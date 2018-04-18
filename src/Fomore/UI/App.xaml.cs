@@ -10,7 +10,7 @@ namespace Fomore.UI
         {
             var splashScreen = new SplashScreen("assets/images/splash.png");
             splashScreen.Show(false);
-            Task.Delay(2500).Wait();
+            Task.Delay(3500).Wait();
             splashScreen.Close(TimeSpan.Zero);
         }
     }
