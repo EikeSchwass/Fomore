@@ -3,7 +3,7 @@
 namespace Testing
 {
     [TestFixture]
-    public class Class1
+    public class DummyTests
     {
         [PreTest]
         public void PreTest() { }

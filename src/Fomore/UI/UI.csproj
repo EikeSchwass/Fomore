@@ -94,13 +94,20 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Core\Core.csproj">
-      <Project>{69bdc167-4bd6-4ca7-96a5-08f0bfe85470}</Project>
-      <Name>Core</Name>
-    </ProjectReference>
+    <Resource Include="assets\images\splash.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="assets\images\splash.png" />
+    <Folder Include="ViewModel\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Core\Core.csproj">
+      <Project>{9bda5a67-14f6-450a-8919-8a5884ae9b60}</Project>
+      <Name>Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Renderer\Renderer.csproj">
+      <Project>{350bcfe3-16b0-433a-9723-98444e4e5d37}</Project>
+      <Name>Renderer</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
