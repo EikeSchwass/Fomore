@@ -4,6 +4,10 @@
              StartupUri="MainWindow.xaml"
              Startup="ApplicationStartUp">
     <Application.Resources>
-         
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="Views/Templates/ImportBonesTemplate.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
     </Application.Resources>
 </Application>

@@ -3,9 +3,25 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:ui="clr-namespace:Fomore.UI"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="Fomore" Height="900" Width="1440" Icon="assets/images/icon.ico" DataContext="{Binding Path=AppState, Source={x:Static ui:App.Instance}}">
     <Grid>
-        
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <Menu Grid.Row="0">
+            <MenuItem Header="File">
+                <MenuItem Header="New..." />
+                <MenuItem Header="Open..." />
+                <MenuItem Header="Quit" />
+            </MenuItem>
+            <MenuItem Header="Edit">
+                <MenuItem Header="Undo" />
+                <MenuItem Header="Redo" />
+            </MenuItem>
+        </Menu>
+        <ContentControl Grid.Row="1" Content="{Binding CurrentViewModel}" />
     </Grid>
 </Window>

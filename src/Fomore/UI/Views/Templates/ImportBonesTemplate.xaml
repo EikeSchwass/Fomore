@@ -1,0 +1,9 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:viewModel="clr-namespace:Fomore.UI.ViewModel">
+    <DataTemplate DataType="{x:Type viewModel:ImportBonesViewModel}">
+        <Grid Background="CornflowerBlue">
+            <TextBlock FontSize="80" FontFamily="Comic Sans MS" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold" Background="White" TextWrapping="Wrap">This is an example template for the import bones ViewModel</TextBlock>
+        </Grid>
+    </DataTemplate>
+</ResourceDictionary>
