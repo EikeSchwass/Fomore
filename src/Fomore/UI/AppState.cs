@@ -4,9 +4,9 @@ namespace Fomore.UI
 {
     public class AppState : ViewModelBase
     {
-        private ViewModelBase currentViewModel = new ImportBonesViewModel();
+        private ContentViewModelBase currentViewModel = new WelcomeScreenViewModel();
 
-        public ViewModelBase CurrentViewModel
+        public ContentViewModelBase CurrentViewModel
         {
             get => currentViewModel;
             set
