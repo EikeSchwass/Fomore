@@ -74,7 +74,7 @@
                                     <TextBlock Grid.Row="1" Style="{StaticResource NewOptionSubHeadline}" Text="Opens the creature creation wizard, which will guide you through the process of creating a new creature" />
                                 </Grid>
                             </Grid>
-                        </controls:PanelButton>
+                        </controls:PanelButton> 
                         <controls:PanelButton Grid.Row="2" Margin="8,4,8,8" MaxWidth="512" Style="{StaticResource {x:Type controls:PanelButton}}">
                             <Grid>
                                 <Grid.ColumnDefinitions>
