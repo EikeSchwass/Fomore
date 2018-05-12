@@ -134,7 +134,9 @@
   <ItemGroup>
     <Resource Include="assets\images\splash.png" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="assets\fonts\" />
+  </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Core\Core.csproj">
       <Project>{9bda5a67-14f6-450a-8919-8a5884ae9b60}</Project>

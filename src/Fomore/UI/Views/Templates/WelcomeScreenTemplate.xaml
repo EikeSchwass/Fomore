@@ -64,7 +64,7 @@
                                     <ColumnDefinition Width="Auto" />
                                     <ColumnDefinition Width="4*" />
                                 </Grid.ColumnDefinitions>
-                                <fa:ImageAwesome Icon="FileOutline" VerticalAlignment="Center" Margin="24" Height="48" />
+                                <fa:ImageAwesome Icon="File" VerticalAlignment="Center" Margin="24" Height="48" />
                                 <Grid Grid.Column="1">
                                     <Grid.RowDefinitions>
                                         <RowDefinition Height="Auto"  />
@@ -81,7 +81,7 @@
                                     <ColumnDefinition Width="Auto" />
                                     <ColumnDefinition Width="4*" />
                                 </Grid.ColumnDefinitions>
-                                <fa:ImageAwesome Icon="FileOutline" VerticalAlignment="Center" Margin="24" Height="48" />
+                                <fa:ImageAwesome Icon="Download" VerticalAlignment="Center" Margin="24" Height="48" />
                                 <Grid Grid.Column="1">
                                     <Grid.RowDefinitions>
                                         <RowDefinition Height="Auto"  />
