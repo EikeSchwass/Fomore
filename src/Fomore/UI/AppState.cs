@@ -5,7 +5,7 @@ namespace Fomore.UI
     public class AppState : ViewModelBase
     {
         private ContentViewModelBase currentViewModel = new WelcomeScreenViewModel();
-
+        
         public ContentViewModelBase CurrentViewModel
         {
             get => currentViewModel;

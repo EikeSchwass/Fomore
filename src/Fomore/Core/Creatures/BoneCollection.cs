@@ -3,10 +3,16 @@ using System.Collections.Generic;
 
 namespace Core.Creatures
 {
+    /// <summary>
+    /// This class represents a collection of bones for a single creature.
+    /// </summary>
     public class BoneCollection : ICollection<BoneModel>
     {
         private List<BoneModel> BoneModels { get; } = new List<BoneModel>();
 
+        /// <summary>
+        /// The name of the Collection for later reference.
+        /// </summary>
         public string Name { get; set; }
 
         /// <inheritdoc />
