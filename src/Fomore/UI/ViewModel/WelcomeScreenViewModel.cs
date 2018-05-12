@@ -1,5 +1,3 @@
-using Core.Creatures;
-
 namespace Fomore.UI.ViewModel
 {
     public class WelcomeScreenViewModel : ContentViewModelBase
