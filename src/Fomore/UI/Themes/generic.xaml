@@ -58,7 +58,6 @@
     <Style TargetType="{x:Type TextBlock}">
         <Setter Property="FontFamily" Value="Segoe UI" />
     </Style>
-    
     <Style TargetType="{x:Type Menu}">
         <Setter Property="TextBlock.FontSize" Value="18" />
     </Style>
