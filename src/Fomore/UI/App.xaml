@@ -10,6 +10,7 @@
                 <ResourceDictionary Source="Converter/ConverterDictionary.xaml" />
                 <ResourceDictionary Source="Views/Templates/WelcomeScreenTemplate.xaml" />
                 <ResourceDictionary Source="Views/Templates/ImportBonesTemplate.xaml" />
+                <ResourceDictionary Source="Views/Templates/CreatureEditorTemplate.xaml" />
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>

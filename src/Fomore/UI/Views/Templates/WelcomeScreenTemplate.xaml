@@ -5,11 +5,6 @@
                     xmlns:fa="http://schemas.fontawesome.io/icons/">
     <DataTemplate DataType="{x:Type viewModel:WelcomeScreenViewModel}">
         <DataTemplate.Resources>
-            <Style x:Key="WelcomePageHeadline" TargetType="{x:Type TextBlock}" BasedOn="{StaticResource {x:Type TextBlock}}">
-                <Setter Property="FontSize" Value="32" />
-                <Setter Property="FontWeight" Value="Medium" />
-                <Setter Property="Margin" Value="12,6" />
-            </Style>
             <Style x:Key="NewOptionHeadline" TargetType="{x:Type TextBlock}" BasedOn="{StaticResource {x:Type TextBlock}}">
                 <Setter Property="FontSize" Value="24" />
                 <Setter Property="FontWeight" Value="Medium" />
@@ -24,18 +19,10 @@
             </Style>
         </DataTemplate.Resources>
         <Grid Background="{StaticResource TemplateBackground}">
-            <Grid Margin="48">
+            <Grid Style="{StaticResource ContentGrid}">
                 <Grid.Resources>
-                    <Style TargetType="{x:Type Border}">
-                        <Setter Property="BorderBrush" Value="Black" />
-                        <Setter Property="BorderThickness" Value="2" />
-                        <Setter Property="Margin" Value="8" />
-                        <Setter Property="Background" Value="{StaticResource ContentBackground}" />
-                    </Style>
                     <Style TargetType="{x:Type StackPanel}">
                         <Setter Property="Background" Value="{StaticResource HeaderBackground}" />
-                    </Style>
-                    <Style TargetType="{x:Type controls:PanelButton}">
                     </Style>
                 </Grid.Resources>
                 <Grid.ColumnDefinitions>
@@ -47,18 +34,13 @@
                     <RowDefinition Height="3*" />
                 </Grid.RowDefinitions>
                 <!-- New -->
-                <Border Grid.Row="0" Grid.Column="0">
+                <controls:BoxContentPresenter Grid.Row="0" Grid.Column="0" Header="New">
                     <Grid>
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto" />
-                            <RowDefinition Height="*" />
-                            <RowDefinition Height="*" />
+                            <RowDefinition Height="Auto" />
                         </Grid.RowDefinitions>
-                        <StackPanel>
-                            <TextBlock Text="New" Style="{StaticResource WelcomePageHeadline}" />
-                            <Separator />
-                        </StackPanel>
-                        <controls:PanelButton Grid.Row="1" Margin="8,8,8,4" Command="{Binding NewCreatureCommand}" MaxWidth="512">
+                        <controls:PanelButton Grid.Row="0" Margin="8,8,8,4" Command="{Binding NewCreatureCommand}" MaxWidth="512">
                             <Grid>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="Auto" />
@@ -74,8 +56,8 @@
                                     <TextBlock Grid.Row="1" Style="{StaticResource NewOptionSubHeadline}" Text="Opens the creature creation wizard, which will guide you through the process of creating a new creature" />
                                 </Grid>
                             </Grid>
-                        </controls:PanelButton> 
-                        <controls:PanelButton Grid.Row="2" Margin="8,4,8,8" MaxWidth="512" Style="{StaticResource {x:Type controls:PanelButton}}">
+                        </controls:PanelButton>
+                        <controls:PanelButton Grid.Row="1" Margin="8,4,8,8" MaxWidth="512" Style="{StaticResource {x:Type controls:PanelButton}}">
                             <Grid>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="Auto" />
@@ -93,35 +75,19 @@
                             </Grid>
                         </controls:PanelButton>
                     </Grid>
-                </Border>
-                <Border Grid.Row="0" Grid.Column="1" Grid.RowSpan="2">
+                </controls:BoxContentPresenter>
+                <controls:BoxContentPresenter Grid.Row="0" Grid.Column="1" Grid.RowSpan="2" Header="Creatures">
                     <Grid>
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="Auto" />
-                            <RowDefinition Height="*" />
-                        </Grid.RowDefinitions>
-                        <StackPanel>
-                            <TextBlock Style="{StaticResource WelcomePageHeadline}" Text="Creatures" />
-                            <Separator />
-                        </StackPanel>
-                        <TextBlock Grid.Row="1" Text="No creatures created so far" FontSize="18" VerticalAlignment="Center" HorizontalAlignment="Center" Visibility="{Binding BoneLibrary.Count, Converter={StaticResource NumberVisibilityConverter}}"></TextBlock>
-                        <ItemsControl Grid.Row="1" />
+                        <TextBlock Text="No creatures created so far" FontSize="18" VerticalAlignment="Center" HorizontalAlignment="Center" Visibility="{Binding BoneLibrary.Count, Converter={StaticResource NumberVisibilityConverter}}"></TextBlock>
+                        <ItemsControl />
                     </Grid>
-                </Border>
-                <Border Grid.Row="1" Grid.Column="0">
+                </controls:BoxContentPresenter>
+                <controls:BoxContentPresenter Grid.Row="1" Grid.Column="0" Header="Bone Library">
                     <Grid>
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="Auto" />
-                            <RowDefinition Height="*" />
-                        </Grid.RowDefinitions>
-                        <StackPanel>
-                            <TextBlock Style="{StaticResource WelcomePageHeadline}" Text="Bone Library" />
-                            <Separator />
-                        </StackPanel>
-                        <TextBlock Grid.Row="1" Text="Bone Library is empty" FontSize="18" VerticalAlignment="Center" HorizontalAlignment="Center" Visibility="{Binding BoneLibrary.Count, Converter={StaticResource NumberVisibilityConverter}}"></TextBlock>
-                        <ItemsControl Grid.Row="1" ItemsSource="{Binding BoneLibrary}" />
+                        <TextBlock Text="Bone Library is empty" FontSize="18" VerticalAlignment="Center" HorizontalAlignment="Center" Visibility="{Binding BoneLibrary.Count, Converter={StaticResource NumberVisibilityConverter}}"></TextBlock>
+                        <ItemsControl ItemsSource="{Binding BoneLibrary}" />
                     </Grid>
-                </Border>
+                </controls:BoxContentPresenter>
             </Grid>
         </Grid>
     </DataTemplate>

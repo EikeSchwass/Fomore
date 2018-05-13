@@ -5,11 +5,13 @@
     <SolidColorBrush x:Key="TemplateBackground" Color="#553d2b" />
     <SolidColorBrush x:Key="HeaderBackground" Color="#c5d5c5" />
     <SolidColorBrush x:Key="ContentBackground" Color="#b0c0b0" />
+    <SolidColorBrush x:Key="ContentDarkBackground" Color="#708070" />
+    <SolidColorBrush x:Key="HighlightBrush" Color="#f0fff0" />
 
     <Style TargetType="{x:Type controls:PanelButton}" BasedOn="{StaticResource {x:Type Button}}">
         <Setter Property="Background" Value="#e9f5e9" />
-        <Setter Property="IsMouseOverBackgroundBrush" Value="#f0fff0" />
-        <Setter Property="IsPressedBackgroundBrush" Value="#d0e9d0" />
+        <Setter Property="IsMouseOverBackgroundBrush" Value="{StaticResource HighlightBrush}" />
+        <Setter Property="IsPressedBackgroundBrush" Value="{StaticResource HeaderBackground}" />
         <Setter Property="IsDisabledBorderBrush" Value="LightGray" />
         <Setter Property="IsDisabledBackgroundBrush" Value="#ededed" />
         <Setter Property="Margin" Value="8" />
@@ -60,6 +62,19 @@
     </Style>
     <Style TargetType="{x:Type Menu}">
         <Setter Property="TextBlock.FontSize" Value="18" />
+    </Style>
+    <Style TargetType="{x:Type Grid}" x:Key="ContentGrid">
+        <Setter Property="Margin" Value="48" />
+    </Style>
+    <Style TargetType="{x:Type Border}" x:Key="DefaultBorder">
+        <Setter Property="HorizontalAlignment" Value="Center" />
+        <Setter Property="BorderBrush" Value="Black" />
+        <Setter Property="BorderThickness" Value="1" />
+    </Style>
+    <Style TargetType="{x:Type TextBox}">
+        <Setter Property="Background" Value="{StaticResource ContentDarkBackground}" />
+        <Setter Property="Foreground" Value="{StaticResource HighlightBrush}" />
+        <Setter Property="FontWeight" Value="Medium" />
     </Style>
 
 </ResourceDictionary>

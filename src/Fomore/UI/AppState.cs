@@ -4,7 +4,7 @@ namespace Fomore.UI
 {
     public class AppState : ViewModelBase
     {
-        private ContentViewModelBase currentViewModel = new WelcomeScreenViewModel();
+        private ContentViewModelBase currentViewModel = new CreatureEditorVM();
         
         public ContentViewModelBase CurrentViewModel
         {
