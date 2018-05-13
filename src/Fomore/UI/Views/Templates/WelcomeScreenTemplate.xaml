@@ -3,7 +3,7 @@
                     xmlns:viewModel="clr-namespace:Fomore.UI.ViewModel"
                     xmlns:controls="clr-namespace:Fomore.UI.Views.Controls"
                     xmlns:fa="http://schemas.fontawesome.io/icons/">
-    <DataTemplate DataType="{x:Type viewModel:WelcomeScreenViewModel}">
+    <DataTemplate DataType="{x:Type viewModel:WelcomeScreenVM}">
         <DataTemplate.Resources>
             <Style x:Key="NewOptionHeadline" TargetType="{x:Type TextBlock}" BasedOn="{StaticResource {x:Type TextBlock}}">
                 <Setter Property="FontSize" Value="24" />
@@ -18,77 +18,75 @@
                 <Setter Property="Foreground" Value="DimGray" />
             </Style>
         </DataTemplate.Resources>
-        <Grid Background="{StaticResource TemplateBackground}">
-            <Grid Style="{StaticResource ContentGrid}">
-                <Grid.Resources>
-                    <Style TargetType="{x:Type StackPanel}">
-                        <Setter Property="Background" Value="{StaticResource HeaderBackground}" />
-                    </Style>
-                </Grid.Resources>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="Auto" />
-                    <ColumnDefinition Width="*" />
-                </Grid.ColumnDefinitions>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="3*" />
-                </Grid.RowDefinitions>
-                <!-- New -->
-                <controls:BoxContentPresenter Grid.Row="0" Grid.Column="0" Header="New">
-                    <Grid>
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="Auto" />
-                            <RowDefinition Height="Auto" />
-                        </Grid.RowDefinitions>
-                        <controls:PanelButton Grid.Row="0" Margin="8,8,8,4" Command="{Binding NewCreatureCommand}" MaxWidth="512">
-                            <Grid>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="Auto" />
-                                    <ColumnDefinition Width="4*" />
-                                </Grid.ColumnDefinitions>
-                                <fa:ImageAwesome Icon="File" VerticalAlignment="Center" Margin="24" Height="48" />
-                                <Grid Grid.Column="1">
-                                    <Grid.RowDefinitions>
-                                        <RowDefinition Height="Auto"  />
-                                        <RowDefinition Height="*"  />
-                                    </Grid.RowDefinitions>
-                                    <TextBlock Grid.Row="0" Style="{StaticResource NewOptionHeadline}" Text="Create a new creature" />
-                                    <TextBlock Grid.Row="1" Style="{StaticResource NewOptionSubHeadline}" Text="Opens the creature creation wizard, which will guide you through the process of creating a new creature" />
-                                </Grid>
+        <Grid>
+            <Grid.Resources>
+                <Style TargetType="{x:Type StackPanel}">
+                    <Setter Property="Background" Value="{StaticResource Level4Brush}" />
+                </Style>
+            </Grid.Resources>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="3*" />
+            </Grid.RowDefinitions>
+            <!-- New -->
+            <controls:BoxContentPresenter Grid.Row="0" Grid.Column="0" Header="New">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+                    <controls:PanelButton Grid.Row="0" Margin="8,8,8,4" Command="{Binding NewCreatureCommand}" MaxWidth="512">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="4*" />
+                            </Grid.ColumnDefinitions>
+                            <fa:ImageAwesome Icon="File" VerticalAlignment="Center" Margin="24" Height="48" />
+                            <Grid Grid.Column="1">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"  />
+                                    <RowDefinition Height="*"  />
+                                </Grid.RowDefinitions>
+                                <TextBlock Grid.Row="0" Style="{StaticResource NewOptionHeadline}" Text="Create a new creature" />
+                                <TextBlock Grid.Row="1" Style="{StaticResource NewOptionSubHeadline}" Text="Opens the creature creation wizard, which will guide you through the process of creating a new creature" />
                             </Grid>
-                        </controls:PanelButton>
-                        <controls:PanelButton Grid.Row="1" Margin="8,4,8,8" MaxWidth="512" Style="{StaticResource {x:Type controls:PanelButton}}">
-                            <Grid>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="Auto" />
-                                    <ColumnDefinition Width="4*" />
-                                </Grid.ColumnDefinitions>
-                                <fa:ImageAwesome Icon="Download" VerticalAlignment="Center" Margin="24" Height="48" />
-                                <Grid Grid.Column="1">
-                                    <Grid.RowDefinitions>
-                                        <RowDefinition Height="Auto"  />
-                                        <RowDefinition Height="*"  />
-                                    </Grid.RowDefinitions>
-                                    <TextBlock Grid.Row="0" Style="{StaticResource NewOptionHeadline}" Text="Import Bones" />
-                                    <TextBlock Grid.Row="1" Style="{StaticResource NewOptionSubHeadline}" Text="Opens the import bone wizard, which will guide you through the process of importing bones" />
-                                </Grid>
+                        </Grid>
+                    </controls:PanelButton>
+                    <controls:PanelButton Grid.Row="1" Margin="8,4,8,8" MaxWidth="512" Style="{StaticResource {x:Type controls:PanelButton}}">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="4*" />
+                            </Grid.ColumnDefinitions>
+                            <fa:ImageAwesome Icon="Download" VerticalAlignment="Center" Margin="24" Height="48" />
+                            <Grid Grid.Column="1">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"  />
+                                    <RowDefinition Height="*"  />
+                                </Grid.RowDefinitions>
+                                <TextBlock Grid.Row="0" Style="{StaticResource NewOptionHeadline}" Text="Import Bones" />
+                                <TextBlock Grid.Row="1" Style="{StaticResource NewOptionSubHeadline}" Text="Opens the import bone wizard, which will guide you through the process of importing bones" />
                             </Grid>
-                        </controls:PanelButton>
-                    </Grid>
-                </controls:BoxContentPresenter>
-                <controls:BoxContentPresenter Grid.Row="0" Grid.Column="1" Grid.RowSpan="2" Header="Creatures">
-                    <Grid>
-                        <TextBlock Text="No creatures created so far" FontSize="18" VerticalAlignment="Center" HorizontalAlignment="Center" Visibility="{Binding BoneLibrary.Count, Converter={StaticResource NumberVisibilityConverter}}"></TextBlock>
-                        <ItemsControl />
-                    </Grid>
-                </controls:BoxContentPresenter>
-                <controls:BoxContentPresenter Grid.Row="1" Grid.Column="0" Header="Bone Library">
-                    <Grid>
-                        <TextBlock Text="Bone Library is empty" FontSize="18" VerticalAlignment="Center" HorizontalAlignment="Center" Visibility="{Binding BoneLibrary.Count, Converter={StaticResource NumberVisibilityConverter}}"></TextBlock>
-                        <ItemsControl ItemsSource="{Binding BoneLibrary}" />
-                    </Grid>
-                </controls:BoxContentPresenter>
-            </Grid>
+                        </Grid>
+                    </controls:PanelButton>
+                </Grid>
+            </controls:BoxContentPresenter>
+            <controls:BoxContentPresenter Grid.Row="0" Grid.Column="1" Grid.RowSpan="2" Header="Creatures">
+                <Grid>
+                    <TextBlock Text="No creatures created so far" FontSize="18" VerticalAlignment="Center" HorizontalAlignment="Center" Visibility="{Binding BoneLibrary.Count, Converter={StaticResource NumberVisibilityConverter}}"></TextBlock>
+                    <ItemsControl />
+                </Grid>
+            </controls:BoxContentPresenter>
+            <controls:BoxContentPresenter Grid.Row="1" Grid.Column="0" Header="Bone Library">
+                <Grid>
+                    <TextBlock Text="Bone Library is empty" FontSize="18" VerticalAlignment="Center" HorizontalAlignment="Center" Visibility="{Binding BoneLibrary.Count, Converter={StaticResource NumberVisibilityConverter}}"></TextBlock>
+                    <ItemsControl ItemsSource="{Binding BoneLibrary}" />
+                </Grid>
+            </controls:BoxContentPresenter>
         </Grid>
     </DataTemplate>
 </ResourceDictionary>

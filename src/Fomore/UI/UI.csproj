@@ -62,14 +62,18 @@
     <Compile Include="ViewModel\BoneCollectionVM.cs" />
     <Compile Include="ViewModel\BoneLibraryVM.cs" />
     <Compile Include="ViewModel\BoneModelVM.cs" />
+    <Compile Include="ViewModel\Commands\DelegateCommand.cs" />
     <Compile Include="ViewModel\Commands\StubCommand.cs" />
     <Compile Include="ViewModel\ContentViewModelBase.cs" />
     <Compile Include="ViewModel\CreatureEditorVM.cs" />
     <Compile Include="ViewModel\ImportBonesViewModel.cs" />
     <Compile Include="ViewModel\ViewModelBase.cs" />
-    <Compile Include="ViewModel\WelcomeScreenViewModel.cs" />
+    <Compile Include="ViewModel\WelcomeScreenVM.cs" />
     <Compile Include="Views\Controls\BoxContentPresenter.xaml.cs">
       <DependentUpon>BoxContentPresenter.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Controls\CreatureEditor.xaml.cs">
+      <DependentUpon>CreatureEditor.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Controls\PanelButton.xaml.cs">
       <DependentUpon>PanelButton.xaml</DependentUpon>
@@ -99,6 +103,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\Controls\BoxContentPresenter.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Controls\CreatureEditor.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -172,6 +180,12 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="assets\images\placeholder.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="assets\images\bone.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="assets\images\joint.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

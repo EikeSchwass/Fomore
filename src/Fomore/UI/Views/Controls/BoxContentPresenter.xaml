@@ -18,8 +18,8 @@
         <Style TargetType="{x:Type controls:BoxContentPresenter}">
             <Setter Property="HeaderFontMargin" Value="12,6" />
             <Setter Property="HeaderFontSize" Value="28" />
-            <Setter Property="HeaderBackground" Value="{StaticResource HeaderBackground}" />
-            <Setter Property="ContentBackground" Value="{StaticResource ContentBackground}" />
+            <Setter Property="HeaderBackground" Value="{StaticResource Level4Brush}" />
+            <Setter Property="ContentBackground" Value="{StaticResource Level3Brush}" />
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="{x:Type controls:BoxContentPresenter}">

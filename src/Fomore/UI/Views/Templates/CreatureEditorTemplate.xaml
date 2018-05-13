@@ -3,43 +3,43 @@
                     xmlns:viewModel="clr-namespace:Fomore.UI.ViewModel"
                     xmlns:controls="clr-namespace:Fomore.UI.Views.Controls">
     <DataTemplate DataType="{x:Type viewModel:CreatureEditorVM}">
-        <Grid Background="{StaticResource TemplateBackground}">
-            <Grid Style="{StaticResource ContentGrid}">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="*" />
-                    <RowDefinition Height="Auto" />
-                </Grid.RowDefinitions>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="Auto" />
-                    <ColumnDefinition />
-                    <ColumnDefinition Width="Auto" />
-                </Grid.ColumnDefinitions>
-                <!--<controls:BoxContentPresenter Grid.Row="1" Grid.Column="0" Header="All Creatures" /> -->
-                <controls:BoxContentPresenter Grid.Row="0" Grid.Column="1" Grid.RowSpan="2" Header="Editor" />
-                <controls:BoxContentPresenter Grid.Row="0" Grid.Column="2" Header="Creature Information">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+            <!--<controls:BoxContentPresenter Grid.Row="1" Grid.Column="0" Header="All Creatures" /> -->
+            <controls:BoxContentPresenter Grid.Row="0" Grid.Column="1" Grid.RowSpan="2" Header="Editor">
+                <controls:CreatureEditor />
+            </controls:BoxContentPresenter>
+            <controls:BoxContentPresenter Grid.Row="0" Grid.Column="2" Header="Creature Information">
+                <StackPanel>
                     <StackPanel>
-                        <StackPanel>
-                            <controls:PropertyPresenter PropertyTitle="Name" PropertyValue="Blubfish" CanEditValue="True" />
-                            <Border Margin="8" Style="{StaticResource DefaultBorder}">
-                                <Image Source="../../assets/images/icon.ico" HorizontalAlignment="Center" VerticalAlignment="Center" Width="128" Height="128" Margin="2" />
-                            </Border>
-                            <Separator></Separator>
-                        </StackPanel>
-                        <StackPanel>
-                            <controls:PropertyPresenter PropertyTitle="Total Weight" PropertyValue="18.35 kg" />
-                            <controls:PropertyPresenter PropertyTitle="Bone Count" PropertyValue="19" />
-                            <controls:PropertyPresenter PropertyTitle="Joint Count" PropertyValue="18" />
-                        </StackPanel>
+                        <controls:PropertyPresenter PropertyTitle="Name" PropertyValue="Blubfish" CanEditValue="True" />
+                        <Border Margin="8" Style="{StaticResource DefaultBorder}">
+                            <Image Source="../../assets/images/icon.ico" HorizontalAlignment="Center" VerticalAlignment="Center" Width="128" Height="128" Margin="2" />
+                        </Border>
+                        <Separator></Separator>
                     </StackPanel>
-                </controls:BoxContentPresenter>
-                <controls:BoxContentPresenter Grid.Row="1" Grid.Column="2" Header="Properties">
                     <StackPanel>
-                        <controls:PropertyPresenter PropertyTitle="Lower Limit (°)" PropertyValue="-30" CanEditValue="True" />
-                        <controls:PropertyPresenter PropertyTitle="Uper Limit (°)" PropertyValue="30" CanEditValue="True" />
-                        <controls:PropertyPresenter PropertyTitle="Max Strength (kN)" PropertyValue="{Binding RelativeSource={RelativeSource AncestorType={x:Type Window}}, Path=ActualWidth, StringFormat={}{0:0.00}}" />
+                        <controls:PropertyPresenter PropertyTitle="Total Weight" PropertyValue="18.35 kg" />
+                        <controls:PropertyPresenter PropertyTitle="Bone Count" PropertyValue="19" />
+                        <controls:PropertyPresenter PropertyTitle="Joint Count" PropertyValue="18" />
                     </StackPanel>
-                </controls:BoxContentPresenter>
-            </Grid>
+                </StackPanel>
+            </controls:BoxContentPresenter>
+            <controls:BoxContentPresenter Grid.Row="1" Grid.Column="2" Header="Properties">
+                <StackPanel>
+                    <controls:PropertyPresenter PropertyTitle="Lower Limit (°)" PropertyValue="-30" CanEditValue="True" />
+                    <controls:PropertyPresenter PropertyTitle="Uper Limit (°)" PropertyValue="30" CanEditValue="True" />
+                    <controls:PropertyPresenter PropertyTitle="Max Strength (kN)" PropertyValue="{Binding RelativeSource={RelativeSource AncestorType={x:Type Window}}, Path=ActualWidth, StringFormat={}{0:0.00}}" />
+                </StackPanel>
+            </controls:BoxContentPresenter>
         </Grid>
     </DataTemplate>
 </ResourceDictionary>

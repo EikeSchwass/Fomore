@@ -5,7 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:ui="clr-namespace:Fomore.UI"
         mc:Ignorable="d"
-        Title="Fomore" MinHeight="600" MinWidth="960" Width="1440" Height="900" Icon="assets/images/icon.ico" DataContext="{Binding Path=AppState, Source={x:Static ui:App.Instance}}">
+        Title="Fomore" MinHeight="600" MinWidth="960" Width="1440" Height="900" Icon="assets/images/icon.ico" DataContext="{Binding Path=AppState, Source={x:Static ui:App.Instance}}"
+        Background="{StaticResource Level0Brush}">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
@@ -28,6 +29,6 @@
                 <MenuItem Header="About" Command="{Binding CurrentViewModel.AboutCommand}" />
             </MenuItem>
         </Menu>
-        <ContentControl Grid.Row="1" Content="{Binding CurrentViewModel}" />
+        <ContentControl Grid.Row="1" Content="{Binding CurrentViewModel}" Margin="{StaticResource ContentMargin}" />
     </Grid>
 </Window>
