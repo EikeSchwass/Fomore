@@ -59,14 +59,17 @@
     </ApplicationDefinition>
     <Compile Include="Converter\BooleanVisibilityConverter.cs" />
     <Compile Include="Converter\NumberVisibilityConverter.cs" />
-    <Compile Include="ViewModel\BoneCollectionVM.cs" />
-    <Compile Include="ViewModel\BoneLibraryVM.cs" />
     <Compile Include="ViewModel\BoneModelVM.cs" />
     <Compile Include="ViewModel\Commands\DelegateCommand.cs" />
     <Compile Include="ViewModel\Commands\StubCommand.cs" />
-    <Compile Include="ViewModel\ContentViewModelBase.cs" />
+    <Compile Include="ViewModel\CreatureVM.cs" />
+    <Compile Include="ViewModel\ViewViewModelBase.cs" />
+    <Compile Include="ViewModel\CreatureCollectionVM.cs" />
     <Compile Include="ViewModel\CreatureEditorVM.cs" />
     <Compile Include="ViewModel\ImportBonesViewModel.cs" />
+    <Compile Include="ViewModel\ListVM.cs" />
+    <Compile Include="ViewModel\ScenarioCollectionVM.cs" />
+    <Compile Include="ViewModel\ScenarioVM.cs" />
     <Compile Include="ViewModel\ViewModelBase.cs" />
     <Compile Include="ViewModel\WelcomeScreenVM.cs" />
     <Compile Include="Views\Controls\BoxContentPresenter.xaml.cs">

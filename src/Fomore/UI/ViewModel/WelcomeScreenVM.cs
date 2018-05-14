@@ -2,25 +2,12 @@ using Fomore.UI.ViewModel.Commands;
 
 namespace Fomore.UI.ViewModel
 {
-    public class WelcomeScreenVM : ContentViewModelBase
+    public class WelcomeScreenVM : ViewViewModelBase
     {
-        private BoneLibraryVM boneLibrary;
-
-        public BoneLibraryVM BoneLibrary
-        {
-            get => boneLibrary;
-            set
-            {
-                if (Equals(value, boneLibrary)) return;
-                boneLibrary = value;
-                OnPropertyChanged();
-            }
-        }
-
-        public WelcomeScreenVM()
+        public WelcomeScreenVM(AppState appState) : base(appState)
         {
             NewCreatureCommand =
-                new DelegateCommand(parameter => App.Instance.AppState.CurrentViewModel = new CreatureEditorVM(),
+                new DelegateCommand(parameter => AppState.CurrentViewModel = new CreatureEditorVM(AppState),
                                     parameter => true);
         }
     }

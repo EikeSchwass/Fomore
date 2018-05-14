@@ -4,9 +4,9 @@ namespace Fomore.UI
 {
     public class AppState : ViewModelBase
     {
-        private ContentViewModelBase currentViewModel = new WelcomeScreenVM();
+        private ViewViewModelBase currentViewModel;
         
-        public ContentViewModelBase CurrentViewModel
+        public ViewViewModelBase CurrentViewModel
         {
             get => currentViewModel;
             set
@@ -16,5 +16,14 @@ namespace Fomore.UI
                 OnPropertyChanged();
             }
         }
+
+        public AppState()
+        {
+            CurrentViewModel=new WelcomeScreenVM(this);
+        }
+
+
+        public CreatureCollectionVM CreatureCollection { get; } = new CreatureCollectionVM();
+        public ScenarioCollectionVM ScenarioCollection { get; } = new ScenarioCollectionVM();
     }
 }

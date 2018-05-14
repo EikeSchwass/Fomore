@@ -2,12 +2,13 @@ using Core.Creatures;
 
 namespace Fomore.UI.ViewModel
 {
-    public class BoneModelVM : ViewModelBase
+    public class BoneVM : ViewModelBase
     {
-        public BoneModelVM(BoneModel boneModel)
+        public Bone Bone { get; }
+
+        public BoneVM(Bone bone)
         {
-            BoneModel = boneModel;
+            Bone = bone;
         }
-        public BoneModel BoneModel { get; }
     }
 }
