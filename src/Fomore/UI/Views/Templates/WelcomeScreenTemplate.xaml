@@ -2,16 +2,20 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:viewModel="clr-namespace:Fomore.UI.ViewModel"
                     xmlns:controls="clr-namespace:Fomore.UI.Views.Controls"
-                    xmlns:fa="http://schemas.fontawesome.io/icons/">
+                    xmlns:fa="http://schemas.fontawesome.io/icons/"
+                    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                    mc:Ignorable="d">
     <DataTemplate DataType="{x:Type viewModel:WelcomeScreenVM}">
         <DataTemplate.Resources>
-            <Style x:Key="NewOptionHeadline" TargetType="{x:Type TextBlock}" BasedOn="{StaticResource {x:Type TextBlock}}">
+            <Style x:Key="NewOptionHeadline" TargetType="{x:Type TextBlock}"
+                   BasedOn="{StaticResource {x:Type TextBlock}}">
                 <Setter Property="FontSize" Value="24" />
                 <Setter Property="FontWeight" Value="Medium" />
                 <Setter Property="Margin" Value="8,4,8,0" />
-                <Setter Property="VerticalAlignment" Value="Center" />
             </Style>
-            <Style x:Key="NewOptionSubHeadline" TargetType="{x:Type TextBlock}" BasedOn="{StaticResource {x:Type TextBlock}}">
+            <Style x:Key="NewOptionSubHeadline" TargetType="{x:Type TextBlock}"
+                   BasedOn="{StaticResource {x:Type TextBlock}}">
                 <Setter Property="FontSize" Value="14" />
                 <Setter Property="FontWeight" Value="Light" />
                 <Setter Property="Margin" Value="8,0,8,2" />
@@ -25,40 +29,56 @@
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
             <!-- Creatures -->
-            <controls:BoxContentPresenter Grid.Column="0" Header="Creatures">
+            <controls:BoxContentPresenter Grid.Column="0">
+                <controls:BoxContentPresenter.HeaderContent>
+                    <Grid VerticalAlignment="Center"
+                          DataContext="{Binding DataContext ,RelativeSource={RelativeSource AncestorType={x:Type controls:BoxContentPresenter}}}">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Grid.Column="0" Text="Creatures" VerticalAlignment="Center" />
+                        <controls:PanelButton Grid.Column="1" HorizontalAlignment="Right" Margin="2" Command="{Binding AppState.CurrentViewModel.ShowMessageBoxCommand}" CommandParameter="{DynamicResource NewCreatureMessageBox}">
+                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="8">
+                                <fa:ImageAwesome Icon="Plus" Margin="0,0,4,0" />
+                                <TextBlock Text="Add Creature" Margin="4,0,0,0" />
+                            </StackPanel>
+                        </controls:PanelButton>
+                    </Grid>
+                </controls:BoxContentPresenter.HeaderContent>
                 <Grid>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="*" />
-                    </Grid.RowDefinitions>
-                    <controls:PanelButton>
-                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="1">
-                            <fa:ImageAwesome Icon="Plus" Height="48" Margin="8" />
-                            <TextBlock Text="Add new Creature" Margin="8" Style="{StaticResource NewOptionHeadline}" />
-                        </StackPanel>
-                    </controls:PanelButton>
-                    <TextBlock Grid.Row="1" Text="No creatures created so far" FontSize="18" VerticalAlignment="Center" HorizontalAlignment="Center" Visibility="{Binding AppState.CreatureCollection.Count, Converter={StaticResource NumberVisibilityConverter}}" />
-                    <ScrollViewer Grid.Row="1" Margin="8" VerticalScrollBarVisibility="Auto">
-                        <ItemsControl ItemsSource="{Binding AppState.CreatureCollection}" />
+                    <TextBlock Text="No creatures created so far" FontSize="18" VerticalAlignment="Center"
+                               HorizontalAlignment="Center"
+                               Visibility="{Binding AppState.CreatureCollection.Count, Converter={StaticResource NumberVisibilityConverter}}" />
+                    <ScrollViewer Margin="8" VerticalScrollBarVisibility="Auto">
+                        <ItemsControl ItemsSource="{Binding AppState.CreatureCollection}" Margin="4,-2" />
                     </ScrollViewer>
                 </Grid>
             </controls:BoxContentPresenter>
             <!-- Scenarios -->
-            <controls:BoxContentPresenter Grid.Column="1" Header="Scenarios">
+            <controls:BoxContentPresenter Grid.Column="1">
+                <controls:BoxContentPresenter.HeaderContent>
+                    <Grid VerticalAlignment="Center"
+                          DataContext="{Binding DataContext ,RelativeSource={RelativeSource AncestorType={x:Type controls:BoxContentPresenter}}}">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Grid.Column="0" Text="Scenarios" VerticalAlignment="Center" />
+                        <controls:PanelButton Grid.Column="1" HorizontalAlignment="Right" Margin="2" Command="{Binding AppState.CurrentViewModel.ShowMessageBoxCommand}" CommandParameter="{StaticResource NewScenarioMessageBox}">
+                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="8">
+                                <fa:ImageAwesome Icon="Plus" Margin="0,0,4,0" />
+                                <TextBlock Text="Add Scenario" Margin="4,0,0,0" />
+                            </StackPanel>
+                        </controls:PanelButton>
+                    </Grid>
+                </controls:BoxContentPresenter.HeaderContent>
                 <Grid>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="*" />
-                    </Grid.RowDefinitions>
-                    <controls:PanelButton>
-                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="1">
-                            <fa:ImageAwesome Icon="Plus" Height="48" Margin="8" />
-                            <TextBlock Text="Add new Scenario" Margin="8" Style="{StaticResource NewOptionHeadline}" />
-                        </StackPanel>
-                    </controls:PanelButton>
-                    <TextBlock Grid.Row="1" Text="No scenarios created so far" FontSize="18" VerticalAlignment="Center" HorizontalAlignment="Center" Visibility="{Binding AppState.ScenarioCollection.Count, Converter={StaticResource NumberVisibilityConverter}}" />
-                    <ScrollViewer Grid.Row="1" Margin="8" VerticalScrollBarVisibility="Auto">
-                        <ItemsControl ItemsSource="{Binding AppState.ScenarioCollection}" />
+                    <TextBlock Text="No scenarios created so far" FontSize="18" VerticalAlignment="Center"
+                               HorizontalAlignment="Center"
+                               Visibility="{Binding AppState.ScenarioCollection.Count, Converter={StaticResource NumberVisibilityConverter}}" />
+                    <ScrollViewer Margin="8" VerticalScrollBarVisibility="Auto">
+                        <ItemsControl ItemsSource="{Binding AppState.ScenarioCollection}" Margin="4,-2" />
                     </ScrollViewer>
                 </Grid>
             </controls:BoxContentPresenter>

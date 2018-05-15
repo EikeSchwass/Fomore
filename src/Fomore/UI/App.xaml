@@ -8,6 +8,10 @@
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="Themes/Generic.xaml" />
                 <ResourceDictionary Source="Converter/ConverterDictionary.xaml" />
+                <ResourceDictionary Source="Views/Templates/MessageBoxTemplates.xaml" />
+                <ResourceDictionary Source="Views/Templates/CreatureTemplate.xaml" />
+                <ResourceDictionary Source="Views/Templates/ScenarioTemplate.xaml" />
+                <ResourceDictionary Source="Views/Templates/ScrollbarTemplate.xaml" />
                 <ResourceDictionary Source="Views/Templates/WelcomeScreenTemplate.xaml" />
                 <ResourceDictionary Source="Views/Templates/ImportBonesTemplate.xaml" />
                 <ResourceDictionary Source="Views/Templates/CreatureEditorTemplate.xaml" />

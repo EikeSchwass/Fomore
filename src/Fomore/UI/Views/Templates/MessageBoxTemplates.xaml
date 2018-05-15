@@ -1,0 +1,94 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:controls="clr-namespace:Fomore.UI.Views.Controls"
+                    xmlns:viewModel="clr-namespace:Fomore.UI.ViewModel"
+                    xmlns:ui="clr-namespace:Fomore.UI" xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" mc:Ignorable="d">
+    <controls:MessageBoxParameters Title="New Creature" x:Key="NewCreatureMessageBox">
+        <controls:MessageBoxParameters.Content>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+                <TextBlock Grid.Column="0" Text="Creature Name" />
+                <TextBox Grid.Column="1" Width="200"
+                         Text="{Binding Path=(controls:MessageBoxParameters.Tag), Mode=OneWayToSource}" />
+            </Grid>
+        </controls:MessageBoxParameters.Content>
+        <controls:MessageBoxParameters.OptionsPanel>
+            <Grid d:DataContext="{d:DesignInstance controls:MessageBoxParameters}">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
+                <controls:PanelButton Grid.Column="0" Content="Create Creature" Command="{Binding CloseCommand}">
+                    <controls:PanelButton.CommandParameter>
+                        <viewModel:CommandInvocation
+                            Command="{Binding AppState.CreatureCollection.AddNewCreatureCommand, Source={x:Static ui:App.Instance}}"
+                            Parameter="{Binding AppState.MessageBoxParameters.Tag, Source={x:Static ui:App.Instance}}" />
+                    </controls:PanelButton.CommandParameter>
+                </controls:PanelButton>
+                <controls:PanelButton Grid.Column="1" Content="Cancel" Command="{Binding CloseCommand}" />
+            </Grid>
+        </controls:MessageBoxParameters.OptionsPanel>
+    </controls:MessageBoxParameters>
+    <controls:MessageBoxParameters Title="New Scenario" x:Key="NewScenarioMessageBox">
+        <controls:MessageBoxParameters.Content>
+            <Grid DataContext="{Binding AppState, Source={x:Static ui:App.Instance}}">
+                <Grid.RowDefinitions>
+                    <RowDefinition />
+                    <RowDefinition />
+                </Grid.RowDefinitions>
+                <Grid Grid.Row="0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Grid.Column="0" Text="Creature" />
+                    <ComboBox Grid.Column="1" Width="200" ItemsSource="{Binding CreatureCollection}"
+                              VerticalAlignment="Center" x:Name="CreatureSelectionComboBox">
+                        <ComboBox.ItemTemplate>
+                            <DataTemplate DataType="{x:Type viewModel:CreatureVM}">
+                                <TextBlock Text="{Binding Name}" />
+                            </DataTemplate>
+                        </ComboBox.ItemTemplate>
+                    </ComboBox>
+                </Grid>
+                <Grid Grid.Row="1">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Grid.Column="0" Text="Environment" />
+                    <ComboBox Grid.Column="1" Width="200" ItemsSource="{Binding ScenarioCollection}"
+                              VerticalAlignment="Center" x:Name="EnvironmentSelectionComboBox">
+                        <ComboBox.ItemTemplate>
+                            <DataTemplate DataType="{x:Type viewModel:EnvironmentVM}">
+                                <TextBlock Text="{Binding Name}" />
+                            </DataTemplate>
+                        </ComboBox.ItemTemplate>
+                    </ComboBox>
+                </Grid>
+            </Grid>
+        </controls:MessageBoxParameters.Content>
+        <controls:MessageBoxParameters.OptionsPanel>
+            <Grid DataContext="{Binding AppState, Source={x:Static ui:App.Instance}}">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
+                <controls:PanelButton Grid.Column="0" Content="Create Scenario"
+                                      Command="{Binding MessageBoxParameters.CloseCommand}">
+                    <controls:PanelButton.CommandParameter>
+                        <viewModel:CommandInvocation
+                            Command="{Binding AppState.ScenarioCollection.AddNewScenarioCommand, Source={x:Static ui:App.Instance}}"
+                            Parameter="{Binding Path=SelectedItem, ElementName=CreatureSelectionComboBox}" />
+                    </controls:PanelButton.CommandParameter>
+                </controls:PanelButton>
+                <controls:PanelButton Grid.Column="1" Content="Cancel"
+                                      Command="{Binding MessageBoxParameters.CloseCommand}" />
+            </Grid>
+        </controls:MessageBoxParameters.OptionsPanel>
+    </controls:MessageBoxParameters>
+</ResourceDictionary>

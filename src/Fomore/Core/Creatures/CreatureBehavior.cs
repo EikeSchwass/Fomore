@@ -13,7 +13,7 @@ namespace Core.Creatures
         public static CreatureBehavior CreateFromCreature(Creature creature)
         {
             var creatureBehavior = new CreatureBehavior(creature);
-            throw new NotImplementedException();
+            throw new NotImplementedException(creatureBehavior.ToString());
         }
     }
 }

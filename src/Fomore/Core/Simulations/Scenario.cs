@@ -2,9 +2,10 @@
 
 namespace Core.Simulations
 {
-    public class Scenario
+    public class Scenario : ICloneable<Scenario>
     {
-        public Creature Creature { get; set; }
-        public Environment Environment { get; set; }
+        public Creature Creature { get; set; } = new Creature();
+        public Environment Environment { get; set; } = new Environment();
+        public Scenario Clone() => new Scenario();
     }
 }

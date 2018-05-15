@@ -7,7 +7,6 @@ namespace Fomore.UI.ViewModel
 {
     public class ListVM<T> : IEnumerable<T>, INotifyCollectionChanged where T : ViewModelBase
     {
-
         private List<T> Items { get; } = new List<T>();
 
         public int Count => Items.Count;
@@ -24,29 +23,36 @@ namespace Fomore.UI.ViewModel
         public void Add(T item)
         {
             Items.Add(item);
+            OnItemAdded(item);
             CollectionChanged?.Invoke(this, new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Add, item));
         }
 
         public bool Remove(T item)
         {
+            int index = Items.IndexOf(item);
             bool returnValue = Items.Remove(item);
-            CollectionChanged?.Invoke(this, new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Remove, item));
+            OnItemRemoved(item);
+            CollectionChanged?.Invoke(this,
+                                      new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Remove,
+                                                                           item,
+                                                                           index));
             return returnValue;
         }
 
         public void Clear()
         {
-            Items.Clear();
-            CollectionChanged?.Invoke(this, new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Reset));
+            var list = Items.ToList();
+            foreach (var item in list) Remove(item);
         }
 
         public void AddRange(IEnumerable<T> items)
         {
-            var itemList = items.ToList();
-            Items.AddRange(itemList);
-            CollectionChanged?.Invoke(this, new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Add, itemList));
+            foreach (var item in items) Items.Add(item);
         }
 
         public bool Contains(T item) => Items.Contains(item);
+
+        protected virtual void OnItemAdded(T item) { }
+        protected virtual void OnItemRemoved(T item) { }
     }
 }

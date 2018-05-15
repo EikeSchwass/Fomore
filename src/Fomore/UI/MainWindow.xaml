@@ -4,8 +4,10 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:ui="clr-namespace:Fomore.UI"
+        xmlns:controls="clr-namespace:Fomore.UI.Views.Controls"
         mc:Ignorable="d"
-        Title="Fomore" MinHeight="600" MinWidth="960" Width="1440" Height="900" Icon="assets/images/icon.ico" DataContext="{Binding Path=AppState, Source={x:Static ui:App.Instance}}"
+        Title="Fomore" MinHeight="600" MinWidth="960" Width="1440" Height="900" Icon="assets/images/icon.ico"
+        DataContext="{Binding Path=AppState, Source={x:Static ui:App.Instance}}"
         Background="{StaticResource Level0Brush}">
     <Grid>
         <Grid.RowDefinitions>
@@ -15,7 +17,7 @@
         <Menu Grid.Row="0">
             <MenuItem Header="File">
                 <MenuItem Header="New">
-                    <MenuItem Header="Creature..." Command="{Binding CurrentViewModel.NewCreatureCommand}" />
+                    <MenuItem Header="Creature..." Command="{Binding CurrentViewModel.ShowMessageBoxCommand}" CommandParameter="{StaticResource NewCreatureMessageBox}" />
                     <MenuItem Header="Bone Collection..." Command="{Binding CurrentViewModel.NewBoneCollectionCommand}" />
                 </MenuItem>
                 <MenuItem Header="Open..." Command="{Binding CurrentViewModel.OpenCommand}" />
@@ -26,9 +28,23 @@
                 <MenuItem Header="Redo" Command="{Binding CurrentViewModel.RedoCommand}" />
             </MenuItem>
             <MenuItem Header="Help">
-                <MenuItem Header="About" Command="{Binding CurrentViewModel.AboutCommand}" />
+                <MenuItem Header="About" Command="{Binding CurrentViewModel.ShowMessageBoxCommand}">
+                    <MenuItem.CommandParameter>
+                        <controls:MessageBoxParameters Title="About">
+                            <controls:MessageBoxParameters.Content>
+                                <TextBlock MaxWidth="512" TextWrapping="Wrap"
+                                           Text="This application was developed during the Practical Course on GUI / VR / AR during the summer term of 2018 at the Georg-August-University in Göttingen" />
+                            </controls:MessageBoxParameters.Content>
+                            <controls:MessageBoxParameters.OptionsPanel>
+                                <controls:PanelButton Content="Close" Command="{Binding CloseCommand}"
+                                                      d:DataContext="{d:DesignInstance controls:MessageBoxParameters}" />
+                            </controls:MessageBoxParameters.OptionsPanel>
+                        </controls:MessageBoxParameters>
+                    </MenuItem.CommandParameter>
+                </MenuItem>
             </MenuItem>
         </Menu>
         <ContentControl Grid.Row="1" Content="{Binding CurrentViewModel}" Margin="{StaticResource ContentMargin}" />
+        <controls:MessageBoxControl Grid.Row="0" Grid.RowSpan="2" MessageBoxParameters="{Binding MessageBoxParameters}" />
     </Grid>
 </Window>

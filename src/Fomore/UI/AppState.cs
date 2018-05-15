@@ -1,11 +1,13 @@
 using Fomore.UI.ViewModel;
+using Fomore.UI.Views.Controls;
 
 namespace Fomore.UI
 {
     public class AppState : ViewModelBase
     {
         private ViewViewModelBase currentViewModel;
-        
+        private MessageBoxParameters messageBoxParameters;
+
         public ViewViewModelBase CurrentViewModel
         {
             get => currentViewModel;
@@ -17,13 +19,23 @@ namespace Fomore.UI
             }
         }
 
-        public AppState()
-        {
-            CurrentViewModel=new WelcomeScreenVM(this);
-        }
-
-
         public CreatureCollectionVM CreatureCollection { get; } = new CreatureCollectionVM();
         public ScenarioCollectionVM ScenarioCollection { get; } = new ScenarioCollectionVM();
+
+        public MessageBoxParameters MessageBoxParameters
+        {
+            get => messageBoxParameters;
+            set
+            {
+                if (Equals(value, messageBoxParameters)) return;
+                messageBoxParameters = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public AppState()
+        {
+            CurrentViewModel = new WelcomeScreenVM(this);
+        }
     }
 }

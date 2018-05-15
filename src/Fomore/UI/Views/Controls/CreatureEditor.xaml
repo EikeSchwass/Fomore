@@ -17,8 +17,6 @@
                                 <Setter Property="Width" Value="48" />
                                 <Setter Property="Height" Value="48" />
                                 <Setter Property="Background" Value="{StaticResource Level3Brush}" />
-                                <Setter Property="BorderBrush" Value="Black" />
-                                <Setter Property="BorderThickness" Value="1" />
                                 <Setter Property="Padding" Value="8" />
                             </Style>
                         </ControlTemplate.Resources>

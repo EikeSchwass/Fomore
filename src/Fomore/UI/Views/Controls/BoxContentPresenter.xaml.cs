@@ -8,11 +8,11 @@ namespace Fomore.UI.Views.Controls
     /// </summary>
     public partial class BoxContentPresenter
     {
-        public static readonly DependencyProperty HeaderProperty =
-            DependencyProperty.Register("Header",
-                                        typeof(string),
+        public static readonly DependencyProperty HeaderContentProperty =
+            DependencyProperty.Register("HeaderContent",
+                                        typeof(object),
                                         typeof(BoxContentPresenter),
-                                        new PropertyMetadata("Untitled"));
+                                        new PropertyMetadata(null));
 
         public static readonly DependencyProperty HeaderFontSizeProperty =
             DependencyProperty.Register("HeaderFontSize",
@@ -20,8 +20,8 @@ namespace Fomore.UI.Views.Controls
                                         typeof(BoxContentPresenter),
                                         new PropertyMetadata(default(double)));
 
-        public static readonly DependencyProperty HeaderFontMarginProperty =
-            DependencyProperty.Register("HeaderFontMargin",
+        public static readonly DependencyProperty HeaderMarginProperty =
+            DependencyProperty.Register("HeaderMargin",
                                         typeof(Thickness),
                                         typeof(BoxContentPresenter),
                                         new PropertyMetadata(default(Thickness)));
@@ -56,16 +56,16 @@ namespace Fomore.UI.Views.Controls
             set => SetValue(HeaderFontSizeProperty, value);
         }
 
-        public Thickness HeaderFontMargin
+        public Thickness HeaderMargin
         {
-            get => (Thickness)GetValue(HeaderFontMarginProperty);
-            set => SetValue(HeaderFontMarginProperty, value);
+            get => (Thickness)GetValue(HeaderMarginProperty);
+            set => SetValue(HeaderMarginProperty, value);
         }
 
-        public string Header
+        public object HeaderContent
         {
-            get => (string)GetValue(HeaderProperty);
-            set => SetValue(HeaderProperty, value);
+            get => GetValue(HeaderContentProperty);
+            set => SetValue(HeaderContentProperty, value);
         }
 
         public BoxContentPresenter()

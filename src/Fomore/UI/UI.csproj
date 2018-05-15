@@ -60,9 +60,12 @@
     <Compile Include="Converter\BooleanVisibilityConverter.cs" />
     <Compile Include="Converter\NumberVisibilityConverter.cs" />
     <Compile Include="ViewModel\BoneModelVM.cs" />
+    <Compile Include="ViewModel\CommandInvocation.cs" />
     <Compile Include="ViewModel\Commands\DelegateCommand.cs" />
     <Compile Include="ViewModel\Commands\StubCommand.cs" />
     <Compile Include="ViewModel\CreatureVM.cs" />
+    <Compile Include="ViewModel\EnvironmentVM.cs" />
+    <Compile Include="Views\Controls\MessageBoxParameters.cs" />
     <Compile Include="ViewModel\ViewViewModelBase.cs" />
     <Compile Include="ViewModel\CreatureCollectionVM.cs" />
     <Compile Include="ViewModel\CreatureEditorVM.cs" />
@@ -77,6 +80,9 @@
     </Compile>
     <Compile Include="Views\Controls\CreatureEditor.xaml.cs">
       <DependentUpon>CreatureEditor.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Controls\MessageBoxControl.xaml.cs">
+      <DependentUpon>MessageBoxControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Controls\PanelButton.xaml.cs">
       <DependentUpon>PanelButton.xaml</DependentUpon>
@@ -113,6 +119,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\Controls\MessageBoxControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\Controls\PanelButton.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -125,7 +135,23 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\Templates\MessageBoxTemplates.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Templates\ScenarioTemplate.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Templates\CreatureTemplate.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\Templates\ImportBonesTemplate.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Templates\ScrollbarTemplate.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

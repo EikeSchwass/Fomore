@@ -14,10 +14,10 @@
                 <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
             <!--<controls:BoxContentPresenter Grid.Row="1" Grid.Column="0" Header="All Creatures" /> -->
-            <controls:BoxContentPresenter Grid.Row="0" Grid.Column="1" Grid.RowSpan="2" Header="Editor">
+            <controls:BoxContentPresenter Grid.Row="0" Grid.Column="1" Grid.RowSpan="2" HeaderContent="Editor">
                 <controls:CreatureEditor />
             </controls:BoxContentPresenter>
-            <controls:BoxContentPresenter Grid.Row="0" Grid.Column="2" Header="Creature Information">
+            <controls:BoxContentPresenter Grid.Row="0" Grid.Column="2" HeaderContent="Creature Information">
                 <StackPanel>
                     <StackPanel>
                         <controls:PropertyPresenter PropertyTitle="Name" PropertyValue="Blubfish" CanEditValue="True" />
@@ -33,7 +33,7 @@
                     </StackPanel>
                 </StackPanel>
             </controls:BoxContentPresenter>
-            <controls:BoxContentPresenter Grid.Row="1" Grid.Column="2" Header="Properties">
+            <controls:BoxContentPresenter Grid.Row="1" Grid.Column="2" HeaderContent="Properties">
                 <StackPanel>
                     <controls:PropertyPresenter PropertyTitle="Lower Limit (°)" PropertyValue="-30" CanEditValue="True" />
                     <controls:PropertyPresenter PropertyTitle="Uper Limit (°)" PropertyValue="30" CanEditValue="True" />
