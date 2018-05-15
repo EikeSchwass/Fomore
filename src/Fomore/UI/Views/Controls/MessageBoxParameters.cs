@@ -1,6 +1,5 @@
 ﻿using System.Windows;
 using System.Windows.Input;
-using Fomore.UI.ViewModel;
 using Fomore.UI.ViewModel.Commands;
 
 namespace Fomore.UI.Views.Controls
@@ -30,13 +29,7 @@ namespace Fomore.UI.Views.Controls
                                         typeof(object),
                                         typeof(MessageBoxParameters),
                                         new PropertyMetadata(default(object)));
-
-        public static readonly DependencyProperty TagProperty =
-            DependencyProperty.Register("Tag",
-                                        typeof(object),
-                                        typeof(MessageBoxParameters),
-                                        new PropertyMetadata(default(object)));
-
+        
         public string Title
         {
             get => (string)GetValue(TitleProperty);
@@ -61,22 +54,11 @@ namespace Fomore.UI.Views.Controls
             set => SetValue(IsOpenedProperty, value);
         }
 
-        public object Tag
-        {
-            get => GetValue(TagProperty);
-            set => SetValue(TagProperty, value);
-        }
-
         public ICommand CloseCommand { get; }
 
         public MessageBoxParameters()
         {
-            CloseCommand = new DelegateCommand(o =>
-                                               {
-                                                   IsOpened = false;
-                                                   if (o is CommandInvocation command)
-                                                       command.Command.Execute(command.Parameter);
-                                               }, o => true);
+            CloseCommand = new DelegateCommand(o => IsOpened = false, o => true);
         }
     }
 }

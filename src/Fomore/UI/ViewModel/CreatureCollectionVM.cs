@@ -10,7 +10,7 @@ namespace Fomore.UI.ViewModel
 
         public CreatureCollectionVM()
         {
-            AddNewCreatureCommand = new DelegateCommand(o => AddNewCreature((string)o), o => true);
+            AddNewCreatureCommand = new DelegateCommand(o => AddNewCreature(), o => true);
             Add(new CreatureVM(new Creature()));
             Add(new CreatureVM(new Creature()));
             Add(new CreatureVM(new Creature()));
@@ -49,10 +49,9 @@ namespace Fomore.UI.ViewModel
             Add(creatureVM.Clone());
         }
 
-        private void AddNewCreature(string name)
+        private void AddNewCreature()
         {
             var creature = new Creature();
-            creature.CreatureInformation.Name = name;
             Add(new CreatureVM(creature));
         }
     }

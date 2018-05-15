@@ -17,7 +17,7 @@
         <Menu Grid.Row="0">
             <MenuItem Header="File">
                 <MenuItem Header="New">
-                    <MenuItem Header="Creature..." Command="{Binding CurrentViewModel.ShowMessageBoxCommand}" CommandParameter="{StaticResource NewCreatureMessageBox}" />
+                    <MenuItem Header="Creature..." Command="{Binding CreatureCollection.AddNewCreatureCommand}" />
                     <MenuItem Header="Bone Collection..." Command="{Binding CurrentViewModel.NewBoneCollectionCommand}" />
                 </MenuItem>
                 <MenuItem Header="Open..." Command="{Binding CurrentViewModel.OpenCommand}" />

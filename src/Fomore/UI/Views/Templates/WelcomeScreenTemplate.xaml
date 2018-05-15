@@ -38,7 +38,7 @@
                             <ColumnDefinition Width="Auto" />
                         </Grid.ColumnDefinitions>
                         <TextBlock Grid.Column="0" Text="Creatures" VerticalAlignment="Center" />
-                        <controls:PanelButton Grid.Column="1" HorizontalAlignment="Right" Margin="2" Command="{Binding AppState.CurrentViewModel.ShowMessageBoxCommand}" CommandParameter="{DynamicResource NewCreatureMessageBox}">
+                        <controls:PanelButton Grid.Column="1" HorizontalAlignment="Right" Margin="2" Command="{Binding AppState.CreatureCollection.AddNewCreatureCommand}">
                             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="8">
                                 <fa:ImageAwesome Icon="Plus" Margin="0,0,4,0" />
                                 <TextBlock Text="Add Creature" Margin="4,0,0,0" />
@@ -65,7 +65,7 @@
                             <ColumnDefinition Width="Auto" />
                         </Grid.ColumnDefinitions>
                         <TextBlock Grid.Column="0" Text="Scenarios" VerticalAlignment="Center" />
-                        <controls:PanelButton Grid.Column="1" HorizontalAlignment="Right" Margin="2" Command="{Binding AppState.CurrentViewModel.ShowMessageBoxCommand}" CommandParameter="{StaticResource NewScenarioMessageBox}">
+                        <controls:PanelButton Grid.Column="1" HorizontalAlignment="Right" Margin="2" Command="{Binding AppState.ScenarioCollection.AddNewScenarioCommand}">
                             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="8">
                                 <fa:ImageAwesome Icon="Plus" Margin="0,0,4,0" />
                                 <TextBlock Text="Add Scenario" Margin="4,0,0,0" />
