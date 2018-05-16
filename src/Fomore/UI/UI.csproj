@@ -58,14 +58,19 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Converter\BooleanVisibilityConverter.cs" />
+    <Compile Include="Converter\MessageBoxIconConverter.cs" />
     <Compile Include="Converter\NumberVisibilityConverter.cs" />
     <Compile Include="ViewModel\BoneModelVM.cs" />
     <Compile Include="ViewModel\CommandInvocation.cs" />
+    <Compile Include="ViewModel\Commands\CompositeCommand.cs" />
     <Compile Include="ViewModel\Commands\DelegateCommand.cs" />
     <Compile Include="ViewModel\Commands\StubCommand.cs" />
     <Compile Include="ViewModel\CreatureVM.cs" />
+    <Compile Include="ViewModel\EnvironmentCollectionVM.cs" />
     <Compile Include="ViewModel\EnvironmentVM.cs" />
-    <Compile Include="Views\Controls\MessageBoxParameters.cs" />
+    <Compile Include="ViewModel\MessageBoxVM.cs" />
+    <Compile Include="ViewModel\MessageBoxCommand.cs" />
+    <Compile Include="ViewModel\MessageBoxParameters.cs" />
     <Compile Include="ViewModel\ViewViewModelBase.cs" />
     <Compile Include="ViewModel\CreatureCollectionVM.cs" />
     <Compile Include="ViewModel\CreatureEditorVM.cs" />
@@ -90,6 +95,7 @@
     <Compile Include="Views\Controls\PropertyPresenter.xaml.cs">
       <DependentUpon>PropertyPresenter.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ViewViewModelNavigator.cs" />
     <Page Include="Converter\ConverterDictionary.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -132,6 +138,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\Templates\CreatureEditorTemplate.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Templates\EnvironmentTemplate.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -211,6 +221,9 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="assets\images\joint.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="assets\images\terraindummy.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

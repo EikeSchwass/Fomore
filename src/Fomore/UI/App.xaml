@@ -6,9 +6,10 @@
     <Application.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="Themes/Generic.xaml" />
                 <ResourceDictionary Source="Converter/ConverterDictionary.xaml" />
+                <ResourceDictionary Source="Themes/Generic.xaml" />
                 <ResourceDictionary Source="Views/Templates/CreatureTemplate.xaml" />
+                <ResourceDictionary Source="Views/Templates/EnvironmentTemplate.xaml" />
                 <ResourceDictionary Source="Views/Templates/ScenarioTemplate.xaml" />
                 <ResourceDictionary Source="Views/Templates/ScrollbarTemplate.xaml" />
                 <ResourceDictionary Source="Views/Templates/WelcomeScreenTemplate.xaml" />

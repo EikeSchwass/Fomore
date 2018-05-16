@@ -1,4 +1,5 @@
 ﻿using System.Windows;
+using Fomore.UI.ViewModel;
 
 namespace Fomore.UI.Views.Controls
 {

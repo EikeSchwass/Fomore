@@ -7,31 +7,17 @@ namespace Fomore.UI.ViewModel
     public class CreatureCollectionVM : ListVM<CreatureVM>
     {
         public ICommand AddNewCreatureCommand { get; }
+        public ICommand CloneCommand { get; }
+        public ICommand EditCommand { get; }
+        public ICommand RemoveCommand { get; }
 
         public CreatureCollectionVM()
         {
             AddNewCreatureCommand = new DelegateCommand(o => AddNewCreature(), o => true);
+            CloneCommand = new DelegateCommand(o => CloneCreature((CreatureVM)o), o => true);
+            EditCommand = new DelegateCommand(o => EditCreature((CreatureVM)o), o => true);
+            RemoveCommand = new DelegateCommand(o => RemoveCreature((CreatureVM)o), o => true);
             Add(new CreatureVM(new Creature()));
-            Add(new CreatureVM(new Creature()));
-            Add(new CreatureVM(new Creature()));
-        }
-
-        /// <inheritdoc />
-        protected override void OnItemAdded(CreatureVM item)
-        {
-            base.OnItemAdded(item);
-            item.CloneRequested += CloneCreature;
-            item.EditViewRequested += EditCreature;
-            item.RemoveRequested += RemoveCreature;
-        }
-
-        /// <inheritdoc />
-        protected override void OnItemRemoved(CreatureVM item)
-        {
-            base.OnItemRemoved(item);
-            item.CloneRequested -= CloneCreature;
-            item.EditViewRequested -= EditCreature;
-            item.RemoveRequested -= RemoveCreature;
         }
 
         private void RemoveCreature(CreatureVM creature)
@@ -53,6 +39,7 @@ namespace Fomore.UI.ViewModel
         {
             var creature = new Creature();
             Add(new CreatureVM(creature));
+            AppState.ViewModelNavigator.PushView(new CreatureEditorVM());
         }
     }
 }

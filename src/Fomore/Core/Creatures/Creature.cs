@@ -8,7 +8,10 @@ namespace Core.Creatures
         public List<Joint> Joints { get; } = new List<Joint>();
         public CreatureInformation CreatureInformation { get; } = new CreatureInformation();
 
-#warning NotImplemented
-        public Creature Clone() => new Creature();
+        public Creature Clone()
+        {
+            // Todo Implements
+            return new Creature();
+        }
     }
 }

@@ -1,8 +1,7 @@
-﻿using System.Windows;
-using System.Windows.Input;
-using Fomore.UI.ViewModel.Commands;
+﻿using System.Collections.ObjectModel;
+using System.Windows;
 
-namespace Fomore.UI.Views.Controls
+namespace Fomore.UI.ViewModel
 {
     public class MessageBoxParameters : DependencyObject
     {
@@ -18,47 +17,37 @@ namespace Fomore.UI.Views.Controls
                                         typeof(MessageBoxParameters),
                                         new PropertyMetadata(default(string)));
 
-        public static readonly DependencyProperty IsOpenedProperty =
-            DependencyProperty.Register("IsOpened",
-                                        typeof(bool),
-                                        typeof(MessageBoxParameters),
-                                        new PropertyMetadata(default(bool)));
-
         public static readonly DependencyProperty OptionsPanelProperty =
             DependencyProperty.Register("OptionsPanel",
                                         typeof(object),
                                         typeof(MessageBoxParameters),
                                         new PropertyMetadata(default(object)));
-        
+
+        public static readonly DependencyProperty IconProperty =
+            DependencyProperty.Register("Icon",
+                                        typeof(MessageBoxImage),
+                                        typeof(MessageBoxParameters),
+                                        new PropertyMetadata(MessageBoxImage.None));
+
+        public MessageBoxImage Icon
+        {
+            get => (MessageBoxImage)GetValue(IconProperty);
+            set => SetValue(IconProperty, value);
+        }
+
         public string Title
         {
             get => (string)GetValue(TitleProperty);
             set => SetValue(TitleProperty, value);
         }
 
-        public object OptionsPanel
-        {
-            get => GetValue(OptionsPanelProperty);
-            set => SetValue(OptionsPanelProperty, value);
-        }
+        public ObservableCollection<MessageBoxCommand> MessageBoxCommands { get; } =
+            new ObservableCollection<MessageBoxCommand>();
 
         public object Content
         {
             get => GetValue(ContentProperty);
             set => SetValue(ContentProperty, value);
-        }
-
-        public bool IsOpened
-        {
-            get => (bool)GetValue(IsOpenedProperty);
-            set => SetValue(IsOpenedProperty, value);
-        }
-
-        public ICommand CloseCommand { get; }
-
-        public MessageBoxParameters()
-        {
-            CloseCommand = new DelegateCommand(o => IsOpened = false, o => true);
         }
     }
 }

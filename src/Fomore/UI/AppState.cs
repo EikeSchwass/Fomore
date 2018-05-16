@@ -1,41 +1,32 @@
 using Fomore.UI.ViewModel;
-using Fomore.UI.Views.Controls;
 
 namespace Fomore.UI
 {
     public class AppState : ViewModelBase
     {
-        private ViewViewModelBase currentViewModel;
-        private MessageBoxParameters messageBoxParameters;
+        private MessageBoxVM messageBox;
 
-        public ViewViewModelBase CurrentViewModel
+        public ViewViewModelNavigator ViewModelNavigator { get; } = new ViewViewModelNavigator();
+
+        public MessageBoxVM MessageBox
         {
-            get => currentViewModel;
+            get => messageBox;
             set
             {
-                if (Equals(value, currentViewModel)) return;
-                currentViewModel = value;
+                if (Equals(value, messageBox)) return;
+                messageBox = value;
                 OnPropertyChanged();
             }
         }
 
         public CreatureCollectionVM CreatureCollection { get; } = new CreatureCollectionVM();
         public ScenarioCollectionVM ScenarioCollection { get; } = new ScenarioCollectionVM();
-
-        public MessageBoxParameters MessageBoxParameters
-        {
-            get => messageBoxParameters;
-            set
-            {
-                if (Equals(value, messageBoxParameters)) return;
-                messageBoxParameters = value;
-                OnPropertyChanged();
-            }
-        }
+        public EnvironmentCollectionVM EnvironmentCollection { get; } = new EnvironmentCollectionVM();
 
         public AppState()
         {
-            CurrentViewModel = new WelcomeScreenVM(this);
+            MessageBox = new MessageBoxVM();
+            ViewModelNavigator.PushView(new WelcomeScreenVM());
         }
     }
 }

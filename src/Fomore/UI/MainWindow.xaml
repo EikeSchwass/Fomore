@@ -4,11 +4,24 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:ui="clr-namespace:Fomore.UI"
+        xmlns:viewModel="clr-namespace:Fomore.UI.ViewModel"
         xmlns:controls="clr-namespace:Fomore.UI.Views.Controls"
         mc:Ignorable="d"
         Title="Fomore" MinHeight="600" MinWidth="960" Width="1440" Height="900" Icon="assets/images/icon.ico"
         DataContext="{Binding Path=AppState, Source={x:Static ui:App.Instance}}"
         Background="{StaticResource Level0Brush}">
+    <Window.Resources>
+        <viewModel:MessageBoxParameters x:Key="AboutMessageBoxParameters" Title="About" Icon="None">
+            <viewModel:MessageBoxParameters.Content>
+                <TextBlock MaxWidth="512" TextWrapping="Wrap"
+                           Text="This application was developed during the Practical Course on GUI / VR / AR during the summer term of 2018 at the Georg-August-University in Göttingen" />
+            </viewModel:MessageBoxParameters.Content>
+            <viewModel:MessageBoxParameters.MessageBoxCommands>
+                <viewModel:MessageBoxCommand Text="OK"
+                                             InvokeCommand="{Binding AppStateMessageBox.CloseMessageBoxCommand, RelativeSource={RelativeSource Self}}" />
+            </viewModel:MessageBoxParameters.MessageBoxCommands>
+        </viewModel:MessageBoxParameters>
+    </Window.Resources>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
@@ -18,33 +31,17 @@
             <MenuItem Header="File">
                 <MenuItem Header="New">
                     <MenuItem Header="Creature..." Command="{Binding CreatureCollection.AddNewCreatureCommand}" />
-                    <MenuItem Header="Bone Collection..." Command="{Binding CurrentViewModel.NewBoneCollectionCommand}" />
+                    <MenuItem Header="Environment..." Command="{Binding EnvironmentCollection.AddNewEnvironmentCommand}" />
+                    <MenuItem Header="Scenario..." Command="{Binding ScenarioCollection.AddNewScenarioCommand}" />
                 </MenuItem>
-                <MenuItem Header="Open..." Command="{Binding CurrentViewModel.OpenCommand}" />
-                <MenuItem Header="Quit" Command="{Binding CurrentViewModel.QuitCommand}" />
-            </MenuItem>
-            <MenuItem Header="Edit">
-                <MenuItem Header="Undo" Command="{Binding CurrentViewModel.UndoCommand}" />
-                <MenuItem Header="Redo" Command="{Binding CurrentViewModel.RedoCommand}" />
             </MenuItem>
             <MenuItem Header="Help">
-                <MenuItem Header="About" Command="{Binding CurrentViewModel.ShowMessageBoxCommand}">
-                    <MenuItem.CommandParameter>
-                        <controls:MessageBoxParameters Title="About">
-                            <controls:MessageBoxParameters.Content>
-                                <TextBlock MaxWidth="512" TextWrapping="Wrap"
-                                           Text="This application was developed during the Practical Course on GUI / VR / AR during the summer term of 2018 at the Georg-August-University in Göttingen" />
-                            </controls:MessageBoxParameters.Content>
-                            <controls:MessageBoxParameters.OptionsPanel>
-                                <controls:PanelButton Content="Close" Command="{Binding CloseCommand}"
-                                                      d:DataContext="{d:DesignInstance controls:MessageBoxParameters}" />
-                            </controls:MessageBoxParameters.OptionsPanel>
-                        </controls:MessageBoxParameters>
-                    </MenuItem.CommandParameter>
-                </MenuItem>
+                <MenuItem Header="About" Command="{Binding MessageBox.ShowMessageBoxCommand}"
+                          CommandParameter="{StaticResource AboutMessageBoxParameters}" />
             </MenuItem>
         </Menu>
-        <ContentControl Grid.Row="1" Content="{Binding CurrentViewModel}" Margin="{StaticResource ContentMargin}" />
-        <controls:MessageBoxControl Grid.Row="0" Grid.RowSpan="2" MessageBoxParameters="{Binding MessageBoxParameters}" />
+        <ContentControl Grid.Row="1" Content="{Binding ViewModelNavigator.CurrentViewViewModel}" Margin="{StaticResource ContentMargin}" />
+        <controls:MessageBoxControl Grid.Row="0" Grid.RowSpan="2"
+                                    MessageBoxParameters="{Binding Path=MessageBox.MessageBoxParameters}" />
     </Grid>
 </Window>

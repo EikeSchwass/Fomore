@@ -5,7 +5,7 @@ using System.Linq;
 
 namespace Fomore.UI.ViewModel
 {
-    public class ListVM<T> : IEnumerable<T>, INotifyCollectionChanged where T : ViewModelBase
+    public class ListVM<T> : ViewModelBase, IEnumerable<T>, INotifyCollectionChanged where T : ViewModelBase
     {
         private List<T> Items { get; } = new List<T>();
 
@@ -23,19 +23,19 @@ namespace Fomore.UI.ViewModel
         public void Add(T item)
         {
             Items.Add(item);
-            OnItemAdded(item);
             CollectionChanged?.Invoke(this, new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Add, item));
+            OnPropertyChanged(nameof(Count));
         }
 
         public bool Remove(T item)
         {
             int index = Items.IndexOf(item);
             bool returnValue = Items.Remove(item);
-            OnItemRemoved(item);
             CollectionChanged?.Invoke(this,
                                       new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Remove,
                                                                            item,
                                                                            index));
+            OnPropertyChanged(nameof(Count));
             return returnValue;
         }
 
@@ -43,6 +43,7 @@ namespace Fomore.UI.ViewModel
         {
             var list = Items.ToList();
             foreach (var item in list) Remove(item);
+            OnPropertyChanged(nameof(Count));
         }
 
         public void AddRange(IEnumerable<T> items)
@@ -51,8 +52,5 @@ namespace Fomore.UI.ViewModel
         }
 
         public bool Contains(T item) => Items.Contains(item);
-
-        protected virtual void OnItemAdded(T item) { }
-        protected virtual void OnItemRemoved(T item) { }
     }
 }

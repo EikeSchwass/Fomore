@@ -6,6 +6,8 @@ namespace Fomore.UI.ViewModel
 {
     public abstract class ViewModelBase : INotifyPropertyChanged
     {
+        public AppState AppState => App.Instance.AppState;
+
         public event PropertyChangedEventHandler PropertyChanged;
 
         [NotifyPropertyChangedInvocator]

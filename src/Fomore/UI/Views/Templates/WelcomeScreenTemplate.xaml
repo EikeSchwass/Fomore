@@ -27,6 +27,7 @@
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
             <!-- Creatures -->
             <controls:BoxContentPresenter Grid.Column="0">
@@ -55,8 +56,35 @@
                     </ScrollViewer>
                 </Grid>
             </controls:BoxContentPresenter>
-            <!-- Scenarios -->
+            <!-- Environments -->
             <controls:BoxContentPresenter Grid.Column="1">
+                <controls:BoxContentPresenter.HeaderContent>
+                    <Grid VerticalAlignment="Center"
+                          DataContext="{Binding DataContext, RelativeSource={RelativeSource AncestorType={x:Type controls:BoxContentPresenter}}}">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Grid.Column="0" Text="Environments" VerticalAlignment="Center" />
+                        <controls:PanelButton Grid.Column="1" HorizontalAlignment="Right" Margin="2" Command="{Binding AppState.EnvironmentCollection.AddNewEnvironmentCommand}">
+                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="8">
+                                <fa:ImageAwesome Icon="Plus" Margin="0,0,4,0" />
+                                <TextBlock Text="Add Environmet" Margin="4,0,0,0" />
+                            </StackPanel>
+                        </controls:PanelButton>
+                    </Grid>
+                </controls:BoxContentPresenter.HeaderContent>
+                <Grid>
+                    <TextBlock Text="No environments created so far" FontSize="18" VerticalAlignment="Center"
+                               HorizontalAlignment="Center"
+                               Visibility="{Binding AppState.EnvironmentCollection.Count, Converter={StaticResource NumberVisibilityConverter}}" />
+                    <ScrollViewer Margin="8" VerticalScrollBarVisibility="Auto">
+                        <ItemsControl ItemsSource="{Binding AppState.EnvironmentCollection}" Margin="4,-2" />
+                    </ScrollViewer>
+                </Grid>
+            </controls:BoxContentPresenter>
+            <!-- Scenarios -->
+            <controls:BoxContentPresenter Grid.Column="2">
                 <controls:BoxContentPresenter.HeaderContent>
                     <Grid VerticalAlignment="Center"
                           DataContext="{Binding DataContext ,RelativeSource={RelativeSource AncestorType={x:Type controls:BoxContentPresenter}}}">

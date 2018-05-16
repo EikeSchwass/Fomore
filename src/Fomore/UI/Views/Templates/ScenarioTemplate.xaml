@@ -2,7 +2,8 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:viewModel="clr-namespace:Fomore.UI.ViewModel"
                     xmlns:controls="clr-namespace:Fomore.UI.Views.Controls"
-                    xmlns:fa="http://schemas.fontawesome.io/icons/">
+                    xmlns:fa="http://schemas.fontawesome.io/icons/"
+                    xmlns:ui="clr-namespace:Fomore.UI">
     <DataTemplate DataType="{x:Type viewModel:ScenarioVM}">
         <DataTemplate.Resources>
             <Style TargetType="{x:Type controls:PanelButton}" BasedOn="{StaticResource {x:Type controls:PanelButton}}">
@@ -33,13 +34,13 @@
                     </StackPanel>
                 </Grid>
                 <StackPanel Grid.Column="1" HorizontalAlignment="Right" Orientation="Horizontal">
-                    <controls:PanelButton Command="{Binding CloneScenarionCommand}" ToolTip="Clone">
+                    <controls:PanelButton Command="{Binding AppState.ScenarioCollection.CloneCommand, Source={x:Static ui:App.Instance}}" CommandParameter="{Binding}" ToolTip="Clone">
                         <fa:ImageAwesome Icon="Clone" />
                     </controls:PanelButton>
-                    <controls:PanelButton Command="{Binding EditScenarionCommand}" ToolTip="Edit">
+                    <controls:PanelButton  Command="{Binding AppState.ScenarioCollection.EditCommand, Source={x:Static ui:App.Instance}}" CommandParameter="{Binding}" ToolTip="Edit">
                         <fa:ImageAwesome Icon="Edit" />
                     </controls:PanelButton>
-                    <controls:PanelButton Command="{Binding RemoveScenarionCommand}" ToolTip="Remove" >
+                    <controls:PanelButton  Command="{Binding AppState.ScenarioCollection.RemoveCommand, Source={x:Static ui:App.Instance}}" CommandParameter="{Binding}" ToolTip="Remove" >
                         <fa:ImageAwesome Icon="Remove" />
                     </controls:PanelButton>
 

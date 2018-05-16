@@ -7,31 +7,16 @@ namespace Fomore.UI.ViewModel
     public class ScenarioCollectionVM : ListVM<ScenarioVM>
     {
         public ICommand AddNewScenarioCommand { get; }
+        public ICommand CloneCommand { get; }
+        public ICommand EditCommand { get; }
+        public ICommand RemoveCommand { get; }
 
         public ScenarioCollectionVM()
         {
             AddNewScenarioCommand = new DelegateCommand(o => AddNewScenario(), o => true);
-            Add(new ScenarioVM(new Scenario()));
-            Add(new ScenarioVM(new Scenario()));
-            Add(new ScenarioVM(new Scenario()));
-        }
-
-        /// <inheritdoc />
-        protected override void OnItemAdded(ScenarioVM scenario)
-        {
-            base.OnItemAdded(scenario);
-            scenario.CloneRequested += CloneScenario;
-            scenario.EditViewRequested += EditScenario;
-            scenario.RemoveRequested += RemoveScenario;
-        }
-
-        /// <inheritdoc />
-        protected override void OnItemRemoved(ScenarioVM scenario)
-        {
-            base.OnItemRemoved(scenario);
-            scenario.CloneRequested -= CloneScenario;
-            scenario.EditViewRequested -= EditScenario;
-            scenario.RemoveRequested -= RemoveScenario;
+            CloneCommand = new DelegateCommand(o => CloneScenario((ScenarioVM)o), o => true);
+            EditCommand = new DelegateCommand(o => EditScenario((ScenarioVM)o), o => true);
+            RemoveCommand = new DelegateCommand(o => RemoveScenario((ScenarioVM)o), o => true);
         }
 
         private void RemoveScenario(ScenarioVM scenario)
