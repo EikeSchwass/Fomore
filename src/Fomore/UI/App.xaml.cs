@@ -8,8 +8,6 @@ namespace Fomore.UI
     {
         public static App Instance { get; private set; }
 
-        public AppState AppState { get; } = new AppState();
-
         public App()
         {
             Instance = Instance ?? this;

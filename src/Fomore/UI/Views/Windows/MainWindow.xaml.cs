@@ -1,4 +1,4 @@
-﻿namespace Fomore.UI
+﻿namespace Fomore.UI.Views.Windows
 {
     public partial class MainWindow
     {

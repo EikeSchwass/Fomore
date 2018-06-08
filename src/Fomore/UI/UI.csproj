@@ -60,47 +60,14 @@
     <Compile Include="Converter\BooleanVisibilityConverter.cs" />
     <Compile Include="Converter\MessageBoxIconConverter.cs" />
     <Compile Include="Converter\NumberVisibilityConverter.cs" />
-    <Compile Include="ViewModel\BoneModelVM.cs" />
-    <Compile Include="ViewModel\CommandInvocation.cs" />
     <Compile Include="ViewModel\Commands\CompositeCommand.cs" />
     <Compile Include="ViewModel\Commands\DelegateCommand.cs" />
     <Compile Include="ViewModel\Commands\StubCommand.cs" />
-    <Compile Include="ViewModel\CreatureVM.cs" />
-    <Compile Include="ViewModel\EnvironmentCollectionVM.cs" />
-    <Compile Include="ViewModel\EnvironmentVM.cs" />
-    <Compile Include="ViewModel\MessageBoxVM.cs" />
-    <Compile Include="ViewModel\MessageBoxCommand.cs" />
-    <Compile Include="ViewModel\MessageBoxParameters.cs" />
-    <Compile Include="ViewModel\ViewViewModelBase.cs" />
-    <Compile Include="ViewModel\CreatureCollectionVM.cs" />
-    <Compile Include="ViewModel\CreatureEditorVM.cs" />
-    <Compile Include="ViewModel\ImportBonesViewModel.cs" />
-    <Compile Include="ViewModel\ListVM.cs" />
-    <Compile Include="ViewModel\ScenarioCollectionVM.cs" />
-    <Compile Include="ViewModel\ScenarioVM.cs" />
-    <Compile Include="ViewModel\ViewModelBase.cs" />
-    <Compile Include="ViewModel\WelcomeScreenVM.cs" />
-    <Compile Include="Views\Controls\BoxContentPresenter.xaml.cs">
-      <DependentUpon>BoxContentPresenter.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\Controls\CreatureEditor.xaml.cs">
-      <DependentUpon>CreatureEditor.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\Controls\MessageBoxControl.xaml.cs">
-      <DependentUpon>MessageBoxControl.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\Controls\PanelButton.xaml.cs">
-      <DependentUpon>PanelButton.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\Controls\PropertyPresenter.xaml.cs">
-      <DependentUpon>PropertyPresenter.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="ViewViewModelNavigator.cs" />
     <Page Include="Converter\ConverterDictionary.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="MainWindow.xaml">
+    <Page Include="Views\Windows\MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -108,60 +75,11 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="AppState.cs" />
-    <Compile Include="MainWindow.xaml.cs">
+    <Compile Include="Views\Windows\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
     <Page Include="Themes\Generic.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\Controls\BoxContentPresenter.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\Controls\CreatureEditor.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\Controls\MessageBoxControl.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\Controls\PanelButton.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\Controls\PropertyPresenter.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\Templates\CreatureEditorTemplate.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\Templates\EnvironmentTemplate.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\Templates\ScenarioTemplate.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Views\Templates\CreatureTemplate.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\Templates\ImportBonesTemplate.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\Templates\ScrollbarTemplate.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\Templates\WelcomeScreenTemplate.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -199,6 +117,8 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="assets\fonts\" />
+    <Folder Include="Views\Controls\" />
+    <Folder Include="Views\Templates\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Core\Core.csproj">
