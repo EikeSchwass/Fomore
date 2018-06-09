@@ -7,6 +7,9 @@ namespace Fomore.UI.ViewModel.Navigation
     {
         private TabPageVM selectedTab;
 
+        /// <summary>
+        /// The currently selected tab.
+        /// </summary>
         public TabPageVM SelectedTab
         {
             get => selectedTab;
@@ -16,16 +19,19 @@ namespace Fomore.UI.ViewModel.Navigation
                 selectedTab = value;
                 OnPropertyChanged();
                 SwitchToCreatureTabCommand.OnCanExecuteChanged();
-                SwitchToEnvironmentTabommand.OnCanExecuteChanged();
+                SwitchToEnvironmentTabCommand.OnCanExecuteChanged();
                 SwitchToTrainingTabCommand.OnCanExecuteChanged();
                 SwitchToSimulationTabCommand.OnCanExecuteChanged();
             }
         }
 
+        /// <summary>
+        /// A collection of all the tabs of the main window.
+        /// </summary>
         public ObservableCollection<TabPageVM> TabCollection { get; }
 
         public DelegateCommand SwitchToCreatureTabCommand { get; }
-        public DelegateCommand SwitchToEnvironmentTabommand { get; }
+        public DelegateCommand SwitchToEnvironmentTabCommand { get; }
         public DelegateCommand SwitchToTrainingTabCommand { get; }
         public DelegateCommand SwitchToSimulationTabCommand { get; }
 
@@ -42,28 +48,44 @@ namespace Fomore.UI.ViewModel.Navigation
             SimulationTab = new SimulationTabVM { NavigationVM = this };
 
             SwitchToCreatureTabCommand = new DelegateCommand(SwitchToCreatureTab, o => SelectedTab != CreatureTab);
-            SwitchToEnvironmentTabommand = new DelegateCommand(SwitchToEnvironmentTab, o => SelectedTab != EnvironmentTab);
+            SwitchToEnvironmentTabCommand = new DelegateCommand(SwitchToEnvironmentTab, o => SelectedTab != EnvironmentTab);
             SwitchToTrainingTabCommand = new DelegateCommand(SwitchToTrainingTab, o => SelectedTab != TrainingTab);
             SwitchToSimulationTabCommand = new DelegateCommand(SwitchToSimulationTab, o => SelectedTab != SimulationTab);
 
             TabCollection = new ObservableCollection<TabPageVM> { CreatureTab, EnvironmentTab, TrainingTab, SimulationTab };
         }
 
+        /// <summary>
+        /// Handler for the <see cref="SwitchToSimulationTabCommand"/>.
+        /// </summary>
+        /// <param name="obj">Not used right now.</param>
         private void SwitchToSimulationTab(object obj)
         {
             SelectedTab = SimulationTab;
         }
 
+        /// <summary>
+        /// Handler for the <see cref="SwitchToTrainingTabCommand"/>.
+        /// </summary>
+        /// <param name="obj">Not used right now.</param>
         private void SwitchToTrainingTab(object obj)
         {
             SelectedTab = TrainingTab;
         }
 
+        /// <summary>
+        /// Handler for the <see cref="SwitchToEnvironmentTabCommand"/>.
+        /// </summary>
+        /// <param name="obj">Not used right now.</param>
         private void SwitchToEnvironmentTab(object obj)
         {
             SelectedTab = EnvironmentTab;
         }
 
+        /// <summary>
+        /// Handler for the <see cref="SwitchToCreatureTabCommand"/>.
+        /// </summary>
+        /// <param name="obj">Not used right now.</param>
         private void SwitchToCreatureTab(object obj)
         {
             SelectedTab = CreatureTab;

@@ -9,7 +9,7 @@
     <Grid>
           <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center">
               <Button Content="Switch to Creature Tab" Command="{Binding NavigationVM.SwitchToCreatureTabCommand}" />
-              <Button Content="Switch to Enviroment Tab" Command="{Binding NavigationVM.SwitchToEnvironmentTabommand}"/>
+              <Button Content="Switch to Enviroment Tab" Command="{Binding NavigationVM.SwitchToEnvironmentTabCommand}"/>
               <Button Content="Switch to Training Tab" Command="{Binding NavigationVM.SwitchToTrainingTabCommand}"/>
               <Button Content="Switch to Simulation Tab" Command="{Binding NavigationVM.SwitchToSimulationTabCommand}"/>
           </StackPanel>  

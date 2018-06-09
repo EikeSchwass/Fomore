@@ -5,6 +5,9 @@ using System.Windows.Input;
 
 namespace Fomore.UI.ViewModel.Commands
 {
+    /// <summary>
+    /// Placeholder command that executed no code.
+    /// </summary>
     public class StubCommand : ICommand
     {
         /// <inheritdoc />
