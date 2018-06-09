@@ -7,6 +7,9 @@ using System.Windows.Data;
 
 namespace Fomore.UI.Converter
 {
+    /// <summary>
+    /// Like this
+    /// </summary>
     public class NumberVisibilityConverter : IValueConverter
     {
         /// <inheritdoc />

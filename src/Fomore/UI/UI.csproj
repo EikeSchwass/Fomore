@@ -58,7 +58,6 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Converter\BooleanVisibilityConverter.cs" />
-    <Compile Include="Converter\MessageBoxIconConverter.cs" />
     <Compile Include="Converter\NumberVisibilityConverter.cs" />
     <Compile Include="ViewModel\Commands\CompositeCommand.cs" />
     <Compile Include="ViewModel\Commands\DelegateCommand.cs" />
