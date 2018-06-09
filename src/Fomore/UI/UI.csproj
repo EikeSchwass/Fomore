@@ -66,6 +66,22 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\Controls\CreatureTabControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Controls\EnvironmentTabControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Controls\SimulationTabControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Controls\TrainingTabControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\Windows\MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -73,6 +89,25 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="ViewModel\Navigation\CreatureTabVM.cs" />
+    <Compile Include="ViewModel\Navigation\EnvironmentTabVM.cs" />
+    <Compile Include="ViewModel\Navigation\NavigationVM.cs" />
+    <Compile Include="ViewModel\Navigation\SimulationTabVM.cs" />
+    <Compile Include="ViewModel\Navigation\TabPageVM.cs" />
+    <Compile Include="ViewModel\Navigation\TrainingTabVM.cs" />
+    <Compile Include="ViewModel\Navigation\ViewModelBase.cs" />
+    <Compile Include="Views\Controls\CreatureTabControl.xaml.cs">
+      <DependentUpon>CreatureTabControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Controls\EnvironmentTabControl.xaml.cs">
+      <DependentUpon>EnvironmentTabControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Controls\SimulationTabControl.xaml.cs">
+      <DependentUpon>SimulationTabControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Controls\TrainingTabControl.xaml.cs">
+      <DependentUpon>TrainingTabControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Windows\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
@@ -116,7 +151,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="assets\fonts\" />
-    <Folder Include="Views\Controls\" />
     <Folder Include="Views\Templates\" />
   </ItemGroup>
   <ItemGroup>
