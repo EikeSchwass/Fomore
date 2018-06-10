@@ -107,6 +107,9 @@ namespace Core.Training.Evolution
 
     public struct GenerationCompositionProportions
     {
+        /// <summary>
+        /// Number of best individuals that should remain unchanged for the next generation
+        /// </summary>
         public int NumberOfUnchangedIndividuals { get; }
     }
 }
