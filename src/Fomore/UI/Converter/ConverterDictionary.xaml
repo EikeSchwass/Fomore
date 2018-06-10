@@ -3,5 +3,4 @@
                     xmlns:local="clr-namespace:Fomore.UI.Converter">
     <local:NumberVisibilityConverter x:Key="NumberVisibilityConverter" />
     <local:BooleanVisibilityConverter x:Key="BooleanVisibilityConverter" />
-    <local:MessageBoxIconConverter x:Key="MessageBoxIconConverter" />
 </ResourceDictionary>

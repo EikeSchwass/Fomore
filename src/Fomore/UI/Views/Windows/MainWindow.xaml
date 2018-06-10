@@ -3,9 +3,13 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:navigation="clr-namespace:Fomore.UI.ViewModel.Navigation"
+        xmlns:controls="clr-namespace:Fomore.UI.Views.Controls"
         mc:Ignorable="d"
-        Title="Fomore" MinHeight="600" MinWidth="960" Width="1440" Height="900" Icon="../../assets/images/icon.ico"
-        Background="{StaticResource Level0Brush}">
+        Title="Fomore" MinHeight="600" MinWidth="960" Width="1440" Height="900" Icon="../../assets/images/icon.ico">
+    <Window.DataContext>
+        <navigation:NavigationVM />
+    </Window.DataContext>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
@@ -20,5 +24,31 @@
                 </MenuItem>
             </MenuItem>
         </Menu>
+        <TabControl Grid.Row="1" SelectedItem="{Binding SelectedTab, Mode=TwoWay}" ItemsSource="{Binding TabCollection}">
+            <TabControl.Resources>
+                <DataTemplate DataType="{x:Type navigation:CreatureTabVM}">
+                    <controls:CreatureTabControl />
+                </DataTemplate>
+                <DataTemplate DataType="{x:Type navigation:EnvironmentTabVM}">
+                    <controls:EnvironmentTabControl />
+                </DataTemplate>
+                <DataTemplate DataType="{x:Type navigation:TrainingTabVM}">
+                    <controls:TrainingTabControl />
+                </DataTemplate>
+                <DataTemplate DataType="{x:Type navigation:SimulationTabVM}">
+                    <controls:SimulationTabControl />
+                </DataTemplate>
+            </TabControl.Resources>
+            <TabControl.ItemTemplate>
+                <DataTemplate DataType="navigation:TabPageVM">
+                    <TextBlock Text="{Binding Header}" />
+                </DataTemplate>
+            </TabControl.ItemTemplate>
+            <TabControl.ContentTemplate>
+                <DataTemplate DataType="navigation:TabPageVM">
+                    <ContentControl Content="{Binding}" />
+                </DataTemplate>
+            </TabControl.ContentTemplate>
+        </TabControl>
     </Grid>
 </Window>

@@ -6,6 +6,9 @@ using System.Windows.Input;
 
 namespace Fomore.UI.ViewModel.Commands
 {
+    /// <summary>
+    /// This class executes multiple commands after each other.
+    /// </summary>
     public class CompositeCommand : ICommand
     {
         public ReadOnlyCollection<ICommand> Commands { get; }
@@ -33,5 +36,13 @@ namespace Fomore.UI.ViewModel.Commands
 
         /// <inheritdoc />
         public event EventHandler CanExecuteChanged;
+
+        /// <summary>
+        /// Call this method to invoke the <see cref="CanExecuteChanged"/> event and trigger an reevaluation of the <see cref="CanExecute"/> method.
+        /// </summary>
+        public void OnCanExecuteChanged()
+        {
+            CanExecuteChanged?.Invoke(this, new EventArgs());
+        }
     }
 }
