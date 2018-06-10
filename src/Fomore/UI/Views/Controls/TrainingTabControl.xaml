@@ -12,6 +12,7 @@
             <Button Content="Switch to Enviroment Tab" Command="{Binding NavigationVM.SwitchToEnvironmentTabCommand}" />
             <Button Content="Switch to Training Tab" Command="{Binding NavigationVM.SwitchToTrainingTabCommand}" />
             <Button Content="Switch to Simulation Tab" Command="{Binding NavigationVM.SwitchToSimulationTabCommand}" />
+            <TextBlock Text="Let me show you how to do commits once you changed something" />
         </StackPanel>
     </Grid>
 </UserControl>
