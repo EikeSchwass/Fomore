@@ -15,7 +15,8 @@
                     <RowDefinition Height="600"/>
                     <RowDefinition Height="60"/>
                 </Grid.RowDefinitions>
-                <StackPanel Grid.Column="0">
+                <!-- Define Scenario-->
+                <StackPanel>
                     <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*"/>
@@ -62,19 +63,17 @@
                         </StackPanel>
                     </Grid>
                 </StackPanel>
-
+                <!-- Buttons-->
                 <StackPanel Grid.Row="1">
-                    <!-- Buttons-->
                     <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*"/>
                             <ColumnDefinition Width="*"/>
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
-                        <Button Margin="90 20 10 0" Grid.Column="1" Content="Reset" Height="40" Background="Azure" FontSize="14" FontWeight="Bold"/>
-                        <Button x:Name="DeleteBottin" Margin="0 20 100 0" Grid.Column="2" Content="Start Training" Height="40" Background="Azure" FontSize="14" FontWeight="Bold"/>
+                        <Button Margin="90 20 10 0" Grid.Column="1" Content="Reset" Height="50" Background="Azure" FontSize="14" FontWeight="Bold"/>
+                        <Button x:Name="DeleteBottin" Margin="0 20 100 0" Grid.Column="2" Content="Start Training" Height="50" Background="Azure" FontSize="14" FontWeight="Bold"/>
                     </Grid>
-
                 </StackPanel>
             </Grid>
  
