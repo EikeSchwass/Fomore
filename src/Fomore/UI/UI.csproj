@@ -40,6 +40,7 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Windows.Interactivity, Version=4.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
@@ -60,6 +61,10 @@
     </ApplicationDefinition>
     <Compile Include="Converter\BooleanVisibilityConverter.cs" />
     <Compile Include="Converter\NumberVisibilityConverter.cs" />
+    <Compile Include="ViewModel\Application\AppStateVM.cs" />
+    <Compile Include="ViewModel\Application\EntityStorageVM.cs" />
+    <Compile Include="ViewModel\Data\CreatureVM.cs" />
+    <Compile Include="ViewModel\Data\EnvironmentVM.cs" />
     <Compile Include="ViewModel\Commands\CompositeCommand.cs" />
     <Compile Include="ViewModel\Commands\DelegateCommand.cs" />
     <Compile Include="ViewModel\Commands\StubCommand.cs" />
@@ -91,6 +96,9 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="ViewModel\Data\MovementPatternVM.cs" />
+    <Compile Include="ViewModel\Helper\CollectionAccess.cs" />
+    <Compile Include="ViewModel\Helper\ReadOnlyObservableCollection.cs" />
     <Compile Include="ViewModel\Navigation\CreatureTabVM.cs" />
     <Compile Include="ViewModel\Navigation\EnvironmentTabVM.cs" />
     <Compile Include="ViewModel\Navigation\NavigationVM.cs" />
