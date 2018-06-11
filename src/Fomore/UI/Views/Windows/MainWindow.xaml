@@ -5,11 +5,20 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:navigation="clr-namespace:Fomore.UI.ViewModel.Navigation"
         xmlns:controls="clr-namespace:Fomore.UI.Views.Controls"
+        xmlns:application="clr-namespace:Fomore.UI.ViewModel.Application"
+        xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
         mc:Ignorable="d"
         Title="Fomore" MinHeight="600" MinWidth="960" Width="1440" Height="900" Icon="../../assets/images/icon.ico">
     <Window.DataContext>
-        <navigation:NavigationVM />
+        <application:AppStateVM  />
     </Window.DataContext>
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Loaded">
+            <i:EventTrigger.Actions>
+                <i:InvokeCommandAction Command="{Binding LoadCommand}"></i:InvokeCommandAction>
+            </i:EventTrigger.Actions>
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
@@ -24,7 +33,7 @@
                 </MenuItem>
             </MenuItem>
         </Menu>
-        <TabControl Grid.Row="1" SelectedItem="{Binding SelectedTab, Mode=TwoWay}" ItemsSource="{Binding TabCollection}">
+        <TabControl Grid.Row="1" DataContext="{Binding Path=NavigationVM}" SelectedItem="{Binding SelectedTab, Mode=TwoWay}" ItemsSource="{Binding TabCollection}">
             <TabControl.Resources>
                 <DataTemplate DataType="{x:Type navigation:CreatureTabVM}">
                     <controls:CreatureTabControl />

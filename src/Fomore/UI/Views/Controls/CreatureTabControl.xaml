@@ -9,8 +9,8 @@
     
     <Grid>
         <StackPanel>
-            <Button Content="Create New Creature" x:Name="CreateButton" Click="CreateNewButton_Click"/>
-            <ListBox x:Name="MyListBox"/>
+            <Button Content="Create New Creature"/>
+            <ListBox />
         </StackPanel>
 
         <!-- It's important that this is in the end of the XAML as it needs to be on top of everything else! -->
@@ -24,7 +24,7 @@
                 CornerRadius="0,55,0,55" 
                 HorizontalAlignment="Center" 
                 VerticalAlignment="Center">
-                <StackPanel Grid.Column="0">
+                <StackPanel>
                     <TextBlock Margin="5" Text="{Binding Path=Header}" FontWeight="Bold" FontFamily="Cambria" />
 
                     <TextBlock Margin="5" Text="{Binding Path=EnterName}"/>
@@ -33,9 +33,9 @@
                     <TextBlock Margin="5" Text="{Binding Path=Description}"/>
                     <TextBox  Padding="5" Margin="5" Text="{Binding Path=EnterDescription, Mode=TwoWay}"  />
 
-                    <Button x:Name="Create" Margin="5" Content="{Binding Path=CreateButton}" Background="{x:Null}" Click="SaveButton_Click" />
+                    <Button  Margin="5" Content="{Binding Path=CreateButton}" Background="{x:Null}"  />
 
-                    <Button x:Name="Cancel" Margin="5" Content="{Binding Path=CancelButton}" Background="{x:Null}" Click="CancelButton_Click" />
+                    <Button  Margin="5" Content="{Binding Path=CancelButton}" Background="{x:Null}"  />
 
                 </StackPanel>
             </Border>
