@@ -12,7 +12,7 @@
             <Button Content="Switch to Enviroment Tab" Command="{Binding NavigationVM.SwitchToEnvironmentTabCommand}"/>
             <Button Content="Switch to Training Tab" Command="{Binding NavigationVM.SwitchToTrainingTabCommand}"/>
             <Button Content="Switch to Simulation Tab" Command="{Binding NavigationVM.SwitchToSimulationTabCommand}"/>
-            <Button Content="Add New Environment" Click="CreateNewEnvironment_Click" />
+            <Button Content="Add New Environment"  />
         </StackPanel>
 
         <Grid x:Name="CreatureNewEnvironment" Visibility="Collapsed">
@@ -35,16 +35,16 @@
                     <TextBox  Padding="5" Margin="5" Text="{Binding Path=EnterDescription, Mode=TwoWay}"  />
 
                     <TextBlock Margin="5" Text="{Binding Path=Terrain}"/>
-                    <TextBox  Padding="5" Margin="5" Text="{Binding Path=Terrain, Mode=TwoWay}"  />
+                    <TextBox  Padding="5" Margin="5" Text="{Binding Path=Terrain, Mode=OneWay}"  />
 
                     <TextBlock Margin="5" Text="{Binding Path=GroundType}"/>
-                    <TextBox  Padding="5" Margin="5" Text="{Binding Path=GroundType, Mode=TwoWay}"  />
+                    <TextBox  Padding="5" Margin="5" Text="{Binding Path=GroundType, Mode=OneWay}"  />
 
                     <TextBlock Margin="5" Text="{Binding Path=Gravity}"/>
-                    <TextBox  Padding="5" Margin="5" Text="{Binding Path=Gravity, Mode=TwoWay}"  />
+                    <TextBox  Padding="5" Margin="5" Text="{Binding Path=Gravity, Mode=OneWay}"  />
 
                     <TextBlock Margin="5" Text="{Binding Path=Friction}"/>
-                    <TextBox  Padding="5" Margin="5" Text="{Binding Path=Friction, Mode=TwoWay}"  />
+                    <TextBox  Padding="5" Margin="5" Text="{Binding Path=Friction, Mode=OneWay}"  />
 
                     <Button x:Name="Create" Margin="5" Content="{Binding Path=CreateButton}" Background="{x:Null}" Click="SaveButton_Click" />
 
