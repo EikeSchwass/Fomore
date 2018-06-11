@@ -24,6 +24,11 @@ namespace Fomore.UI.ViewModel.Navigation
     /// <typeparam name="T">The Type of the class of the model.</typeparam>
     public abstract class ViewModelBase<T> : ViewModelBase
     {
-        protected T Model { get; set; }
+        public T Model { get; }
+
+        protected ViewModelBase(T model)
+        {
+            Model = model;
+        }
     }
 }

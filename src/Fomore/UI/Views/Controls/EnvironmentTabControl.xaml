@@ -5,13 +5,64 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:navigation="clr-namespace:Fomore.UI.ViewModel.Navigation"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800" d:DataContext="{d:DesignInstance navigation:SimulationTabVM}">
+             d:DesignHeight="450" d:DesignWidth="800" d:DataContext="{d:DesignInstance navigation:EnvironmentTabVM}">
     <Grid>
-        <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center">
+        <StackPanel >
             <Button Content="Switch to Creature Tab" Command="{Binding NavigationVM.SwitchToCreatureTabCommand}" />
             <Button Content="Switch to Enviroment Tab" Command="{Binding NavigationVM.SwitchToEnvironmentTabCommand}"/>
             <Button Content="Switch to Training Tab" Command="{Binding NavigationVM.SwitchToTrainingTabCommand}"/>
             <Button Content="Switch to Simulation Tab" Command="{Binding NavigationVM.SwitchToSimulationTabCommand}"/>
+            <Button Content="Add New Environment"  />
         </StackPanel>
-</Grid>
+
+        <Grid x:Name="CreatureNewEnvironment" Visibility="Collapsed">
+            <Grid Background="Black" Opacity="0.5"/>
+            <Border
+                MinWidth="250"
+                Background="Orange" 
+                BorderBrush="Black" 
+                BorderThickness="1" 
+                CornerRadius="0,55,0,55" 
+                HorizontalAlignment="Center" 
+                VerticalAlignment="Center">
+                <StackPanel Grid.Column="0">
+                    <TextBlock Margin="5" Text="{Binding Path=Header}" FontWeight="Bold" FontFamily="Cambria" />
+
+                    <TextBlock Margin="5" Text="{Binding Path=EnterName}"/>
+                    <TextBox x:Name="InputNameTextBox"  Padding="5" Margin="5" Text="{Binding Path=EnvironmentName, Mode=TwoWay}"  />
+
+                    <TextBlock Margin="5" Text="{Binding Path=Description}"/>
+                    <TextBox  Padding="5" Margin="5" Text="{Binding Path=EnterDescription, Mode=TwoWay}"  />
+
+                    <TextBlock Margin="5" Text="{Binding Path=Terrain}"/>
+                    <TextBox  Padding="5" Margin="5" Text="{Binding Path=Terrain, Mode=OneWay}"  />
+
+                    <TextBlock Margin="5" Text="{Binding Path=GroundType}"/>
+                    <TextBox  Padding="5" Margin="5" Text="{Binding Path=GroundType, Mode=OneWay}"  />
+
+                    <TextBlock Margin="5" Text="{Binding Path=Gravity}"/>
+                    <TextBox  Padding="5" Margin="5" Text="{Binding Path=Gravity, Mode=OneWay}"  />
+
+                    <TextBlock Margin="5" Text="{Binding Path=Friction}"/>
+                    <TextBox  Padding="5" Margin="5" Text="{Binding Path=Friction, Mode=OneWay}"  />
+
+                    <Button x:Name="Create" Margin="5" Content="{Binding Path=CreateButton}" Background="{x:Null}" Click="SaveButton_Click" />
+
+                    <Button x:Name="Cancel" Margin="5" Content="{Binding Path=CancelButton}" Background="{x:Null}" Click="CancelButton_Click" />
+
+                </StackPanel>
+            </Border>
+        </Grid>
+
+
+
+
+
+
+
+
+
+
+
+    </Grid>
 </UserControl>

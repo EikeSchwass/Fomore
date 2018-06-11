@@ -9,10 +9,5 @@
         /// The Header of the Tab Page.
         /// </summary>
         public abstract string Header { get; }
-
-        /// <summary>
-        /// Holds a reference to the <see cref="NavigationVM"/> instance the view currently uses.
-        /// </summary>
-        public NavigationVM NavigationVM { get; set; }
     }
 }
