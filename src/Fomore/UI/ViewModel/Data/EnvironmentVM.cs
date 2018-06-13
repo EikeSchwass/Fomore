@@ -1,5 +1,4 @@
 ﻿using Core;
-using Fomore.UI.ViewModel.Navigation;
 
 namespace Fomore.UI.ViewModel.Data
 {

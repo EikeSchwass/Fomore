@@ -1,4 +1,4 @@
 ﻿namespace Core
 {
-    public class MovementPattern : Entitiy { }
+    public class MovementPattern { }
 }

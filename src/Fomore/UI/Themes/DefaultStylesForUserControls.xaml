@@ -1,0 +1,42 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:controls="clr-namespace:Fomore.UI.Views.Controls">
+    <Style TargetType="{x:Type controls:CustomizableButton}">
+        <Setter Property="IsMouseOverBackground" Value="{StaticResource Level4Brush}" />
+        <Setter Property="IsSelectedBackground" Value="{StaticResource Level5Brush}" />
+        <Setter Property="IsPressedBackground" Value="{StaticResource Level2Brush}" />
+        <Setter Property="Background" Value="{StaticResource Level3Brush}" />
+        <Setter Property="Margin" Value="6,3" />
+        <Setter Property="Padding" Value="8,4" />
+        <Setter Property="BorderBrush" Value="Black" />
+        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="controls:CustomizableButton">
+                    <ControlTemplate.Triggers>
+                        <DataTrigger Binding="{Binding IsSelected, RelativeSource={RelativeSource Self}}" Value="true">
+                            <Setter Property="Background"
+                                    Value="{Binding IsSelectedBackground, RelativeSource={RelativeSource Self} }" />
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding IsMouseOver, RelativeSource={RelativeSource Self}}" Value="true">
+                            <Setter Property="Background"
+                                    Value="{Binding IsMouseOverBackground, RelativeSource={RelativeSource Self} }" />
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding IsPressed, RelativeSource={RelativeSource Self}}" Value="true">
+                            <Setter Property="Background"
+                                    Value="{Binding IsPressedBackground, RelativeSource={RelativeSource Self} }" />
+                        </DataTrigger>
+                    </ControlTemplate.Triggers>
+                    <Border Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}" Cursor="{TemplateBinding Cursor}"
+                            HorizontalAlignment="{TemplateBinding HorizontalAlignment}"
+                            VerticalAlignment="{TemplateBinding VerticalAlignment}" Margin="{TemplateBinding Margin}"
+                            Padding="{TemplateBinding Padding}">
+                        <ContentPresenter Content="{TemplateBinding Content}" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}" />
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+</ResourceDictionary>

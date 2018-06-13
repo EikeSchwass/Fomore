@@ -8,14 +8,10 @@
              d:DesignHeight="450" d:DesignWidth="800" d:DataContext="{d:DesignInstance navigation:EnvironmentTabVM}">
     <Grid>
         <StackPanel >
-            <Button Content="Switch to Creature Tab" Command="{Binding NavigationVM.SwitchToCreatureTabCommand}" />
-            <Button Content="Switch to Enviroment Tab" Command="{Binding NavigationVM.SwitchToEnvironmentTabCommand}"/>
-            <Button Content="Switch to Training Tab" Command="{Binding NavigationVM.SwitchToTrainingTabCommand}"/>
-            <Button Content="Switch to Simulation Tab" Command="{Binding NavigationVM.SwitchToSimulationTabCommand}"/>
             <Button Content="Add New Environment"  />
         </StackPanel>
 
-        <Grid x:Name="CreatureNewEnvironment" Visibility="Collapsed">
+        <Grid Visibility="Collapsed">
             <Grid Background="Black" Opacity="0.5"/>
             <Border
                 MinWidth="250"
@@ -25,7 +21,7 @@
                 CornerRadius="0,55,0,55" 
                 HorizontalAlignment="Center" 
                 VerticalAlignment="Center">
-                <StackPanel Grid.Column="0">
+                <StackPanel>
                     <TextBlock Margin="5" Text="{Binding Path=Header}" FontWeight="Bold" FontFamily="Cambria" />
 
                     <TextBlock Margin="5" Text="{Binding Path=EnterName}"/>

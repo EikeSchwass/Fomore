@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Core
+namespace Core.Training
 {
     public static class AdvancedRandom
     {
