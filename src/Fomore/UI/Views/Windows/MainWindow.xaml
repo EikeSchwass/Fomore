@@ -8,17 +8,10 @@
         xmlns:application="clr-namespace:Fomore.UI.ViewModel.Application"
         xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
         mc:Ignorable="d"
-        Title="Fomore" MinHeight="600" MinWidth="960" Width="1440" Height="900" Icon="../../assets/images/icon.ico">
+        Title="Fomore" MinHeight="600" MinWidth="960" Width="1440" Height="900" Icon="../../assets/images/icon.ico" Loaded="MainWindow_OnLoaded">
     <Window.DataContext>
         <application:AppStateVM  />
     </Window.DataContext>
-    <i:Interaction.Triggers>
-        <i:EventTrigger EventName="Loaded">
-            <i:EventTrigger.Actions>
-                <i:InvokeCommandAction Command="{Binding LoadCommand}"></i:InvokeCommandAction>
-            </i:EventTrigger.Actions>
-        </i:EventTrigger>
-    </i:Interaction.Triggers>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
