@@ -40,7 +40,7 @@ namespace Fomore.UI.ViewModel.Navigation
             CreatureTab = new CreatureTabVM(entitiesStorage);
             EnvironmentTab = new EnvironmentTabVM(entitiesStorage);
             TrainingTab = new TrainingTabVM();
-            SimulationTab = new SimulationTabVM(TabNavigationVM);
+            SimulationTab = new SimulationTabVM();
 
             TabNavigationVM = new TabNavigationVM(new DelegateCommand(SwitchToCreatureTab, o => SelectedTab != CreatureTab),
                                                   new DelegateCommand(SwitchToEnvironmentTab, o => SelectedTab != EnvironmentTab),
@@ -48,6 +48,8 @@ namespace Fomore.UI.ViewModel.Navigation
                                                   new DelegateCommand(SwitchToSimulationTab, o => SelectedTab != SimulationTab));
 
             TabCollection = new ObservableCollection<TabPageVM> { CreatureTab, EnvironmentTab, TrainingTab, SimulationTab };
+
+            SimulationTab.TabNavigationVM = TabNavigationVM;
         }
 
         private void SwitchToSimulationTab(object obj)
@@ -68,31 +70,6 @@ namespace Fomore.UI.ViewModel.Navigation
         private void SwitchToCreatureTab(object obj)
         {
             SelectedTab = CreatureTab;
-        }
-    }
-
-    public class TabNavigationVM : ViewModelBase
-    {
-        public DelegateCommand SwitchToCreatureTabCommand { get; }
-        public DelegateCommand SwitchToEnvironmentTabCommand { get; }
-        public DelegateCommand SwitchToTrainingTabCommand { get; }
-        public DelegateCommand SwitchToSimulationTabCommand { get; }
-
-        /// <inheritdoc />
-        public TabNavigationVM(DelegateCommand switchToCreatureTabCommand, DelegateCommand switchToEnvironmentTabCommand, DelegateCommand switchToTrainingTabCommand, DelegateCommand switchToSimulationTabCommand)
-        {
-            SwitchToCreatureTabCommand = switchToCreatureTabCommand;
-            SwitchToEnvironmentTabCommand = switchToEnvironmentTabCommand;
-            SwitchToTrainingTabCommand = switchToTrainingTabCommand;
-            SwitchToSimulationTabCommand = switchToSimulationTabCommand;
-        }
-
-        public void OnCanExecuteChanged()
-        {
-            SwitchToCreatureTabCommand.OnCanExecuteChanged();
-            SwitchToEnvironmentTabCommand.OnCanExecuteChanged();
-            SwitchToTrainingTabCommand.OnCanExecuteChanged();
-            SwitchToSimulationTabCommand.OnCanExecuteChanged();
         }
     }
 }
