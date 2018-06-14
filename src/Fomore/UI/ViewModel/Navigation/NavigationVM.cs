@@ -40,7 +40,7 @@ namespace Fomore.UI.ViewModel.Navigation
             CreatureTab = new CreatureTabVM(entitiesStorage);
             EnvironmentTab = new EnvironmentTabVM(entitiesStorage);
             TrainingTab = new TrainingTabVM();
-            SimulationTab = new SimulationTabVM();
+            SimulationTab = new SimulationTabVM(entitiesStorage);
 
             TabNavigationVM = new TabNavigationVM(new DelegateCommand(SwitchToCreatureTab, o => SelectedTab != CreatureTab),
                                                   new DelegateCommand(SwitchToEnvironmentTab, o => SelectedTab != EnvironmentTab),
