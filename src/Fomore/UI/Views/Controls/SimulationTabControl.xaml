@@ -4,9 +4,20 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:navigation="clr-namespace:Fomore.UI.ViewModel.Navigation"
-             xmlns:ui="clr-namespace:Fomore.UI"
+             xmlns:data="clr-namespace:Fomore.UI.ViewModel.Data"
              mc:Ignorable="d"
              d:DesignHeight="450" d:DesignWidth="800" d:DataContext="{d:DesignInstance navigation:SimulationTabVM}">
+    <UserControl.Resources>
+        <DataTemplate DataType="{x:Type data:EnvironmentVM}">
+            <Border BorderThickness="3" CornerRadius="3" BorderBrush="Green">
+                <StackPanel Background="LightGray" Orientation="Horizontal">
+                    <Label FontWeight="ExtraBold" Content="{Binding Name}" />
+                    <Label Content="{Binding Description}" />
+                    <Label FontStyle="Italic" Content="{Binding Gravity}" />
+                </StackPanel>
+            </Border>
+        </DataTemplate>
+    </UserControl.Resources>
     <Grid Margin="5">
         <Grid.ColumnDefinitions>
             <ColumnDefinition />
@@ -35,33 +46,26 @@
         </ListBox>
         <Label Grid.Column="1" Grid.Row="0" HorizontalAlignment="Center" Content="Step 2: Chose Movement pattern"
                VerticalAlignment="Center" />
-        <ListBox Grid.Column="1" Grid.Row="1" HorizontalAlignment="Stretch" Height="auto" Margin="5" ItemsSource="{Binding SelectedCreature.MovementPatterns}">
+        <ListBox Grid.Column="1" Grid.Row="1" HorizontalAlignment="Stretch" Height="auto" Margin="5" HorizontalContentAlignment="Stretch" IsEnabled="{Binding Path=SelectedItem}" ItemsSource="{Binding Path=SelectedItem.MovementPatterns, ElementName=CreatureSelectionList}">
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <Border BorderThickness="3" CornerRadius="3" BorderBrush="Blue">
-                        <StackPanel Background="LightGray" Orientation="Horizontal">
-                            <Label FontWeight="ExtraBold" Content="{Binding Name}" />
-                            <Label Content="{Binding Description}" />
-                        </StackPanel>
+                        <Grid Background="LightGray" HorizontalAlignment="Stretch">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <Label FontWeight="ExtraBold" Grid.Column="0" Content="{Binding Name}" />
+                            <Label Grid.Column="1" HorizontalAlignment="Right" Content="{Binding Description}" />
+                        </Grid>
                     </Border>
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>
         <Label Grid.Column="2" Grid.Row="0" HorizontalAlignment="Center" Content="Step 3: Chose Environment"
                VerticalAlignment="Center" />
-        <ListBox Grid.Column="2" Grid.Row="1" HorizontalAlignment="Stretch" Height="auto" Margin="5"
+        <ListBox Grid.Column="2" Grid.Row="1" HorizontalAlignment="Stretch" Height="auto" Margin="5" HorizontalContentAlignment="Stretch"
                  ItemsSource="{Binding EntityStorageVM.Environments}">
-            <ListBox.ItemTemplate>
-                <DataTemplate>
-                    <Border BorderThickness="3" CornerRadius="3" BorderBrush="Green">
-                        <StackPanel Background="LightGray" Orientation="Horizontal">
-                            <Label FontWeight="ExtraBold" Content="{Binding Name}" />
-                            <Label Content="{Binding Description}" />
-                            <Label FontStyle="Italic" Content="{Binding Gravity}" />
-                        </StackPanel>
-                    </Border>
-                </DataTemplate>
-            </ListBox.ItemTemplate>
         </ListBox>
 
         <Button Grid.Column="0" Grid.Row="2" Content="Create some stuff ..." Padding="5"

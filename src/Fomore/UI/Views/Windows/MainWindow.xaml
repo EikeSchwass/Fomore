@@ -6,7 +6,6 @@
         xmlns:navigation="clr-namespace:Fomore.UI.ViewModel.Navigation"
         xmlns:controls="clr-namespace:Fomore.UI.Views.Controls"
         xmlns:application="clr-namespace:Fomore.UI.ViewModel.Application"
-        xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
         mc:Ignorable="d"
         Title="Fomore" MinHeight="600" MinWidth="960" Width="1440" Height="900" Icon="../../assets/images/icon.ico" Loaded="MainWindow_OnLoaded">
     <Window.DataContext>
