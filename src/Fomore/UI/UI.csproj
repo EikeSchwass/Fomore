@@ -187,5 +187,10 @@
   <ItemGroup>
     <Resource Include="assets\images\terraindummy.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="assets\images\creature_icon.png" />
+    <Resource Include="assets\images\environment_icon.png" />
+    <Resource Include="assets\images\movementpattern_icon.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
