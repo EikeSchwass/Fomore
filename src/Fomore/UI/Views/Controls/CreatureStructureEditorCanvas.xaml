@@ -9,7 +9,6 @@
              d:DesignHeight="400" d:DesignWidth="400"
              d:DataContext="{d:DesignInstance creatureEditor:CreatureStructureEditorCanvasVM}"
              Background="DarkGray"
-
              SizeChanged="CreatureStructureEditorCanvas_OnSizeChanged"
              ClipToBounds="True">
     <Canvas Width="{Binding CanvasWidth}" Height="{Binding CanvasHeight}"
@@ -52,23 +51,23 @@
         <!-- Bones -->
         <ItemsControl ItemsSource="{Binding CreatureVM.CreatureStructureVM.BoneCollectionVM}" />
         <!-- Joints -->
-        <ItemsControl ItemsSource="{Binding CreatureVM.CreatureStructureVM.JointCollectionVM}">
+        <ItemsControl DataContext="{Binding Path=CreatureVM.CreatureStructureVM.JointCollectionVM}" ItemsSource="{Binding}" >
+            <ItemsControl.ItemTemplate>
+                <DataTemplate DataType="{x:Type data:JointVM}">
+                    <Ellipse Width="8" Height="8" Fill="Red" Stroke="Gray" StrokeThickness="0.1" />
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
             <ItemsControl.ItemsPanel>
                 <ItemsPanelTemplate>
                     <Canvas IsItemsHost="True" />
                 </ItemsPanelTemplate>
             </ItemsControl.ItemsPanel>
             <ItemsControl.ItemContainerStyle>
-                <Style TargetType="{x:Type ContentPresenter}">
-                    <Setter Property="Canvas.Left" Value="{Binding Content.DataContext.Position.X}" />
-                    <Setter Property="Canvas.Top" Value="{Binding Position}" />
+                <Style>
+                    <Setter Property="Canvas.Left" Value="{Binding Position.X}" />
+                    <Setter Property="Canvas.Top" Value="{Binding Position.Y}" />
                 </Style>
             </ItemsControl.ItemContainerStyle>
-            <ItemsControl.ItemTemplate>
-                <DataTemplate DataType="{x:Type data:JointVM}">
-                    <Ellipse Width="8" Height="8" Fill="Red" Stroke="Gray" StrokeThickness="0.1" />
-                </DataTemplate>
-            </ItemsControl.ItemTemplate>
         </ItemsControl>
 
         <!-- Previews -->

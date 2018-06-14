@@ -27,7 +27,7 @@ namespace Fomore.UI.ViewModel.CreatureEditor.Tools
             if (mouseInfo.MiddleMouseButtonDown)
                 return PanTool.OnCanvasMouseDown(mouseInfo);
 
-            var jointVM = new JointVM(new Joint {Position = new Vector2(mouseInfo.RelativePosition.X, mouseInfo.RelativePosition.Y)});
+            var jointVM = new JointVM(new Joint { Position = CanvasVM.PreviewJoint.Position });
             CanvasVM.CreatureVM.CreatureStructureVM.JointCollectionVM.Add(jointVM);
 
             return true;
@@ -45,7 +45,7 @@ namespace Fomore.UI.ViewModel.CreatureEditor.Tools
         {
             PanTool.OnCanvasMouseMove(mouseInfo);
             CanvasVM.PreviewJoint.Visibility = Visibility.Visible;
-            CanvasVM.PreviewJoint.Position = new Vector2(mouseInfo.RelativePosition.X, mouseInfo.RelativePosition.Y);
+            CanvasVM.PreviewJoint.Position = new Vector2(mouseInfo.RelativePosition.X - CanvasVM.PreviewJoint.JointSize / 2, mouseInfo.RelativePosition.Y - CanvasVM.PreviewJoint.JointSize / 2);
             return false;
         }
 

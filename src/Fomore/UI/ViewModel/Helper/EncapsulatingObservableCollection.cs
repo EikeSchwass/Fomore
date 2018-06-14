@@ -9,7 +9,7 @@ using Fomore.UI.ViewModel.Commands;
 
 namespace Fomore.UI.ViewModel.Helper
 {
-    public class EncapsulatingObservableCollection<TViewModel, TModel> : ViewModelBase, IList<TViewModel>, INotifyCollectionChanged
+    public class EncapsulatingObservableCollection<TViewModel, TModel> : ViewModelBase, ICollection<TViewModel>, INotifyCollectionChanged
         where TViewModel : ViewModelBase<TModel>
         where TModel : class
     {
@@ -26,8 +26,7 @@ namespace Fomore.UI.ViewModel.Helper
         public DelegateCommand<TViewModel> RemoveItemCommand { get; }
         public DelegateCommand ClearItemCsommand { get; }
 
-        /// <inheritdoc />
-        public TViewModel this[int index]
+        /*public TViewModel this[int index]
         {
             get => ViewModels[index];
             set
@@ -35,7 +34,7 @@ namespace Fomore.UI.ViewModel.Helper
                 EncapsulatedList[index] = value.Model;
                 ViewModels[index] = value;
             }
-        }
+        }*/
 
         public EncapsulatingObservableCollection(IList<TModel> encapsulatedList, Func<TModel, TViewModel> viewModelCreation)
         {
@@ -59,7 +58,9 @@ namespace Fomore.UI.ViewModel.Helper
                 throw new NotSupportedException("The item was already added to the collection");
             ViewModels.Add(item);
             EncapsulatedList.Add(item?.Model);
-            CollectionChanged?.Invoke(this, new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Add, ViewModels.Count - 1));
+            CollectionChanged?.Invoke(ViewModels,
+                                      new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Add, item));
+            OnPropertyChanged(null);
             ClearItemCsommand.OnCanExecuteChanged();
             RemoveItemCommand.OnCanExecuteChanged();
         }
@@ -76,6 +77,7 @@ namespace Fomore.UI.ViewModel.Helper
 
         /// <inheritdoc />
         public bool Contains(TViewModel item) => ViewModels.Contains(item);
+
         public bool Contains(TModel item) => ViewModels.Any(vm => vm.Model == item);
 
         /// <inheritdoc />
@@ -97,11 +99,9 @@ namespace Fomore.UI.ViewModel.Helper
             return returnValue;
         }
 
-        /// <inheritdoc />
         public int IndexOf(TViewModel item) => ViewModels.IndexOf(item);
         public int IndexOf(TModel item) => ViewModels.IndexOf(ViewModels.First(vm => vm.Model == item));
 
-        /// <inheritdoc />
         public void Insert(int index, TViewModel item)
         {
             if (ViewModels.Contains(item) || EncapsulatedList.Contains(item?.Model))
@@ -113,7 +113,6 @@ namespace Fomore.UI.ViewModel.Helper
             RemoveItemCommand.OnCanExecuteChanged();
         }
 
-        /// <inheritdoc />
         public void RemoveAt(int index) => Remove(ViewModels[index]);
 
         /// <inheritdoc />

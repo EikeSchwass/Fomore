@@ -14,7 +14,6 @@ namespace Fomore.UI.ViewModel.CreatureEditor
             get => position;
             set
             {
-                value = new Vector2(value.X - JointSize / 2, value.Y - JointSize / 2);
                 if (value.Equals(position)) return;
                 position = value;
                 OnPropertyChanged();
