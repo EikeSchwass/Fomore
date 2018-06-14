@@ -53,12 +53,6 @@ namespace Fomore.UI.ViewModel.CreatureEditor.Tools
         }
 
         /// <inheritdoc />
-        public override void OnSelected()
-        {
-            CanvasVM.PreviewJoint.Visibility = Visibility.Visible;
-        }
-
-        /// <inheritdoc />
         public override void OnDeselected()
         {
             CanvasVM.PreviewJoint.Visibility = Visibility.Hidden;
