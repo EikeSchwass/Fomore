@@ -131,6 +131,7 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="ViewModel\Data\JointVM.cs" />
     <Compile Include="ViewModel\Data\MovementPatternVM.cs" />
     <Compile Include="ViewModel\Helper\CollectionAccess.cs" />
     <Compile Include="ViewModel\Helper\EncapsulatingObservableCollection.cs" />

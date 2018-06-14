@@ -4,6 +4,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using Core;
 using Fomore.UI.ViewModel.Commands;
+using Fomore.UI.ViewModel.Data;
 
 namespace Fomore.UI.ViewModel.CreatureEditor.Tools
 {
@@ -25,7 +26,11 @@ namespace Fomore.UI.ViewModel.CreatureEditor.Tools
         {
             if (mouseInfo.MiddleMouseButtonDown)
                 return PanTool.OnCanvasMouseDown(mouseInfo);
-            return false;
+
+            var jointVM = new JointVM(new Joint {Position = new Vector2(mouseInfo.RelativePosition.X, mouseInfo.RelativePosition.Y)});
+            CanvasVM.CreatureVM.CreatureStructureVM.JointCollectionVM.Add(jointVM);
+
+            return true;
         }
 
         /// <inheritdoc />
@@ -49,6 +54,7 @@ namespace Fomore.UI.ViewModel.CreatureEditor.Tools
         {
             CanvasVM.PreviewJoint.Visibility = Visibility.Visible;
         }
+
         /// <inheritdoc />
         public override void OnDeselected()
         {

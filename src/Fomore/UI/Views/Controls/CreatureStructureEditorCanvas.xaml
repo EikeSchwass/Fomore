@@ -4,6 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:creatureEditor="clr-namespace:Fomore.UI.ViewModel.CreatureEditor"
+             xmlns:data="clr-namespace:Fomore.UI.ViewModel.Data"
              mc:Ignorable="d"
              d:DesignHeight="400" d:DesignWidth="400"
              d:DataContext="{d:DesignInstance creatureEditor:CreatureStructureEditorCanvasVM}"
@@ -51,7 +52,24 @@
         <!-- Bones -->
         <ItemsControl ItemsSource="{Binding CreatureVM.CreatureStructureVM.BoneCollectionVM}" />
         <!-- Joints -->
-        <ItemsControl ItemsSource="{Binding CreatureVM.CreatureStructureVM.JointCollectionVM}" />
+        <ItemsControl ItemsSource="{Binding CreatureVM.CreatureStructureVM.JointCollectionVM}">
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <Canvas IsItemsHost="True" />
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+            <ItemsControl.ItemContainerStyle>
+                <Style TargetType="{x:Type ContentPresenter}">
+                    <Setter Property="Canvas.Left" Value="{Binding Content.DataContext.Position.X}" />
+                    <Setter Property="Canvas.Top" Value="{Binding Position}" />
+                </Style>
+            </ItemsControl.ItemContainerStyle>
+            <ItemsControl.ItemTemplate>
+                <DataTemplate DataType="{x:Type data:JointVM}">
+                    <Ellipse Width="8" Height="8" Fill="Red" Stroke="Gray" StrokeThickness="0.1" />
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+        </ItemsControl>
 
         <!-- Previews -->
 

@@ -44,10 +44,4 @@ namespace Fomore.UI.ViewModel.Data
 
         public BoneVM(Bone model) : base(model) { }
     }
-
-    public class JointVM : ViewModelBase<Joint>
-    {
-        /// <inheritdoc />
-        public JointVM(Joint model) : base(model) { }
-    }
 }
