@@ -72,10 +72,11 @@
     <Compile Include="ViewModel\CreatureEditor\Tools\PanTool.cs" />
     <Compile Include="ViewModel\CreatureEditor\Tools\PlaceBoneTool.cs" />
     <Compile Include="ViewModel\CreatureEditor\Tools\PlaceJointTool.cs" />
-    <Compile Include="ViewModel\CreatureEditor\Tools\SelectTool.cs" />
+    <Compile Include="ViewModel\CreatureEditor\Tools\SelectAllTool.cs" />
     <Compile Include="ViewModel\CreatureEditor\Tools\Tool.cs" />
     <Compile Include="ViewModel\CreatureEditor\Tools\ToolEventArgs.cs" />
     <Compile Include="ViewModel\CreatureEditor\Tools\ToolEventHandler.cs" />
+    <Compile Include="ViewModel\CreatureEditor\Tools\ToolType.cs" />
     <Compile Include="ViewModel\Data\BoneVM.cs" />
     <Compile Include="ViewModel\Data\CreatureStructureVM.cs" />
     <Compile Include="ViewModel\Data\CreatureVM.cs" />

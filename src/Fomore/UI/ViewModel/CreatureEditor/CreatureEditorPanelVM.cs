@@ -14,7 +14,7 @@ namespace Fomore.UI.ViewModel.CreatureEditor
             CreatureVM = creatureVM;
             ToolCollectionVM = new ToolCollectionVM();
             CreatureStructureEditorCanvasVM = new CreatureStructureEditorCanvasVM(CreatureVM, ToolCollectionVM);
-            ToolCollectionVM.Tools.Add(new SelectTool(CreatureStructureEditorCanvasVM));
+            ToolCollectionVM.Tools.Add(new SelectAllTool(CreatureStructureEditorCanvasVM));
             ToolCollectionVM.Tools.Add(new PanTool(CreatureStructureEditorCanvasVM));
             ToolCollectionVM.Tools.Add(new PlaceJointTool(CreatureStructureEditorCanvasVM));
             ToolCollectionVM.Tools.Add(new PlaceBoneTool(CreatureStructureEditorCanvasVM));

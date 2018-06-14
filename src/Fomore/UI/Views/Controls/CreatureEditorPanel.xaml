@@ -9,59 +9,57 @@
              mc:Ignorable="d"
              d:DesignHeight="450" d:DesignWidth="800"
              d:DataContext="{d:DesignInstance creatureEditor:CreatureEditorPanelVM}">
-    <Grid>
-        <Grid.Resources>
-            <DataTemplate DataType="{x:Type tools:Tool}">
-                <controls:CustomizableButton Padding="2" Margin="1" IsSelected="{Binding IsSelected}"
-                                             Command="{Binding PressedCommand}">
-                    <Image Source="{Binding Path=Image}" Width="32" Height="32" />
-                </controls:CustomizableButton>
-            </DataTemplate>
-        </Grid.Resources>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto" />
-            <RowDefinition />
-        </Grid.RowDefinitions>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="Auto" />
-            <ColumnDefinition Width="*" />
-        </Grid.ColumnDefinitions>
-        <!-- Toolbars -->
-        <Border BorderThickness="0,0,0,1" Grid.Row="0" Grid.ColumnSpan="2" Style="{StaticResource DefaultBorder}">
-            <Grid Background="{StaticResource Level3Brush}">
-                <ItemsControl ItemsSource="{Binding ToolCollectionVM.Tools}" Margin="6,4">
-                    <ItemsControl.ItemsPanel>
-                        <ItemsPanelTemplate>
-                            <StackPanel Orientation="Horizontal" />
-                        </ItemsPanelTemplate>
-                    </ItemsControl.ItemsPanel>
-                </ItemsControl>
-            </Grid>
-        </Border>
-        <Border Grid.Row="1" Grid.Column="0" BorderThickness="0,0,1,0" Style="{StaticResource DefaultBorder}">
-            <Grid Background="{StaticResource Level2Brush}">
-                <ItemsControl ItemsSource="{Binding ToolCollectionVM.Tools}" Margin="6,4">
-                    <ItemsControl.ItemsPanel>
-                        <ItemsPanelTemplate>
-                            <StackPanel Orientation="Vertical" />
-                        </ItemsPanelTemplate>
-                    </ItemsControl.ItemsPanel>
-                </ItemsControl>
-                <Separator HorizontalAlignment="Right" />
-            </Grid>
-        </Border>
+  <Grid>
+    <Grid.Resources>
+      <DataTemplate DataType="{x:Type tools:Tool}">
+        <controls:CustomizableButton Padding="2" Margin="1" IsSelected="{Binding IsSelected}"
+                                     Command="{Binding PressedCommand}">
+          <Image Source="{Binding Path=Image}" Width="32" Height="32" />
+        </controls:CustomizableButton>
+      </DataTemplate>
+    </Grid.Resources>
+    <Grid.RowDefinitions>
+      <RowDefinition Height="Auto" />
+      <RowDefinition />
+    </Grid.RowDefinitions>
+    <Grid.ColumnDefinitions>
+      <ColumnDefinition Width="Auto" />
+      <ColumnDefinition Width="*" />
+    </Grid.ColumnDefinitions>
+    <!-- Toolbars -->
 
-        <!-- Canvas -->
-        <controls:CreatureStructureEditorCanvas Grid.Column="1" Grid.Row="1"
-                                                DataContext="{Binding CreatureStructureEditorCanvasVM}"
-                                                MouseDownCommand="{Binding CanvasMouseDownCommand}" 
-                                                MouseMoveCommand="{Binding CanvasMouseMoveCommand}"
-                                                MouseUpCommand="{Binding CanvasMouseUpCommand}"
-                                                MouseWheelCommand="{Binding CanvasMouseWheelCommand}"
-                                                MouseEnterCommand="{Binding CanvasMouseEnterCommand}"
-                                                MouseLeaveCommand="{Binding CanvasMouseLeaveCommand}"
-                                                SizeChangedCommand="{Binding CanvasSizeChangedCommand}"
+    <!-- General Tools -->
+    <Border BorderThickness="0,0,0,1" Grid.Row="0" Grid.ColumnSpan="2" Style="{StaticResource DefaultBorder}">
+      <Grid Background="{StaticResource Level3Brush}">
+
+      </Grid>
+    </Border>
+
+    <!-- Canvas Tools -->
+    <Border Grid.Row="1" Grid.Column="0" BorderThickness="0,0,1,0" Style="{StaticResource DefaultBorder}">
+      <Grid Background="{StaticResource Level2Brush}">
+        <ItemsControl ItemsSource="{Binding ToolCollectionVM.Tools}" Margin="6,4" ItemBindingGroup="{Binding Path=ToolType}">
+          <ItemsControl.ItemsPanel>
+            <ItemsPanelTemplate>
+              <StackPanel Orientation="Vertical" />
+            </ItemsPanelTemplate>
+          </ItemsControl.ItemsPanel>
+        </ItemsControl>
+        <Separator HorizontalAlignment="Right" />
+      </Grid>
+    </Border>
+
+    <!-- Canvas -->
+    <controls:CreatureStructureEditorCanvas Grid.Column="1" Grid.Row="1"
+                                            DataContext="{Binding CreatureStructureEditorCanvasVM}"
+                                            MouseDownCommand="{Binding CanvasMouseDownCommand}"
+                                            MouseMoveCommand="{Binding CanvasMouseMoveCommand}"
+                                            MouseUpCommand="{Binding CanvasMouseUpCommand}"
+                                            MouseWheelCommand="{Binding CanvasMouseWheelCommand}"
+                                            MouseEnterCommand="{Binding CanvasMouseEnterCommand}"
+                                            MouseLeaveCommand="{Binding CanvasMouseLeaveCommand}"
+                                            SizeChangedCommand="{Binding CanvasSizeChangedCommand}"
                                                 />
 
-    </Grid>
+  </Grid>
 </UserControl>

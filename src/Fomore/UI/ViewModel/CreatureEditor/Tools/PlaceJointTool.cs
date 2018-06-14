@@ -13,6 +13,9 @@ namespace Fomore.UI.ViewModel.CreatureEditor.Tools
         /// <inheritdoc />
         public override ImageSource Image { get; } = new BitmapImage(new Uri("/assets/images/joint.png", UriKind.Relative));
 
+        /// <inheritdoc />
+        public override ToolType ToolType { get; } = ToolType.PlacementTool;
+
         private PanTool PanTool { get; }
 
         /// <inheritdoc />

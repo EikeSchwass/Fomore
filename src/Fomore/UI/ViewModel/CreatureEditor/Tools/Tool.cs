@@ -16,6 +16,8 @@ namespace Fomore.UI.ViewModel.CreatureEditor.Tools
         public CreatureStructureEditorCanvasVM CanvasVM { get; }
         public abstract ImageSource Image { get; }
 
+        public abstract ToolType ToolType { get; }
+
         public Cursor CurrentCursor
         {
             get => currentCursor;

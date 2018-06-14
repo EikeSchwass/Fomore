@@ -10,6 +10,9 @@ namespace Fomore.UI.ViewModel.CreatureEditor.Tools
         /// <inheritdoc />
         public override ImageSource Image { get; } = ImageAwesome.CreateImageSource(FontAwesomeIcon.HandGrabOutline, Brushes.Black);
 
+        /// <inheritdoc />
+        public override ToolType ToolType { get; } = ToolType.PanningTool;
+
         private Point StartPosition { get; set; }
         protected bool IsDragging { get; private set; }
 

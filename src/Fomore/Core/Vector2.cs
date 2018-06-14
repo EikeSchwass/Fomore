@@ -1,8 +1,7 @@
-﻿using System;
-
-namespace Core
+﻿namespace Core
 {
-    [Obsolete("This class is only a placeholder for the actual Vector2 class of FarseerPhysics")]
+    // TODO mark this as obsolete
+    //[Obsolete("This class is only a placeholder for the actual Vector2 class of FarseerPhysics")]
     public struct Vector2
     {
         public double X { get; }
