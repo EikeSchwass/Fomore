@@ -1,4 +1,5 @@
-﻿using Core;
+﻿using System;
+using Core;
 using Fomore.UI.ViewModel.Helper;
 
 namespace Fomore.UI.ViewModel.Data
@@ -8,8 +9,9 @@ namespace Fomore.UI.ViewModel.Data
     /// </summary>
     public class CreatureVM : ViewModelBase<Creature>
     {
-        private string description;
         private string name;
+        private string description;
+        private DateTime lastAccess;
 
         public string Name
         {
@@ -19,6 +21,7 @@ namespace Fomore.UI.ViewModel.Data
                 if (value == name) return;
                 name = value;
                 OnPropertyChanged();
+                OnAccess();
             }
         }
         public string Description
@@ -28,6 +31,18 @@ namespace Fomore.UI.ViewModel.Data
             {
                 if (value == description) return;
                 description = value;
+                OnPropertyChanged();
+                OnAccess();
+            }
+        }
+
+        public DateTime LastAccess
+        {
+            get => lastAccess;
+            private set
+            {
+                if (value.Equals(lastAccess)) return;
+                lastAccess = value;
                 OnPropertyChanged();
             }
         }
@@ -41,6 +56,12 @@ namespace Fomore.UI.ViewModel.Data
         {
             MovementPatternCollectionVM = new EncapsulatingObservableCollection<MovementPatternVM, MovementPattern>(creature.MovementPatterns, m => new MovementPatternVM(m));
             CreatureStructureVM = new CreatureStructureVM(Model.CreatureStructure);
+        }
+
+        // Todo update on Structure updates as well
+        private void OnAccess()
+        {
+            LastAccess = DateTime.Now;
         }
     }
 }
