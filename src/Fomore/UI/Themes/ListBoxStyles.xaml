@@ -4,13 +4,13 @@
     <SolidColorBrush x:Key="SelectedItemColor" Color="Red" />
     <SolidColorBrush x:Key="NormalItemColor" Color="Green" />
 
-    <Style TargetType="{x:Type ListBoxItem}">
+    <!--<Style TargetType="{x:Type ListBoxItem}">
         <Style.Triggers>
             <Trigger Property="IsSelected" Value="True">
                 <Setter Property="Background" Value="{StaticResource SelectedItemColor}" />
             </Trigger>
         </Style.Triggers>
-    </Style>
+    </Style>-->
     <Style TargetType="ListBox">
         <Setter Property="MinWidth" Value="250" />
         <Setter Property="MaxWidth" Value="500" />
@@ -40,6 +40,7 @@
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto" />
                     <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
                     <RowDefinition />
@@ -47,9 +48,9 @@
                 </Grid.RowDefinitions>
                 <Image Grid.Column="0" Grid.RowSpan="2" Margin="10" Width="64" Height="64"
                            Source="../assets/images/creature_icon.png" />
-                <TextBlock Grid.Column="1" Grid.Row="0" Style="{StaticResource ListBoxItemTextBlocks}" FontSize="20" FontWeight="ExtraBold"
-                               Text="{Binding Name}" />
-                <TextBlock Grid.Column="1" Grid.Row="1" Style="{StaticResource ListBoxItemTextBlocks}" Text="{Binding Description}" />
+                <TextBlock Grid.Column="1" Grid.Row="0" Style="{StaticResource ListBoxItemTextBlocks}" FontSize="20" FontWeight="ExtraBold" Text="{Binding Name}" />
+                <TextBlock Grid.Column="2" Grid.Row="0" Style="{StaticResource ListBoxItemTextBlocks}" TextAlignment="Right" FontStyle="Italic" Text="{Binding LastAccess}" />
+                <TextBlock Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="1" Style="{StaticResource ListBoxItemTextBlocks}" Text="{Binding Description}" />
             </Grid>
         </Border>
     </DataTemplate>
@@ -59,6 +60,7 @@
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto" />
                     <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
                     <RowDefinition />
@@ -66,9 +68,10 @@
                 </Grid.RowDefinitions>
                 <Image Grid.Column="0" Grid.RowSpan="2" Margin="10" Width="64" Height="64"
                        Source="../../assets/images/movementpattern_icon.png" />
-                <TextBlock Grid.Column="1" Grid.Row="0" Style="{StaticResource ListBoxItemTextBlocks}" FontSize="20" FontWeight="ExtraBold"
-                           Text="{Binding Name}" />
-                <TextBlock Grid.Column="1" Grid.Row="1" Style="{StaticResource ListBoxItemTextBlocks}" Text="{Binding Iterations, StringFormat={}#Iterations: {0}}" />
+                <TextBlock Grid.Column="1" Grid.Row="0" Style="{StaticResource ListBoxItemTextBlocks}" FontSize="20" FontWeight="ExtraBold" Text="{Binding Name}" />
+                <TextBlock Grid.Column="2" Grid.Row="0" Style="{StaticResource ListBoxItemTextBlocks}" TextAlignment="Right" FontStyle="Italic" Text="{Binding LastAccess}" />
+                <TextBlock Grid.Column="1" Grid.Row="1" Style="{StaticResource ListBoxItemTextBlocks}" FontWeight="Bold" Text="Iterations:" />
+                <TextBlock Grid.Column="2" Grid.Row="1" Style="{StaticResource ListBoxItemTextBlocks}" Text="{Binding Iterations}" />
             </Grid>
         </Border>
     </DataTemplate>
@@ -88,9 +91,10 @@
                        Source="../../assets/images/environment_icon.png" />
                 <TextBlock Grid.Column="1" Grid.Row="0" Style="{StaticResource ListBoxItemTextBlocks}" FontSize="20" FontWeight="ExtraBold"
                            Text="{Binding Name}" />
-                <TextBlock Grid.Column="1" Grid.Row="1" Style="{StaticResource ListBoxItemTextBlocks}" Text="{Binding Description}" />
-                <TextBlock Grid.Column="2" Grid.Row="0" Style="{StaticResource ListBoxItemTextBlocks}" TextAlignment="Right" FontStyle="Italic"
-                           Text="{Binding Gravity, StringFormat={}{0} m/s²}" />
+                <TextBlock Grid.Column="2" Grid.Row="0" Style="{StaticResource ListBoxItemTextBlocks}" TextAlignment="Right" FontStyle="Italic" Text="{Binding LastAccess}" />
+                <TextBlock Grid.Column="1" Grid.Row="1" Style="{StaticResource ListBoxItemTextBlocks}" FontWeight="Bold" Text="Gravity:" />
+                <TextBlock Grid.Column="2" Grid.Row="1" Style="{StaticResource ListBoxItemTextBlocks}" Text="{Binding Gravity, StringFormat={}{0} m/s²}" />
+
             </Grid>
         </Border>
     </DataTemplate>
