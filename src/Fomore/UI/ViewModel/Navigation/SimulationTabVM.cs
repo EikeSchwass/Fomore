@@ -6,6 +6,10 @@ namespace Fomore.UI.ViewModel.Navigation
 {
     public class SimulationTabVM : TabPageVM
     {
+        private CreatureVM selectedCreature;
+        private MovementPatternVM selectedMovementPattern;
+        private EnvironmentVM selectedEnvironment;
+
         public EntityStorageVM EntityStorageVM { get; }
 
         public CreatureVM SelectedCreature
@@ -19,25 +23,37 @@ namespace Fomore.UI.ViewModel.Navigation
             }
         }
 
-        private TabNavigationVM tabNavigationVM;
-        private CreatureVM selectedCreature;
-
-        public TabNavigationVM TabNavigationVM
+        public MovementPatternVM SelectedMovementPattern
         {
-            get => tabNavigationVM;
+            get => selectedMovementPattern;
             set
             {
-                if (Equals(value, tabNavigationVM)) return;
-                tabNavigationVM = value;
+                if (Equals(value, selectedMovementPattern)) return;
+                selectedMovementPattern = value;
                 OnPropertyChanged();
             }
         }
 
+        public EnvironmentVM SelectedEnvironment
+        {
+            get => selectedEnvironment;
+            set
+            {
+                if (Equals(value, selectedEnvironment)) return;
+                selectedEnvironment = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public TabNavigationVM TabNavigationVM { get; }
+
+
         /// <inheritdoc />
         public override string Header => "Simulation";
 
-        public SimulationTabVM(EntityStorageVM entitiesStorage)
+        public SimulationTabVM(TabNavigationVM navigationVM, EntityStorageVM entitiesStorage)
         {
+            TabNavigationVM = navigationVM;
             EntityStorageVM = entitiesStorage;
             CreateStuffCommand = new DelegateCommand(CreateCreaturesAction, o => true);
         }

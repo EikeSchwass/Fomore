@@ -7,61 +7,6 @@
              xmlns:data="clr-namespace:Fomore.UI.ViewModel.Data"
              mc:Ignorable="d"
              d:DesignHeight="450" d:DesignWidth="800" d:DataContext="{d:DesignInstance navigation:SimulationTabVM}">
-    <UserControl.Resources>
-        <DataTemplate DataType="{x:Type data:CreatureVM}">
-            <Border BorderThickness="3" CornerRadius="3" BorderBrush="Red" Margin="3">
-                <Grid Background="LightGray">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="Auto" />
-                        <ColumnDefinition Width="*" />
-                    </Grid.ColumnDefinitions>
-                    <Grid.RowDefinitions>
-                        <RowDefinition />
-                        <RowDefinition />
-                    </Grid.RowDefinitions>
-                    <Image Grid.Column="0" Grid.RowSpan="2" Margin="10" Width="64" Height="64" Source="../../assets/images/creature_icon.png" />
-                    <TextBlock Grid.Column="1" Grid.Row="0" Padding="10" FontSize="20" FontWeight="ExtraBold" Text="{Binding Name}" />
-                    <TextBlock Grid.Column="1" Grid.Row="1" Padding="10" Text="{Binding Description}" />
-                </Grid>
-            </Border>
-        </DataTemplate>
-        <DataTemplate DataType="{x:Type data:MovementPatternVM}">
-            <Border BorderThickness="3" CornerRadius="3" BorderBrush="Blue" Margin="3">
-                <Grid Background="LightGray">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="Auto" />
-                        <ColumnDefinition Width="*" />
-                    </Grid.ColumnDefinitions>
-                    <Grid.RowDefinitions>
-                        <RowDefinition />
-                        <RowDefinition />
-                    </Grid.RowDefinitions>
-                    <Image Grid.Column="0" Grid.RowSpan="2" Margin="10" Width="64" Height="64" Source="../../assets/images/movementpattern_icon.png" />
-                    <TextBlock Grid.Column="1" Grid.Row="0" Padding="10" FontSize="20" FontWeight="ExtraBold" Text="{Binding Name}" />
-                    <TextBlock Grid.Column="1" Grid.Row="1" Padding="10" Text="{Binding Description}" />
-                </Grid>
-            </Border>
-        </DataTemplate>
-        <DataTemplate DataType="{x:Type data:EnvironmentVM}">
-            <Border BorderThickness="3" CornerRadius="3" BorderBrush="Green" Margin="3">
-                <Grid Background="LightGray">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="Auto" />
-                        <ColumnDefinition Width="*" />
-                        <ColumnDefinition Width="*" />
-                    </Grid.ColumnDefinitions>
-                    <Grid.RowDefinitions>
-                        <RowDefinition />
-                        <RowDefinition />
-                    </Grid.RowDefinitions>
-                    <Image Grid.Column="0" Grid.RowSpan="2" Margin="10" Width="64" Height="64" Source="../../assets/images/environment_icon.png" />
-                    <TextBlock Grid.Column="1" Grid.Row="0" Padding="10" FontSize="20" FontWeight="ExtraBold" Text="{Binding Name}" />
-                    <TextBlock Grid.Column="1" Grid.Row="1" Padding="10" Text="{Binding Description}" />
-                    <TextBlock Grid.Column="2" Grid.Row="0" Padding="10" TextAlignment="Right" FontStyle="Italic" Text="{Binding Gravity, StringFormat={}{0} m/s²}" />
-                </Grid>
-            </Border>
-        </DataTemplate>
-    </UserControl.Resources>
     <Grid Margin="5">
         <Grid.ColumnDefinitions>
             <ColumnDefinition />
@@ -75,22 +20,23 @@
         </Grid.RowDefinitions>
         <Label Grid.Column="0" Grid.Row="0" HorizontalAlignment="Center" Content="Step 1: Chose Creature"
                VerticalAlignment="Center" />
-        <ListBox Grid.Column="0" Grid.Row="1" HorizontalAlignment="Stretch" Height="auto"
-                 Margin="5" HorizontalContentAlignment="Stretch" ItemsSource="{Binding EntityStorageVM.Creatures}"
+        <ListBox Grid.Column="0" Grid.Row="1"
+                 ItemsSource="{Binding EntityStorageVM.Creatures}"
                  SelectedItem="{Binding SelectedCreature, Mode=TwoWay}" />
 
         <Label Grid.Column="1" Grid.Row="0" HorizontalAlignment="Center" Content="Step 2: Chose Movement pattern"
                VerticalAlignment="Center" />
-        <ListBox Grid.Column="1" Grid.Row="1" HorizontalAlignment="Stretch" Height="auto" Margin="5"
-                 HorizontalContentAlignment="Stretch" ItemsSource="{Binding SelectedCreature.MovementPatterns}" />
+        <ListBox Grid.Column="1" Grid.Row="1"
+                 ItemsSource="{Binding SelectedCreature.MovementPatterns}"
+                 SelectedItem="{Binding SelectedMovementPattern, Mode=TwoWay}" />
 
         <Label Grid.Column="2" Grid.Row="0" HorizontalAlignment="Center" Content="Step 3: Chose Environment"
                VerticalAlignment="Center" />
-        <ListBox Grid.Column="2" Grid.Row="1" HorizontalAlignment="Stretch" Height="auto" Margin="5"
-                 HorizontalContentAlignment="Stretch"
-                 ItemsSource="{Binding EntityStorageVM.Environments}" />
+        <ListBox Grid.Column="2" Grid.Row="1"
+                 ItemsSource="{Binding EntityStorageVM.Environments}"
+                 SelectedItem="{Binding SelectedEnvironment, Mode=TwoWay}" />
 
-        <Button Grid.Column="0" Grid.Row="2" Content="Create some stuff ..." Padding="5"
+        <Button Grid.Column="0" Grid.Row="2" Content="Create some stuff ..."
                 Command="{Binding CreateStuffCommand}" />
         <!--
         <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center">
