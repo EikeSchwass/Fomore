@@ -19,15 +19,15 @@
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
             <Button Grid.Row="0" Content="Create new Creature" />
-            <ListBox Grid.Row="1" SelectedItem="{Binding EntitiesStorage.SelectedCreature, Mode=TwoWay}" ItemsSource="{Binding EntitiesStorage.Creatures}" />
+            <ListBox Grid.Row="1" SelectedItem="{Binding SelectedCreature, Mode=TwoWay}" ItemsSource="{Binding EntitiesStorage.Creatures}" />
         </Grid>
         <Grid Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center"
-              Visibility="{Binding RelativeSource={RelativeSource AncestorType={x:Type controls:CreatureTabControl}}, Path=DataContext.EntitiesStorage.SelectedCreature, FallbackValue=Hidden, TargetNullValue=Visible}">
+              Visibility="{Binding RelativeSource={RelativeSource AncestorType={x:Type controls:CreatureTabControl}}, Path=DataContext.SelectedCreature, FallbackValue=Hidden, TargetNullValue=Visible}">
             <TextBlock>No creature selected ...</TextBlock>
         </Grid>
         <Grid Grid.Column="1" 
-              Visibility="{Binding RelativeSource={RelativeSource AncestorType={x:Type controls:CreatureTabControl}}, Path=DataContext.EntitiesStorage.SelectedCreature, FallbackValue=Visible, TargetNullValue=Hidden}" 
-              DataContext="{Binding EntitiesStorage.SelectedCreature}" >
+              Visibility="{Binding RelativeSource={RelativeSource AncestorType={x:Type controls:CreatureTabControl}}, Path=DataContext.SelectedCreature, FallbackValue=Visible, TargetNullValue=Hidden}" 
+              DataContext="{Binding SelectedCreature}" >
             <Grid.ColumnDefinitions>
                 <ColumnDefinition />
                 <ColumnDefinition />
