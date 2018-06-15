@@ -1,0 +1,81 @@
+﻿<UserControl x:Class="Fomore.UI.Views.Controls.CreatureStructureEditorCanvas"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:creatureEditor="clr-namespace:Fomore.UI.ViewModel.CreatureEditor"
+             xmlns:data="clr-namespace:Fomore.UI.ViewModel.Data"
+             mc:Ignorable="d"
+             d:DesignHeight="400" d:DesignWidth="400"
+             d:DataContext="{d:DesignInstance creatureEditor:CreatureStructureEditorCanvasVM}"
+             Background="DarkGray"
+             SizeChanged="CreatureStructureEditorCanvas_OnSizeChanged"
+             ClipToBounds="True">
+    <Canvas Width="{Binding CanvasWidth}" Height="{Binding CanvasHeight}"
+            HorizontalAlignment="Left" VerticalAlignment="Top" MouseDown="CreatureStructureEditorCanvas_OnMouseDown"
+            MouseUp="CreatureStructureEditorCanvas_OnMouseUp"
+            MouseMove="CreatureStructureEditorCanvas_OnMouseMove"
+            MouseWheel="CreatureStructureEditorCanvas_OnMouseWheel"
+            MouseEnter="CreatureStructureEditorCanvas_OnMouseEnter"
+            MouseLeave="CreatureStructureEditorCanvas_OnMouseLeave">
+        <Canvas.Background>
+            <VisualBrush TileMode="Tile" Viewport="0,0,10,10" Viewbox="0,0,10,10" ViewboxUnits="Absolute"
+                         ViewportUnits="Absolute">
+                <VisualBrush.Visual>
+                    <Grid>
+                        <Rectangle Stroke="DarkGray" Width="10" Height="10" Fill="White" StrokeThickness="0.1" />
+                    </Grid>
+                </VisualBrush.Visual>
+            </VisualBrush>
+        </Canvas.Background>
+        <Canvas.RenderTransform>
+            <TransformGroup>
+                <ScaleTransform ScaleX="{Binding CameraVM.ZoomFactor}" ScaleY="{Binding CameraVM.ZoomFactor}" />
+                <TranslateTransform X="{Binding CameraVM.OffsetX}" Y="{Binding CameraVM.OffsetY}" />
+            </TransformGroup>
+        </Canvas.RenderTransform>
+        <Canvas.ContextMenu>
+            <ContextMenu>
+                <MenuItem Header="Background Image">
+                    <MenuItem Header="Set Background Image" Command="{Binding SetBackgroundImageCommand}" />
+                    <MenuItem Header="Remove Background Image" Command="{Binding RemoveBackgroundImageCommand}" />
+                </MenuItem>
+            </ContextMenu>
+        </Canvas.ContextMenu>
+        <Rectangle Width="{Binding CanvasWidth}" Height="{Binding CanvasHeight}" Fill="Transparent" Stroke="Black"
+                   StrokeThickness="2" />
+        <Grid Width="{Binding CanvasWidth}" Height="{Binding CanvasHeight}">
+            <Image Source="{Binding BackgroundImageSource}" HorizontalAlignment="Center" VerticalAlignment="Center"
+                   Stretch="None" />
+        </Grid>
+        <!-- Bones -->
+        <ItemsControl ItemsSource="{Binding CreatureVM.CreatureStructureVM.BoneCollectionVM}" />
+        <!-- Joints -->
+        <ItemsControl DataContext="{Binding Path=CreatureVM.CreatureStructureVM.JointCollectionVM}" ItemsSource="{Binding}" >
+            <ItemsControl.ItemTemplate>
+                <DataTemplate DataType="{x:Type data:JointVM}">
+                    <Ellipse Width="8" Height="8" Fill="Red" Stroke="Gray" StrokeThickness="0.1" />
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <Canvas IsItemsHost="True" />
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+            <ItemsControl.ItemContainerStyle>
+                <Style>
+                    <Setter Property="Canvas.Left" Value="{Binding Position.X}" />
+                    <Setter Property="Canvas.Top" Value="{Binding Position.Y}" />
+                </Style>
+            </ItemsControl.ItemContainerStyle>
+        </ItemsControl>
+
+        <!-- Previews -->
+
+        <!-- Joint Preview -->
+        <Ellipse Fill="Red" Opacity="0.75" IsHitTestVisible="False"
+                 Visibility="{Binding PreviewJoint.Visibility}"
+                 Canvas.Left="{Binding PreviewJoint.Position.X}" Canvas.Top="{Binding PreviewJoint.Position.Y}"
+                 Width="{Binding PreviewJoint.JointSize}" Height="{Binding PreviewJoint.JointSize}" />
+    </Canvas>
+</UserControl>

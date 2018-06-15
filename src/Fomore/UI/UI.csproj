@@ -62,12 +62,41 @@
     <Compile Include="Converter\NumberVisibilityConverter.cs" />
     <Compile Include="ViewModel\Application\AppStateVM.cs" />
     <Compile Include="ViewModel\Application\EntityStorageVM.cs" />
+    <Compile Include="ViewModel\Commands\CommandParameters.cs" />
+    <Compile Include="ViewModel\Commands\DelegateHandleCommand.cs" />
+    <Compile Include="ViewModel\CreatureEditor\CreatureEditorPanelVM.cs" />
+    <Compile Include="ViewModel\CreatureEditor\CreatureEditorVM.cs" />
+    <Compile Include="ViewModel\CreatureEditor\CreatureStructureEditorCanvasVM.cs" />
+    <Compile Include="ViewModel\CreatureEditor\PreviewJointVM.cs" />
+    <Compile Include="ViewModel\CreatureEditor\ToolCollectionVM.cs" />
+    <Compile Include="ViewModel\CreatureEditor\Tools\PanTool.cs" />
+    <Compile Include="ViewModel\CreatureEditor\Tools\PlaceBoneTool.cs" />
+    <Compile Include="ViewModel\CreatureEditor\Tools\PlaceJointTool.cs" />
+    <Compile Include="ViewModel\CreatureEditor\Tools\SelectAllTool.cs" />
+    <Compile Include="ViewModel\CreatureEditor\Tools\Tool.cs" />
+    <Compile Include="ViewModel\CreatureEditor\Tools\ToolEventArgs.cs" />
+    <Compile Include="ViewModel\CreatureEditor\Tools\ToolEventHandler.cs" />
+    <Compile Include="ViewModel\CreatureEditor\Tools\ToolType.cs" />
+    <Compile Include="ViewModel\Data\BoneVM.cs" />
+    <Compile Include="ViewModel\Data\CreatureStructureVM.cs" />
     <Compile Include="ViewModel\Data\CreatureVM.cs" />
     <Compile Include="ViewModel\Data\EnvironmentVM.cs" />
     <Compile Include="ViewModel\Commands\CompositeCommand.cs" />
     <Compile Include="ViewModel\Commands\DelegateCommand.cs" />
     <Compile Include="ViewModel\Commands\StubCommand.cs" />
     <Page Include="Converter\ConverterDictionary.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Themes\DefaultStylesForUserControls.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Controls\CreatureEditorPanel.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Controls\CreatureStructureEditorCanvas.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -83,7 +112,15 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\Controls\CustomizableButton.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\Controls\TrainingTabControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Windows\CreatureStructureEditor.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -95,8 +132,10 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="ViewModel\Data\JointVM.cs" />
     <Compile Include="ViewModel\Data\MovementPatternVM.cs" />
     <Compile Include="ViewModel\Helper\CollectionAccess.cs" />
+    <Compile Include="ViewModel\Helper\EncapsulatingObservableCollection.cs" />
     <Compile Include="ViewModel\Helper\ReadOnlyObservableCollection.cs" />
     <Compile Include="ViewModel\Navigation\CreatureTabVM.cs" />
     <Compile Include="ViewModel\Navigation\EnvironmentTabVM.cs" />
@@ -104,7 +143,14 @@
     <Compile Include="ViewModel\Navigation\SimulationTabVM.cs" />
     <Compile Include="ViewModel\Navigation\TabPageVM.cs" />
     <Compile Include="ViewModel\Navigation\TrainingTabVM.cs" />
-    <Compile Include="ViewModel\Navigation\ViewModelBase.cs" />
+    <Compile Include="ViewModel\ViewModelBase.cs" />
+    <Compile Include="Views\Controls\CameraVM.cs" />
+    <Compile Include="Views\Controls\CreatureEditorPanel.xaml.cs">
+      <DependentUpon>CreatureEditorPanel.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Controls\CreatureStructureEditorCanvas.xaml.cs">
+      <DependentUpon>CreatureStructureEditorCanvas.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Controls\CreatureTabControl.xaml.cs">
       <DependentUpon>CreatureTabControl.xaml</DependentUpon>
     </Compile>
@@ -114,8 +160,14 @@
     <Compile Include="Views\Controls\SimulationTabControl.xaml.cs">
       <DependentUpon>SimulationTabControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\Controls\CustomizableButton.xaml.cs">
+      <DependentUpon>CustomizableButton.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Controls\TrainingTabControl.xaml.cs">
       <DependentUpon>TrainingTabControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Windows\CreatureStructureEditor.xaml.cs">
+      <DependentUpon>CreatureStructureEditor.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Windows\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>

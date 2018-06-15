@@ -1,13 +1,14 @@
 ﻿using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using System.Windows;
 using Fomore.UI.Annotations;
 
-namespace Fomore.UI.ViewModel.Navigation
+namespace Fomore.UI.ViewModel
 {
     /// <summary>
     /// The base class for all view models. Implements <see cref="INotifyPropertyChanged"/> and the handler logic.
     /// </summary>
-    public abstract class ViewModelBase : INotifyPropertyChanged
+    public abstract class ViewModelBase : DependencyObject, INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
 

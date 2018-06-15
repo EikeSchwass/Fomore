@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Linq;
-using Fomore.UI.ViewModel.Navigation;
 
 namespace Fomore.UI.ViewModel.Helper
 {

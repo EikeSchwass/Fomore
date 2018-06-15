@@ -1,8 +1,5 @@
-﻿using System.Linq;
-using Core;
-using Fomore.UI.ViewModel.Commands;
+﻿using Core;
 using Fomore.UI.ViewModel.Helper;
-using Fomore.UI.ViewModel.Navigation;
 
 namespace Fomore.UI.ViewModel.Data
 {
@@ -24,7 +21,6 @@ namespace Fomore.UI.ViewModel.Data
                 OnPropertyChanged();
             }
         }
-
         public string Description
         {
             get => description;
@@ -36,47 +32,15 @@ namespace Fomore.UI.ViewModel.Data
             }
         }
 
-        public ReadOnlyObservableCollection<MovementPatternVM> MovementPatterns { get; }
+        public EncapsulatingObservableCollection<MovementPatternVM, MovementPattern> MovementPatternCollectionVM { get; }
 
-        public CollectionAccess<MovementPatternVM> MovementPatternCollectionAccess { get; }
-
-        public DelegateCommand<MovementPatternVM> AddMovementPatternCommand { get; }
-        public DelegateCommand<MovementPatternVM> RemoveMovementPatternCommand { get; }
-        public DelegateCommand<MovementPatternVM> ClearMovementPatternsCommand { get; }
+        public CreatureStructureVM CreatureStructureVM { get; }
 
         /// <inheritdoc />
-        public CreatureVM(Creature model) : base(model)
+        public CreatureVM(Creature creature) : base(creature)
         {
-            MovementPatternCollectionAccess = ReadOnlyObservableCollection<MovementPatternVM>.Create();
-            MovementPatterns = MovementPatternCollectionAccess.Collection;
-            AddMovementPatternCommand = new DelegateCommand<MovementPatternVM>(AddMovementPattern, o => true);
-            RemoveMovementPatternCommand = new DelegateCommand<MovementPatternVM>(RemoveMovementPattern, o => MovementPatterns.Any());
-            ClearMovementPatternsCommand = new DelegateCommand<MovementPatternVM>(ClearMovementPattern, o => MovementPatterns.Any());
-        }
-
-        private void AddMovementPattern(MovementPatternVM movementPattern)
-        {
-            MovementPatternCollectionAccess.Add(movementPattern);
-            // Todo add moventmentpattern to creature
-            RemoveMovementPatternCommand.OnCanExecuteChanged();
-            ClearMovementPatternsCommand.OnCanExecuteChanged();
-        }
-
-        private void RemoveMovementPattern(MovementPatternVM movementPattern)
-        {
-            MovementPatternCollectionAccess.Remove(movementPattern);
-            // Todo add moventmentpattern to creature
-            RemoveMovementPatternCommand.OnCanExecuteChanged();
-            ClearMovementPatternsCommand.OnCanExecuteChanged();
-        }
-
-        private void ClearMovementPattern(MovementPatternVM movementPattern)
-        {
-
-            MovementPatternCollectionAccess.Clear();
-            // Todo add moventmentpattern to creature
-            RemoveMovementPatternCommand.OnCanExecuteChanged();
-            ClearMovementPatternsCommand.OnCanExecuteChanged();
+            MovementPatternCollectionVM = new EncapsulatingObservableCollection<MovementPatternVM, MovementPattern>(creature.MovementPatterns, m => new MovementPatternVM(m));
+            CreatureStructureVM = new CreatureStructureVM(Model.CreatureStructure);
         }
     }
 }

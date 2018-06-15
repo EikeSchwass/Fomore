@@ -3,7 +3,6 @@ using Core;
 using Fomore.UI.ViewModel.Commands;
 using Fomore.UI.ViewModel.Data;
 using Fomore.UI.ViewModel.Helper;
-using Fomore.UI.ViewModel.Navigation;
 
 namespace Fomore.UI.ViewModel.Application
 {
