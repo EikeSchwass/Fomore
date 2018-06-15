@@ -44,6 +44,8 @@ namespace Fomore.UI.ViewModel.Data
         public DelegateCommand<MovementPatternVM> RemoveMovementPatternCommand { get; }
         public DelegateCommand<MovementPatternVM> ClearMovementPatternsCommand { get; }
 
+        public bool IsSelected => true;
+
         /// <inheritdoc />
         public CreatureVM(Creature model) : base(model)
         {

@@ -11,9 +11,6 @@
     <Window.DataContext>
         <application:AppStateVM  />
     </Window.DataContext>
-    <Window.Resources>
-        <ResourceDictionary Source="../../Themes/ListBoxStyles.xaml" />
-    </Window.Resources>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
