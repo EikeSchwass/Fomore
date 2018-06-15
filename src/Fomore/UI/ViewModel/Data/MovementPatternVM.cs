@@ -52,4 +52,5 @@ namespace Fomore.UI.ViewModel.Data
         /// <inheritdoc />
         public MovementPatternVM(MovementPattern model) : base(model) { }
 
+    }
 }

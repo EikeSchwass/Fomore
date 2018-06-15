@@ -1,4 +1,5 @@
 ﻿using Fomore.UI.ViewModel.Application;
+using Fomore.UI.ViewModel.Commands;
 
 namespace Fomore.UI.ViewModel.Navigation
 {
@@ -9,21 +10,16 @@ namespace Fomore.UI.ViewModel.Navigation
         /// <inheritdoc />
         public override string Header => "New Creature";
 
-        public EntityStorageVM EntitiesStorage { get; }
-
         public DelegateCommand SimulateCreatureCommand { get; }
 
         public TabNavigationVM TabNavigationVM { get; }
 
-        public SimulationTabVM SimulationTabVM { get; }
-
         public string CreatureName { get; set; }
         public string EnterDescription { get; set; }
 
-        public CreatureTabVM(TabNavigationVM navigationVM, SimulationTabVM simulationTab, EntityStorageVM entitiesStorage)
+        public CreatureTabVM(TabNavigationVM navigationVM, EntityStorageVM entitiesStorage)
         {
             TabNavigationVM = navigationVM;
-            SimulationTabVM = simulationTab;
             EntitiesStorage = entitiesStorage;
         }
     }
