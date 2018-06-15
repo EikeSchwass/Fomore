@@ -12,7 +12,6 @@ namespace Fomore.UI.Views.Controls
             InitializeComponent();
         }
 
-
         private void SaveButton_Click(object sender, RoutedEventArgs e)
         {
             throw new System.NotImplementedException();

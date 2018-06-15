@@ -42,7 +42,7 @@
         <Button Grid.Column="2" Grid.Row="2" Background="Green" Margin="5" Command="{Binding StartSimulationCommand}" Content="Start Simulation" />
         <!--
         <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center">
-            <Button Content="Switch to Creature Tab" Command="{Binding TabNavigationVM.SwitchToCreatureTabCommand}" />
+            <Button Content="Switch to Creature Tab" Command="{Binding Path=TabNavigationVM.SwitchToCreatureTabCommand}" />
             <Button Content="Switch to Enviroment Tab" Command="{Binding TabNavigationVM.SwitchToEnvironmentTabCommand}"/>
             <Button Content="Switch to Training Tab" Command="{Binding TabNavigationVM.SwitchToTrainingTabCommand}"/>
             <Button Content="Switch to Simulation Tab" Command="{Binding TabNavigationVM.SwitchToSimulationTabCommand}"/>
