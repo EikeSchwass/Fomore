@@ -11,8 +11,8 @@ namespace Fomore.UI.Views.Windows
         public MainWindow()
         {
             InitializeComponent();
-            var creatureStructureEditor = new CreatureStructureEditor { DataContext = new CreatureEditorVM(new CreatureVM(new Creature())) };
-            creatureStructureEditor.Show();
+            //var creatureStructureEditor = new CreatureStructureEditor { DataContext = new CreatureEditorVM(new CreatureVM(new Creature())) };
+            //creatureStructureEditor.Show();
         }
 
         private void MainWindow_OnLoaded(object sender, RoutedEventArgs e)
