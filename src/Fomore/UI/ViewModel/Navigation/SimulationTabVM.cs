@@ -1,4 +1,5 @@
-﻿using Fomore.UI.ViewModel.Application;
+﻿using System;
+using Fomore.UI.ViewModel.Application;
 using Fomore.UI.ViewModel.Commands;
 using Fomore.UI.ViewModel.Data;
 
@@ -40,6 +41,11 @@ namespace Fomore.UI.ViewModel.Navigation
         {
             EntityStorageVM = entitiesStorage;
             CreateStuffCommand = new DelegateCommand(CreateCreaturesAction, o => true);
+            StartSimulationCommand = new DelegateCommand(StartSimulationAction,
+                                                         o => EntityStorageVM.SelectedCreature != null &&
+                                                              EntityStorageVM.SelectedMovementPattern != null &&
+                                                              EntityStorageVM.SelectedEnvironment != null);
+            EntityStorageVM.EntityDependentCommands.Add(StartSimulationCommand);
         }
 
         public DelegateCommand CreateStuffCommand { get; }
@@ -58,10 +64,11 @@ namespace Fomore.UI.ViewModel.Navigation
             dog.AddMovementPatternCommand.Execute(new MovementPatternVM(null) { Name = "Dog runs on Earth", Description = "42 iterations"});
             dog.AddMovementPatternCommand.Execute(new MovementPatternVM(null) { Name = "Dog walks on Moon", Description = "123 iterations"});
 
-            cat.AddMovementPatternCommand.Execute(new MovementPatternVM(null) { Name = "Cat walks on Earth", Description = "5 iterations"});
-            
-            EntityStorageVM.AddEnvironmentCommand.Execute(new EnvironmentVM(null) { Name = "Earth", Description = "Our lovely home planet", Gravity = 9.81 });
-            EntityStorageVM.AddEnvironmentCommand.Execute(new EnvironmentVM(null) { Name = "Moon", Description = "The beautiful moon surrounding our earth", Gravity = 1.62 });
+        public DelegateCommand StartSimulationCommand { get; }
+
+        private void StartSimulationAction(object obj)
+        {
+            EntityStorageVM.SelectedMovementPattern.Iterations++;
         }
     }
 }

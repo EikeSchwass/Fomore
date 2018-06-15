@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Collections.ObjectModel;
+using System.Linq;
 using Core;
 using Fomore.UI.ViewModel.Commands;
 using Fomore.UI.ViewModel.Data;
@@ -8,16 +9,76 @@ namespace Fomore.UI.ViewModel.Application
 {
     public class EntityStorageVM : ViewModelBase<EntitiyStorage>
     {
-        public ReadOnlyObservableCollection<CreatureVM> Creatures { get; }
-        public ReadOnlyObservableCollection<EnvironmentVM> Environments { get; }
+        private CreatureVM selectedCreature;
+        private MovementPatternVM selectedMovementPattern;
+        private EnvironmentVM selectedEnvironment;
+        public Helper.ReadOnlyObservableCollection<CreatureVM> Creatures { get; }
+        public Helper.ReadOnlyObservableCollection<EnvironmentVM> Environments { get; }
+
+        public Collection<DelegateCommand> EntityDependentCommands { get; set; }
+
+        public CreatureVM SelectedCreature
+        {
+            get => selectedCreature;
+            set
+            {
+                if (Equals(value, selectedCreature)) return;
+                selectedCreature = value;
+                OnPropertyChanged();
+                foreach (var command in EntityDependentCommands)
+                {
+                    command.OnCanExecuteChanged();
+                }
+            }
+        }
+
+        public MovementPatternVM SelectedMovementPattern
+        {
+            get => selectedMovementPattern;
+            set
+            {
+                if (Equals(value, selectedMovementPattern)) return;
+                selectedMovementPattern = value;
+                OnPropertyChanged();
+                foreach (var command in EntityDependentCommands)
+                {
+                    command.OnCanExecuteChanged();
+                }
+            }
+        }
+
+        public EnvironmentVM SelectedEnvironment
+        {
+            get => selectedEnvironment;
+            set
+            {
+                if (Equals(value, selectedEnvironment)) return;
+                selectedEnvironment = value;
+                OnPropertyChanged();
+                foreach (var command in EntityDependentCommands)
+                {
+                    command.OnCanExecuteChanged();
+                }
+            }
+        }
+
+        public DelegateCommand ResetSelectionCommand { get; }
+
+        private void ResetSelectionAction(object obj)
+        {
+            SelectedCreature = null;
+            SelectedMovementPattern = null;
+            SelectedEnvironment = null;
+        }
 
         /// <inheritdoc />
         public EntityStorageVM(EntitiyStorage model) : base(model)
         {
-            CreatureCollectionAccess = ReadOnlyObservableCollection<CreatureVM>.Create();
-            EnvironmentCollectionAccess = ReadOnlyObservableCollection<EnvironmentVM>.Create();
+            CreatureCollectionAccess = Helper.ReadOnlyObservableCollection<CreatureVM>.Create();
+            EnvironmentCollectionAccess = Helper.ReadOnlyObservableCollection<EnvironmentVM>.Create();
             Creatures = CreatureCollectionAccess.Collection;
             Environments = EnvironmentCollectionAccess.Collection;
+            EntityDependentCommands = new Collection<DelegateCommand>();
 
             AddCreatureCommand = new DelegateCommand<CreatureVM>(AddCreature, o => true);
             RemoveCreatureCommand = new DelegateCommand<CreatureVM>(RemoveCreature, o => Creatures.Any());
@@ -25,6 +86,9 @@ namespace Fomore.UI.ViewModel.Application
             AddEnvironmentCommand = new DelegateCommand<EnvironmentVM>(AddEnvironment, o => true);
             RemoveEnvironmentCommand = new DelegateCommand<EnvironmentVM>(RemoveEnvironment, o => Environments.Any());
             ClearEnvironmentsCommand = new DelegateCommand<EnvironmentVM>(ClearEnvironments, o => Environments.Any());
+
+            ResetSelectionCommand = new DelegateCommand(ResetSelectionAction, o => SelectedCreature != null || SelectedMovementPattern != null || SelectedEnvironment != null);
+            EntityDependentCommands.Add(ResetSelectionCommand);
         }
 
         private void AddCreature(CreatureVM obj)

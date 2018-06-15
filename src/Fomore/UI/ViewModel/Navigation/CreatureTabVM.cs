@@ -9,16 +9,21 @@ namespace Fomore.UI.ViewModel.Navigation
         /// <inheritdoc />
         public override string Header => "New Creature";
 
-        public string EnterName => "Enter Name*:";
-        public string Description => "Description";
-        public string CreateButton => "Create";
-        public string CancelButton => "Cancel";
+        public EntityStorageVM EntitiesStorage { get; }
+
+        public DelegateCommand SimulateCreatureCommand { get; }
+
+        public TabNavigationVM TabNavigationVM { get; }
+
+        public SimulationTabVM SimulationTabVM { get; }
 
         public string CreatureName { get; set; }
         public string EnterDescription { get; set; }
 
-        public CreatureTabVM(EntityStorageVM entitiesStorage)
+        public CreatureTabVM(TabNavigationVM navigationVM, SimulationTabVM simulationTab, EntityStorageVM entitiesStorage)
         {
+            TabNavigationVM = navigationVM;
+            SimulationTabVM = simulationTab;
             EntitiesStorage = entitiesStorage;
         }
     }
