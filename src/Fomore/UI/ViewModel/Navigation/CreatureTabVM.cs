@@ -43,7 +43,7 @@ namespace Fomore.UI.ViewModel.Navigation
                 OnPropertyChanged();
             }
         }
-
+        //not showing
         public ICommand ShowCreatureCreationDialogCommand { get; }
     }
 }
