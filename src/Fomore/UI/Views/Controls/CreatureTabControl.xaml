@@ -21,10 +21,12 @@
             <Button Grid.Row="0" Content="Create new Creature" />
             <ListBox Grid.Row="1" SelectedItem="{Binding SelectedCreature, Mode=TwoWay}" ItemsSource="{Binding EntitiesStorage.Creatures}" />
         </Grid>
+
         <Grid Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center"
               Visibility="{Binding RelativeSource={RelativeSource AncestorType={x:Type controls:CreatureTabControl}}, Path=DataContext.SelectedCreature, FallbackValue=Hidden, TargetNullValue=Visible}">
             <TextBlock>No creature selected ...</TextBlock>
         </Grid>
+
         <Grid Grid.Column="1" 
               Visibility="{Binding RelativeSource={RelativeSource AncestorType={x:Type controls:CreatureTabControl}}, Path=DataContext.SelectedCreature, FallbackValue=Visible, TargetNullValue=Hidden}" 
               DataContext="{Binding SelectedCreature}" >
@@ -35,6 +37,29 @@
             <StackPanel Grid.Column="0">
                 <TextBlock Margin="20" FontWeight="ExtraBold" FontSize="30" Text="{Binding Name}" />
                 <TextBox Margin="20" TextWrapping="WrapWithOverflow" Text="{Binding Description, Mode=TwoWay}" />
+                <Grid Margin="20">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition />
+                        <RowDefinition />
+                        <RowDefinition />
+                        <RowDefinition />
+                        <RowDefinition />
+                    </Grid.RowDefinitions>
+                    <TextBlock Grid.Column="0" Grid.Row="0" Text="Last Changed:" />
+                    <TextBlock Grid.Column="1" Grid.Row="0" Text="{Binding LastAccess}" />
+                    <TextBlock Grid.Column="0" Grid.Row="1" Text="Number of Joints:" />
+                    <TextBlock Grid.Column="1" Grid.Row="1" Text="{Binding CreatureStructureVM.JointCollectionVM.Count}" />
+                    <TextBlock Grid.Column="0" Grid.Row="2" Text="Number of Bones:" />
+                    <TextBlock Grid.Column="1" Grid.Row="2" Text="{Binding CreatureStructureVM.BoneCollectionVM.Count}" />
+                    <TextBlock Grid.Column="0" Grid.Row="3" Text="Total Weight:" />
+                    <TextBlock Grid.Column="1" Grid.Row="3" Text="TODO" />
+                    <TextBlock Grid.Column="0" Grid.Row="4" Text="Number of Movement Patterns:" />
+                    <TextBlock Grid.Column="1" Grid.Row="4" Text="{Binding MovementPatternCollectionVM.Count}" />
+                </Grid>
             </StackPanel>
             <StackPanel Grid.Column="1">
                 <Image Source="../../assets/images/placeholder.png" />
@@ -43,6 +68,8 @@
                 <Button Content="Delete" Margin="5" Background="Red" Command="{Binding RelativeSource={RelativeSource AncestorType={x:Type controls:CreatureTabControl}}, Path=DataContext.EntitiesStorage.RemoveCreatureCommand}" CommandParameter="{Binding}" />
             </StackPanel>
         </Grid>
+        
+
 
         <!-- It's important that this is in the end of the XAML as it needs to be on top of everything else! -->
         <Grid x:Name="CreatureNewBox" Visibility="Collapsed">
