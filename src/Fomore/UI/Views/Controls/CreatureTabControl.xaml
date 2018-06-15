@@ -19,19 +19,28 @@
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
             <Button Grid.Row="0" Content="Create new Creature" />
-            <ListBox Grid.Row="1" SelectedItem="{Binding SelectedCreature, Mode=TwoWay}" ItemsSource="{Binding EntitiesStorage.Creatures}" />
+            <ListBox Grid.Row="1" SelectedItem="{Binding EntitiesStorage.SelectedCreature, Mode=TwoWay}" ItemsSource="{Binding EntitiesStorage.Creatures}" />
         </Grid>
-        <Grid Grid.Column="1" DataContext="{Binding SelectedCreature}">
+        <Grid Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center"
+              Visibility="{Binding RelativeSource={RelativeSource AncestorType={x:Type controls:CreatureTabControl}}, Path=DataContext.EntitiesStorage.SelectedCreature, FallbackValue=Hidden, TargetNullValue=Visible}">
+            <TextBlock>No creature selected ...</TextBlock>
+        </Grid>
+        <Grid Grid.Column="1" 
+              Visibility="{Binding RelativeSource={RelativeSource AncestorType={x:Type controls:CreatureTabControl}}, Path=DataContext.EntitiesStorage.SelectedCreature, FallbackValue=Visible, TargetNullValue=Hidden}" 
+              DataContext="{Binding EntitiesStorage.SelectedCreature}" >
             <Grid.ColumnDefinitions>
                 <ColumnDefinition />
                 <ColumnDefinition />
             </Grid.ColumnDefinitions>
             <StackPanel Grid.Column="0">
-                <TextBlock FontWeight="ExtraBold" FontSize="30" Text="{Binding Name}" />
+                <TextBlock Margin="20" FontWeight="ExtraBold" FontSize="30" Text="{Binding Name}" />
+                <TextBox Margin="20" TextWrapping="WrapWithOverflow" Text="{Binding Description, Mode=TwoWay}" />
             </StackPanel>
             <StackPanel Grid.Column="1">
                 <Image Source="../../assets/images/placeholder.png" />
-                <Button Command="{Binding RelativeSource={RelativeSource AncestorType={x:Type controls:CreatureTabControl}}, Path=DataContext.SimulateCreatureCommand}" Content="Simulate"></Button>
+                <Button Content="Simulate" Margin="5" Background="Blue" Command="{Binding RelativeSource={RelativeSource AncestorType={x:Type controls:CreatureTabControl}}, Path=DataContext.SimulateCreatureCommand}" />
+                <Button Content="Edit in the Editor" Margin="5" />
+                <Button Content="Delete" Margin="5" Background="Red" Command="{Binding RelativeSource={RelativeSource AncestorType={x:Type controls:CreatureTabControl}}, Path=DataContext.EntitiesStorage.RemoveCreatureCommand}" CommandParameter="{Binding}" />
             </StackPanel>
         </Grid>
 

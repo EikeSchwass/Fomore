@@ -37,6 +37,7 @@
     <Style TargetType="{x:Type TextBox}">
         <Setter Property="Background" Value="{StaticResource Level1Brush}" />
         <Setter Property="Foreground" Value="{StaticResource Level5Brush}" />
+        <Setter Property="Padding" Value="5" />
         <Setter Property="FontWeight" Value="Medium" />
         <Setter Property="BorderBrush" Value="Black" />
         <Setter Property="BorderThickness" Value="1" />

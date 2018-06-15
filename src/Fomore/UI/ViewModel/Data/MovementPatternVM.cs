@@ -7,6 +7,7 @@ namespace Fomore.UI.ViewModel.Data
     {
         private string name;
         private string description;
+        private int iterations;
 
         /// <inheritdoc />
         public MovementPatternVM(MovementPattern model) : base(model) { }
@@ -29,6 +30,17 @@ namespace Fomore.UI.ViewModel.Data
             {
                 if (value == description) return;
                 description = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public int Iterations
+        {
+            get => iterations;
+            set
+            {
+                if (value == iterations) return;
+                iterations = value;
                 OnPropertyChanged();
             }
         }

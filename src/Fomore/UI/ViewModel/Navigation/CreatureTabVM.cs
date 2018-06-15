@@ -11,35 +11,19 @@ namespace Fomore.UI.ViewModel.Navigation
 
         public EntityStorageVM EntitiesStorage { get; }
 
-        private CreatureVM selectedCreature;
-        private TabNavigationVM tabNavigationVM;
-
-        public CreatureVM SelectedCreature
-        {
-            get => selectedCreature;
-            set
-            {
-                if (Equals(value, selectedCreature)) return;
-                selectedCreature = value;
-                OnPropertyChanged();
-            }
-        }
-
         public DelegateCommand SimulateCreatureCommand { get; }
 
         public TabNavigationVM TabNavigationVM { get; }
 
-        public string EnterName => "Enter Name*:";
-        public string Description => "Description";
-        public string CreateButton => "Create";
-        public string CancelButton => "Cancel";
+        public SimulationTabVM SimulationTabVM { get; }
 
         public string CreatureName { get; set; }
         public string EnterDescription { get; set; }
 
-        public CreatureTabVM(TabNavigationVM navigationVM, EntityStorageVM entitiesStorage)
+        public CreatureTabVM(TabNavigationVM navigationVM, SimulationTabVM simulationTab, EntityStorageVM entitiesStorage)
         {
             TabNavigationVM = navigationVM;
+            SimulationTabVM = simulationTab;
             EntitiesStorage = entitiesStorage;
             SimulateCreatureCommand = new DelegateCommand(SimulateCreatureAction, o => true);
         }
