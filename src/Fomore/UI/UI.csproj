@@ -73,6 +73,8 @@
     <Compile Include="ViewModel\CreatureEditor\Tools\PlaceBoneTool.cs" />
     <Compile Include="ViewModel\CreatureEditor\Tools\PlaceJointTool.cs" />
     <Compile Include="ViewModel\CreatureEditor\Tools\SelectAllTool.cs" />
+    <Compile Include="ViewModel\CreatureEditor\Tools\SelectBonesTool.cs" />
+    <Compile Include="ViewModel\CreatureEditor\Tools\SelectJointsTool.cs" />
     <Compile Include="ViewModel\CreatureEditor\Tools\Tool.cs" />
     <Compile Include="ViewModel\CreatureEditor\Tools\ToolEventArgs.cs" />
     <Compile Include="ViewModel\CreatureEditor\Tools\ToolEventHandler.cs" />
@@ -237,6 +239,11 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="assets\images\terraindummy.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="assets\images\arrowselectionall.png" />
+    <Resource Include="assets\images\arrowselectionbones.png" />
+    <Resource Include="assets\images\arrowselectionjoints.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
