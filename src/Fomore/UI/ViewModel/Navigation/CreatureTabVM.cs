@@ -30,10 +30,8 @@ namespace Fomore.UI.ViewModel.Navigation
             ShowCreatureCreationDialogCommand = new DelegateCommand(ShowCreatureCreationDialog, o => true);
             HideCreatureCreationDialogCommand = new DelegateCommand(HideCreatureCreationDialog, o => true);
             CreateCreatureDialogVM = new CreateCreatureDialogVM();
-
-            CreatureList = new List<string> { "One", "Two", "Three" };
-            ;//CreateCreatureDialogVM.creatures;
-        }
+            
+        }    
 
         private void HideCreatureCreationDialog(object obj)
         {

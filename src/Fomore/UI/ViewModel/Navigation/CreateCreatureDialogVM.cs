@@ -15,7 +15,9 @@ namespace Fomore.UI.ViewModel.Navigation
         private Visibility visibility = Visibility.Hidden;
         private string creatureDescription;
         private string creatureName;
-        public static ICollection<Creature> creatures;
+        public  ICollection<Creature> creatures;
+
+        public ICollection<Creature> getCreatures { get { return creatures; } }
 
         public string CreatureName
         {

@@ -10,7 +10,7 @@
     <Grid>
         <StackPanel>
             <Button Content="Create New Creature" Command="{Binding ShowCreatureCreationDialogCommand}"/>
-            <ListBox ItemsSource="{Binding Path=EntitiesStorage}"/>
+            <ListBox ItemsSource="{Binding Path=CreateCreatureDialogVM.getCreatures.Count}"/>
         </StackPanel>
 
         <!-- It's important that this is in the end of the XAML as it needs to be on top of everything else! -->
@@ -33,9 +33,9 @@
                     <TextBlock Margin="5" Text="{Binding Path=Description}"/>
                     <TextBox  Padding="5" Margin="5" Text="{Binding Path=CreateCreatureDialogVM.CreatureDescription, Mode=TwoWay}"  />
 
-                    <Button  Margin="5" Content="{Binding Path=CreateButton}" Command="{Binding Path=CreateCreatureDialogVM.CreateCreatureCommand}"   />
+                    <Button  Margin="5" Content="{Binding Path=CreateButton}" Command="{Binding Path=CreateCreatureDialogVM.CreateCreatureCommand}" Background="{x:Null}"  />
 
-                    <Button  Margin="5" Content="{Binding Path=CancelButton}" Command="{Binding HideCreatureCreationDialogCommand}"  />
+                    <Button  Margin="5" Content="{Binding Path=CancelButton}" Command="{Binding HideCreatureCreationDialogCommand}" Background="{x:Null}"  />
 
                 </StackPanel>
             </Border>
