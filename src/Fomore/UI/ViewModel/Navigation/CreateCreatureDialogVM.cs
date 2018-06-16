@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
+using Core;
 using Fomore.UI.ViewModel.Commands;
 
 namespace Fomore.UI.ViewModel.Navigation
@@ -14,6 +15,7 @@ namespace Fomore.UI.ViewModel.Navigation
         private Visibility visibility = Visibility.Hidden;
         private string creatureDescription;
         private string creatureName;
+        public static ICollection<Creature> creatures;
 
         public string CreatureName
         {
@@ -55,6 +57,7 @@ namespace Fomore.UI.ViewModel.Navigation
         {
             CreateCreatureCommand = new DelegateCommand(CreateCreature, CanCreateCeature);
             CancelCreatureCreationCommand = new StubCommand();
+            creatures = new List<Creature>();
         }
 
         private bool CanCreateCeature(object arg)
@@ -65,7 +68,11 @@ namespace Fomore.UI.ViewModel.Navigation
         private void CreateCreature(object obj)
         {
             Visibility = Visibility.Hidden;
-            CreatureName = String.Empty;
+            Creature creature = new Creature();
+            creature.CreatureName = this.CreatureName;
+            creature.CreatureDescription = this.creatureDescription;
+
+            creatures.Add(creature);
         }
     }
 }

@@ -1,5 +1,7 @@
-﻿using System.Windows;
+﻿using System.Collections.Generic;
+using System.Windows;
 using System.Windows.Input;
+using Core;
 using Fomore.UI.ViewModel.Application;
 using Fomore.UI.ViewModel.Commands;
 
@@ -17,15 +19,25 @@ namespace Fomore.UI.ViewModel.Navigation
         public string CreateButton => "Create";
         public string CancelButton => "Cancel";
 
-        public string CreatureName { get; set; }
-        public string EnterDescription { get; set; }
+        public List<string> CreatureList;
+        
+
         private CreateCreatureDialogVM cretureCreateCreatureDialogVM;
 
         public CreatureTabVM(EntityStorageVM entitiesStorage)
         {
             EntitiesStorage = entitiesStorage;
             ShowCreatureCreationDialogCommand = new DelegateCommand(ShowCreatureCreationDialog, o => true);
+            HideCreatureCreationDialogCommand = new DelegateCommand(HideCreatureCreationDialog, o => true);
             CreateCreatureDialogVM = new CreateCreatureDialogVM();
+
+            CreatureList = new List<string> { "One", "Two", "Three" };
+            ;//CreateCreatureDialogVM.creatures;
+        }
+
+        private void HideCreatureCreationDialog(object obj)
+        {
+            CreateCreatureDialogVM.Visibility = Visibility.Hidden;
         }
 
         private void ShowCreatureCreationDialog(object obj)
@@ -43,7 +55,8 @@ namespace Fomore.UI.ViewModel.Navigation
                 OnPropertyChanged();
             }
         }
-        //not showing
         public ICommand ShowCreatureCreationDialogCommand { get; }
+
+        public ICommand HideCreatureCreationDialogCommand { get; }
     }
 }

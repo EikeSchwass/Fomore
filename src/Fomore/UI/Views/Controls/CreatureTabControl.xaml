@@ -10,11 +10,11 @@
     <Grid>
         <StackPanel>
             <Button Content="Create New Creature" Command="{Binding ShowCreatureCreationDialogCommand}"/>
-            <ListBox x:Name="MyListBox"/>
+            <ListBox ItemsSource="{Binding Path=EntitiesStorage}"/>
         </StackPanel>
 
         <!-- It's important that this is in the end of the XAML as it needs to be on top of everything else! -->
-        <Grid x:Name="CreatureNewBox" Visibility="Collapsed">
+        <Grid x:Name="CreatureNewBox" Visibility="{Binding Path=CreateCreatureDialogVM.Visibility}">
             <Grid Background="Black" Opacity="0.5"/>
             <Border
                 MinWidth="250"
@@ -28,14 +28,14 @@
                     <TextBlock Margin="5" Text="{Binding Path=Header}" FontWeight="Bold" FontFamily="Cambria" />
 
                     <TextBlock Margin="5" Text="{Binding Path=EnterName}"/>
-                    <TextBox x:Name="InputNameTextBox"  Padding="5" Margin="5" Text="{Binding Path=CreatureName, Mode=TwoWay}"  />
+                    <TextBox x:Name="InputNameTextBox"  Padding="5" Margin="5" Text="{Binding Path=CreateCreatureDialogVM.CreatureName, Mode=TwoWay}"  />
 
                     <TextBlock Margin="5" Text="{Binding Path=Description}"/>
-                    <TextBox  Padding="5" Margin="5" Text="{Binding Path=EnterDescription, Mode=TwoWay}"  />
+                    <TextBox  Padding="5" Margin="5" Text="{Binding Path=CreateCreatureDialogVM.CreatureDescription, Mode=TwoWay}"  />
 
-                    <Button  Margin="5" Content="{Binding Path=CreateButton}" Background="{x:Null}"  />
+                    <Button  Margin="5" Content="{Binding Path=CreateButton}" Command="{Binding Path=CreateCreatureDialogVM.CreateCreatureCommand}"   />
 
-                    <Button  Margin="5" Content="{Binding Path=CancelButton}" Background="{x:Null}"  />
+                    <Button  Margin="5" Content="{Binding Path=CancelButton}" Command="{Binding HideCreatureCreationDialogCommand}"  />
 
                 </StackPanel>
             </Border>
