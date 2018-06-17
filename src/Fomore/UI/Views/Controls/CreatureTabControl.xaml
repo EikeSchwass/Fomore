@@ -9,8 +9,30 @@
 
     <Grid>
         <StackPanel>
-            <Button Content="Create New Creature" Command="{Binding ShowCreatureCreationDialogCommand}"/>
-            <ListBox ItemsSource="{Binding Path= EntitiesStorage.Creatures}"/>
+
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+
+                <StackPanel Grid.Column="0" Grid.Row="0">
+                    <Button Content="Create New Creature" Command="{Binding ShowCreatureCreationDialogCommand}"/>
+                </StackPanel>
+
+                <StackPanel Grid.Column="0" Grid.Row="1">
+                    <ListBox ItemsSource="{Binding Path= EntitiesStorage.Creatures}" />
+                </StackPanel>
+
+                <StackPanel Margin="10" Grid.Column="1" Grid.Row="0">
+                    <TextBlock Text="Welcome!"/>
+                </StackPanel>
+            </Grid>
         </StackPanel>
 
         <!-- It's important that this is in the end of the XAML as it needs to be on top of everything else! -->
@@ -21,7 +43,7 @@
                 Background="{StaticResource Level2Brush}" 
                 BorderBrush="Black" 
                 BorderThickness="1" 
-                CornerRadius="0,55,0,55" 
+                CornerRadius="0,0,0,0" 
                 HorizontalAlignment="Center" 
                 VerticalAlignment="Center">
                 <StackPanel>
