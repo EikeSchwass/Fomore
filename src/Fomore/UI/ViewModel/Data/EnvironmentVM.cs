@@ -10,9 +10,7 @@ namespace Fomore.UI.ViewModel.Data
         private DateTime lastAccess;
         private double gravity;
         private double friction;
-
-        /// <inheritdoc />
-
+        
         public string Name
         {
             get => name;
