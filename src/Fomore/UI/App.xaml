@@ -7,8 +7,9 @@
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="Converter/ConverterDictionary.xaml" />
-                <ResourceDictionary Source="Themes/DefaultStylesForUserControls.xaml" />
                 <ResourceDictionary Source="Themes/Generic.xaml" />
+                <ResourceDictionary Source="Themes/DefaultStylesForUserControls.xaml" />
+                <ResourceDictionary Source="Themes/ListBoxStyles.xaml" />
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>

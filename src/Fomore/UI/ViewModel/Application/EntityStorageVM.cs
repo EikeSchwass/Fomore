@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Collections.ObjectModel;
+using System.Linq;
 using Core;
 using Fomore.UI.ViewModel.Commands;
 using Fomore.UI.ViewModel.Data;
@@ -8,16 +9,19 @@ namespace Fomore.UI.ViewModel.Application
 {
     public class EntityStorageVM : ViewModelBase<EntitiyStorage>
     {
-        public ReadOnlyObservableCollection<CreatureVM> Creatures { get; }
-        public ReadOnlyObservableCollection<EnvironmentVM> Environments { get; }
+        public Helper.ReadOnlyObservableCollection<CreatureVM> Creatures { get; }
+        public Helper.ReadOnlyObservableCollection<EnvironmentVM> Environments { get; }
+
+        public Collection<DelegateCommand> EntityDependentCommands { get; set; }
 
         /// <inheritdoc />
         public EntityStorageVM(EntitiyStorage model) : base(model)
         {
-            CreatureCollectionAccess = ReadOnlyObservableCollection<CreatureVM>.Create();
-            EnvironmentCollectionAccess = ReadOnlyObservableCollection<EnvironmentVM>.Create();
+            CreatureCollectionAccess = Helper.ReadOnlyObservableCollection<CreatureVM>.Create();
+            EnvironmentCollectionAccess = Helper.ReadOnlyObservableCollection<EnvironmentVM>.Create();
             Creatures = CreatureCollectionAccess.Collection;
             Environments = EnvironmentCollectionAccess.Collection;
+            EntityDependentCommands = new Collection<DelegateCommand>();
 
             AddCreatureCommand = new DelegateCommand<CreatureVM>(AddCreature, o => true);
             RemoveCreatureCommand = new DelegateCommand<CreatureVM>(RemoveCreature, o => Creatures.Any());

@@ -59,6 +59,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Converter\BooleanVisibilityConverter.cs" />
+    <Compile Include="Converter\DescriptionWidthConverter.cs" />
     <Compile Include="Converter\NumberVisibilityConverter.cs" />
     <Compile Include="ViewModel\Application\AppStateVM.cs" />
     <Compile Include="ViewModel\Application\EntityStorageVM.cs" />
@@ -93,6 +94,10 @@
     <Page Include="Themes\DefaultStylesForUserControls.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Themes\ListBoxStyles.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Views\Controls\CreatureEditorPanel.xaml">
       <SubType>Designer</SubType>
@@ -241,6 +246,11 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="assets\images\terraindummy.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="assets\images\creature_icon.png" />
+    <Resource Include="assets\images\environment_icon.png" />
+    <Resource Include="assets\images\movementpattern_icon.png" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="assets\images\arrowselectionall.png" />
