@@ -29,7 +29,7 @@ namespace Fomore.UI.ViewModel.Navigation
             EntitiesStorage = entitiesStorage;
             ShowCreatureCreationDialogCommand = new DelegateCommand(ShowCreatureCreationDialog, o => true);
             HideCreatureCreationDialogCommand = new DelegateCommand(HideCreatureCreationDialog, o => true);
-            CreateCreatureDialogVM = new CreateCreatureDialogVM();
+            CreateCreatureDialogVM = new CreateCreatureDialogVM(EntitiesStorage);
             
         }    
 

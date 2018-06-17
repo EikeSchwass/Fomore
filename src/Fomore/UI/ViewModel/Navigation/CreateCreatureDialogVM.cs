@@ -6,18 +6,19 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 using Core;
+using Fomore.UI.ViewModel.Application;
 using Fomore.UI.ViewModel.Commands;
+using Fomore.UI.ViewModel.Data;
 
 namespace Fomore.UI.ViewModel.Navigation
 {
     public class CreateCreatureDialogVM : ViewModelBase
     {
+        public EntityStorageVM EntitiesStorage { get; }
         private Visibility visibility = Visibility.Hidden;
         private string creatureDescription;
         private string creatureName;
-        public  ICollection<Creature> creatures;
-
-        public ICollection<Creature> getCreatures { get { return creatures; } }
+        private bool isOpen;
 
         public string CreatureName
         {
@@ -41,6 +42,12 @@ namespace Fomore.UI.ViewModel.Navigation
             }
         }
 
+        public bool IsOpen
+        {
+            get => isOpen;
+            set { isOpen = value; }
+        }
+
         public Visibility Visibility
         {
             get => visibility;
@@ -55,11 +62,11 @@ namespace Fomore.UI.ViewModel.Navigation
         public ICommand CreateCreatureCommand { get; }
         public ICommand CancelCreatureCreationCommand { get; }
 
-        public CreateCreatureDialogVM()
+        public CreateCreatureDialogVM(EntityStorageVM entitiesStorage)
         {
+            EntitiesStorage = entitiesStorage;
             CreateCreatureCommand = new DelegateCommand(CreateCreature, CanCreateCeature);
             CancelCreatureCreationCommand = new StubCommand();
-            creatures = new List<Creature>();
         }
 
         private bool CanCreateCeature(object arg)
@@ -73,8 +80,9 @@ namespace Fomore.UI.ViewModel.Navigation
             Creature creature = new Creature();
             creature.CreatureName = this.CreatureName;
             creature.CreatureDescription = this.creatureDescription;
-
-            creatures.Add(creature);
+            creature.isOpen = this.isOpen;
+            CreatureVM creatureVM = new CreatureVM(creature);
+            EntitiesStorage.AddCreatureCommand.Execute(creatureVM);
         }
     }
 }
