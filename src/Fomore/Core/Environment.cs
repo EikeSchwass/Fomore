@@ -1,6 +1,6 @@
 ﻿namespace Core
 {
-    public class Environment : Entitiy
+    public class Environment
     {
         public Environment()
         {
