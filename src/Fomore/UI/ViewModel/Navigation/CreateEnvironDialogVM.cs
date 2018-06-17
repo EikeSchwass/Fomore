@@ -1,43 +1,37 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Input;
 using Core;
+using Fomore.UI.ViewModel.Application;
 using Fomore.UI.ViewModel.Commands;
-using Environment = Core.Environment;
+using Fomore.UI.ViewModel.Data;
 
 namespace Fomore.UI.ViewModel.Navigation
 {
-    public class CreateEnvironDialogVM : ViewModelBase
+    public class CreateEnvironmentDialogVM : ViewModelBase
     {
+        private string environmentDescription;
+        private string environmentName;
         private Visibility visibility = Visibility.Hidden;
-        public string EnvironmentDescription;
-        public string EnvironmentName;
-        public ICollection<Environment> Environs;
+        public EntityStorageVM EntityStorageVM { get; }
 
-        public ICollection<Environment> GetEnvironments { get { return Environs; } }
-
-        public string EnvironName
+        public string EnvironmentName
         {
-            get => EnvironmentName;
+            get => environmentName;
             set
             {
-                if (value == EnvironmentName) return;
-                EnvironmentName = value;
+                if (value == environmentName) return;
+                environmentName = value;
                 OnPropertyChanged();
             }
         }
 
-        public string EnvironDescription
+        public string EnvironmentDescription
         {
-            get => EnvironmentDescription;
+            get => environmentDescription;
             set
             {
-                if (value == EnvironmentDescription) return;
-                EnvironmentDescription = value;
+                if (value == environmentDescription) return;
+                environmentDescription = value;
                 OnPropertyChanged();
             }
         }
@@ -53,30 +47,23 @@ namespace Fomore.UI.ViewModel.Navigation
             }
         }
 
-        public ICommand CreateEnvironCommand { get; }
-        public ICommand CancelEnvironCreationCommand { get; }
+        public ICommand CreateEnvironmentCommand { get; }
+        public ICommand CancelEnvironmentCreationCommand { get; }
 
-        public CreateEnvironDialogVM()
+        public CreateEnvironmentDialogVM(EntityStorageVM entityStorageVM)
         {
-            CreateEnvironCommand = new DelegateCommand(CreateEnviron, CanCreateEnviron);
-            CancelEnvironCreationCommand = new StubCommand();
-            Environs = new List<Environment>();
+            EntityStorageVM = entityStorageVM;
+            CreateEnvironmentCommand = new DelegateCommand(CreateEnvironment, CanCreateEnvironment);
+            CancelEnvironmentCreationCommand = new StubCommand();
         }
 
-        private bool CanCreateEnviron(object arg)
-        {
-            return true;
-        }
+        private bool CanCreateEnvironment(object arg) => true;
 
-        private void CreateEnviron(object obj)
+        private void CreateEnvironment(object obj)
         {
             Visibility = Visibility.Hidden;
-            Environment Environs = new Environment();
-            Environs.EnvironmentName = this.EnvironmentName;
-            Environs.EnvironmentDescription = this.EnvironmentDescription;
-
-            //Environs.Add(Environs);
+            var environment = new EnvironmentVM(new Environment {Name = EnvironmentName, Description = EnvironmentDescription});
+            EntityStorageVM.AddEnvironmentCommand.Execute(environment);
         }
-
     }
 }

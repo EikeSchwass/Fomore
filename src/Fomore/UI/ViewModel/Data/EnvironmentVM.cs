@@ -1,7 +1,4 @@
-﻿using System.Linq;
-using Core;
-using Fomore.UI.ViewModel.Commands;
-using Fomore.UI.ViewModel.Helper;
+﻿using Core;
 using Fomore.UI.ViewModel.Navigation;
 
 namespace Fomore.UI.ViewModel.Data
@@ -11,27 +8,24 @@ namespace Fomore.UI.ViewModel.Data
     /// </summary>
     public class EnvironmentVM : ViewModelBase<Environment>
     {
-        private string description;
-        private string name;
-
         public string Name
         {
-            get => name;
+            get => Model.Name;
             set
             {
-                if (value == name) return;
-                name = value;
+                if (value == Model.Name) return;
+                Model.Name = value;
                 OnPropertyChanged();
             }
         }
 
         public string Description
         {
-            get => description;
+            get => Model.Description;
             set
             {
-                if (value == description) return;
-                description = value;
+                if (value == Model.Description) return;
+                Model.Description = value;
                 OnPropertyChanged();
             }
         }

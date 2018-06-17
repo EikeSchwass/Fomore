@@ -1,6 +1,4 @@
-﻿using System.Windows;
-
-namespace Fomore.UI.Views.Controls
+﻿namespace Fomore.UI.Views.Controls
 {
     /// <summary>
     /// Interaction logic for EnvironmentTabControl.xaml
@@ -11,21 +9,5 @@ namespace Fomore.UI.Views.Controls
         {
             InitializeComponent();
         }
-
-        private void CreateNewEnvironment_Click(object sender, RoutedEventArgs e)
-        {
-            throw new System.NotImplementedException();
-        }
-
-        private void SaveButton_Click(object sender, RoutedEventArgs e)
-        {
-            throw new System.NotImplementedException();
-        }
-
-        private void CancelButton_Click(object sender, RoutedEventArgs e)
-        {
-            throw new System.NotImplementedException();
-        }
-
     }
 }
