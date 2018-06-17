@@ -8,14 +8,15 @@
              d:DesignHeight="450" d:DesignWidth="800" d:DataContext="{d:DesignInstance navigation:EnvironmentTabVM}">
     <Grid>
         <StackPanel >
-            <Button Content="Add New Environment"  />
+            <Button Content="Add New Environment" Command="{Binding ShowEnvironCreationDialogCommand}" />
+            <ListBox ItemsSource="{Binding Path=EntitiesStorage.Environments}"/>
         </StackPanel>
 
-        <Grid Visibility="Collapsed">
+        <Grid Visibility="{Binding Path=CreateEnvironmentDialogVM.Visibility}">
             <Grid Background="Black" Opacity="0.5"/>
             <Border
-                MinWidth="250"
-                Background="Orange" 
+                MinWidth="400"
+                Background="{StaticResource Level2Brush}" 
                 BorderBrush="Black" 
                 BorderThickness="1" 
                 CornerRadius="0,55,0,55" 
@@ -24,27 +25,32 @@
                 <StackPanel>
                     <TextBlock Margin="5" Text="{Binding Path=Header}" FontWeight="Bold" FontFamily="Cambria" />
 
-                    <TextBlock Margin="5" Text="{Binding Path=EnterName}"/>
-                    <TextBox x:Name="InputNameTextBox"  Padding="5" Margin="5" Text="{Binding Path=EnvironmentName, Mode=TwoWay}"  />
+                    <TextBlock Margin="5" Text="{Binding Path=EnvironmentName}"/>
+                    <TextBox Padding="1" Margin="3" Text="{Binding Path=CreateEnvironmentDialogVM.EnvironmentName, Mode=TwoWay}"  />
 
                     <TextBlock Margin="5" Text="{Binding Path=Description}"/>
-                    <TextBox  Padding="5" Margin="5" Text="{Binding Path=EnterDescription, Mode=TwoWay}"  />
+                    <TextBox  Padding="1" Margin="3" Text="{Binding Path=CreateEnvironmentDialogVM.EnvironmentDescription, Mode=TwoWay}"  />
 
+                    <!-- In my opinion the user shouldn't be forced to make all these settings right now. The name and the description should sufficient to create an environment.
+                    After the user created the environment the environment should be selected and then the user should be able to do the advanced settings in the panel on the right (see Dominicks wireframes).
+                    
                     <TextBlock Margin="5" Text="{Binding Path=Terrain}"/>
-                    <TextBox  Padding="5" Margin="5" Text="{Binding Path=Terrain, Mode=OneWay}"  />
+                    <TextBox  Padding="1" Margin="3" Text="{Binding Path=Terrain, Mode=OneWay}"  />
 
                     <TextBlock Margin="5" Text="{Binding Path=GroundType}"/>
-                    <TextBox  Padding="5" Margin="5" Text="{Binding Path=GroundType, Mode=OneWay}"  />
+                    <TextBox  Padding="1" Margin="3" Text="{Binding Path=GroundType, Mode=OneWay}"  />
 
                     <TextBlock Margin="5" Text="{Binding Path=Gravity}"/>
-                    <TextBox  Padding="5" Margin="5" Text="{Binding Path=Gravity, Mode=OneWay}"  />
+                    <TextBox  Padding="1" Margin="3" Text="{Binding Path=Gravity, Mode=OneWay}"  />
 
                     <TextBlock Margin="5" Text="{Binding Path=Friction}"/>
-                    <TextBox  Padding="5" Margin="5" Text="{Binding Path=Friction, Mode=OneWay}"  />
+                    <TextBox  Padding="1" Margin="3" Text="{Binding Path=Friction, Mode=OneWay}"  />
+                    
+                    -->
 
-                    <Button x:Name="Create" Margin="5" Content="{Binding Path=CreateButton}" Background="{x:Null}" Click="SaveButton_Click" />
+                    <Button Margin="5" Content="{Binding Path=CreateButton}" Command="{Binding Path=CreateEnvironmentDialogVM.CreateEnvironmentCommand}" Background="{x:Null}" />
 
-                    <Button x:Name="Cancel" Margin="5" Content="{Binding Path=CancelButton}" Background="{x:Null}" Click="CancelButton_Click" />
+                    <Button Margin="5" Content="{Binding Path=CancelButton}" Command="{Binding Path=CreateEnvironmentDialogVM.CancelEnvironmentCreationCommand}" Background="{x:Null}" />
 
                 </StackPanel>
             </Border>

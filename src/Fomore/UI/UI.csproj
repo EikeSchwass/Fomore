@@ -139,6 +139,7 @@
     <Compile Include="ViewModel\Helper\CollectionAccess.cs" />
     <Compile Include="ViewModel\Helper\EncapsulatingObservableCollection.cs" />
     <Compile Include="ViewModel\Helper\ReadOnlyObservableCollection.cs" />
+    <Compile Include="ViewModel\Navigation\CreateEnvironDialogVM.cs" />
     <Compile Include="ViewModel\Navigation\CreateCreatureDialogVM.cs" />
     <Compile Include="ViewModel\Navigation\CreatureTabVM.cs" />
     <Compile Include="ViewModel\Navigation\EnvironmentTabVM.cs" />
