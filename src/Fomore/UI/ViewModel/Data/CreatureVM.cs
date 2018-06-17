@@ -9,28 +9,26 @@ namespace Fomore.UI.ViewModel.Data
     /// </summary>
     public class CreatureVM : ViewModelBase<Creature>
     {
-        private string name;
-        private string description;
         private DateTime lastAccess;
 
         public string Name
         {
-            get => name;
+            get => Model.CreatureName;
             set
             {
-                if (value == name) return;
-                name = value;
+                if (value == Model.CreatureName) return;
+                Model.CreatureName = value;
                 OnPropertyChanged();
                 OnAccess();
             }
         }
         public string Description
         {
-            get => description;
+            get => Model.CreatureDescription;
             set
             {
-                if (value == description) return;
-                description = value;
+                if (value == Model.CreatureDescription) return;
+                Model.CreatureDescription = value;
                 OnPropertyChanged();
                 OnAccess();
             }

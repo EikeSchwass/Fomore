@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Input;
 using Core;
 using Fomore.UI.ViewModel.Application;
@@ -14,11 +9,10 @@ namespace Fomore.UI.ViewModel.Navigation
 {
     public class CreateCreatureDialogVM : ViewModelBase
     {
-        public EntityStorageVM EntitiesStorage { get; }
-        private Visibility visibility = Visibility.Hidden;
         private string creatureDescription;
         private string creatureName;
-        private bool isOpen;
+        private Visibility visibility = Visibility.Hidden;
+        public EntityStorageVM EntitiesStorage { get; }
 
         public string CreatureName
         {
@@ -42,11 +36,7 @@ namespace Fomore.UI.ViewModel.Navigation
             }
         }
 
-        public bool IsOpen
-        {
-            get => isOpen;
-            set { isOpen = value; }
-        }
+        public bool IsOpen { get; set; }
 
         public Visibility Visibility
         {
@@ -69,19 +59,13 @@ namespace Fomore.UI.ViewModel.Navigation
             CancelCreatureCreationCommand = new StubCommand();
         }
 
-        private bool CanCreateCeature(object arg)
-        {
-            return true;
-        }
+        private bool CanCreateCeature(object arg) => true;
 
         private void CreateCreature(object obj)
         {
             Visibility = Visibility.Hidden;
-            Creature creature = new Creature();
-            creature.CreatureName = this.CreatureName;
-            creature.CreatureDescription = this.creatureDescription;
-            creature.isOpen = this.isOpen;
-            CreatureVM creatureVM = new CreatureVM(creature);
+            var creature = new Creature {CreatureName = CreatureName, CreatureDescription = creatureDescription};
+            var creatureVM = new CreatureVM(creature);
             EntitiesStorage.AddCreatureCommand.Execute(creatureVM);
         }
     }

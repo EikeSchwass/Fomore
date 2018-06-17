@@ -11,8 +11,6 @@ namespace Fomore.UI.ViewModel.Data
         private double gravity;
         private double friction;
 
-        /// <inheritdoc />
-
         public string Name
         {
             get => name;
