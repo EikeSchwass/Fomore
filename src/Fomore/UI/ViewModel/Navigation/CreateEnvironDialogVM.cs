@@ -14,8 +14,8 @@ namespace Fomore.UI.ViewModel.Navigation
     public class CreateEnvironDialogVM : ViewModelBase
     {
         private Visibility visibility = Visibility.Hidden;
-        private string EnvironmentDescription;
-        private string EnvironmentName;
+        public string EnvironmentDescription;
+        public string EnvironmentName;
         public ICollection<Environment> Environs;
 
         public ICollection<Environment> GetEnvironments { get { return Environs; } }

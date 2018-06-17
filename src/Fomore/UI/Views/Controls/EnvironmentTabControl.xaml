@@ -14,10 +14,10 @@
             <Button Content="Switch to Simulation Tab" Command="{Binding NavigationVM.SwitchToSimulationTabCommand}"/>
             
             <Button Content="Add New Environment" Command="{Binding ShowEnvironCreationDialogCommand}" />
-            <ListBox ItemsSource="{Binding Path=CreateEnvironDialogVM.getEnviron.Count}"/>
+            <ListBox ItemsSource="{Binding Path=Fomore.UI.Navigation.CreateEnvironDialogVM.getEnviron.Count}"/>
         </StackPanel>
 
-        <Grid x:Name="CreatureNewEnvironment" Visibility="{Binding Path=CreateEnvironDialogVM.Visibility}">
+        <Grid x:Name="CreatureNewEnvironment" Visibility="{Binding Path=Fomore.Uni.Navigation.CreateEnvironDialogVM.Visibility}">
             <Grid Background="Black" Opacity="0.5"/>
             <Border
                 MinWidth="400"
@@ -31,7 +31,7 @@
                     <TextBlock Margin="5" Text="{Binding Path=Header}" FontWeight="Bold" FontFamily="Cambria" />
 
                     <TextBlock Margin="5" Text="{Binding Path=EnvironmentName}"/>
-                    <TextBox x:Name="InputNameTextBox"  Padding="1" Margin="3" Text="{Binding Path=CreateCreatureDialogVM.EnvironmentName, Mode=TwoWay}"  />
+                    <TextBox x:Name="InputNameTextBox"  Padding="1" Margin="3" Text="{Binding Path=CreateEnvironDialogVM.EnvironmentName, Mode=TwoWay}"  />
 
                     <TextBlock Margin="5" Text="{Binding Path=Description}"/>
                     <TextBox  Padding="1" Margin="3" Text="{Binding Path=EnterDescription, Mode=TwoWay}"  />
@@ -48,9 +48,9 @@
                     <TextBlock Margin="5" Text="{Binding Path=Friction}"/>
                     <TextBox  Padding="1" Margin="3" Text="{Binding Path=Friction, Mode=OneWay}"  />
 
-                    <Button x:Name="Create" Margin="5" Content="{Binding Path=CreateButton}" Background="{x:Null}" Click="SaveButton_Click" />
+                    <Button x:Name="Create" Margin="5" Content="{Binding Path=CreateButton}" Command="{Binding Path=CreateEnvironDialogVM.CreateEnvironCommand}" Background="{x:Null}" Click="SaveButton_Click" />
 
-                    <Button x:Name="Cancel" Margin="5" Content="{Binding Path=CancelButton}" Background="{x:Null}" Click="CancelButton_Click" />
+                    <Button x:Name="Cancel" Margin="5" Content="{Binding Path=CancelButton}" Command="{Binding HideEnvironCreationDialogCommand}" Background="{x:Null}" Click="CancelButton_Click" />
 
                 </StackPanel>
             </Border>
