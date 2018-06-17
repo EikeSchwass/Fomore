@@ -75,7 +75,7 @@ namespace Fomore.UI.ViewModel.Navigation
             Environs.EnvironmentName = this.EnvironmentName;
             Environs.EnvironmentDescription = this.EnvironmentDescription;
 
-            Environs.Add(Environs);
+            //Environs.Add(Environs);
         }
 
     }
