@@ -106,15 +106,15 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\Controls\CustomizableButton.xaml">
+      <SubType>Designer</SubType>
+      <Generator>XamlIntelliSenseFileGenerator</Generator>
+    </Page>
     <Page Include="Views\Controls\EnvironmentTabControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\Controls\SimulationTabControl.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\Controls\CustomizableButton.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -158,14 +158,14 @@
     <Compile Include="Views\Controls\CreatureTabControl.xaml.cs">
       <DependentUpon>CreatureTabControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\Controls\CustomizableButton.xaml.cs">
+      <DependentUpon>CustomizableButton.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Controls\EnvironmentTabControl.xaml.cs">
       <DependentUpon>EnvironmentTabControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Controls\SimulationTabControl.xaml.cs">
       <DependentUpon>SimulationTabControl.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\Controls\CustomizableButton.xaml.cs">
-      <DependentUpon>CustomizableButton.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Controls\TrainingTabControl.xaml.cs">
       <DependentUpon>TrainingTabControl.xaml</DependentUpon>

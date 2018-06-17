@@ -30,36 +30,10 @@ namespace Fomore.UI.ViewModel.Data
             }
         }
 
-        /// <inheritdoc />
-        private string name;
-        private string description;
         private DateTime lastAccess;
         private double gravity;
         private double friction;
 
-        public string Name
-        {
-            get => name;
-            set
-            {
-                if (value == name) return;
-                name = value;
-                OnPropertyChanged();
-                OnAccess();
-            }
-        }
-
-        public string Description
-        {
-            get => description;
-            set
-            {
-                if (value == description) return;
-                description = value;
-                OnPropertyChanged();
-                OnAccess();
-            }
-        }
 
         public double Gravity
         {
