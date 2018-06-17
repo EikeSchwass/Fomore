@@ -12,14 +12,16 @@
             <Button Content="Switch to Enviroment Tab" Command="{Binding NavigationVM.SwitchToEnvironmentTabCommand}"/>
             <Button Content="Switch to Training Tab" Command="{Binding NavigationVM.SwitchToTrainingTabCommand}"/>
             <Button Content="Switch to Simulation Tab" Command="{Binding NavigationVM.SwitchToSimulationTabCommand}"/>
-            <Button Content="Add New Environment"  />
+            
+            <Button Content="Add New Environment" Command="{Binding ShowEnvironCreationDialogCommand}" />
+            <ListBox ItemsSource="{Binding Path=CreateEnvironDialogVM.getEnviron.Count}"/>
         </StackPanel>
 
-        <Grid x:Name="CreatureNewEnvironment" Visibility="Collapsed">
+        <Grid x:Name="CreatureNewEnvironment" Visibility="{Binding Path=CreateEnvironDialogVM.Visibility}">
             <Grid Background="Black" Opacity="0.5"/>
             <Border
-                MinWidth="250"
-                Background="Orange" 
+                MinWidth="400"
+                Background="{StaticResource Level2Brush}" 
                 BorderBrush="Black" 
                 BorderThickness="1" 
                 CornerRadius="0,55,0,55" 
@@ -28,23 +30,23 @@
                 <StackPanel Grid.Column="0">
                     <TextBlock Margin="5" Text="{Binding Path=Header}" FontWeight="Bold" FontFamily="Cambria" />
 
-                    <TextBlock Margin="5" Text="{Binding Path=EnterName}"/>
-                    <TextBox x:Name="InputNameTextBox"  Padding="5" Margin="5" Text="{Binding Path=EnvironmentName, Mode=TwoWay}"  />
+                    <TextBlock Margin="5" Text="{Binding Path=EnvironmentName}"/>
+                    <TextBox x:Name="InputNameTextBox"  Padding="1" Margin="3" Text="{Binding Path=CreateCreatureDialogVM.EnvironmentName, Mode=TwoWay}"  />
 
                     <TextBlock Margin="5" Text="{Binding Path=Description}"/>
-                    <TextBox  Padding="5" Margin="5" Text="{Binding Path=EnterDescription, Mode=TwoWay}"  />
+                    <TextBox  Padding="1" Margin="3" Text="{Binding Path=EnterDescription, Mode=TwoWay}"  />
 
                     <TextBlock Margin="5" Text="{Binding Path=Terrain}"/>
-                    <TextBox  Padding="5" Margin="5" Text="{Binding Path=Terrain, Mode=OneWay}"  />
+                    <TextBox  Padding="1" Margin="3" Text="{Binding Path=Terrain, Mode=OneWay}"  />
 
                     <TextBlock Margin="5" Text="{Binding Path=GroundType}"/>
-                    <TextBox  Padding="5" Margin="5" Text="{Binding Path=GroundType, Mode=OneWay}"  />
+                    <TextBox  Padding="1" Margin="3" Text="{Binding Path=GroundType, Mode=OneWay}"  />
 
                     <TextBlock Margin="5" Text="{Binding Path=Gravity}"/>
-                    <TextBox  Padding="5" Margin="5" Text="{Binding Path=Gravity, Mode=OneWay}"  />
+                    <TextBox  Padding="1" Margin="3" Text="{Binding Path=Gravity, Mode=OneWay}"  />
 
                     <TextBlock Margin="5" Text="{Binding Path=Friction}"/>
-                    <TextBox  Padding="5" Margin="5" Text="{Binding Path=Friction, Mode=OneWay}"  />
+                    <TextBox  Padding="1" Margin="3" Text="{Binding Path=Friction, Mode=OneWay}"  />
 
                     <Button x:Name="Create" Margin="5" Content="{Binding Path=CreateButton}" Background="{x:Null}" Click="SaveButton_Click" />
 

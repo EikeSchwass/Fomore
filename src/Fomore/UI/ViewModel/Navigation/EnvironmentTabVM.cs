@@ -1,4 +1,10 @@
-﻿using Fomore.UI.ViewModel.Application;
+﻿using System.Collections.Generic;
+using System.Windows;
+using System.Windows.Input;
+using Core;
+using Fomore.UI.ViewModel.Application;
+using Fomore.UI.ViewModel.Commands;
+
 
 namespace Fomore.UI.ViewModel.Navigation
 {
@@ -20,12 +26,44 @@ namespace Fomore.UI.ViewModel.Navigation
         public string CreateButton => "Create";
         public string CancelButton => "Cancel";
 
+        public List<string> EnvironmentList;
+
         public string EnvironmentName { get; set; }
         public string EnterDescription { get; set; }
+
+        private CreateEnvironDialogVM CreateEnvironDialogVM;
 
         public EnvironmentTabVM(EntityStorageVM entitiesStorage)
         {
             EntitiesStorage = entitiesStorage;
+            ShowEnvironCreationDialogCommand = new DelegateCommand(ShowEnvironCreationDialog, o => true);
+            HideEnvironCreationDialogCommand = new DelegateCommand(HideEnvironCreationDialog, o => true);
+            CreateEnvironDialogVM = new CreateEnvironDialogVM();
         }
+
+        private void ShowEnvironCreationDialog(object obj)
+        {
+            CreateEnvironDialogVM.Visibility = Visibility.Visible;
+        }
+
+        private void HideEnvironCreationDialog(object obj)
+        {
+            CreateEnvironDialogVM.Visibility = Visibility.Hidden;
+        }
+
+        public CreateEnvironDialogVM CreateCreatureDialogVM
+        {
+            get => CreateEnvironDialogVM;
+            set
+            {
+                if (Equals(value, CreateEnvironDialogVM)) return;
+                CreateEnvironDialogVM = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public ICommand ShowEnvironCreationDialogCommand { get; }
+
+        public ICommand HideEnvironCreationDialogCommand { get; }
     }
 }

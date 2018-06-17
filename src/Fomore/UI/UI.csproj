@@ -101,6 +101,7 @@
     <Compile Include="ViewModel\Data\MovementPatternVM.cs" />
     <Compile Include="ViewModel\Helper\CollectionAccess.cs" />
     <Compile Include="ViewModel\Helper\ReadOnlyObservableCollection.cs" />
+    <Compile Include="ViewModel\Navigation\CreateEnvironDialogVM.cs" />
     <Compile Include="ViewModel\Navigation\CreatureTabVM.cs" />
     <Compile Include="ViewModel\Navigation\EnvironmentTabVM.cs" />
     <Compile Include="ViewModel\Navigation\NavigationVM.cs" />
