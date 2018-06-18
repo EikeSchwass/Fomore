@@ -44,7 +44,7 @@ namespace Fomore.UI.ViewModel.Navigation
 
             CreatureTab = new CreatureTabVM(entitiesStorage);
             EnvironmentTab = new EnvironmentTabVM(entitiesStorage);
-            TrainingTab = new TrainingTabVM();
+            TrainingTab = new TrainingTabVM(entitiesStorage);
             SimulationTab = new SimulationTabVM(entitiesStorage);
 
             TabCollection = new ObservableCollection<TabPageVM> { CreatureTab, EnvironmentTab, TrainingTab, SimulationTab };
