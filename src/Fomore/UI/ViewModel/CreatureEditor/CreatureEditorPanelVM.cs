@@ -1,4 +1,6 @@
-﻿using Fomore.UI.ViewModel.CreatureEditor.Tools;
+﻿using System.Collections.ObjectModel;
+using Fomore.UI.ViewModel.CreatureEditor.Behaviours;
+using Fomore.UI.ViewModel.CreatureEditor.Tools;
 using Fomore.UI.ViewModel.Data;
 
 namespace Fomore.UI.ViewModel.CreatureEditor
@@ -7,7 +9,10 @@ namespace Fomore.UI.ViewModel.CreatureEditor
     {
         public CreatureVM CreatureVM { get; }
         public ToolCollectionVM ToolCollectionVM { get; }
+        public ObservableCollection<BaseBehaviour> Behaviours { get; }
         public CreatureStructureEditorCanvasVM CreatureStructureEditorCanvasVM { get; }
+
+
 
         public CreatureEditorPanelVM(CreatureVM creatureVM)
         {
@@ -20,6 +25,22 @@ namespace Fomore.UI.ViewModel.CreatureEditor
             ToolCollectionVM.Tools.Add(new PanTool(CreatureStructureEditorCanvasVM));
             ToolCollectionVM.Tools.Add(new PlaceJointTool(CreatureStructureEditorCanvasVM));
             ToolCollectionVM.Tools.Add(new PlaceBoneTool(CreatureStructureEditorCanvasVM));
+
+            Behaviours = new ObservableCollection<BaseBehaviour>
+            {
+                new UndoBehaviour(),
+                new RedoBehaviour(),
+                new CopyBehaviour(),
+                new CutBehaviour(),
+                new PasteBehaviour(),
+                new RotateLeftBehaviour(),
+                new RotateRightBehaviour(),
+                new FlipHorizontalBehaviour(),
+                new FlipVeticalBehaviour(),
+                new SaveBehaviour(),
+                new DeleteBehaviour(),
+                new ClearBehaviour()
+            };
         }
     }
 }

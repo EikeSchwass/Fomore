@@ -6,6 +6,7 @@
              xmlns:creatureEditor="clr-namespace:Fomore.UI.ViewModel.CreatureEditor"
              xmlns:controls="clr-namespace:Fomore.UI.Views.Controls"
              xmlns:tools="clr-namespace:Fomore.UI.ViewModel.CreatureEditor.Tools"
+             xmlns:behaviours="clr-namespace:Fomore.UI.ViewModel.CreatureEditor.Behaviours"
              mc:Ignorable="d"
              d:DesignHeight="450" d:DesignWidth="800"
              d:DataContext="{d:DesignInstance creatureEditor:CreatureEditorPanelVM}">
@@ -14,6 +15,11 @@
             <DataTemplate DataType="{x:Type tools:Tool}">
                 <controls:CustomizableButton Padding="2" Margin="1" IsSelected="{Binding IsSelected}"
                                              Command="{Binding PressedCommand}">
+                    <Image Source="{Binding Path=Image}" Width="32" Height="32" />
+                </controls:CustomizableButton>
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type behaviours:BaseBehaviour}">
+                <controls:CustomizableButton Padding="2" Margin="1" Command="{Binding Command}">
                     <Image Source="{Binding Path=Image}" Width="32" Height="32" />
                 </controls:CustomizableButton>
             </DataTemplate>
@@ -29,8 +35,54 @@
         <!-- Toolbars -->
 
         <!-- General Tools -->
-        <Border BorderThickness="0,0,0,1" Grid.Row="0" Grid.ColumnSpan="2" Style="{StaticResource DefaultBorder}">
-            <Grid Background="{StaticResource Level3Brush}" />
+        <Border BorderThickness="0,0,0,1" Grid.Row="0" Grid.Column="1" HorizontalAlignment="Left" Style="{StaticResource DefaultBorder}">
+            <Grid Background="{StaticResource Level3Brush}">
+                <Grid.Resources>
+                    <CollectionViewSource x:Key="CanvasBehaviourSource" Source="{Binding Path=Behaviours}">
+                        <CollectionViewSource.GroupDescriptions>
+                            <PropertyGroupDescription PropertyName="BehaviourType" />
+                        </CollectionViewSource.GroupDescriptions>
+                    </CollectionViewSource>
+                </Grid.Resources>
+                <ItemsControl Margin="6,4" ItemsSource="{Binding Source={StaticResource CanvasBehaviourSource}}">
+                    <ItemsControl.GroupStyle>
+                        <GroupStyle>
+                            <GroupStyle.Panel>
+                                <ItemsPanelTemplate>
+                                    <StackPanel Orientation="Horizontal" />
+                                </ItemsPanelTemplate>
+                            </GroupStyle.Panel>
+                            <GroupStyle.ContainerStyle>
+                                <Style TargetType="{x:Type GroupItem}">
+                                    <Setter Property="Padding" Value="6" />
+                                    <Setter Property="Background" Value="Black" />
+                                    <Setter Property="Template">
+                                        <Setter.Value>
+                                            <ControlTemplate TargetType="{x:Type GroupItem}">
+                                                <StackPanel Orientation="Horizontal">
+                                                    <ItemsPresenter Margin="5" />
+                                                    <ContentPresenter Content="{TemplateBinding ContentControl.Content}" ContentTemplate="{TemplateBinding ContentControl.ContentTemplate}" ContentStringFormat="{TemplateBinding ContentControl.ContentStringFormat}" />
+                                                </StackPanel>
+                                            </ControlTemplate>
+                                        </Setter.Value>
+                                    </Setter>
+                                </Style>
+                            </GroupStyle.ContainerStyle>
+                            <GroupStyle.HeaderTemplate>
+                                <DataTemplate>
+                                    <Separator Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}" Background="Black" />
+                                </DataTemplate>
+                            </GroupStyle.HeaderTemplate>
+                        </GroupStyle>
+                    </ItemsControl.GroupStyle>
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <StackPanel Orientation="Horizontal" />
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                </ItemsControl>
+                <Separator VerticalAlignment="Bottom" Background="Black" />
+            </Grid>
         </Border>
 
         <!-- Canvas Tools -->
@@ -54,7 +106,7 @@
                                         <Setter.Value>
                                             <ControlTemplate TargetType="{x:Type GroupItem}">
                                                 <StackPanel>
-                                                    <ItemsPresenter Margin="5,5,0,0" />
+                                                    <ItemsPresenter Margin="5" />
                                                     <ContentPresenter Content="{TemplateBinding ContentControl.Content}" ContentTemplate="{TemplateBinding ContentControl.ContentTemplate}" ContentStringFormat="{TemplateBinding ContentControl.ContentStringFormat}" />
                                                 </StackPanel>
                                             </ControlTemplate>
@@ -75,7 +127,7 @@
                         </ItemsPanelTemplate>
                     </ItemsControl.ItemsPanel>
                 </ItemsControl>
-                <Separator HorizontalAlignment="Right" />
+                <Separator Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}" HorizontalAlignment="Right" Background="Black" />
             </Grid>
         </Border>
 

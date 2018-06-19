@@ -65,6 +65,8 @@
     <Compile Include="ViewModel\Application\EntityStorageVM.cs" />
     <Compile Include="ViewModel\Commands\CommandParameters.cs" />
     <Compile Include="ViewModel\Commands\DelegateHandleCommand.cs" />
+    <Compile Include="ViewModel\CreatureEditor\Behaviours\BaseBehaviour.cs" />
+    <Compile Include="ViewModel\CreatureEditor\Behaviours\UndoBehaviour.cs" />
     <Compile Include="ViewModel\CreatureEditor\CreatureEditorPanelVM.cs" />
     <Compile Include="ViewModel\CreatureEditor\CreatureEditorVM.cs" />
     <Compile Include="ViewModel\CreatureEditor\CreatureStructureEditorCanvasVM.cs" />
@@ -256,6 +258,10 @@
     <Resource Include="assets\images\arrowselectionall.png" />
     <Resource Include="assets\images\arrowselectionbones.png" />
     <Resource Include="assets\images\arrowselectionjoints.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="assets\images\fliphorizontal.png" />
+    <Resource Include="assets\images\flipvertical.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
