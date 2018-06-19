@@ -26,11 +26,20 @@
                 </StackPanel>
 
                 <StackPanel Grid.Column="0" Grid.Row="1">
-                    <ListBox ItemsSource="{Binding Path= EntitiesStorage.Creatures}" />
+                    <ListBox ItemsSource="{Binding Path= EntitiesStorage.Creatures}" 
+                             SelectedItem="{Binding SelectedCreature, Mode=TwoWay}"/>
+                    <Button Content="Delete" Height="23" 
+         HorizontalAlignment="Left" 
+         Margin="513,322,0,0"  
+         Name="button1" 
+         VerticalAlignment="Top" Width="75" Command="{Binding Commands}"    
+         CommandParameter="Delete" />
                 </StackPanel>
 
                 <StackPanel Margin="10" Grid.Column="1" Grid.Row="0">
                     <TextBlock Text="Welcome!"/>
+                    <TextBlock Text="You have not ceated any creature"/>
+                    <TextBlock Text="Get Started now"/>
                 </StackPanel>
             </Grid>
         </StackPanel>
@@ -50,9 +59,9 @@
                     <TextBlock Margin="5" Text="{Binding Path=Header}" FontWeight="Bold" FontFamily="Cambria" />
 
                     <TextBlock Margin="5" Text="{Binding Path=EnterName}"/>
-                    <TextBox Padding="5" Margin="5" Text="{Binding Path=CreateCreatureDialogVM.CreatureName, Mode=TwoWay}"  />
+                    <TextBox Padding="5" Margin="5" Text="{Binding Path=CreateCreatureDialogVM.CreatureName, Mode=TwoWay }" />
 
-                    <TextBlock Margin="5" Text="{Binding Path=Description}"/>
+                        <TextBlock Margin="5" Text="{Binding Path=Description}"/>
                     <TextBox  Padding="5" Margin="5" Text="{Binding Path=CreateCreatureDialogVM.CreatureDescription, Mode=TwoWay}"  />
 
                     <CheckBox Command="{Binding Path=CreateCreatureDialogVM.IsOpen, Mode=OneWay}" />
