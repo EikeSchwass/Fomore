@@ -5,6 +5,8 @@
         <Setter Property="IsMouseOverBackground" Value="{StaticResource Level4Brush}" />
         <Setter Property="IsSelectedBackground" Value="{StaticResource Level5Brush}" />
         <Setter Property="IsPressedBackground" Value="{StaticResource Level2Brush}" />
+        <Setter Property="IsDisabledBackground" Value="LightGray" />
+        <Setter Property="IsDisabledGrayOpacity" Value="0.5" />
         <Setter Property="Background" Value="{StaticResource Level3Brush}" />
         <Setter Property="Margin" Value="6,3" />
         <Setter Property="Padding" Value="8,4" />
@@ -13,10 +15,34 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="controls:CustomizableButton">
+                    <Border Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}" Cursor="{TemplateBinding Cursor}"
+                            HorizontalAlignment="{TemplateBinding HorizontalAlignment}"
+                            VerticalAlignment="{TemplateBinding VerticalAlignment}" Margin="{TemplateBinding Margin}">
+                        <Grid HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                              VerticalAlignment="{TemplateBinding VerticalContentAlignment}">
+                            <ContentPresenter Content="{TemplateBinding Content}" Margin="{TemplateBinding Padding}" />
+                            <Rectangle Fill="{TemplateBinding IsDisabledBackground}" x:Name="GrayRectangle">
+                                <Rectangle.Style>
+                                    <Style TargetType="{x:Type Rectangle}">
+                                        <Setter Property="Opacity" Value="0" />
+                                    </Style>
+                                </Rectangle.Style>
+                            </Rectangle>
+                        </Grid>
+                    </Border>
                     <ControlTemplate.Triggers>
                         <DataTrigger Binding="{Binding IsSelected, RelativeSource={RelativeSource Self}}" Value="true">
                             <Setter Property="Background"
                                     Value="{Binding IsSelectedBackground, RelativeSource={RelativeSource Self} }" />
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding IsEnabled, RelativeSource={RelativeSource Self}}" Value="false">
+                            <Setter Property="Opacity" TargetName="GrayRectangle"
+                                    Value="{Binding IsDisabledGrayOpacity, RelativeSource={RelativeSource AncestorType={x:Type controls:CustomizableButton}} }" />
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding IsEnabled, RelativeSource={RelativeSource Self}}" Value="true">
+                            <Setter Property="Opacity" TargetName="GrayRectangle"
+                                    Value="0" />
                         </DataTrigger>
                         <DataTrigger Binding="{Binding IsMouseOver, RelativeSource={RelativeSource Self}}" Value="true">
                             <Setter Property="Background"
@@ -27,13 +53,6 @@
                                     Value="{Binding IsPressedBackground, RelativeSource={RelativeSource Self} }" />
                         </DataTrigger>
                     </ControlTemplate.Triggers>
-                    <Border Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}"
-                            BorderThickness="{TemplateBinding BorderThickness}" Cursor="{TemplateBinding Cursor}"
-                            HorizontalAlignment="{TemplateBinding HorizontalAlignment}"
-                            VerticalAlignment="{TemplateBinding VerticalAlignment}" Margin="{TemplateBinding Margin}"
-                            Padding="{TemplateBinding Padding}">
-                        <ContentPresenter Content="{TemplateBinding Content}" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}" />
-                    </Border>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>

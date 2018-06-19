@@ -66,6 +66,17 @@
     <Compile Include="ViewModel\Commands\CommandParameters.cs" />
     <Compile Include="ViewModel\Commands\DelegateHandleCommand.cs" />
     <Compile Include="ViewModel\CreatureEditor\Behaviours\BaseBehaviour.cs" />
+    <Compile Include="ViewModel\CreatureEditor\Behaviours\ClearBehaviour.cs" />
+    <Compile Include="ViewModel\CreatureEditor\Behaviours\CopyBehaviour.cs" />
+    <Compile Include="ViewModel\CreatureEditor\Behaviours\CutBehaviour.cs" />
+    <Compile Include="ViewModel\CreatureEditor\Behaviours\DeleteBehaviour.cs" />
+    <Compile Include="ViewModel\CreatureEditor\Behaviours\FlipHorizontalBehaviour.cs" />
+    <Compile Include="ViewModel\CreatureEditor\Behaviours\FlipVeticalBehaviour.cs" />
+    <Compile Include="ViewModel\CreatureEditor\Behaviours\PasteBehaviour.cs" />
+    <Compile Include="ViewModel\CreatureEditor\Behaviours\RedoBehaviour.cs" />
+    <Compile Include="ViewModel\CreatureEditor\Behaviours\RotateLeftBehaviour.cs" />
+    <Compile Include="ViewModel\CreatureEditor\Behaviours\RotateRightBehaviour.cs" />
+    <Compile Include="ViewModel\CreatureEditor\Behaviours\SaveBehaviour.cs" />
     <Compile Include="ViewModel\CreatureEditor\Behaviours\UndoBehaviour.cs" />
     <Compile Include="ViewModel\CreatureEditor\CreatureEditorPanelVM.cs" />
     <Compile Include="ViewModel\CreatureEditor\CreatureEditorVM.cs" />
@@ -144,6 +155,7 @@
     <Compile Include="ViewModel\Data\JointVM.cs" />
     <Compile Include="ViewModel\Data\MovementPatternVM.cs" />
     <Compile Include="ViewModel\Helper\CollectionAccess.cs" />
+    <Compile Include="ViewModel\Helper\HistoryStackVM.cs" />
     <Compile Include="ViewModel\Helper\EncapsulatingObservableCollection.cs" />
     <Compile Include="ViewModel\Helper\ReadOnlyObservableCollection.cs" />
     <Compile Include="ViewModel\Navigation\CreateEnvironDialogVM.cs" />

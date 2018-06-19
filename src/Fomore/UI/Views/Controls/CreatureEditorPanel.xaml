@@ -14,12 +14,22 @@
         <Grid.Resources>
             <DataTemplate DataType="{x:Type tools:Tool}">
                 <controls:CustomizableButton Padding="2" Margin="1" IsSelected="{Binding IsSelected}"
-                                             Command="{Binding PressedCommand}">
+                                             Command="{Binding PressedCommand}"  CommandParameter="{Binding Path=DataContext, RelativeSource={RelativeSource AncestorType={x:Type controls:CreatureEditorPanel}}}">
                     <Image Source="{Binding Path=Image}" Width="32" Height="32" />
                 </controls:CustomizableButton>
             </DataTemplate>
             <DataTemplate DataType="{x:Type behaviours:BaseBehaviour}">
-                <controls:CustomizableButton Padding="2" Margin="1" Command="{Binding Command}">
+                <controls:CustomizableButton Padding="2" Margin="1" Command="{Binding Command}" CommandParameter="{Binding Path=DataContext, RelativeSource={RelativeSource AncestorType={x:Type controls:CreatureEditorPanel}}}">
+                    <Image Source="{Binding Path=Image}" Width="32" Height="32" />
+                </controls:CustomizableButton>
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type behaviours:UndoBehaviour}">
+                <controls:CustomizableButton Padding="2" Margin="1" Command="{Binding DataContext.HistoryStack.UndoCommand, RelativeSource={RelativeSource AncestorType={x:Type controls:CreatureEditorPanel}}}">
+                    <Image Source="{Binding Path=Image}" Width="32" Height="32" />
+                </controls:CustomizableButton>
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type behaviours:RedoBehaviour}">
+                <controls:CustomizableButton Padding="2" Margin="1" Command="{Binding DataContext.HistoryStack.RedoCommand, RelativeSource={RelativeSource AncestorType={x:Type controls:CreatureEditorPanel}}}">
                     <Image Source="{Binding Path=Image}" Width="32" Height="32" />
                 </controls:CustomizableButton>
             </DataTemplate>

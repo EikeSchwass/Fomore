@@ -17,10 +17,7 @@ namespace Fomore.UI.ViewModel.CreatureEditor.Tools
         protected bool IsDragging { get; private set; }
 
         /// <inheritdoc />
-        public PanTool(CreatureStructureEditorCanvasVM canvasVM) : base(canvasVM) { }
-
-        /// <inheritdoc />
-        public override bool OnCanvasMouseMove(MouseInfo mouseInfo)
+        public override bool OnCanvasMouseMove(MouseInfo mouseInfo, CreatureStructureEditorCanvasVM canvasVM)
         {
             if (!IsDragging) return true;
 
@@ -28,14 +25,14 @@ namespace Fomore.UI.ViewModel.CreatureEditor.Tools
             double deltaY = (mouseInfo.AbosultePosition - StartPosition).Y;
             StartPosition = mouseInfo.AbosultePosition;
 
-            CanvasVM.CameraVM.OffsetX += deltaX;
-            CanvasVM.CameraVM.OffsetY += deltaY;
+            canvasVM.CameraVM.OffsetX += deltaX;
+            canvasVM.CameraVM.OffsetY += deltaY;
 
             return true;
         }
 
         /// <inheritdoc />
-        public override bool OnCanvasMouseDown(MouseInfo mouseInfo)
+        public override bool OnCanvasMouseDown(MouseInfo mouseInfo, CreatureStructureEditorCanvasVM canvasVM)
         {
             IsDragging = true;
             StartPosition = mouseInfo.AbosultePosition;
@@ -44,16 +41,16 @@ namespace Fomore.UI.ViewModel.CreatureEditor.Tools
         }
 
         /// <inheritdoc />
-        public override bool OnCanvasMouseUp(MouseInfo mouseInfo)
+        public override bool OnCanvasMouseUp(MouseInfo mouseInfo, CreatureStructureEditorCanvasVM canvasVM)
         {
             IsDragging = false;
             return false;
         }
 
         /// <inheritdoc />
-        public override void OnCanvasMouseLeave()
+        public override void OnCanvasMouseLeave(CreatureStructureEditorCanvasVM canvasVM)
         {
-            OnCanvasMouseUp(default(MouseInfo));
+            OnCanvasMouseUp(default(MouseInfo), canvasVM);
         }
     }
 }

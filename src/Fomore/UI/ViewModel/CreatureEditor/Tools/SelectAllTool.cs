@@ -11,7 +11,5 @@ namespace Fomore.UI.ViewModel.CreatureEditor.Tools
         /// <inheritdoc />
         public override ToolType ToolType { get; } = ToolType.SelectionTool;
 
-        /// <inheritdoc />
-        public SelectAllTool(CreatureStructureEditorCanvasVM canvasVM) : base(canvasVM) { }
     }
 }

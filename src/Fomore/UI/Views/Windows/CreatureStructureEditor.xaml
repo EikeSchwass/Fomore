@@ -40,8 +40,8 @@
                     </Grid.RowDefinitions>
                     <TextBlock Grid.Row="0" Grid.Column="0" Text="Bone Count" />
                     <TextBlock Grid.Row="1" Grid.Column="0" Text="Joint Count" />
-                    <TextBlock Grid.Row="0" Grid.Column="1" Text="{Binding CreatureVM.CreatureStructureVM.BoneCollectionVM.Count}" />
-                    <TextBlock Grid.Row="1" Grid.Column="1" Text="{Binding CreatureVM.CreatureStructureVM.JointCollectionVM.Count}" />
+                    <TextBlock Grid.Row="0" Grid.Column="1" Text="{Binding CreatureHistoryStackVM.Current.CreatureStructureVM.BoneCollectionVM.Count}" />
+                    <TextBlock Grid.Row="1" Grid.Column="1" Text="{Binding CreatureHistoryStackVM.Current.CreatureStructureVM.JointCollectionVM.Count}" />
                 </Grid>
             </Grid>
         </Grid>

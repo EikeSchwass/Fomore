@@ -1,6 +1,5 @@
 ﻿using System.Windows;
 using System.Windows.Media;
-using Fomore.UI.ViewModel.CreatureEditor.Tools;
 
 namespace Fomore.UI.Views.Controls
 {
@@ -9,17 +8,38 @@ namespace Fomore.UI.Views.Controls
     /// </summary>
     public partial class CustomizableButton
     {
-        public static readonly DependencyProperty ToolProperty =
-            DependencyProperty.Register("Tool", typeof(Tool), typeof(CustomizableButton), new PropertyMetadata(default(Tool)));
-
         public static readonly DependencyProperty IsSelectedProperty =
             DependencyProperty.Register("IsSelected", typeof(bool), typeof(CustomizableButton), new PropertyMetadata(default(bool)));
 
-        public Tool Tool
-        {
-            get => (Tool)GetValue(ToolProperty);
-            set => SetValue(ToolProperty, value);
-        }
+        public static readonly DependencyProperty IsDisabledBackgroundProperty =
+            DependencyProperty.Register("IsDisabledBackground",
+                                        typeof(Brush),
+                                        typeof(CustomizableButton),
+                                        new PropertyMetadata(default(Brush)));
+
+        public static readonly DependencyProperty IsSelectedBackgroundProperty =
+            DependencyProperty.Register("IsSelectedBackground",
+                                        typeof(Brush),
+                                        typeof(CustomizableButton),
+                                        new PropertyMetadata(default(Brush)));
+
+        public static readonly DependencyProperty IsMouseOverBackgroundProperty =
+            DependencyProperty.Register("IsMouseOverBackground",
+                                        typeof(Brush),
+                                        typeof(CustomizableButton),
+                                        new PropertyMetadata(default(Brush)));
+
+        public static readonly DependencyProperty IsPressedBackgroundProperty =
+            DependencyProperty.Register("IsPressedBackground",
+                                        typeof(Brush),
+                                        typeof(CustomizableButton),
+                                        new PropertyMetadata(default(Brush)));
+
+        public static readonly DependencyProperty IsDisabledGrayOpacityProperty =
+            DependencyProperty.Register("IsDisabledGrayOpacity",
+                                        typeof(double),
+                                        typeof(CustomizableButton),
+                                        new PropertyMetadata(default(double)));
 
         public bool IsSelected
         {
@@ -27,17 +47,23 @@ namespace Fomore.UI.Views.Controls
             set => SetValue(IsSelectedProperty, value);
         }
 
-        public static readonly DependencyProperty IsSelectedBackgroundProperty = DependencyProperty.Register("IsSelectedBackground", typeof(Brush), typeof(CustomizableButton), new PropertyMetadata(default(Brush)));
+        public double IsDisabledGrayOpacity
+        {
+            get => (double)GetValue(IsDisabledGrayOpacityProperty);
+            set => SetValue(IsDisabledGrayOpacityProperty, value);
+        }
+
+        public Brush IsDisabledBackground
+        {
+            get => (Brush)GetValue(IsDisabledBackgroundProperty);
+            set => SetValue(IsDisabledBackgroundProperty, value);
+        }
 
         public Brush IsSelectedBackground
         {
-            get { return (Brush)GetValue(IsSelectedBackgroundProperty); }
-            set { SetValue(IsSelectedBackgroundProperty, value); }
+            get => (Brush)GetValue(IsSelectedBackgroundProperty);
+            set => SetValue(IsSelectedBackgroundProperty, value);
         }
-
-        public static readonly DependencyProperty IsMouseOverBackgroundProperty = DependencyProperty.Register("IsMouseOverBackground", typeof(Brush), typeof(CustomizableButton), new PropertyMetadata(default(Brush)));
-
-        public static readonly DependencyProperty IsPressedBackgroundProperty = DependencyProperty.Register("IsPressedBackground", typeof(Brush), typeof(CustomizableButton), new PropertyMetadata(default(Brush)));
 
         public Brush IsPressedBackground
         {

@@ -13,7 +13,6 @@ namespace Fomore.UI.ViewModel.CreatureEditor.Tools
             DependencyProperty.Register("IsSelected", typeof(bool), typeof(Tool), new PropertyMetadata(default(bool)));
 
         private Cursor currentCursor;
-        public CreatureStructureEditorCanvasVM CanvasVM { get; }
         public abstract ImageSource Image { get; }
 
         public abstract ToolType ToolType { get; }
@@ -35,12 +34,11 @@ namespace Fomore.UI.ViewModel.CreatureEditor.Tools
             private set => SetValue(IsSelectedProperty, value);
         }
 
-        public DelegateCommand PressedCommand { get; }
+        public DelegateCommand<CreatureEditorPanelVM> PressedCommand { get; }
 
-        protected Tool(CreatureStructureEditorCanvasVM canvasVM)
+        protected Tool()
         {
-            CanvasVM = canvasVM;
-            PressedCommand = new DelegateCommand(o => SelectionRequested?.Invoke(this, new ToolEventArgs(this)), o => CanBeSelected());
+            PressedCommand = new DelegateCommand<CreatureEditorPanelVM>(o => SelectionRequested?.Invoke(this, new ToolEventArgs(this, o.CreatureStructureEditorCanvasVM)), o => CanBeSelected());
         }
 
         public event ToolEventHandler SelectionRequested;
@@ -59,15 +57,15 @@ namespace Fomore.UI.ViewModel.CreatureEditor.Tools
             OnDeselected();
         }
 
-        public virtual bool OnCanvasMouseDown(MouseInfo mouseInfo) => false;
-        public virtual bool OnCanvasMouseMove(MouseInfo mouseInfo) => false;
-        public virtual bool OnCanvasMouseUp(MouseInfo mouseInfo) => false;
-        public virtual void OnCanvasMouseEnter() { }
-        public virtual void OnCanvasMouseLeave() { }
+        public virtual bool OnCanvasMouseDown(MouseInfo mouseInfo, CreatureStructureEditorCanvasVM canvasVM) => false;
+        public virtual bool OnCanvasMouseMove(MouseInfo mouseInfo, CreatureStructureEditorCanvasVM canvasVM) => false;
+        public virtual bool OnCanvasMouseUp(MouseInfo mouseInfo, CreatureStructureEditorCanvasVM canvasVM) => false;
+        public virtual void OnCanvasMouseEnter( CreatureStructureEditorCanvasVM canvasVM) { }
+        public virtual void OnCanvasMouseLeave( CreatureStructureEditorCanvasVM canvasVM) { }
 
-        public virtual bool OnCanvasMouseWheel(MouseWheelInfo mouseWheelInfo)
+        public virtual bool OnCanvasMouseWheel(MouseWheelInfo mouseWheelInfo, CreatureStructureEditorCanvasVM canvasVM)
         {
-            CanvasVM.CameraVM.ZoomFactor += mouseWheelInfo.MouseWheelDelta / 1200;
+            canvasVM.CameraVM.ZoomFactor += mouseWheelInfo.MouseWheelDelta / 1200;
             return true;
         }
 

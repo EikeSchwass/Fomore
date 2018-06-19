@@ -2,29 +2,28 @@
 using Fomore.UI.ViewModel.CreatureEditor.Behaviours;
 using Fomore.UI.ViewModel.CreatureEditor.Tools;
 using Fomore.UI.ViewModel.Data;
+using Fomore.UI.ViewModel.Helper;
 
 namespace Fomore.UI.ViewModel.CreatureEditor
 {
     public class CreatureEditorPanelVM
     {
-        public CreatureVM CreatureVM { get; }
+        public HistoryStackVM<CreatureVM> HistoryStack { get; }
         public ToolCollectionVM ToolCollectionVM { get; }
         public ObservableCollection<BaseBehaviour> Behaviours { get; }
         public CreatureStructureEditorCanvasVM CreatureStructureEditorCanvasVM { get; }
 
-
-
-        public CreatureEditorPanelVM(CreatureVM creatureVM)
+        public CreatureEditorPanelVM(HistoryStackVM<CreatureVM> historyStack)
         {
-            CreatureVM = creatureVM;
+            HistoryStack = historyStack;
             ToolCollectionVM = new ToolCollectionVM();
-            CreatureStructureEditorCanvasVM = new CreatureStructureEditorCanvasVM(CreatureVM, ToolCollectionVM);
-            ToolCollectionVM.Tools.Add(new SelectAllTool(CreatureStructureEditorCanvasVM));
-            ToolCollectionVM.Tools.Add(new SelectJointsTool(CreatureStructureEditorCanvasVM));
-            ToolCollectionVM.Tools.Add(new SelectBonesTool(CreatureStructureEditorCanvasVM));
-            ToolCollectionVM.Tools.Add(new PanTool(CreatureStructureEditorCanvasVM));
-            ToolCollectionVM.Tools.Add(new PlaceJointTool(CreatureStructureEditorCanvasVM));
-            ToolCollectionVM.Tools.Add(new PlaceBoneTool(CreatureStructureEditorCanvasVM));
+            ToolCollectionVM.Tools.Add(new SelectAllTool());
+            ToolCollectionVM.Tools.Add(new SelectJointsTool());
+            ToolCollectionVM.Tools.Add(new SelectBonesTool());
+            ToolCollectionVM.Tools.Add(new PanTool());
+            ToolCollectionVM.Tools.Add(new PlaceJointTool());
+            ToolCollectionVM.Tools.Add(new PlaceBoneTool());
+            CreatureStructureEditorCanvasVM = new CreatureStructureEditorCanvasVM(HistoryStack, ToolCollectionVM);
 
             Behaviours = new ObservableCollection<BaseBehaviour>
             {

@@ -10,74 +10,79 @@ namespace Fomore.UI.ViewModel.CreatureEditor.Tools
 {
     public class PlaceJointTool : Tool
     {
+        private CreatureStructureEditorCanvasVM CanvasVM { get; set; }
+
         /// <inheritdoc />
         public override ImageSource Image { get; } = new BitmapImage(new Uri("/assets/images/joint.png", UriKind.Relative));
 
         /// <inheritdoc />
         public override ToolType ToolType { get; } = ToolType.PlacementTool;
 
-        private PanTool PanTool { get; }
+        private PanTool PanTool { get; } = new PanTool();
 
         /// <inheritdoc />
-        public PlaceJointTool(CreatureStructureEditorCanvasVM canvasVM) : base(canvasVM)
+        public override bool OnCanvasMouseDown(MouseInfo mouseInfo, CreatureStructureEditorCanvasVM canvasVM)
         {
-            PanTool = new PanTool(canvasVM);
-        }
-
-        /// <inheritdoc />
-        public override bool OnCanvasMouseDown(MouseInfo mouseInfo)
-        {
+            CanvasVM = CanvasVM ?? canvasVM;
             if (mouseInfo.MiddleMouseButtonDown)
-                return PanTool.OnCanvasMouseDown(mouseInfo);
+                return PanTool.OnCanvasMouseDown(mouseInfo, canvasVM);
 
-            var jointVM = new JointVM(new Joint { Position = CanvasVM.PreviewJoint.Position });
-            CanvasVM.CreatureVM.CreatureStructureVM.JointCollectionVM.Add(jointVM);
+            var jointVM = new JointVM(new Joint { Position = canvasVM.PreviewJoint.Position });
+            var creatureVM = canvasVM.HistoryStack.Current.Clone();
+            creatureVM.CreatureStructureVM.JointCollectionVM.Add(jointVM);
+            canvasVM.HistoryStack.NewEntry(creatureVM);
 
             return true;
         }
 
         /// <inheritdoc />
-        public override bool OnCanvasMouseUp(MouseInfo mouseInfo)
+        public override bool OnCanvasMouseUp(MouseInfo mouseInfo, CreatureStructureEditorCanvasVM canvasVM)
         {
-            PanTool.OnCanvasMouseUp(mouseInfo);
+            CanvasVM = CanvasVM ?? canvasVM;
+            PanTool.OnCanvasMouseUp(mouseInfo, canvasVM);
             return false;
         }
 
         /// <inheritdoc />
-        public override bool OnCanvasMouseMove(MouseInfo mouseInfo)
+        public override bool OnCanvasMouseMove(MouseInfo mouseInfo, CreatureStructureEditorCanvasVM canvasVM)
         {
-            PanTool.OnCanvasMouseMove(mouseInfo);
-            CanvasVM.PreviewJoint.Visibility = Visibility.Visible;
-            CanvasVM.PreviewJoint.Position = new Vector2(mouseInfo.RelativePosition.X - CanvasVM.PreviewJoint.JointSize / 2, mouseInfo.RelativePosition.Y - CanvasVM.PreviewJoint.JointSize / 2);
+            CanvasVM = CanvasVM ?? canvasVM;
+            PanTool.OnCanvasMouseMove(mouseInfo, canvasVM);
+            canvasVM.PreviewJoint.Visibility = Visibility.Visible;
+            canvasVM.PreviewJoint.Position = new Vector2(mouseInfo.RelativePosition.X - canvasVM.PreviewJoint.JointSize / 2, mouseInfo.RelativePosition.Y - canvasVM.PreviewJoint.JointSize / 2);
             return false;
         }
 
         /// <inheritdoc />
         public override void OnDeselected()
         {
-            CanvasVM.PreviewJoint.Visibility = Visibility.Hidden;
+            if (CanvasVM != null)
+                CanvasVM.PreviewJoint.Visibility = Visibility.Hidden;
         }
 
         /// <inheritdoc />
-        public override bool OnCanvasMouseWheel(MouseWheelInfo mouseWheelInfo)
+        public override bool OnCanvasMouseWheel(MouseWheelInfo mouseWheelInfo, CreatureStructureEditorCanvasVM canvasVM)
         {
-            bool result = base.OnCanvasMouseWheel(mouseWheelInfo);
-            CanvasVM.PreviewJoint.Visibility = Visibility.Hidden;
+            CanvasVM = CanvasVM ?? canvasVM;
+            bool result = base.OnCanvasMouseWheel(mouseWheelInfo, canvasVM);
+            canvasVM.PreviewJoint.Visibility = Visibility.Hidden;
             return result;
         }
 
         /// <inheritdoc />
-        public override void OnCanvasMouseLeave()
+        public override void OnCanvasMouseLeave(CreatureStructureEditorCanvasVM canvasVM)
         {
-            CanvasVM.PreviewJoint.Visibility = Visibility.Hidden;
-            PanTool.OnCanvasMouseLeave();
+            CanvasVM = CanvasVM ?? canvasVM;
+            canvasVM.PreviewJoint.Visibility = Visibility.Hidden;
+            PanTool.OnCanvasMouseLeave(canvasVM);
         }
 
         /// <inheritdoc />
-        public override void OnCanvasMouseEnter()
+        public override void OnCanvasMouseEnter(CreatureStructureEditorCanvasVM canvasVM)
         {
-            CanvasVM.PreviewJoint.Visibility = Visibility.Visible;
-            PanTool.OnCanvasMouseEnter();
+            CanvasVM = CanvasVM ?? canvasVM;
+            canvasVM.PreviewJoint.Visibility = Visibility.Visible;
+            PanTool.OnCanvasMouseEnter(canvasVM);
         }
     }
 }

@@ -7,7 +7,7 @@ namespace Fomore.UI.ViewModel.Data
     /// <summary>
     /// The Viewmodel that encapsulates the Creature class
     /// </summary>
-    public class CreatureVM : ViewModelBase<Creature>
+    public class CreatureVM : ViewModelBase<Creature>, ICloneable<CreatureVM>
     {
         private DateTime lastAccess;
 
@@ -60,6 +60,12 @@ namespace Fomore.UI.ViewModel.Data
         private void OnAccess()
         {
             LastAccess = DateTime.Now;
+        }
+
+        /// <inheritdoc />
+        public CreatureVM Clone()
+        {
+            return new CreatureVM(Model.Clone());
         }
     }
 }

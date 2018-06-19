@@ -12,7 +12,5 @@ namespace Fomore.UI.ViewModel.CreatureEditor.Tools
         /// <inheritdoc />
         public override ToolType ToolType { get; } = ToolType.PlacementTool;
 
-        /// <inheritdoc />
-        public PlaceBoneTool(CreatureStructureEditorCanvasVM canvasVM) : base(canvasVM) { }
     }
 }

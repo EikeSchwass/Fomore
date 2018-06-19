@@ -49,9 +49,9 @@
                    Stretch="None" />
         </Grid>
         <!-- Bones -->
-        <ItemsControl ItemsSource="{Binding CreatureVM.CreatureStructureVM.BoneCollectionVM}" />
+        <ItemsControl ItemsSource="{Binding HistoryStack.Current.CreatureStructureVM.BoneCollectionVM}" />
         <!-- Joints -->
-        <ItemsControl DataContext="{Binding Path=CreatureVM.CreatureStructureVM.JointCollectionVM}" ItemsSource="{Binding}" >
+        <ItemsControl DataContext="{Binding HistoryStack.Current.CreatureStructureVM.JointCollectionVM}" ItemsSource="{Binding}" >
             <ItemsControl.ItemTemplate>
                 <DataTemplate DataType="{x:Type data:JointVM}">
                     <Ellipse Width="8" Height="8" Fill="Red" Stroke="Gray" StrokeThickness="0.1" />

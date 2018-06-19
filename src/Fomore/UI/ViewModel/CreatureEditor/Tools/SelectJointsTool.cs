@@ -9,7 +9,5 @@ namespace Fomore.UI.ViewModel.CreatureEditor.Tools
         /// <inheritdoc />
         public override ImageSource Image { get; } = new BitmapImage(new Uri("/assets/images/arrowselectionjoints.png", UriKind.Relative));
 
-        /// <inheritdoc />
-        public SelectJointsTool(CreatureStructureEditorCanvasVM canvasVM) : base(canvasVM) { }
     }
 }
