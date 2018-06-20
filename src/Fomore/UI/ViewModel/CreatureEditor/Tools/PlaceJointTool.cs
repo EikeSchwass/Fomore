@@ -18,14 +18,12 @@ namespace Fomore.UI.ViewModel.CreatureEditor.Tools
         /// <inheritdoc />
         public override ToolType ToolType { get; } = ToolType.PlacementTool;
 
-        private PanTool PanTool { get; } = new PanTool();
-
         /// <inheritdoc />
         public override bool OnCanvasMouseDown(MouseInfo mouseInfo, CreatureStructureEditorCanvasVM canvasVM)
         {
             CanvasVM = CanvasVM ?? canvasVM;
-            if (mouseInfo.MiddleMouseButtonDown)
-                return PanTool.OnCanvasMouseDown(mouseInfo, canvasVM);
+            if (base.OnCanvasMouseDown(mouseInfo, canvasVM))
+                return true;
 
             var jointVM = new JointVM(new Joint { Position = canvasVM.PreviewJoint.Position });
             var creatureVM = canvasVM.HistoryStack.Current.Clone();
@@ -39,7 +37,8 @@ namespace Fomore.UI.ViewModel.CreatureEditor.Tools
         public override bool OnCanvasMouseUp(MouseInfo mouseInfo, CreatureStructureEditorCanvasVM canvasVM)
         {
             CanvasVM = CanvasVM ?? canvasVM;
-            PanTool.OnCanvasMouseUp(mouseInfo, canvasVM);
+            if (base.OnCanvasMouseUp(mouseInfo, canvasVM))
+                return true;
             return false;
         }
 
@@ -47,9 +46,10 @@ namespace Fomore.UI.ViewModel.CreatureEditor.Tools
         public override bool OnCanvasMouseMove(MouseInfo mouseInfo, CreatureStructureEditorCanvasVM canvasVM)
         {
             CanvasVM = CanvasVM ?? canvasVM;
-            PanTool.OnCanvasMouseMove(mouseInfo, canvasVM);
+            if (base.OnCanvasMouseMove(mouseInfo, canvasVM))
+                return true;
             canvasVM.PreviewJoint.Visibility = Visibility.Visible;
-            canvasVM.PreviewJoint.Position = new Vector2(mouseInfo.RelativePosition.X - canvasVM.PreviewJoint.JointSize / 2, mouseInfo.RelativePosition.Y - canvasVM.PreviewJoint.JointSize / 2);
+            canvasVM.PreviewJoint.Position = new Vector2(mouseInfo.RelativePosition.X, mouseInfo.RelativePosition.Y);
             return false;
         }
 
@@ -73,16 +73,16 @@ namespace Fomore.UI.ViewModel.CreatureEditor.Tools
         public override void OnCanvasMouseLeave(CreatureStructureEditorCanvasVM canvasVM)
         {
             CanvasVM = CanvasVM ?? canvasVM;
+            base.OnCanvasMouseLeave(canvasVM);
             canvasVM.PreviewJoint.Visibility = Visibility.Hidden;
-            PanTool.OnCanvasMouseLeave(canvasVM);
         }
 
         /// <inheritdoc />
         public override void OnCanvasMouseEnter(CreatureStructureEditorCanvasVM canvasVM)
         {
             CanvasVM = CanvasVM ?? canvasVM;
+            base.OnCanvasMouseEnter(canvasVM);
             canvasVM.PreviewJoint.Visibility = Visibility.Visible;
-            PanTool.OnCanvasMouseEnter(canvasVM);
         }
     }
 }

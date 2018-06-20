@@ -59,7 +59,9 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Converter\BooleanVisibilityConverter.cs" />
+    <Compile Include="Converter\CenterElementConverter.cs" />
     <Compile Include="Converter\DescriptionWidthConverter.cs" />
+    <Compile Include="Converter\ItemInCollectionVisibilityConverter.cs" />
     <Compile Include="Converter\NumberVisibilityConverter.cs" />
     <Compile Include="ViewModel\Application\AppStateVM.cs" />
     <Compile Include="ViewModel\Application\EntityStorageVM.cs" />
@@ -81,7 +83,9 @@
     <Compile Include="ViewModel\CreatureEditor\CreatureEditorPanelVM.cs" />
     <Compile Include="ViewModel\CreatureEditor\CreatureEditorVM.cs" />
     <Compile Include="ViewModel\CreatureEditor\CreatureStructureEditorCanvasVM.cs" />
+    <Compile Include="ViewModel\CreatureEditor\PreviewBoneVM.cs" />
     <Compile Include="ViewModel\CreatureEditor\PreviewJointVM.cs" />
+    <Compile Include="ViewModel\CreatureEditor\SelectionVM.cs" />
     <Compile Include="ViewModel\CreatureEditor\ToolCollectionVM.cs" />
     <Compile Include="ViewModel\CreatureEditor\Tools\PanTool.cs" />
     <Compile Include="ViewModel\CreatureEditor\Tools\PlaceBoneTool.cs" />
@@ -157,7 +161,9 @@
     <Compile Include="ViewModel\Helper\CollectionAccess.cs" />
     <Compile Include="ViewModel\Helper\HistoryStackVM.cs" />
     <Compile Include="ViewModel\Helper\EncapsulatingObservableCollection.cs" />
+    <Compile Include="ViewModel\Helper\ImageSourceExtensions.cs" />
     <Compile Include="ViewModel\Helper\ReadOnlyObservableCollection.cs" />
+    <Compile Include="ViewModel\Helper\VectorExtensions.cs" />
     <Compile Include="ViewModel\Navigation\CreateEnvironDialogVM.cs" />
     <Compile Include="ViewModel\Navigation\CreateCreatureDialogVM.cs" />
     <Compile Include="ViewModel\Navigation\CreatureTabVM.cs" />
@@ -167,7 +173,7 @@
     <Compile Include="ViewModel\Navigation\TabPageVM.cs" />
     <Compile Include="ViewModel\Navigation\TrainingTabVM.cs" />
     <Compile Include="ViewModel\ViewModelBase.cs" />
-    <Compile Include="Views\Controls\CameraVM.cs" />
+    <Compile Include="ViewModel\CreatureEditor\CameraVM.cs" />
     <Compile Include="Views\Controls\CreatureEditorPanel.xaml.cs">
       <DependentUpon>CreatureEditorPanel.xaml</DependentUpon>
     </Compile>
@@ -183,6 +189,7 @@
     <Compile Include="Views\Controls\EnvironmentTabControl.xaml.cs">
       <DependentUpon>EnvironmentTabControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\Controls\NoSizeDecorator.cs" />
     <Compile Include="Views\Controls\SimulationTabControl.xaml.cs">
       <DependentUpon>SimulationTabControl.xaml</DependentUpon>
     </Compile>

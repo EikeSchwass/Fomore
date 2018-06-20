@@ -7,7 +7,6 @@ namespace Fomore.UI.ViewModel.CreatureEditor
     {
         private Vector2 position;
         private Visibility visibility = Visibility.Hidden;
-        public double JointSize => 8;
 
         public Vector2 Position
         {

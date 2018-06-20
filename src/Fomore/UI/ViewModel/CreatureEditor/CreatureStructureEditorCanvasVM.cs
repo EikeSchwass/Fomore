@@ -1,11 +1,14 @@
 ﻿using System;
+using System.Collections.ObjectModel;
+using System.ComponentModel;
+using System.Linq;
 using System.Windows;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using Fomore.UI.ViewModel.Commands;
+using Fomore.UI.ViewModel.CreatureEditor.Tools;
 using Fomore.UI.ViewModel.Data;
 using Fomore.UI.ViewModel.Helper;
-using Fomore.UI.Views.Controls;
 using Microsoft.Win32;
 
 namespace Fomore.UI.ViewModel.CreatureEditor
@@ -14,12 +17,19 @@ namespace Fomore.UI.ViewModel.CreatureEditor
     {
         private ImageSource backgroundImageSource;
 
-        public CameraVM CameraVM { get; }
-        public HistoryStackVM<CreatureVM> HistoryStack { get; }
-        public ToolCollectionVM ToolCollectionVM { get; }
-
         public static double CanvasWidth => 1000;
         public static double CanvasHeight => 1000;
+
+        public PreviewJointVM PreviewJoint { get; } = new PreviewJointVM();
+        public PreviewBoneVM PreviewBone { get; } = new PreviewBoneVM();
+        public SelectionVM SelectionVM { get; } = new SelectionVM();
+
+        public CameraVM CameraVM { get; }
+        public ToolCollectionVM ToolCollectionVM { get; }
+        public HistoryStackVM<CreatureVM> HistoryStack { get; }
+
+        public ObservableCollection<JointVM> SelectedJoints { get; } = new ObservableCollection<JointVM>();
+        public ObservableCollection<BoneVM> SelectedBones { get; } = new ObservableCollection<BoneVM>();
 
         public ImageSource BackgroundImageSource
         {
@@ -45,36 +55,43 @@ namespace Fomore.UI.ViewModel.CreatureEditor
         public DelegateCommand CanvasMouseLeaveCommand { get; }
 
         public DelegateHandleCommand<SizeChange> CanvasSizeChangedCommand { get; }
-        public PreviewJointVM PreviewJoint { get; } = new PreviewJointVM();
-
 
         public CreatureStructureEditorCanvasVM(HistoryStackVM<CreatureVM> historyStack, ToolCollectionVM toolCollectionVM)
         {
             HistoryStack = historyStack;
-            CameraVM = new CameraVM { OffsetX = -CanvasWidth / 2, OffsetY = -CanvasHeight / 2 };
+            HistoryStack.PropertyChanged += HistoryStackChanged;
+            CameraVM = new CameraVM {OffsetX = -CanvasWidth / 2, OffsetY = -CanvasHeight / 2};
             ToolCollectionVM = toolCollectionVM;
             SetBackgroundImageCommand = new DelegateCommand(o => SetBackgroundImage(), o => true);
             RemoveBackgroundImageCommand = new DelegateCommand(o => RemoveBackgroundImage(), o => BackgroundImageSource != null);
 
             CanvasSizeChangedCommand = new DelegateHandleCommand<SizeChange>(CanvasSizeChanged, o => true);
             CanvasMouseDownCommand =
-                new DelegateHandleCommand<MouseInfo>(mouseInfo => ToolCollectionVM.SelectedTool?.OnCanvasMouseDown(mouseInfo,this) == true,
+                new DelegateHandleCommand<MouseInfo>(mouseInfo => ToolCollectionVM.SelectedTool?.OnCanvasMouseDown(mouseInfo, this) == true,
                                                      o => true);
             CanvasMouseUpCommand =
-                new DelegateHandleCommand<MouseInfo>(mouseInfo => ToolCollectionVM.SelectedTool?.OnCanvasMouseUp(mouseInfo,this) == true,
+                new DelegateHandleCommand<MouseInfo>(mouseInfo => ToolCollectionVM.SelectedTool?.OnCanvasMouseUp(mouseInfo, this) == true,
                                                      o => true);
             CanvasMouseMoveCommand =
-                new DelegateHandleCommand<MouseInfo>(mouseInfo => ToolCollectionVM.SelectedTool?.OnCanvasMouseMove(mouseInfo,this) == true,
+                new DelegateHandleCommand<MouseInfo>(mouseInfo => ToolCollectionVM.SelectedTool?.OnCanvasMouseMove(mouseInfo, this) == true,
                                                      o => true);
             CanvasMouseWheelCommand =
                 new DelegateHandleCommand<MouseWheelInfo>(mouseWheelInfo =>
-                                                              ToolCollectionVM.SelectedTool?.OnCanvasMouseWheel(mouseWheelInfo,this) ==
+                                                              ToolCollectionVM.SelectedTool?.OnCanvasMouseWheel(mouseWheelInfo, this) ==
                                                               true,
                                                           o => true);
             CanvasMouseEnterCommand = new DelegateCommand(o => ToolCollectionVM.SelectedTool?.OnCanvasMouseEnter(this), o => true);
             CanvasMouseLeaveCommand = new DelegateCommand(o => ToolCollectionVM.SelectedTool?.OnCanvasMouseLeave(this), o => true);
         }
 
+        private void HistoryStackChanged(object sender, PropertyChangedEventArgs e)
+        {
+            SelectedJoints.Clear();
+            SelectedBones.Clear();
+            PreviewBone.HighlightedJoints.Clear();
+            PreviewBone.Visibility = Visibility.Hidden;
+            ToolCollectionVM.Tools.OfType<PlaceBoneTool>().First().Reset();
+        }
 
         private bool CanvasSizeChanged(SizeChange sizeChange)
         {

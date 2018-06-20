@@ -1,9 +1,8 @@
 ﻿using System;
 using System.Windows;
 using System.Windows.Controls;
-using Fomore.UI.ViewModel.CreatureEditor;
 
-namespace Fomore.UI.Views.Controls
+namespace Fomore.UI.ViewModel.CreatureEditor
 {
     public class CameraVM : ViewBase
     {

@@ -34,11 +34,19 @@ namespace Fomore.UI.ViewModel.CreatureEditor.Tools
             private set => SetValue(IsSelectedProperty, value);
         }
 
+        private PanTool PanTool { get; }
+
         public DelegateCommand<CreatureEditorPanelVM> PressedCommand { get; }
 
         protected Tool()
         {
-            PressedCommand = new DelegateCommand<CreatureEditorPanelVM>(o => SelectionRequested?.Invoke(this, new ToolEventArgs(this, o.CreatureStructureEditorCanvasVM)), o => CanBeSelected());
+            if (!(this is PanTool))
+                PanTool = new PanTool();
+            PressedCommand =
+                new DelegateCommand<CreatureEditorPanelVM>(o => SelectionRequested?.Invoke(this,
+                                                                                           new ToolEventArgs(this,
+                                                                                                             o.CreatureStructureEditorCanvasVM)),
+                                                           o => CanBeSelected());
         }
 
         public event ToolEventHandler SelectionRequested;
@@ -57,11 +65,35 @@ namespace Fomore.UI.ViewModel.CreatureEditor.Tools
             OnDeselected();
         }
 
-        public virtual bool OnCanvasMouseDown(MouseInfo mouseInfo, CreatureStructureEditorCanvasVM canvasVM) => false;
-        public virtual bool OnCanvasMouseMove(MouseInfo mouseInfo, CreatureStructureEditorCanvasVM canvasVM) => false;
-        public virtual bool OnCanvasMouseUp(MouseInfo mouseInfo, CreatureStructureEditorCanvasVM canvasVM) => false;
-        public virtual void OnCanvasMouseEnter( CreatureStructureEditorCanvasVM canvasVM) { }
-        public virtual void OnCanvasMouseLeave( CreatureStructureEditorCanvasVM canvasVM) { }
+        public virtual bool OnCanvasMouseDown(MouseInfo mouseInfo, CreatureStructureEditorCanvasVM canvasVM)
+        {
+            if (mouseInfo.MiddleMouseButtonDown)
+                return PanTool?.OnCanvasMouseDown(mouseInfo, canvasVM) == true;
+            return false;
+        }
+
+        public virtual bool OnCanvasMouseMove(MouseInfo mouseInfo, CreatureStructureEditorCanvasVM canvasVM)
+        {
+            if (mouseInfo.MiddleMouseButtonDown)
+                return PanTool?.OnCanvasMouseMove(mouseInfo, canvasVM) == true;
+            return false;
+        }
+        public virtual bool OnCanvasMouseUp(MouseInfo mouseInfo, CreatureStructureEditorCanvasVM canvasVM)
+        {
+            if (mouseInfo.MiddleMouseButtonDown)
+                return PanTool?.OnCanvasMouseUp(mouseInfo, canvasVM) == true;
+            return false;
+        }
+
+        public virtual void OnCanvasMouseEnter(CreatureStructureEditorCanvasVM canvasVM)
+        {
+            PanTool?.OnCanvasMouseEnter(canvasVM);
+        }
+
+        public virtual void OnCanvasMouseLeave(CreatureStructureEditorCanvasVM canvasVM)
+        {
+            PanTool?.OnCanvasMouseLeave(canvasVM);
+        }
 
         public virtual bool OnCanvasMouseWheel(MouseWheelInfo mouseWheelInfo, CreatureStructureEditorCanvasVM canvasVM)
         {
