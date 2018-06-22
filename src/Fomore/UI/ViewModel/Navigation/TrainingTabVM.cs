@@ -84,7 +84,7 @@ namespace Fomore.UI.ViewModel.Navigation
             EntityStorageVM = entitiesStorage;
             StartTrainingCommand = new DelegateCommand(StartTraining, o => SelectCreature != null && SelectEnvironment != null && speed!=0);
 
-            ResetCommand = new DelegateCommand(Reset, o => SelectCreature != null || SelecMovementPattern != null || SelectEnvironment != null || speed!=0 || show == false );
+            ResetCommand = new DelegateCommand(Reset, o => SelectCreature != null || SelecMovementPattern != null || SelectEnvironment != null || speed!=0 || show == true );
         }
 
         public DelegateCommand StartTrainingCommand { get; }
