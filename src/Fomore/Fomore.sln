@@ -7,9 +7,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UI", "UI\UI.csproj", "{C083
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Testing", "Testing\Testing.csproj", "{66C309B1-506B-4E18-90AF-F9D0538A211B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Core", "Core\Core.csproj", "{9BDA5A67-14F6-450A-8919-8A5884AE9B60}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Core", "Core\Core.csproj", "{9BDA5A67-14F6-450A-8919-8A5884AE9B60}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Renderer", "Renderer\Renderer.csproj", "{350BCFE3-16B0-433A-9723-98444E4E5D37}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Renderer", "Renderer\Renderer.csproj", "{350BCFE3-16B0-433A-9723-98444E4E5D37}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

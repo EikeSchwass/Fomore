@@ -64,6 +64,7 @@ namespace Fomore.UI.ViewModel.Navigation
             {
                 if(Equals(value,show)) return;
                 show = value;
+                OnPropertyChanged();
                 StartTrainingCommand.OnCanExecuteChanged();
                 ResetCommand.OnCanExecuteChanged();
             }
@@ -76,15 +77,17 @@ namespace Fomore.UI.ViewModel.Navigation
             {
                 if(Equals(value,speed)) return;
                 speed = value;
+                OnPropertyChanged();
+                StartTrainingCommand.OnCanExecuteChanged();
                 ResetCommand.OnCanExecuteChanged();
             }
         }
         public TrainingTabVM(EntityStorageVM entitiesStorage)
         {
             EntityStorageVM = entitiesStorage;
-            StartTrainingCommand = new DelegateCommand(StartTraining, o => SelectCreature != null && SelectEnvironment != null && speed!=0);
+            StartTrainingCommand = new DelegateCommand(StartTraining, o => SelectCreature != null && SelectEnvironment != null && speed!=null);
 
-            ResetCommand = new DelegateCommand(Reset, o => SelectCreature != null || SelecMovementPattern != null || SelectEnvironment != null || speed!=0 || show == true );
+            ResetCommand = new DelegateCommand(Reset, o => SelectCreature != null || SelecMovementPattern != null || SelectEnvironment != null || speed!=null || show == true );
         }
 
         public DelegateCommand StartTrainingCommand { get; }
