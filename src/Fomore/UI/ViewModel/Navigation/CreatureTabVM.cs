@@ -41,8 +41,8 @@ namespace Fomore.UI.ViewModel.Navigation
 
         public CreatureTabVM(TabNavigationVM tabNavigationVM, EntityStorageVM entitiesStorage)
         {
-            EntitiesStorage = entitiesStorage;
-            ShowCreatureCreationDialogCommand = new DelegateCommand(ShowCreatureCreationDialog, o => true);
+            EntitiesStorage = entitiesStorage; 
+             ShowCreatureCreationDialogCommand = new DelegateCommand(ShowCreatureCreationDialog, o => true);
             HideCreatureCreationDialogCommand = new DelegateCommand(HideCreatureCreationDialog, o => true);
             CreateCreatureDialogVM = new CreateCreatureDialogVM(EntitiesStorage);
             TabNavigationVM = tabNavigationVM;
@@ -53,6 +53,9 @@ namespace Fomore.UI.ViewModel.Navigation
         {
             TabNavigationVM.SwitchToSimulationTabCommand.Execute(obj);
         }
+            DeleteCreatureCommand = new DelegateCommand(DeleteCreature, o => true);
+
+        }    
 
         private void HideCreatureCreationDialog(object obj)
         {
@@ -74,10 +77,17 @@ namespace Fomore.UI.ViewModel.Navigation
                 OnPropertyChanged();
             }
         }
+
+        private void DeleteCreature(object obj)
+        {
+            EntitiesStorage.RemoveCreatureCommand.Execute((CreatureVM)obj);
+        }
         public ICommand ShowCreatureCreationDialogCommand { get; }
 
         public ICommand HideCreatureCreationDialogCommand { get; }
 
         public DelegateCommand SimulateCommand { get; }
+
+        public ICommand DeleteCreatureCommand { get; }
     }
 }

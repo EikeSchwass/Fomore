@@ -50,9 +50,9 @@
                     <TextBlock Margin="5" Text="{Binding Path=Header}" FontWeight="Bold" FontFamily="Cambria" />
 
                     <TextBlock Margin="5" Text="{Binding Path=EnterName}"/>
-                    <TextBox Padding="5" Margin="5" Text="{Binding Path=CreateCreatureDialogVM.CreatureName, Mode=TwoWay}"  />
+                    <TextBox Padding="5" Margin="5" Text="{Binding Path=CreateCreatureDialogVM.CreatureName, Mode=TwoWay }" />
 
-                    <TextBlock Margin="5" Text="{Binding Path=Description}"/>
+                        <TextBlock Margin="5" Text="{Binding Path=Description}"/>
                     <TextBox  Padding="5" Margin="5" Text="{Binding Path=CreateCreatureDialogVM.CreatureDescription, Mode=TwoWay}"  />
 
                     <CheckBox Command="{Binding Path=CreateCreatureDialogVM.IsOpen, Mode=OneWay}" />
