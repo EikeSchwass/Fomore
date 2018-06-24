@@ -42,7 +42,7 @@ namespace Fomore.UI.ViewModel.Navigation
                                                   new DelegateCommand(SwitchToTrainingTab, o => !ReferenceEquals(SelectedTab, TrainingTab)),
                                                   new DelegateCommand(SwitchToSimulationTab, o => !ReferenceEquals(SelectedTab, SimulationTab)));
 
-            CreatureTab = new CreatureTabVM(entitiesStorage);
+            CreatureTab = new CreatureTabVM(TabNavigationVM, entitiesStorage);
             EnvironmentTab = new EnvironmentTabVM(entitiesStorage);
             TrainingTab = new TrainingTabVM(entitiesStorage);
             SimulationTab = new SimulationTabVM(entitiesStorage);
@@ -53,21 +53,25 @@ namespace Fomore.UI.ViewModel.Navigation
         private void SwitchToSimulationTab(object obj)
         {
             SelectedTab = SimulationTab;
+            SelectedTab.OnSelect(obj);
         }
 
         private void SwitchToTrainingTab(object obj)
         {
             SelectedTab = TrainingTab;
+            SelectedTab.OnSelect(obj);
         }
 
         private void SwitchToEnvironmentTab(object obj)
         {
             SelectedTab = EnvironmentTab;
+            SelectedTab.OnSelect(obj);
         }
 
         private void SwitchToCreatureTab(object obj)
         {
             SelectedTab = CreatureTab;
+            SelectedTab.OnSelect(obj);
         }
     }
 

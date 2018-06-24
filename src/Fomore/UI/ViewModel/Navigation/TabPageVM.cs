@@ -9,5 +9,10 @@
         /// The Header of the Tab Page.
         /// </summary>
         public abstract string Header { get; }
+
+        public virtual void OnSelect(object obj)
+        {
+
+        }
     }
 }
