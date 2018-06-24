@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Input;
 using Fomore.UI.ViewModel.Application;
@@ -47,15 +46,15 @@ namespace Fomore.UI.ViewModel.Navigation
             CreateCreatureDialogVM = new CreateCreatureDialogVM(EntitiesStorage);
             TabNavigationVM = tabNavigationVM;
             SimulateCommand = new DelegateCommand(SimulateAction, o => true);
+            DeleteCreatureCommand = new DelegateCommand(DeleteCreature, o => true);
         }
 
         private void SimulateAction(object obj)
         {
             TabNavigationVM.SwitchToSimulationTabCommand.Execute(obj);
         }
-            DeleteCreatureCommand = new DelegateCommand(DeleteCreature, o => true);
 
-        }    
+        
 
         private void HideCreatureCreationDialog(object obj)
         {
