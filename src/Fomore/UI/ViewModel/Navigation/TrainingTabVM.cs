@@ -12,8 +12,8 @@ namespace Fomore.UI.ViewModel.Navigation
         private CreatureVM selectCreature;
         private EnvironmentVM selectEnvironment;
         private MovementPatternVM selectMovementPattern;
-        private float speed;
-        private bool show;
+        private float? speed;
+        private bool? show;
 
 
         public EntityStorageVM EntityStorageVM { get; }
@@ -57,7 +57,7 @@ namespace Fomore.UI.ViewModel.Navigation
             }
         }
 
-        public bool SelectShow
+        public bool? SelectShow
         {
             get => show;
             set
@@ -65,12 +65,11 @@ namespace Fomore.UI.ViewModel.Navigation
                 if(Equals(value,show)) return;
                 show = value;
                 OnPropertyChanged();
-                StartTrainingCommand.OnCanExecuteChanged();
                 ResetCommand.OnCanExecuteChanged();
             }
         }
 
-        public float SelectSpeed
+        public float? SelectSpeed
         {
             get => speed;
             set
@@ -86,8 +85,7 @@ namespace Fomore.UI.ViewModel.Navigation
         {
             EntityStorageVM = entitiesStorage;
             StartTrainingCommand = new DelegateCommand(StartTraining, o => SelectCreature != null && SelectEnvironment != null && speed!=null);
-
-            ResetCommand = new DelegateCommand(Reset, o => SelectCreature != null || SelecMovementPattern != null || SelectEnvironment != null || speed!=null || show == true );
+            ResetCommand = new DelegateCommand(Reset, o => SelectCreature != null || SelecMovementPattern != null || SelectEnvironment != null || speed!=null || show != null);
         }
 
         public DelegateCommand StartTrainingCommand { get; }
@@ -104,8 +102,8 @@ namespace Fomore.UI.ViewModel.Navigation
             SelectCreature = null;
             SelecMovementPattern = null;
             SelectEnvironment = null;
-            speed = 0;
-            show = false;
+            speed = null;
+            show = null;
         }
 
         /// <inheritdoc />
