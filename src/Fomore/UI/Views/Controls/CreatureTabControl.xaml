@@ -18,19 +18,19 @@
 
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
 
                 <StackPanel Grid.Column="0" Grid.Row="0">
                     <Button Content="Create New Creature" Command="{Binding ShowCreatureCreationDialogCommand}"/>
                 </StackPanel>
 
-                <StackPanel Grid.Column="0" Grid.Row="1">
-                    <ListBox ItemsSource="{Binding Path= EntitiesStorage.Creatures}" />
-                </StackPanel>
+                <ListBox Grid.Column="0" Grid.Row="1" ItemsSource="{Binding Path= EntitiesStorage.Creatures}" SelectedItem="{Binding SelectedCreature, Mode=TwoWay}" />
 
                 <StackPanel Margin="10" Grid.Column="1" Grid.Row="0">
                     <TextBlock Text="Welcome!"/>
+                    <TextBlock Text="{Binding SelectedCreature.Name}" />
+                    <Button Content="Simulate" Command="{Binding SimulateCommand}" CommandParameter="{Binding SelectedCreature}" />
                 </StackPanel>
             </Grid>
         </StackPanel>
