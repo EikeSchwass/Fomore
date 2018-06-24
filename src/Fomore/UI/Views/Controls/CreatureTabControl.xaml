@@ -31,7 +31,6 @@
                     <Button Content="Delete" Height="23" 
          HorizontalAlignment="Left" 
          Margin="513,322,0,0"  
-         Name="button1" 
          VerticalAlignment="Top" Width="75" Command="{Binding Commands}"    
          CommandParameter="Delete" />
                 </StackPanel>
