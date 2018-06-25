@@ -16,6 +16,8 @@ namespace Fomore.UI.ViewModel.Application
             LoadCommand = new DelegateCommand(Load, o => true);
             EntitiesStorageVM = new EntityStorageVM(new EntitiyStorage());
             NavigationVM=new NavigationVM(EntitiesStorageVM);
+            NavigationVM.SelectedTab = NavigationVM.TabCollection[3];
+            ((SimulationTabVM) NavigationVM.TabCollection[3]).CreateStuffCommand.Execute(null);
         }
 
         private void Load(object obj)

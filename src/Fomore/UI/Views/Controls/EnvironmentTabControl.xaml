@@ -6,65 +6,32 @@
              xmlns:navigation="clr-namespace:Fomore.UI.ViewModel.Navigation"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800" d:DataContext="{d:DesignInstance navigation:EnvironmentTabVM}">
+
     <Grid>
-        <StackPanel >
-            <Button Content="Add New Environment" Command="{Binding ShowEnvironCreationDialogCommand}" />
-            <ListBox ItemsSource="{Binding Path=EntitiesStorage.Environments}"/>
-        </StackPanel>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
 
-        <Grid Visibility="{Binding Path=CreateEnvironmentDialogVM.Visibility}">
-            <Grid Background="Black" Opacity="0.5"/>
-            <Border
-                MinWidth="400"
-                Background="{StaticResource Level2Brush}" 
-                BorderBrush="Black" 
-                BorderThickness="1" 
-                CornerRadius="0,55,0,55" 
-                HorizontalAlignment="Center" 
-                VerticalAlignment="Center">
-                <StackPanel>
-                    <TextBlock Margin="5" Text="{Binding Path=Header}" FontWeight="Bold" FontFamily="Cambria" />
-
-                    <TextBlock Margin="5" Text="{Binding Path=EnvironmentName}"/>
-                    <TextBox Padding="1" Margin="3" Text="{Binding Path=CreateEnvironmentDialogVM.EnvironmentName, Mode=TwoWay}"  />
-
-                    <TextBlock Margin="5" Text="{Binding Path=Description}"/>
-                    <TextBox  Padding="1" Margin="3" Text="{Binding Path=CreateEnvironmentDialogVM.EnvironmentDescription, Mode=TwoWay}"  />
-
-                    <!-- In my opinion the user shouldn't be forced to make all these settings right now. The name and the description should sufficient to create an environment.
-                    After the user created the environment the environment should be selected and then the user should be able to do the advanced settings in the panel on the right (see Dominicks wireframes).
-                    
-                    <TextBlock Margin="5" Text="{Binding Path=Terrain}"/>
-                    <TextBox  Padding="1" Margin="3" Text="{Binding Path=Terrain, Mode=OneWay}"  />
-
-                    <TextBlock Margin="5" Text="{Binding Path=GroundType}"/>
-                    <TextBox  Padding="1" Margin="3" Text="{Binding Path=GroundType, Mode=OneWay}"  />
-
-                    <TextBlock Margin="5" Text="{Binding Path=Gravity}"/>
-                    <TextBox  Padding="1" Margin="3" Text="{Binding Path=Gravity, Mode=OneWay}"  />
-
-                    <TextBlock Margin="5" Text="{Binding Path=Friction}"/>
-                    <TextBox  Padding="1" Margin="3" Text="{Binding Path=Friction, Mode=OneWay}"  />
-                    
-                    -->
-
-                    <Button Margin="5" Content="{Binding Path=CreateButton}" Command="{Binding Path=CreateEnvironmentDialogVM.CreateEnvironmentCommand}" Background="{x:Null}" />
-
-                    <Button Margin="5" Content="{Binding Path=CancelButton}" Command="{Binding Path=CreateEnvironmentDialogVM.CancelEnvironmentCreationCommand}" Background="{x:Null}" />
-
-                </StackPanel>
-            </Border>
+        <!-- List on the left side -->
+        <Grid Grid.Column="0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+            <Button Grid.Row="0" Content="Create New Environment" />
+            <ListBox Grid.Row="1" Width="350"
+                     ItemsSource="{Binding EntitiesStorage.Environments}"
+                     SelectedItem="{Binding SelectedEnvironment, Mode=TwoWay}" />
         </Grid>
 
-
-
-
-
-
-
-
-
-
+        <!-- Details grid on the right side -->
+        <Grid Grid.Column="1">
+           
+        </Grid>
 
     </Grid>
 </UserControl>

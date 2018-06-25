@@ -7,104 +7,67 @@ namespace Fomore.UI.ViewModel.Navigation
 {
     public class TrainingTabVM : TabPageVM
     {
-        private CreatureVM selectCreature;
-        private EnvironmentVM selectEnvironment;
-        private MovementPatternVM selectMovementPattern;
-        private float? speed;
-        private bool? show;
-
-
-        public EntityStorageVM EntityStorageVM { get; }
-
-        public CreatureVM SelectCreature
-        {
-            get => selectCreature;
-            set
-            {
-                if (Equals(value, selectCreature)) return;
-                selectCreature = value;
-                OnPropertyChanged();
-                StartTrainingCommand.OnCanExecuteChanged();
-                ResetCommand.OnCanExecuteChanged();
-            }
-
-        }
-
-        public MovementPatternVM SelecMovementPattern
-        {
-            get => selectMovementPattern;
-            set
-            {
-                if (Equals(value, selectMovementPattern)) return;
-                selectMovementPattern = value;
-                OnPropertyChanged();
-                StartTrainingCommand.OnCanExecuteChanged();
-                ResetCommand.OnCanExecuteChanged();
-            }
-        }
-        public EnvironmentVM SelectEnvironment
-        {
-            get => selectEnvironment;
-            set
-            {
-                if (Equals(value, selectEnvironment)) return;
-                selectEnvironment = value;
-                OnPropertyChanged();
-                StartTrainingCommand.OnCanExecuteChanged();
-                ResetCommand.OnCanExecuteChanged();
-            }
-        }
-
-        public bool? SelectShow
-        {
-            get => show;
-            set
-            {
-                if(Equals(value,show)) return;
-                show = value;
-                OnPropertyChanged();
-                ResetCommand.OnCanExecuteChanged();
-            }
-        }
-
-        public float? SelectSpeed
-        {
-            get => speed;
-            set
-            {
-                if(Equals(value,speed)) return;
-                speed = value;
-                OnPropertyChanged();
-                StartTrainingCommand.OnCanExecuteChanged();
-                ResetCommand.OnCanExecuteChanged();
-            }
-        }
-        public TrainingTabVM(EntityStorageVM entitiesStorage)
-        {
-            EntityStorageVM = entitiesStorage;
-            StartTrainingCommand = new DelegateCommand(StartTraining, o => SelectCreature != null && SelectEnvironment != null && speed!=null);
-            ResetCommand = new DelegateCommand(Reset, o => SelectCreature != null || SelecMovementPattern != null || SelectEnvironment != null || speed!=null || show != null);
-        }
-
-        public DelegateCommand StartTrainingCommand { get; }
-        public DelegateCommand ResetCommand { get; }
-
-        //Train
-        private void StartTraining(object obj)
-        {
-        }
-
-        // Reset
-        private void Reset(object obj)
-        {
-            SelectCreature = null;
-            SelecMovementPattern = null;
-            SelectEnvironment = null;
-            speed = null;
-            show = null;
-        }
-
         /// <inheritdoc />
         public override string Header => "Training";
+
+        public TabNavigationVM TabNavigationVM { get; }
+        public EntityStorageVM EntitiesStorage { get; }
+
+        // ------------------------------------------------------------
+        // Properties and private members
+        // ------------------------------------------------------------
+
+        private EnvironmentVM selectedEnvironment;
+        private MovementPatternVM selectedMovementPattern;
+        private CreatureVM selectedCreature;
+
+        public CreatureVM SelectedCreature
+        {
+            get => selectedCreature;
+            set
+            {
+                if (Equals(value, selectedCreature)) return;
+                selectedCreature = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public MovementPatternVM SelectedMovementPattern
+        {
+            get => selectedMovementPattern;
+            set
+            {
+                if (Equals(value, selectedMovementPattern)) return;
+                selectedMovementPattern = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public EnvironmentVM SelectedEnvironment
+        {
+            get => selectedEnvironment;
+            set
+            {
+                if (Equals(value, selectedEnvironment)) return;
+                selectedEnvironment = value;
+                OnPropertyChanged();
+            }
+        }
+
+        // ------------------------------------------------------------
+        // Commands and Actions
+        // ------------------------------------------------------------
+
+
+
+        // ------------------------------------------------------------
+        // Entry point & other methods
+        // ------------------------------------------------------------
+
+        public TrainingTabVM(TabNavigationVM tabNavigationVM, EntityStorageVM entitiesStorage)
+        {
+            TabNavigationVM = tabNavigationVM;
+            EntitiesStorage = entitiesStorage;
+        }
     }
 }

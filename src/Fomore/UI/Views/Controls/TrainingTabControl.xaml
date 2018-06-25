@@ -6,8 +6,8 @@
              xmlns:navigation="clr-namespace:Fomore.UI.ViewModel.Navigation"
              mc:Ignorable="d"
              d:DesignHeight="450" d:DesignWidth="800" d:DataContext="{d:DesignInstance navigation:TrainingTabVM}">
-<Border>
-    <Grid Margin="5">
+
+    <!--<Grid Margin="5">
             <Grid.RowDefinitions>
                 <RowDefinition></RowDefinition>
                 <RowDefinition Height="Auto"></RowDefinition>
@@ -19,7 +19,7 @@
                     <ColumnDefinition/>
                     <ColumnDefinition/>
                 </Grid.ColumnDefinitions>
-                <!--Creature-->
+
                 <ScrollViewer Grid.Column="0">
                     <StackPanel>
                         <TextBlock Text="Creature" FontWeight="Bold" FontSize="18"/>
@@ -29,7 +29,7 @@
                 </ScrollViewer>
 
 
-                <!--Movment Pattern-->
+     
                 <ScrollViewer Grid.Column="1">
                     <StackPanel>
                         <TextBlock Text="Movment Pattern" FontWeight="Bold" FontSize="18"/>
@@ -38,7 +38,7 @@
                     </StackPanel>
                 </ScrollViewer>
                 
-                <!--Environment-->
+
                 <ScrollViewer Grid.Column="2">
                     <StackPanel>
                         <TextBlock Text="Environment" FontWeight="Bold" FontSize="18"/>
@@ -47,7 +47,7 @@
                     </StackPanel>
                 </ScrollViewer>
                 
-                <!--Setting-->
+       
                 <StackPanel Grid.Column="3">
                     <TextBlock Text="Settings" FontWeight="Bold" FontSize="18"/>
                     <Grid>
@@ -76,8 +76,5 @@
                     <Button Margin="0 0 100 0" Grid.Column="2" Content="Start Training" Height="50" Background="White" FontSize="14" FontWeight="Bold" Command="{Binding StartTrainingCommand}"/>
                 </Grid>
             </StackPanel>
-    </Grid>
-</Border>
-
-
+    </Grid>-->
 </UserControl>

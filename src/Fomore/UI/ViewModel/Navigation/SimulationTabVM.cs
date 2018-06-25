@@ -1,4 +1,5 @@
-﻿using Core;
+﻿using System.Windows.Input;
+using Core;
 using Fomore.UI.ViewModel.Application;
 using Fomore.UI.ViewModel.Commands;
 using Fomore.UI.ViewModel.Data;
@@ -8,11 +9,19 @@ namespace Fomore.UI.ViewModel.Navigation
 {
     public class SimulationTabVM : TabPageVM
     {
-        private CreatureVM selectedCreature;
-        private MovementPatternVM selectedMovementPattern;
-        private EnvironmentVM selectedEnvironment;
+        /// <inheritdoc />
+        public override string Header => "Simulation";
 
-        public EntityStorageVM EntityStorageVM { get; }
+        public TabNavigationVM TabNavigationVM { get; }
+        public EntityStorageVM EntitiesStorage { get; }
+
+        // ------------------------------------------------------------
+        // Properties and private members
+        // ------------------------------------------------------------
+
+        private EnvironmentVM selectedEnvironment;
+        private MovementPatternVM selectedMovementPattern;
+        private CreatureVM selectedCreature;
 
         public CreatureVM SelectedCreature
         {
@@ -22,8 +31,6 @@ namespace Fomore.UI.ViewModel.Navigation
                 if (Equals(value, selectedCreature)) return;
                 selectedCreature = value;
                 OnPropertyChanged();
-                StartSimulationCommand.OnCanExecuteChanged();
-                ResetSelectionCommand.OnCanExecuteChanged();
             }
         }
 
@@ -35,8 +42,6 @@ namespace Fomore.UI.ViewModel.Navigation
                 if (Equals(value, selectedMovementPattern)) return;
                 selectedMovementPattern = value;
                 OnPropertyChanged();
-                StartSimulationCommand.OnCanExecuteChanged();
-                ResetSelectionCommand.OnCanExecuteChanged();
             }
         }
 
@@ -48,55 +53,26 @@ namespace Fomore.UI.ViewModel.Navigation
                 if (Equals(value, selectedEnvironment)) return;
                 selectedEnvironment = value;
                 OnPropertyChanged();
-                StartSimulationCommand.OnCanExecuteChanged();
-                ResetSelectionCommand.OnCanExecuteChanged();
             }
         }
 
-        /// <inheritdoc />
-        public override string Header => "Simulation";
+        // ------------------------------------------------------------
+        // Commands and Actions
+        // ------------------------------------------------------------
 
-        public override void OnSelect(object obj)
-        {
-            if (obj is CreatureVM)
-                SelectedCreature = (CreatureVM)obj;
-        }
-
-        public SimulationTabVM(EntityStorageVM entitiesStorage)
-        {
-            EntityStorageVM = entitiesStorage;
-            CreateStuffCommand = new DelegateCommand(CreateCreaturesAction, o => true);
-            StartSimulationCommand = new DelegateCommand(StartSimulationAction,
-                                                         o => SelectedCreature != null &&
-                                                              SelectedMovementPattern != null &&
-                                                              SelectedEnvironment != null);
-
-            ResetSelectionCommand = new DelegateCommand(ResetSelectionAction,
-                                                        o => SelectedCreature != null ||
-                                                             SelectedMovementPattern != null ||
-                                                             SelectedEnvironment != null);
-        }
-
-        public DelegateCommand ResetSelectionCommand { get; }
-
-        private void ResetSelectionAction(object obj)
-        {
-            SelectedCreature = null;
-            SelectedMovementPattern = null;
-            SelectedEnvironment = null;
-        }
-
-        public DelegateCommand CreateStuffCommand { get; }
+        public ICommand CreateStuffCommand { get; }
+        public ICommand ResetSelectionCommand { get; }
+        public ICommand StartSimulationCommand { get; }
 
         private void CreateCreaturesAction(object obj)
         {
-            var dinosaur = new CreatureVM(new Creature()) {Name = "Dinosaur", Description = "Dangerous like me when I'm hungry"};
-            var dog = new CreatureVM(new Creature()) {Name = "Dog", Description = "My name is Rex"};
-            var cat = new CreatureVM(new Creature()) {Name = "Cat", Description = "Miau miau miau..."};
+            var dinosaur = new CreatureVM(new Creature()) { Name = "Dinosaur", Description = "Dangerous like me when I'm hungry" };
+            var dog = new CreatureVM(new Creature()) { Name = "Dog", Description = "My name is Rex" };
+            var cat = new CreatureVM(new Creature()) { Name = "Cat", Description = "Miau miau miau..." };
 
-            EntityStorageVM.AddCreatureCommand.Execute(dinosaur);
-            EntityStorageVM.AddCreatureCommand.Execute(dog);
-            EntityStorageVM.AddCreatureCommand.Execute(cat);
+            EntitiesStorage.AddCreatureCommand.Execute(dinosaur);
+            EntitiesStorage.AddCreatureCommand.Execute(dog);
+            EntitiesStorage.AddCreatureCommand.Execute(cat);
 
             dog.MovementPatternCollectionVM.AddItemCommand.Execute(new MovementPatternVM(new MovementPattern())
             {
@@ -129,15 +105,47 @@ namespace Fomore.UI.ViewModel.Navigation
                 Friction = 0
             };
 
-            EntityStorageVM.AddEnvironmentCommand.Execute(earth);
-            EntityStorageVM.AddEnvironmentCommand.Execute(moon);
+            EntitiesStorage.AddEnvironmentCommand.Execute(earth);
+            EntitiesStorage.AddEnvironmentCommand.Execute(moon);
         }
 
-        public DelegateCommand StartSimulationCommand { get; }
+        private void ResetSelectionAction(object obj)
+        {
+            SelectedCreature = null;
+            SelectedMovementPattern = null;
+            SelectedEnvironment = null;
+        }
 
         private void StartSimulationAction(object obj)
         {
             SelectedMovementPattern.Iterations++;
+        }
+
+        // ------------------------------------------------------------
+        // Entry point & other methods
+        // ------------------------------------------------------------
+
+        public SimulationTabVM(TabNavigationVM tabNavigationVM, EntityStorageVM entitiesStorage)
+        {
+            TabNavigationVM = tabNavigationVM;
+            EntitiesStorage = entitiesStorage;
+
+            // Init commands
+            CreateStuffCommand = new DelegateCommand(CreateCreaturesAction, o => true);
+            ResetSelectionCommand = new DelegateCommand(ResetSelectionAction,
+                                                        o => SelectedCreature != null ||
+                                                             SelectedMovementPattern != null ||
+                                                             SelectedEnvironment != null);
+            StartSimulationCommand = new DelegateCommand(StartSimulationAction,
+                                                         o => SelectedCreature != null &&
+                                                              SelectedMovementPattern != null &&
+                                                              SelectedEnvironment != null);
+        }
+
+        public override void OnSelect(object obj)
+        {
+            if (obj is CreatureVM vm)
+                SelectedCreature = vm;
         }
     }
 }

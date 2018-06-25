@@ -9,17 +9,17 @@ namespace Fomore.UI.ViewModel.Navigation
 {
     public class CreatureTabVM : TabPageVM
     {
-        public EntityStorageVM EntitiesStorage { get; }
+        /// <inheritdoc />
+        public override string Header => "Creature";
 
         public TabNavigationVM TabNavigationVM { get; }
+        public EntityStorageVM EntitiesStorage { get; }
 
-        /// <inheritdoc />
-        public override string Header => "New Creature";
+        // ------------------------------------------------------------
+        // Properties and private members
+        // ------------------------------------------------------------
 
-        public string EnterName => "Enter Name*:";
-        public string Description => "Description";
-        public string CreateButton => "Create";
-        public string CancelButton => "Cancel";
+        private CreatureVM selectedCreature;
 
         public CreatureVM SelectedCreature
         {
@@ -32,61 +32,31 @@ namespace Fomore.UI.ViewModel.Navigation
             }
         }
 
-        public List<string> CreatureList;
-        
+        // ------------------------------------------------------------
+        // Commands and Actions
+        // ------------------------------------------------------------
 
-        private CreateCreatureDialogVM cretureCreateCreatureDialogVM;
-        private CreatureVM selectedCreature;
-
-        public CreatureTabVM(TabNavigationVM tabNavigationVM, EntityStorageVM entitiesStorage)
-        {
-            EntitiesStorage = entitiesStorage; 
-             ShowCreatureCreationDialogCommand = new DelegateCommand(ShowCreatureCreationDialog, o => true);
-            HideCreatureCreationDialogCommand = new DelegateCommand(HideCreatureCreationDialog, o => true);
-            CreateCreatureDialogVM = new CreateCreatureDialogVM(EntitiesStorage);
-            TabNavigationVM = tabNavigationVM;
-            SimulateCommand = new DelegateCommand(SimulateAction, o => true);
-            DeleteCreatureCommand = new DelegateCommand(DeleteCreature, o => true);
-        }
+        public ICommand SimulateCommand { get; }
+        public ICommand EditCreature { get; }
+        public ICommand TrainCommand { get; }
 
         private void SimulateAction(object obj)
         {
             TabNavigationVM.SwitchToSimulationTabCommand.Execute(obj);
         }
 
-        
+        // ------------------------------------------------------------
+        // Entry point & other methods
+        // ------------------------------------------------------------
 
-        private void HideCreatureCreationDialog(object obj)
+        public CreatureTabVM(TabNavigationVM tabNavigationVM, EntityStorageVM entitiesStorage)
         {
-            CreateCreatureDialogVM.Visibility = Visibility.Hidden;
+            TabNavigationVM = tabNavigationVM;
+            EntitiesStorage = entitiesStorage;
+
+            TrainCommand = new StubCommand();
+            SimulateCommand = new DelegateCommand(SimulateAction, o => true);
+            EditCreature = new StubCommand();
         }
-
-        private void ShowCreatureCreationDialog(object obj)
-        {
-            CreateCreatureDialogVM.Visibility = Visibility.Visible;
-        }
-
-        public CreateCreatureDialogVM CreateCreatureDialogVM
-        {
-            get => cretureCreateCreatureDialogVM;
-            set
-            {
-                if (Equals(value, cretureCreateCreatureDialogVM)) return;
-                cretureCreateCreatureDialogVM = value;
-                OnPropertyChanged();
-            }
-        }
-
-        private void DeleteCreature(object obj)
-        {
-            EntitiesStorage.RemoveCreatureCommand.Execute((CreatureVM)obj);
-        }
-        public ICommand ShowCreatureCreationDialogCommand { get; }
-
-        public ICommand HideCreatureCreationDialogCommand { get; }
-
-        public DelegateCommand SimulateCommand { get; }
-
-        public ICommand DeleteCreatureCommand { get; }
     }
 }

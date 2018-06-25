@@ -1,42 +1,104 @@
 ﻿<UserControl x:Class="Fomore.UI.Views.Controls.CreatureTabControl"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:navigation="clr-namespace:Fomore.UI.ViewModel.Navigation"
-             mc:Ignorable="d" 
+             mc:Ignorable="d"
              d:DesignHeight="450" d:DesignWidth="800" d:DataContext="{d:DesignInstance navigation:CreatureTabVM}">
 
     <Grid>
-        <StackPanel>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
 
+        <!-- List on the left side -->
+        <Grid Grid.Column="0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+            <Button Grid.Row="0" Content="Create New Creature" />
+            <ListBox Grid.Row="1" Width="350"
+                     ItemsSource="{Binding EntitiesStorage.Creatures}"
+                     SelectedItem="{Binding SelectedCreature, Mode=TwoWay}" />
+        </Grid>
+        
+        <!-- No Selection screen -->
+        <Grid Grid.Column="1" Visibility="{Binding SelectedCreature, TargetNullValue=Visible, FallbackValue=Collapsed}"> <!-- TODO Make this nice -->
+            <TextBlock Text="No selection made..." />
+        </Grid>
+
+        <!-- Details screen on the right side -->
+        <Grid Grid.Column="1" Visibility="{Binding SelectedCreature, TargetNullValue=Collapsed, FallbackValue=Visible}"> <!-- TODO Make this nice -->
             <Grid>
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="Auto"/>
-                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
                 </Grid.ColumnDefinitions>
+                
+                <!-- The Details -->
+                <Grid Grid.Column="0"> <!-- TODO Use Data Context here -->
+                    <StackPanel>
+                        <TextBlock Text="{Binding SelectedCreature.Name}" />
+                        <TextBox Text="{Binding SelectedCreature.Description}" />
+                        
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition />
+                                <ColumnDefinition />
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition />
+                                <RowDefinition />
+                                <RowDefinition />
+                                <RowDefinition />
+                                <RowDefinition />
+                            </Grid.RowDefinitions>
 
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="*"/>
-                </Grid.RowDefinitions>
+                            <TextBlock Grid.Column="0" Grid.Row="0" Text="Last changed:" />
+                            <TextBlock Grid.Column="1" Grid.Row="0" Text="{Binding SelectedCreature.LastAccess}" />
+                            <TextBlock Grid.Column="0" Grid.Row="1" Text="#Joints:" />
+                            <TextBlock Grid.Column="1" Grid.Row="1" Text="{Binding SelectedCreature.CreatureStructureVM.JointCollectionVM.Count}" />
+                            <TextBlock Grid.Column="0" Grid.Row="2" Text="#Bones:" />
+                            <TextBlock Grid.Column="1" Grid.Row="2" Text="{Binding SelectedCreature.CreatureStructureVM.BoneCollectionVM.Count}" />
+                            <TextBlock Grid.Column="0" Grid.Row="3" Text="Total Weight:" />
+                            <TextBlock Grid.Column="1" Grid.Row="3" Text="{Binding SelectedCreature.CreatureStructureVM.BoneCollectionVM.Count}" />
+                            <TextBlock Grid.Column="0" Grid.Row="4" Text="#Patterns:" />
+                            <TextBlock Grid.Column="1" Grid.Row="4" Text="{Binding SelectedCreature.MovementPatternCollectionVM.Count}" />
+                        </Grid>
+                    </StackPanel>
+                </Grid>
 
-                <StackPanel Grid.Column="0" Grid.Row="0">
-                    <Button Content="Create New Creature" Command="{Binding ShowCreatureCreationDialogCommand}"/>
-                </StackPanel>
+                <!-- Right side of details (Image and Buttons) -->
+                <Grid Grid.Column="1">
+                    <Grid.RowDefinitions>
+                        <RowDefinition />
+                        <RowDefinition />
+                    </Grid.RowDefinitions>
 
-                <ListBox Grid.Column="0" Grid.Row="1" ItemsSource="{Binding Path= EntitiesStorage.Creatures}" SelectedItem="{Binding SelectedCreature, Mode=TwoWay}" />
+                    <Image Grid.Row="0" Source="../../assets/images/placeholder.png" />
 
-                <StackPanel Margin="10" Grid.Column="1" Grid.Row="0">
-                    <TextBlock Text="Welcome!"/>
-                    <TextBlock Text="{Binding SelectedCreature.Name}" />
-                    <Button Content="Simulate" Command="{Binding SimulateCommand}" CommandParameter="{Binding SelectedCreature}" />
-                </StackPanel>
+                    <!-- Button box -->
+                    <StackPanel Grid.Row="1" VerticalAlignment="Bottom">
+                        <Button Content="Train" Command="{Binding TrainCommand}" CommandParameter="{Binding SelectedCreature}" />
+                        <Button Content="Simulate" Command="{Binding SimulateCommand}" CommandParameter="{Binding SelectedCreature}" />
+                        <Button Content="Edit Creature" Command="{Binding EditCreature}" CommandParameter="{Binding SelectedCreature}" />
+                        <Button Content="Delete" Command="{Binding EntitiesStorage.RemoveCreatureCommand}" CommandParameter="{Binding SelectedCreature}" />
+                    </StackPanel>
+                </Grid>
             </Grid>
-        </StackPanel>
 
-        <!-- It's important that this is in the end of the XAML as it needs to be on top of everything else! -->
-        <Grid x:Name="CreatureNewBox" Visibility="{Binding Path=CreateCreatureDialogVM.Visibility}">
+        </Grid>
+
+    </Grid>
+
+    <!-- It's important that this is in the end of the XAML as it needs to be on top of everything else! -->
+    <!--<Grid x:Name="CreatureNewBox" Visibility="{Binding Path=CreateCreatureDialogVM.Visibility}">
             <Grid Background="Black" Opacity="0.5"/>
             <Border
                 MinWidth="250"
@@ -55,15 +117,12 @@
                         <TextBlock Margin="5" Text="{Binding Path=Description}"/>
                     <TextBox  Padding="5" Margin="5" Text="{Binding Path=CreateCreatureDialogVM.CreatureDescription, Mode=TwoWay}"  />
 
-                    <CheckBox Command="{Binding Path=CreateCreatureDialogVM.IsOpen, Mode=OneWay}" />
-                    <Label Content="Open the Crature directly in the creature Tab"/>
+                    <CheckBox Content="Open the Crature directly in the creature Tab" Command="{Binding Path=CreateCreatureDialogVM.IsOpen, Mode=OneWay}" />
                     <Button  Margin="5" Content="{Binding Path=CreateButton}" Command="{Binding Path=CreateCreatureDialogVM.CreateCreatureCommand}" Background="{x:Null}"  />
 
                     <Button  Margin="5" Content="{Binding Path=CancelButton}" Command="{Binding HideCreatureCreationDialogCommand}" Background="{x:Null}"  />
 
                 </StackPanel>
             </Border>
-        </Grid>
-    </Grid>
+        </Grid>-->
 </UserControl>
-
