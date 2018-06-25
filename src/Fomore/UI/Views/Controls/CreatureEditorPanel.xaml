@@ -14,22 +14,28 @@
         <Grid.Resources>
             <DataTemplate DataType="{x:Type tools:Tool}">
                 <controls:CustomizableButton Padding="2" Margin="1" IsSelected="{Binding IsSelected}"
-                                             Command="{Binding PressedCommand}"  CommandParameter="{Binding Path=DataContext, RelativeSource={RelativeSource AncestorType={x:Type controls:CreatureEditorPanel}}}">
+                                             Command="{Binding PressedCommand}"
+                                             CommandParameter="{Binding Path=DataContext, RelativeSource={RelativeSource AncestorType={x:Type controls:CreatureEditorPanel}}}"
+                                             ToolTip="{Binding ToolTip}">
                     <Image Source="{Binding Path=Image}" Width="32" Height="32" />
                 </controls:CustomizableButton>
             </DataTemplate>
             <DataTemplate DataType="{x:Type behaviours:BaseBehaviour}">
-                <controls:CustomizableButton Padding="2" Margin="1" Command="{Binding Command}" CommandParameter="{Binding Path=DataContext, RelativeSource={RelativeSource AncestorType={x:Type controls:CreatureEditorPanel}}}">
+                <controls:CustomizableButton Padding="2" Margin="1" Command="{Binding Command}"
+                                             CommandParameter="{Binding Path=DataContext, RelativeSource={RelativeSource AncestorType={x:Type controls:CreatureEditorPanel}}}"
+                                             ToolTip="{Binding ToolTip}">
                     <Image Source="{Binding Path=Image}" Width="32" Height="32" />
                 </controls:CustomizableButton>
             </DataTemplate>
             <DataTemplate DataType="{x:Type behaviours:UndoBehaviour}">
-                <controls:CustomizableButton Padding="2" Margin="1" Command="{Binding DataContext.HistoryStack.UndoCommand, RelativeSource={RelativeSource AncestorType={x:Type controls:CreatureEditorPanel}}}">
+                <controls:CustomizableButton Padding="2" Margin="1"
+                                             Command="{Binding DataContext.HistoryStack.UndoCommand, RelativeSource={RelativeSource AncestorType={x:Type controls:CreatureEditorPanel}}}">
                     <Image Source="{Binding Path=Image}" Width="32" Height="32" />
                 </controls:CustomizableButton>
             </DataTemplate>
             <DataTemplate DataType="{x:Type behaviours:RedoBehaviour}">
-                <controls:CustomizableButton Padding="2" Margin="1" Command="{Binding DataContext.HistoryStack.RedoCommand, RelativeSource={RelativeSource AncestorType={x:Type controls:CreatureEditorPanel}}}">
+                <controls:CustomizableButton Padding="2" Margin="1"
+                                             Command="{Binding DataContext.HistoryStack.RedoCommand, RelativeSource={RelativeSource AncestorType={x:Type controls:CreatureEditorPanel}}}">
                     <Image Source="{Binding Path=Image}" Width="32" Height="32" />
                 </controls:CustomizableButton>
             </DataTemplate>
@@ -45,7 +51,8 @@
         <!-- Toolbars -->
 
         <!-- General Tools -->
-        <Border BorderThickness="0,0,0,1" Grid.Row="0" Grid.Column="1" HorizontalAlignment="Left" Style="{StaticResource DefaultBorder}">
+        <Border BorderThickness="0,0,0,1" Grid.Row="0" Grid.Column="1" HorizontalAlignment="Left"
+                Style="{StaticResource DefaultBorder}">
             <Grid Background="{StaticResource Level3Brush}">
                 <Grid.Resources>
                     <CollectionViewSource x:Key="CanvasBehaviourSource" Source="{Binding Path=Behaviours}">
@@ -71,7 +78,10 @@
                                             <ControlTemplate TargetType="{x:Type GroupItem}">
                                                 <StackPanel Orientation="Horizontal">
                                                     <ItemsPresenter Margin="5" />
-                                                    <ContentPresenter Content="{TemplateBinding ContentControl.Content}" ContentTemplate="{TemplateBinding ContentControl.ContentTemplate}" ContentStringFormat="{TemplateBinding ContentControl.ContentStringFormat}" />
+                                                    <ContentPresenter
+                                                        Content="{TemplateBinding ContentControl.Content}"
+                                                        ContentTemplate="{TemplateBinding ContentControl.ContentTemplate}"
+                                                        ContentStringFormat="{TemplateBinding ContentControl.ContentStringFormat}" />
                                                 </StackPanel>
                                             </ControlTemplate>
                                         </Setter.Value>
@@ -80,7 +90,8 @@
                             </GroupStyle.ContainerStyle>
                             <GroupStyle.HeaderTemplate>
                                 <DataTemplate>
-                                    <Separator Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}" Background="Black" />
+                                    <Separator Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}"
+                                               Background="Black" />
                                 </DataTemplate>
                             </GroupStyle.HeaderTemplate>
                         </GroupStyle>
@@ -96,7 +107,8 @@
         </Border>
 
         <!-- Canvas Tools -->
-        <Border Grid.Row="1" Grid.Column="0" BorderThickness="0,0,1,0" Style="{StaticResource DefaultBorder}" VerticalAlignment="Top">
+        <Border Grid.Row="1" Grid.Column="0" BorderThickness="0,0,1,0" Style="{StaticResource DefaultBorder}"
+                VerticalAlignment="Top">
             <Grid Background="{StaticResource Level2Brush}">
                 <Grid.Resources>
                     <CollectionViewSource x:Key="CanvasToolSource" Source="{Binding Path=ToolCollectionVM.Tools}">
@@ -117,7 +129,10 @@
                                             <ControlTemplate TargetType="{x:Type GroupItem}">
                                                 <StackPanel>
                                                     <ItemsPresenter Margin="5" />
-                                                    <ContentPresenter Content="{TemplateBinding ContentControl.Content}" ContentTemplate="{TemplateBinding ContentControl.ContentTemplate}" ContentStringFormat="{TemplateBinding ContentControl.ContentStringFormat}" />
+                                                    <ContentPresenter
+                                                        Content="{TemplateBinding ContentControl.Content}"
+                                                        ContentTemplate="{TemplateBinding ContentControl.ContentTemplate}"
+                                                        ContentStringFormat="{TemplateBinding ContentControl.ContentStringFormat}" />
                                                 </StackPanel>
                                             </ControlTemplate>
                                         </Setter.Value>
@@ -137,7 +152,8 @@
                         </ItemsPanelTemplate>
                     </ItemsControl.ItemsPanel>
                 </ItemsControl>
-                <Separator Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}" HorizontalAlignment="Right" Background="Black" />
+                <Separator Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}" HorizontalAlignment="Right"
+                           Background="Black" />
             </Grid>
         </Border>
 

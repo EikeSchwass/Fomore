@@ -1,4 +1,5 @@
 ﻿using System.Windows;
+using System.Windows.Input;
 using System.Windows.Media;
 using Fomore.UI.ViewModel.Commands;
 using FontAwesome.WPF;
@@ -17,7 +18,7 @@ namespace Fomore.UI.ViewModel.CreatureEditor.Tools
         protected bool IsDragging { get; private set; }
 
         /// <inheritdoc />
-        public override bool OnCanvasMouseMove(MouseInfo mouseInfo, CreatureStructureEditorCanvasVM canvasVM)
+        public override bool OnCanvasMouseMove(MouseInfo mouseInfo, CreatureStructureEditorCanvasVM canvasVM, ModifierKeys modifierKeys)
         {
             if (!IsDragging) return true;
 
@@ -32,7 +33,7 @@ namespace Fomore.UI.ViewModel.CreatureEditor.Tools
         }
 
         /// <inheritdoc />
-        public override bool OnCanvasMouseDown(MouseInfo mouseInfo, CreatureStructureEditorCanvasVM canvasVM)
+        public override bool OnCanvasMouseDown(MouseInfo mouseInfo, CreatureStructureEditorCanvasVM canvasVM, ModifierKeys modifierKeys)
         {
             IsDragging = true;
             StartPosition = mouseInfo.AbosultePosition;
@@ -41,16 +42,19 @@ namespace Fomore.UI.ViewModel.CreatureEditor.Tools
         }
 
         /// <inheritdoc />
-        public override bool OnCanvasMouseUp(MouseInfo mouseInfo, CreatureStructureEditorCanvasVM canvasVM)
+        public override bool OnCanvasMouseUp(MouseInfo mouseInfo, CreatureStructureEditorCanvasVM canvasVM, ModifierKeys modifierKeys)
         {
             IsDragging = false;
             return false;
         }
 
         /// <inheritdoc />
-        public override void OnCanvasMouseLeave(CreatureStructureEditorCanvasVM canvasVM)
+        public override void OnCanvasMouseLeave(CreatureStructureEditorCanvasVM canvasVM, ModifierKeys modifierKeys)
         {
-            OnCanvasMouseUp(default(MouseInfo), canvasVM);
+            OnCanvasMouseUp(default(MouseInfo), canvasVM, modifierKeys);
         }
+
+        /// <inheritdoc />
+        public override InputGesture InputGesture { get; } = new KeyGesture(Key.Space);
     }
 }

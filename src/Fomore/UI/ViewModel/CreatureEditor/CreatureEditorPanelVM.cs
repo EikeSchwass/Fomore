@@ -1,4 +1,7 @@
-﻿using System.Collections.ObjectModel;
+﻿using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Collections.Specialized;
+using System.Linq;
 using Fomore.UI.ViewModel.CreatureEditor.Behaviours;
 using Fomore.UI.ViewModel.CreatureEditor.Tools;
 using Fomore.UI.ViewModel.Data;
@@ -6,11 +9,14 @@ using Fomore.UI.ViewModel.Helper;
 
 namespace Fomore.UI.ViewModel.CreatureEditor
 {
-    public class CreatureEditorPanelVM
+    public class CreatureEditorPanelVM : ViewModelBase
     {
         public HistoryStackVM<CreatureVM> HistoryStack { get; }
         public ToolCollectionVM ToolCollectionVM { get; }
         public ObservableCollection<BaseBehaviour> Behaviours { get; }
+
+        public IEnumerable<IHasInputBinding> InputBindings => ToolCollectionVM.Tools.OfType<IHasInputBinding>().Concat(Behaviours);
+
         public CreatureStructureEditorCanvasVM CreatureStructureEditorCanvasVM { get; }
 
         public CreatureEditorPanelVM(HistoryStackVM<CreatureVM> historyStack)
@@ -18,8 +24,6 @@ namespace Fomore.UI.ViewModel.CreatureEditor
             HistoryStack = historyStack;
             ToolCollectionVM = new ToolCollectionVM();
             ToolCollectionVM.Tools.Add(new SelectAllTool());
-            ToolCollectionVM.Tools.Add(new SelectJointsTool());
-            ToolCollectionVM.Tools.Add(new SelectBonesTool());
             ToolCollectionVM.Tools.Add(new PanTool());
             ToolCollectionVM.Tools.Add(new PlaceJointTool());
             ToolCollectionVM.Tools.Add(new PlaceBoneTool());
@@ -27,8 +31,8 @@ namespace Fomore.UI.ViewModel.CreatureEditor
 
             Behaviours = new ObservableCollection<BaseBehaviour>
             {
-                new UndoBehaviour(),
-                new RedoBehaviour(),
+                new UndoBehaviour(HistoryStack),
+                new RedoBehaviour(HistoryStack),
                 new CopyBehaviour(),
                 new CutBehaviour(),
                 new PasteBehaviour(),
@@ -40,6 +44,11 @@ namespace Fomore.UI.ViewModel.CreatureEditor
                 new DeleteBehaviour(),
                 new ClearBehaviour()
             };
+
+            Behaviours.CollectionChanged += CollectionChanged;
+            ToolCollectionVM.Tools.CollectionChanged += CollectionChanged;
         }
+
+        private void CollectionChanged(object sender, NotifyCollectionChangedEventArgs e) => OnPropertyChanged(nameof(InputBindings));
     }
 }

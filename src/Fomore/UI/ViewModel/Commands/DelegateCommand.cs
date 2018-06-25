@@ -21,10 +21,10 @@ namespace Fomore.UI.ViewModel.Commands
         }
 
         /// <inheritdoc />
-        public bool CanExecute(object parameter) => CanExecuteDelegate?.Invoke(parameter) ?? false;
+        public virtual bool CanExecute(object parameter) => CanExecuteDelegate?.Invoke(parameter) ?? false;
 
         /// <inheritdoc />
-        public void Execute(object parameter) => ExecutionDelegate?.Invoke(parameter);
+        public virtual void Execute(object parameter) => ExecutionDelegate?.Invoke(parameter);
 
         /// <inheritdoc />
         public event EventHandler CanExecuteChanged;
@@ -36,32 +36,18 @@ namespace Fomore.UI.ViewModel.Commands
         public void OnCanExecuteChanged() => CanExecuteChanged?.Invoke(this, new EventArgs());
     }
 
-    public class DelegateCommand<T> : ICommand
+    public class DelegateCommand<T> : DelegateCommand
     {
-        public Action<T> ExecutionDelegate { get; }
-        public Func<T, bool> CanExecuteDelegate { get; }
+        public DelegateCommand(Action<T> executionDelegate, Func<T, bool> canExecuteDelegate) : base(o => executionDelegate((T)o),
+                                                                                                     o => canExecuteDelegate((T)o)) { }
 
-        public DelegateCommand(Action<T> executionDelegate, Func<T, bool> canExecuteDelegate)
-        {
-            ExecutionDelegate = executionDelegate;
-            CanExecuteDelegate = canExecuteDelegate;
-        }
+        /// <inheritdoc />
+        public override bool CanExecute(object parameter) => CanExecute((T)parameter);
 
-
-        bool ICommand.CanExecute(object parameter) => CanExecute((T)parameter);
-        void ICommand.Execute(object parameter) => ExecutionDelegate?.Invoke((T)parameter);
+        public override void Execute(object parameter) => ExecutionDelegate?.Invoke((T)parameter);
 
         public bool CanExecute(T parameter) => CanExecuteDelegate?.Invoke(parameter) ?? false;
 
         public void Execute(T parameter) => ExecutionDelegate?.Invoke(parameter);
-
-        /// <inheritdoc />
-        public event EventHandler CanExecuteChanged;
-
-        /// <summary>
-        ///     Call this method to invoke the <see cref="CanExecuteChanged" /> event and trigger an reevaluation of the
-        ///     <see cref="CanExecuteDelegate" />.
-        /// </summary>
-        public void OnCanExecuteChanged() => CanExecuteChanged?.Invoke(this, new EventArgs());
     }
 }

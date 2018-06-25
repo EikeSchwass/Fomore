@@ -22,5 +22,23 @@ namespace Core
         public static Vector2 operator *(Vector2 v1, double scalar) => new Vector2(v1.X * scalar, v1.Y * scalar);
 
         public override string ToString() => $"({X}|{Y})";
+
+        public bool Equals(Vector2 other) => X.Equals(other.X) && Y.Equals(other.Y);
+
+        /// <inheritdoc />
+        public override bool Equals(object obj)
+        {
+            if (ReferenceEquals(null, obj)) return false;
+            return obj is Vector2 vector2 && Equals(vector2);
+        }
+
+        /// <inheritdoc />
+        public override int GetHashCode()
+        {
+            unchecked
+            {
+                return (X.GetHashCode() * 397) ^ Y.GetHashCode();
+            }
+        }
     }
 }

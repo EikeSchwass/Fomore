@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using System.Windows;
+using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using Core;
@@ -22,10 +23,10 @@ namespace Fomore.UI.ViewModel.CreatureEditor.Tools
         private JointVM FirstJoint { get; set; }
 
         /// <inheritdoc />
-        public override bool OnCanvasMouseDown(MouseInfo mouseInfo, CreatureStructureEditorCanvasVM canvasVM)
+        public override bool OnCanvasMouseDown(MouseInfo mouseInfo, CreatureStructureEditorCanvasVM canvasVM, ModifierKeys modifierKeys)
         {
             CanvasVM = CanvasVM ?? canvasVM;
-            if (base.OnCanvasMouseDown(mouseInfo, canvasVM))
+            if (base.OnCanvasMouseDown(mouseInfo, canvasVM,  modifierKeys))
                 return true;
 
 
@@ -46,10 +47,10 @@ namespace Fomore.UI.ViewModel.CreatureEditor.Tools
         }
 
         /// <inheritdoc />
-        public override bool OnCanvasMouseUp(MouseInfo mouseInfo, CreatureStructureEditorCanvasVM canvasVM)
+        public override bool OnCanvasMouseUp(MouseInfo mouseInfo, CreatureStructureEditorCanvasVM canvasVM, ModifierKeys modifierKeys)
         {
             CanvasVM = CanvasVM ?? canvasVM;
-            if (base.OnCanvasMouseUp(mouseInfo, canvasVM))
+            if (base.OnCanvasMouseUp(mouseInfo, canvasVM,modifierKeys))
                 return true;
 
             if (mouseInfo.RightMouseButtonDown)
@@ -85,10 +86,10 @@ namespace Fomore.UI.ViewModel.CreatureEditor.Tools
         }
 
         /// <inheritdoc />
-        public override bool OnCanvasMouseMove(MouseInfo mouseInfo, CreatureStructureEditorCanvasVM canvasVM)
+        public override bool OnCanvasMouseMove(MouseInfo mouseInfo, CreatureStructureEditorCanvasVM canvasVM, ModifierKeys modifierKeys)
         {
             CanvasVM = CanvasVM ?? canvasVM;
-            if (base.OnCanvasMouseMove(mouseInfo, canvasVM))
+            if (base.OnCanvasMouseMove(mouseInfo, canvasVM,modifierKeys))
                 return true;
 
             var mousePosition = new Vector2(mouseInfo.RelativePosition.X, mouseInfo.RelativePosition.Y);
@@ -119,32 +120,34 @@ namespace Fomore.UI.ViewModel.CreatureEditor.Tools
         /// <inheritdoc />
         public override void OnDeselected()
         {
-            if (CanvasVM == null) return;
-            CanvasVM.PreviewBone.Visibility = Visibility.Hidden;
+            Reset();
         }
 
         /// <inheritdoc />
-        public override bool OnCanvasMouseWheel(MouseWheelInfo mouseWheelInfo, CreatureStructureEditorCanvasVM canvasVM)
+        public override InputGesture InputGesture { get; } = new KeyGesture(Key.B, ModifierKeys.Control);
+
+        /// <inheritdoc />
+        public override bool OnCanvasMouseWheel(MouseWheelInfo mouseWheelInfo, CreatureStructureEditorCanvasVM canvasVM, ModifierKeys modifierKeys)
         {
             CanvasVM = CanvasVM ?? canvasVM;
-            bool result = base.OnCanvasMouseWheel(mouseWheelInfo, canvasVM);
+            bool result = base.OnCanvasMouseWheel(mouseWheelInfo, canvasVM,modifierKeys);
             canvasVM.PreviewBone.Visibility = Visibility.Hidden;
             return result;
         }
 
         /// <inheritdoc />
-        public override void OnCanvasMouseLeave(CreatureStructureEditorCanvasVM canvasVM)
+        public override void OnCanvasMouseLeave(CreatureStructureEditorCanvasVM canvasVM, ModifierKeys modifierKeys)
         {
             CanvasVM = CanvasVM ?? canvasVM;
-            base.OnCanvasMouseLeave(canvasVM);
+            base.OnCanvasMouseLeave(canvasVM,modifierKeys);
             canvasVM.PreviewBone.Visibility = Visibility.Hidden;
         }
 
         /// <inheritdoc />
-        public override void OnCanvasMouseEnter(CreatureStructureEditorCanvasVM canvasVM)
+        public override void OnCanvasMouseEnter(CreatureStructureEditorCanvasVM canvasVM, ModifierKeys modifierKeys)
         {
             CanvasVM = CanvasVM ?? canvasVM;
-            base.OnCanvasMouseEnter(canvasVM);
+            base.OnCanvasMouseEnter(canvasVM,modifierKeys);
         }
 
         public void Reset()

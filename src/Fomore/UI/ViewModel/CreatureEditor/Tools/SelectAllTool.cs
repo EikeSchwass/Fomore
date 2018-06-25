@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using System.Windows;
+using System.Windows.Input;
 using System.Windows.Media;
 using Core;
 using Fomore.UI.ViewModel.Commands;
@@ -11,6 +12,7 @@ namespace Fomore.UI.ViewModel.CreatureEditor.Tools
     public class SelectAllTool : Tool
     {
         private const double MinSelectionDiagonale = 4;
+        private const double SinglePointSelectionTolerance = 5; //px
 
         /// <inheritdoc />
         public override ImageSource Image { get; } = ImageAwesome.CreateImageSource(FontAwesomeIcon.MousePointer, Brushes.Black);
@@ -23,10 +25,10 @@ namespace Fomore.UI.ViewModel.CreatureEditor.Tools
         private bool IsSelecting { get; set; }
 
         /// <inheritdoc />
-        public override bool OnCanvasMouseDown(MouseInfo mouseInfo, CreatureStructureEditorCanvasVM canvasVM)
+        public override bool OnCanvasMouseDown(MouseInfo mouseInfo, CreatureStructureEditorCanvasVM canvasVM, ModifierKeys modifierKeys)
         {
             CanvasVM = CanvasVM ?? canvasVM;
-            base.OnCanvasMouseDown(mouseInfo, canvasVM);
+            base.OnCanvasMouseDown(mouseInfo, canvasVM, modifierKeys);
 
             if (mouseInfo.MiddleMouseButtonDown)
                 return false;
@@ -47,17 +49,22 @@ namespace Fomore.UI.ViewModel.CreatureEditor.Tools
         }
 
         /// <inheritdoc />
-        public override void OnCanvasMouseLeave(CreatureStructureEditorCanvasVM canvasVM)
+        public override void OnCanvasMouseLeave(CreatureStructureEditorCanvasVM canvasVM, ModifierKeys modifierKeys)
         {
-            base.OnCanvasMouseLeave(canvasVM);
+            CanvasVM = CanvasVM ?? canvasVM;
+            base.OnCanvasMouseLeave(canvasVM, modifierKeys);
             IsSelecting = false;
+            CanvasVM.SelectionVM.Visibility = Visibility.Hidden;
         }
 
         /// <inheritdoc />
-        public override bool OnCanvasMouseMove(MouseInfo mouseInfo, CreatureStructureEditorCanvasVM canvasVM)
+        public override InputGesture InputGesture { get; } = new KeyGesture(Key.Q, ModifierKeys.Control);
+
+        /// <inheritdoc />
+        public override bool OnCanvasMouseMove(MouseInfo mouseInfo, CreatureStructureEditorCanvasVM canvasVM, ModifierKeys modifierKeys)
         {
             CanvasVM = CanvasVM ?? canvasVM;
-            if (base.OnCanvasMouseMove(mouseInfo, canvasVM))
+            if (base.OnCanvasMouseMove(mouseInfo, canvasVM, modifierKeys))
                 return true;
 
             var mousePosition = new Vector2(mouseInfo.RelativePosition.X, mouseInfo.RelativePosition.Y);
@@ -75,19 +82,24 @@ namespace Fomore.UI.ViewModel.CreatureEditor.Tools
         }
 
         /// <inheritdoc />
-        public override bool OnCanvasMouseUp(MouseInfo mouseInfo, CreatureStructureEditorCanvasVM canvasVM)
+        public override bool OnCanvasMouseUp(MouseInfo mouseInfo, CreatureStructureEditorCanvasVM canvasVM, ModifierKeys modifierKeys)
         {
-            base.OnCanvasMouseUp(mouseInfo, canvasVM);
+            base.OnCanvasMouseUp(mouseInfo, canvasVM, modifierKeys);
             if (mouseInfo.LeftMouseButtonDown == false)
                 return false;
+
+            var mousePosition = new Vector2(mouseInfo.RelativePosition.X, mouseInfo.RelativePosition.Y);
 
             if (IsSelecting)
             {
                 double length = new Vector2(CanvasVM.SelectionVM.Width, CanvasVM.SelectionVM.Height).Length;
                 if (length < MinSelectionDiagonale)
+                {
+                    PointSelection(mousePosition, modifierKeys);
                     CanvasVM.SelectionVM.Visibility = Visibility.Hidden;
+                }
                 else
-                    SelectElementsInSelectionArea(canvasVM);
+                    SelectElementsInSelectionArea(canvasVM, modifierKeys);
 
                 IsSelecting = false;
                 return true;
@@ -96,12 +108,46 @@ namespace Fomore.UI.ViewModel.CreatureEditor.Tools
             return false;
         }
 
-        private void SelectElementsInSelectionArea(CreatureStructureEditorCanvasVM canvasVM)
+        private void PointSelection(Vector2 relativePosition, ModifierKeys modifierKeys)
+        {
+
+            if ((modifierKeys & ModifierKeys.Shift) == 0)
+                Reset();
+            if (CanvasVM == null)
+                return;
+            CanvasVM.SelectionVM.Visibility = Visibility.Hidden;
+
+            if ((modifierKeys & ModifierKeys.Control) > 0 || modifierKeys == 0)
+            {
+                var jointVM = (from joint in CanvasVM.HistoryStack?.Current?.CreatureStructureVM?.JointCollectionVM
+                               let distance = (joint.Position - relativePosition).Length
+                               where distance < SinglePointSelectionTolerance
+                               orderby distance
+                               select joint).FirstOrDefault();
+                if (jointVM != null)
+                {
+                    CanvasVM.SelectedJoints.Add(jointVM);
+                    return;
+                }
+            }
+
+            if ((modifierKeys & ModifierKeys.Alt) > 0 || modifierKeys == 0)
+            {
+
+                var boneVM = (from bone in CanvasVM.HistoryStack?.Current?.CreatureStructureVM?.BoneCollectionVM
+                              let distance = relativePosition.GetDistanceToBone(bone.Model)
+                              where distance < SinglePointSelectionTolerance
+                              orderby distance
+                              select bone).FirstOrDefault();
+                if (boneVM != null)
+                    CanvasVM.SelectedBones.Add(boneVM);
+            }
+        }
+
+        private void SelectElementsInSelectionArea(CreatureStructureEditorCanvasVM canvasVM, ModifierKeys modifierKeys)
         {
             CanvasVM = CanvasVM ?? canvasVM;
-            CanvasVM.SelectionVM.Visibility = Visibility.Hidden;
-            CanvasVM.SelectedJoints.Clear();
-            CanvasVM.SelectedBones.Clear();
+            Reset();
 
             var creatureStructureVM = CanvasVM.HistoryStack.Current.CreatureStructureVM;
             var jointsInRectangle =
@@ -109,11 +155,28 @@ namespace Fomore.UI.ViewModel.CreatureEditor.Tools
             var bonesInRectangle =
                 creatureStructureVM.BoneCollectionVM.Where(boneVM =>
                                                                boneVM.FirstJoint.Position.IsInsideRect(CanvasVM.SelectionVM.Rectangle) ||
-                                                               boneVM.SecondJoint.Position.IsInsideRect(CanvasVM.SelectionVM.Rectangle));
+                                                               boneVM.SecondJoint.Position.IsInsideRect(CanvasVM.SelectionVM.Rectangle) ||
+                                                               CanvasVM.SelectionVM.Rectangle.IsBoneInside(boneVM.Model));
             foreach (var jointVM in jointsInRectangle)
                 CanvasVM.SelectedJoints.Add(jointVM);
             foreach (var boneVM in bonesInRectangle)
                 CanvasVM.SelectedBones.Add(boneVM);
+        }
+
+        private void Reset()
+        {
+            if (CanvasVM == null)
+                return;
+            CanvasVM.SelectionVM.Visibility = Visibility.Hidden;
+            CanvasVM.SelectedJoints.Clear();
+            CanvasVM.SelectedBones.Clear();
+        }
+
+        /// <inheritdoc />
+        public override void OnDeselected()
+        {
+            base.OnDeselected();
+            Reset();
         }
     }
 }

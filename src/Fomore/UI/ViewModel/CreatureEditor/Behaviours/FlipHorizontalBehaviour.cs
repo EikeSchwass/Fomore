@@ -1,8 +1,10 @@
 ﻿using System;
+using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 
-namespace Fomore.UI.ViewModel.CreatureEditor.Behaviours {
+namespace Fomore.UI.ViewModel.CreatureEditor.Behaviours
+{
     public class FlipHorizontalBehaviour : BaseBehaviour
     {
         /// <inheritdoc />
@@ -10,5 +12,11 @@ namespace Fomore.UI.ViewModel.CreatureEditor.Behaviours {
 
         /// <inheritdoc />
         public override BehaviourType BehaviourType { get; } = BehaviourType.Operations;
+
+        /// <inheritdoc />
+        protected override InputGesture InputGesture { get; } = null;
+
+        /// <inheritdoc />
+        public override string ToString() => "Flip Horizontal";
     }
 }

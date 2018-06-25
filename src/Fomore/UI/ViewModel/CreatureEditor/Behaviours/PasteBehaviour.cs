@@ -1,7 +1,9 @@
-﻿using System.Windows.Media;
+﻿using System.Windows.Input;
+using System.Windows.Media;
 using FontAwesome.WPF;
 
-namespace Fomore.UI.ViewModel.CreatureEditor.Behaviours {
+namespace Fomore.UI.ViewModel.CreatureEditor.Behaviours
+{
     public class PasteBehaviour : BaseBehaviour
     {
         /// <inheritdoc />
@@ -9,5 +11,11 @@ namespace Fomore.UI.ViewModel.CreatureEditor.Behaviours {
 
         /// <inheritdoc />
         public override BehaviourType BehaviourType { get; } = BehaviourType.Clipboard;
+
+        /// <inheritdoc />
+        protected override InputGesture InputGesture { get; } = new KeyGesture(Key.V, ModifierKeys.Control);
+
+        /// <inheritdoc />
+        public override string ToString() => "Paste Selection";
     }
 }
