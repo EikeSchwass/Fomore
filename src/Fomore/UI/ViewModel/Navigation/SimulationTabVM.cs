@@ -31,6 +31,8 @@ namespace Fomore.UI.ViewModel.Navigation
                 if (Equals(value, selectedCreature)) return;
                 selectedCreature = value;
                 OnPropertyChanged();
+                ResetSelectionCommand.OnCanExecuteChanged();
+                StartSimulationCommand.OnCanExecuteChanged();
             }
         }
 
@@ -42,6 +44,8 @@ namespace Fomore.UI.ViewModel.Navigation
                 if (Equals(value, selectedMovementPattern)) return;
                 selectedMovementPattern = value;
                 OnPropertyChanged();
+                ResetSelectionCommand.OnCanExecuteChanged();
+                StartSimulationCommand.OnCanExecuteChanged();
             }
         }
 
@@ -53,6 +57,8 @@ namespace Fomore.UI.ViewModel.Navigation
                 if (Equals(value, selectedEnvironment)) return;
                 selectedEnvironment = value;
                 OnPropertyChanged();
+                ResetSelectionCommand.OnCanExecuteChanged();
+                StartSimulationCommand.OnCanExecuteChanged();
             }
         }
 
@@ -60,9 +66,9 @@ namespace Fomore.UI.ViewModel.Navigation
         // Commands and Actions
         // ------------------------------------------------------------
 
-        public ICommand CreateStuffCommand { get; }
-        public ICommand ResetSelectionCommand { get; }
-        public ICommand StartSimulationCommand { get; }
+        public DelegateCommand CreateStuffCommand { get; }
+        public DelegateCommand ResetSelectionCommand { get; }
+        public DelegateCommand StartSimulationCommand { get; }
 
         private void CreateCreaturesAction(object obj)
         {

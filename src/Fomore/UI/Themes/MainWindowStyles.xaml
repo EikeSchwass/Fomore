@@ -13,6 +13,7 @@
 
     <Style x:Key="DetailsDescription" TargetType="TextBox">
         <Setter Property="Height" Value="200" />
+        <Setter Property="TextWrapping" Value="Wrap" />
     </Style>
 
     <Style x:Key="DetailsItemGrid" TargetType="Grid">

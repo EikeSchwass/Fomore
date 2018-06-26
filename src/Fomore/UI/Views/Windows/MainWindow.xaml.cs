@@ -12,7 +12,7 @@ namespace Fomore.UI.Views.Windows
         {
             InitializeComponent();
             var creatureStructureEditor = new CreatureStructureEditor { DataContext = new CreatureEditorVM(new CreatureVM(new Creature())) };
-            creatureStructureEditor.Show();
+            //creatureStructureEditor.Show();
         }
 
         private void MainWindow_OnLoaded(object sender, RoutedEventArgs e)
