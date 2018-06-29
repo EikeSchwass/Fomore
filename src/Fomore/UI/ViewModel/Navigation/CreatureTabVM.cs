@@ -1,9 +1,12 @@
 ﻿using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Input;
+using Core;
 using Fomore.UI.ViewModel.Application;
 using Fomore.UI.ViewModel.Commands;
+using Fomore.UI.ViewModel.CreatureEditor;
 using Fomore.UI.ViewModel.Data;
+using Fomore.UI.Views.Windows;
 
 namespace Fomore.UI.ViewModel.Navigation
 {
@@ -36,15 +39,29 @@ namespace Fomore.UI.ViewModel.Navigation
         // Commands and Actions
         // ------------------------------------------------------------
 
+        public ICommand TrainCommand { get; }
         public ICommand SimulateCommand { get; }
         public ICommand EditCreature { get; }
-        public ICommand TrainCommand { get; }
+
+        private void TrainAction(object obj)
+        {
+            TabNavigationVM.SwitchToTrainingTabCommand.Execute(obj);
+        }
 
         private void SimulateAction(object obj)
         {
             TabNavigationVM.SwitchToSimulationTabCommand.Execute(obj);
         }
 
+        private void EditAction(object obj)
+        {
+            if (obj is CreatureVM creature)
+            {
+                var creatureStructureEditor = new CreatureStructureEditor { DataContext = new CreatureEditorVM(creature) };
+                creatureStructureEditor.Show();
+            }
+        }
+        
         // ------------------------------------------------------------
         // Entry point & other methods
         // ------------------------------------------------------------
@@ -54,9 +71,9 @@ namespace Fomore.UI.ViewModel.Navigation
             TabNavigationVM = tabNavigationVM;
             EntitiesStorage = entitiesStorage;
 
-            TrainCommand = new StubCommand();
+            TrainCommand = new DelegateCommand(TrainAction, o => true);
             SimulateCommand = new DelegateCommand(SimulateAction, o => true);
-            EditCreature = new StubCommand();
+            EditCreature = new DelegateCommand(EditAction, o => true);
         }
     }
 }
