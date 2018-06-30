@@ -22,7 +22,7 @@
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="*" />
             </Grid.RowDefinitions>
-            <Button Grid.Row="0" Content="Create New Creature" />
+            <Button Grid.Row="0" Content="Create New Creature" Command="{Binding NewCreature}" />
             <ListBox Grid.Row="1" Width="350"
                      ItemsSource="{Binding EntitiesStorage.Creatures}"
                      SelectedItem="{Binding SelectedCreature, Mode=TwoWay}" />

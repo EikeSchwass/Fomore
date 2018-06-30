@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Input;
+using Core;
 using Fomore.UI.ViewModel.Application;
 using Fomore.UI.ViewModel.Commands;
 using Fomore.UI.ViewModel.Data;
@@ -36,7 +37,15 @@ namespace Fomore.UI.ViewModel.Navigation
         // Commands and Actions
         // ------------------------------------------------------------
 
+        public ICommand NewEnvironment { get; }
 
+        private void NewEnvironmentAction(object obj)
+        {
+            var environment = new Environment() { Name = "New Environment", Description = "No description available...", Gravity = 0.0, Friction = 0.0};
+            var environmentVM = new EnvironmentVM(environment);
+            EntitiesStorage.AddEnvironmentCommand.Execute(environmentVM);
+            SelectedEnvironment = environmentVM;
+        }
 
         // ------------------------------------------------------------
         // Entry point & other methods
@@ -46,6 +55,8 @@ namespace Fomore.UI.ViewModel.Navigation
         {
             TabNavigationVM = tabNavigationVM;
             EntitiesStorage = entitiesStorage;
+
+            NewEnvironment = new DelegateCommand(NewEnvironmentAction, o => true);
         }
     }
 }

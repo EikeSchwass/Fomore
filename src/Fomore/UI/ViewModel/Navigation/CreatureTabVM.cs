@@ -39,9 +39,18 @@ namespace Fomore.UI.ViewModel.Navigation
         // Commands and Actions
         // ------------------------------------------------------------
 
+        public ICommand NewCreature { get; }
         public ICommand TrainCommand { get; }
         public ICommand SimulateCommand { get; }
         public ICommand EditCreature { get; }
+
+        private void NewCreatureAction(object obj)
+        {
+            var creature = new Creature() {Name = "New Creature", Description = "No description available..."};
+            var creatureVM = new CreatureVM(creature);
+            EntitiesStorage.AddCreatureCommand.Execute(creatureVM);
+            SelectedCreature = creatureVM;
+        }
 
         private void TrainAction(object obj)
         {
@@ -57,11 +66,11 @@ namespace Fomore.UI.ViewModel.Navigation
         {
             if (obj is CreatureVM creature)
             {
-                var creatureStructureEditor = new CreatureStructureEditor { DataContext = new CreatureEditorVM(creature) };
+                var creatureStructureEditor = new CreatureStructureEditor {DataContext = new CreatureEditorVM(creature)};
                 creatureStructureEditor.Show();
             }
         }
-        
+
         // ------------------------------------------------------------
         // Entry point & other methods
         // ------------------------------------------------------------
@@ -71,6 +80,7 @@ namespace Fomore.UI.ViewModel.Navigation
             TabNavigationVM = tabNavigationVM;
             EntitiesStorage = entitiesStorage;
 
+            NewCreature = new DelegateCommand(NewCreatureAction, o => true);
             TrainCommand = new DelegateCommand(TrainAction, o => true);
             SimulateCommand = new DelegateCommand(SimulateAction, o => true);
             EditCreature = new DelegateCommand(EditAction, o => true);

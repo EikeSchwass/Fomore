@@ -22,7 +22,7 @@
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="*" />
             </Grid.RowDefinitions>
-            <Button Grid.Row="0" Content="Create New Environment" />
+            <Button Grid.Row="0" Content="Create New Environment" Command="{Binding NewEnvironment}"/>
             <ListBox Grid.Row="1" Width="350"
                      ItemsSource="{Binding EntitiesStorage.Environments}"
                      SelectedItem="{Binding SelectedEnvironment, Mode=TwoWay}" />
