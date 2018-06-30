@@ -16,6 +16,7 @@ namespace Fomore.UI.ViewModel.Data
                 if (value == Model.Name) return;
                 Model.Name = value;
                 OnPropertyChanged();
+                OnPropertyChanged(nameof(LastAccess));
             }
         }
 
@@ -27,53 +28,36 @@ namespace Fomore.UI.ViewModel.Data
                 if (value == Model.Description) return;
                 Model.Description = value;
                 OnPropertyChanged();
+                OnPropertyChanged(nameof(LastAccess));
             }
         }
-
-        private DateTime lastAccess;
-        private double gravity;
-        private double friction;
 
 
         public double Gravity
         {
-            get => gravity;
+            get => Model.Gravity;
             set
             {
-                if (value.Equals(gravity)) return;
-                gravity = value;
+                if (value == Model.Gravity) return;
+                Model.Gravity = value;
                 OnPropertyChanged();
-                OnAccess();
+                OnPropertyChanged(nameof(LastAccess));
             }
         }
 
         public double Friction
         {
-            get => friction;
+            get => Model.Friction;
             set
             {
-                if (value.Equals(friction)) return;
-                friction = value;
+                if (value == Model.Friction) return;
+                Model.Gravity = value;
                 OnPropertyChanged();
-                OnAccess();
+                OnPropertyChanged(nameof(LastAccess));
             }
         }
 
-        public DateTime LastAccess
-        {
-            get => lastAccess;
-            private set
-            {
-                if (value.Equals(lastAccess)) return;
-                lastAccess = value;
-                OnPropertyChanged();
-            }
-        }
-
-        private void OnAccess()
-        {
-            LastAccess = DateTime.Now;
-        }
+        public DateTime LastAccess => Model.LastAccess;
 
         public EnvironmentVM(Environment model) : base(model) { }
     }
