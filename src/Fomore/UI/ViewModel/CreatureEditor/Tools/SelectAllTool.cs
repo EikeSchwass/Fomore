@@ -33,8 +33,6 @@ namespace Fomore.UI.ViewModel.CreatureEditor.Tools
             if (mouseInfo.MiddleMouseButtonDown)
                 return false;
 
-
-
             var mousePosition = new Vector2(mouseInfo.RelativePosition.X, mouseInfo.RelativePosition.Y);
             if (!IsSelecting)
             {
@@ -117,7 +115,7 @@ namespace Fomore.UI.ViewModel.CreatureEditor.Tools
                 return;
             CanvasVM.SelectionVM.Visibility = Visibility.Hidden;
 
-            if ((modifierKeys & ModifierKeys.Control) > 0 || modifierKeys == 0)
+            if ((modifierKeys & ModifierKeys.Alt) == 0)
             {
                 var jointVM = (from joint in CanvasVM.HistoryStack?.Current?.CreatureStructureVM?.JointCollectionVM
                                let distance = (joint.Position - relativePosition).Length
@@ -126,12 +124,15 @@ namespace Fomore.UI.ViewModel.CreatureEditor.Tools
                                select joint).FirstOrDefault();
                 if (jointVM != null)
                 {
-                    CanvasVM.SelectedJoints.Add(jointVM);
+                    if (CanvasVM.SelectedJoints.Contains(jointVM))
+                        CanvasVM.SelectedJoints.Remove(jointVM);
+                    else
+                        CanvasVM.SelectedJoints.Add(jointVM);
                     return;
                 }
             }
 
-            if ((modifierKeys & ModifierKeys.Alt) > 0 || modifierKeys == 0)
+            if ((modifierKeys & ModifierKeys.Control) == 0)
             {
 
                 var boneVM = (from bone in CanvasVM.HistoryStack?.Current?.CreatureStructureVM?.BoneCollectionVM
@@ -140,7 +141,12 @@ namespace Fomore.UI.ViewModel.CreatureEditor.Tools
                               orderby distance
                               select bone).FirstOrDefault();
                 if (boneVM != null)
-                    CanvasVM.SelectedBones.Add(boneVM);
+                {
+                    if (CanvasVM.SelectedBones.Contains(boneVM))
+                        CanvasVM.SelectedBones.Remove(boneVM);
+                    else
+                        CanvasVM.SelectedBones.Add(boneVM);
+                }
             }
         }
 

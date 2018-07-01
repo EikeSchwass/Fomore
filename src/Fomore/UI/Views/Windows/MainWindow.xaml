@@ -7,7 +7,7 @@
         xmlns:controls="clr-namespace:Fomore.UI.Views.Controls"
         xmlns:application="clr-namespace:Fomore.UI.ViewModel.Application"
         mc:Ignorable="d"
-        Title="Fomore" MinHeight="600" MinWidth="960" Width="1440" Height="900" Icon="../../assets/images/icon.ico" Loaded="MainWindow_OnLoaded" Visibility="Visible">
+        Title="Fomore" MinHeight="600" MinWidth="960" Width="1440" Height="900" Icon="../../assets/images/icon.ico" Loaded="MainWindow_OnLoaded" Visibility="Hidden">
     <Window.DataContext>
         <application:AppStateVM  />
     </Window.DataContext>
