@@ -45,7 +45,6 @@
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto" />
                     <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto" />
@@ -53,7 +52,6 @@
                 </Grid.RowDefinitions>
                 <Image Grid.Column="0" Grid.RowSpan="2" Style="{StaticResource ListBoxIcon}" Source="../assets/images/creature_icon.png" />
                 <TextBlock Grid.Column="1" Grid.Row="0" Style="{StaticResource ListBoxItemName}" Text="{Binding Name}" />
-                <TextBlock Grid.Column="2" Grid.Row="0" Style="{StaticResource ListBoxItemLastAccess}" Text="{Binding LastAccess}" />
             </Grid>
         </Border>
     </DataTemplate>
@@ -64,7 +62,6 @@
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto" />
                     <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
                     <RowDefinition />
@@ -72,9 +69,10 @@
                 </Grid.RowDefinitions>
                 <Image Grid.Column="0" Grid.RowSpan="2" Style="{StaticResource ListBoxIcon}" Source="../../assets/images/movementpattern_icon.png" />
                 <TextBlock Grid.Column="1" Grid.Row="0" Style="{StaticResource ListBoxItemName}" Text="{Binding Name}" />
-                <TextBlock Grid.Column="2" Grid.Row="0" Style="{StaticResource ListBoxItemLastAccess}" Text="{Binding LastAccess}" />
-                <TextBlock Grid.Column="1" Grid.Row="1" Style="{StaticResource ListBoxItemInfo}" FontWeight="Bold" Text="Iterations:" />
-                <TextBlock Grid.Column="2" Grid.Row="1" Style="{StaticResource ListBoxItemInfo}" Text="{Binding Iterations}" />
+                <StackPanel Grid.Column="1" Grid.Row="1">
+                    <TextBlock Style="{StaticResource ListBoxItemInfo}" FontWeight="Bold" Text="Iterations:" />
+                    <TextBlock Style="{StaticResource ListBoxItemInfo}" Text="{Binding Iterations}" />
+                </StackPanel>
             </Grid>
         </Border>
     </DataTemplate>
@@ -85,7 +83,6 @@
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto" />
                     <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
                     <RowDefinition />
@@ -93,9 +90,16 @@
                 </Grid.RowDefinitions>
                 <Image Grid.Column="0" Grid.RowSpan="2" Style="{StaticResource ListBoxIcon}" Source="../../assets/images/environment_icon.png" />
                 <TextBlock Grid.Column="1" Grid.Row="0" Style="{StaticResource ListBoxItemName}" Text="{Binding Name}" />
-                <TextBlock Grid.Column="2" Grid.Row="0" Style="{StaticResource ListBoxItemLastAccess}" Text="{Binding LastAccess}" />
-                <TextBlock Grid.Column="1" Grid.Row="1" Style="{StaticResource ListBoxItemInfo}" FontWeight="Bold" Text="Gravity:" />
-                <TextBlock Grid.Column="2" Grid.Row="1" Style="{StaticResource ListBoxItemInfo}" Text="{Binding Gravity, StringFormat={}{0} m/s²}" />
+                <StackPanel Grid.Column="1" Grid.Row="1" Orientation="Horizontal">
+                    <StackPanel>
+                        <TextBlock Style="{StaticResource ListBoxItemInfo}" FontWeight="Bold" Text="Gravity:" />
+                        <TextBlock Style="{StaticResource ListBoxItemInfo}" Text="{Binding Gravity, StringFormat={}{0} m/s²}" />
+                    </StackPanel>
+                    <StackPanel Margin="30 0">
+                        <TextBlock Style="{StaticResource ListBoxItemInfo}" FontWeight="Bold" Text="Friction:" />
+                        <TextBlock Style="{StaticResource ListBoxItemInfo}" Text="{Binding Friction, StringFormat={}{0} J}" />
+                    </StackPanel>
+                </StackPanel>
             </Grid>
         </Border>
     </DataTemplate>

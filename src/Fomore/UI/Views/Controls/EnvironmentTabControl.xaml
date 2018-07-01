@@ -45,8 +45,8 @@
                 <!-- The Details -->
                 <Grid Grid.Column="0" DataContext="{Binding SelectedEnvironment}">
                     <StackPanel>
-                        <TextBox Style="{StaticResource DetailsName}" Text="{Binding Name, UpdateSourceTrigger=PropertyChanged}" />
-                        <TextBox Style="{StaticResource DetailsDescription}" Text="{Binding Description, UpdateSourceTrigger=PropertyChanged}" />
+                        <TextBox Style="{StaticResource DetailsName}" Text="{Binding Name}" />
+                        <TextBox Style="{StaticResource DetailsDescription}" Text="{Binding Description}" />
 
                         <Grid Style="{StaticResource DetailsItemGrid}">
                             <Grid.ColumnDefinitions>
