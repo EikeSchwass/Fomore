@@ -2,7 +2,7 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:data="clr-namespace:Fomore.UI.ViewModel.Data">
 
-    <Style TargetType="ListBox">
+    <Style x:Key="EntityList" TargetType="ListBox">
         <Setter Property="MinWidth" Value="250" />
         <Setter Property="MaxWidth" Value="500" />
         <Setter Property="HorizontalContentAlignment" Value="Stretch" />
@@ -39,7 +39,7 @@
         <Setter Property="FontStyle" Value="Italic" />
     </Style>
 
-    <DataTemplate DataType="{x:Type data:CreatureVM}">
+    <DataTemplate x:Key="CreatureListItem" DataType="{x:Type data:CreatureVM}">
         <Border Style="{StaticResource ListBoxItemBorder}" BorderBrush="Red">
             <Grid Style="{StaticResource ListBoxItemGrid}">
                 <Grid.ColumnDefinitions>
@@ -57,7 +57,8 @@
             </Grid>
         </Border>
     </DataTemplate>
-    <DataTemplate DataType="{x:Type data:MovementPatternVM}">
+
+    <DataTemplate x:Key="MovementPatternListItem" DataType="{x:Type data:MovementPatternVM}">
         <Border Style="{StaticResource ListBoxItemBorder}" BorderBrush="Blue">
             <Grid Style="{StaticResource ListBoxItemGrid}">
                 <Grid.ColumnDefinitions>
@@ -77,7 +78,8 @@
             </Grid>
         </Border>
     </DataTemplate>
-    <DataTemplate DataType="{x:Type data:EnvironmentVM}">
+
+    <DataTemplate x:Key="EnvironmentListItem" DataType="{x:Type data:EnvironmentVM}">
         <Border Style="{StaticResource ListBoxItemBorder}" BorderBrush="Green">
             <Grid Style="{StaticResource ListBoxItemGrid}">
                 <Grid.ColumnDefinitions>

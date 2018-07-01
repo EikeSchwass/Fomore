@@ -2,6 +2,8 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:local="clr-namespace:Fomore.UI.Converter">
     <local:NumberVisibilityConverter x:Key="NumberVisibilityConverter" />
+    <local:NotNullToVisibilityConverter x:Key="NotNullToVisibilityConverter" />
+    <local:NullToVisibilityConverter x:Key="NullToVisibilityConverter" />
     <local:BooleanVisibilityConverter x:Key="BooleanVisibilityConverter" />
     <local:DescriptionWidthConverter x:Key="DescriptionWidthConverter" />
 </ResourceDictionary>

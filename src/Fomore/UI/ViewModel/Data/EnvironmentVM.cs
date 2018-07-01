@@ -51,7 +51,7 @@ namespace Fomore.UI.ViewModel.Data
             set
             {
                 if (value == Model.Friction) return;
-                Model.Gravity = value;
+                Model.Friction = value;
                 OnPropertyChanged();
                 OnPropertyChanged(nameof(LastAccess));
             }

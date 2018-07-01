@@ -1,4 +1,5 @@
-﻿using System.Windows.Input;
+﻿using System.Windows;
+using System.Windows.Input;
 using Core;
 using Fomore.UI.ViewModel.Application;
 using Fomore.UI.ViewModel.Commands;
@@ -65,55 +66,8 @@ namespace Fomore.UI.ViewModel.Navigation
         // ------------------------------------------------------------
         // Commands and Actions
         // ------------------------------------------------------------
-
-        public DelegateCommand CreateStuffCommand { get; }
         public DelegateCommand ResetSelectionCommand { get; }
         public DelegateCommand StartSimulationCommand { get; }
-
-        private void CreateCreaturesAction(object obj)
-        {
-            var dinosaur = new CreatureVM(new Creature()) { Name = "Dinosaur", Description = "Dangerous like me when I'm hungry" };
-            var dog = new CreatureVM(new Creature()) { Name = "Dog", Description = "My name is Rex" };
-            var cat = new CreatureVM(new Creature()) { Name = "Cat", Description = "Miau miau miau..." };
-
-            EntitiesStorage.AddCreatureCommand.Execute(dinosaur);
-            EntitiesStorage.AddCreatureCommand.Execute(dog);
-            EntitiesStorage.AddCreatureCommand.Execute(cat);
-
-            dog.MovementPatternCollectionVM.AddItemCommand.Execute(new MovementPatternVM(new MovementPattern())
-            {
-                Name = "Dog walks on Earth",
-                Iterations = 1337
-            });
-            dog.MovementPatternCollectionVM.AddItemCommand.Execute(new MovementPatternVM(new MovementPattern())
-            {
-                Name = "Dog runs on Earth",
-                Iterations = 42
-            });
-            dog.MovementPatternCollectionVM.AddItemCommand.Execute(new MovementPatternVM(new MovementPattern())
-            {
-                Name = "Dog walks on Moon",
-                Iterations = 123
-            });
-
-            var earth = new EnvironmentVM(new Environment())
-            {
-                Name = "Earth",
-                Description = "Our wonderful world",
-                Gravity = 9.81,
-                Friction = 3
-            };
-            var moon = new EnvironmentVM(new Environment())
-            {
-                Name = "Moon",
-                Description = "The lovely ball surrounding our home planet",
-                Gravity = 1.62,
-                Friction = 0
-            };
-
-            EntitiesStorage.AddEnvironmentCommand.Execute(earth);
-            EntitiesStorage.AddEnvironmentCommand.Execute(moon);
-        }
 
         private void ResetSelectionAction(object obj)
         {
@@ -124,7 +78,7 @@ namespace Fomore.UI.ViewModel.Navigation
 
         private void StartSimulationAction(object obj)
         {
-            SelectedMovementPattern.Iterations++;
+            MessageBox.Show("The simulation has started...\n\nParameters:\nCreature:\t\t\t" + SelectedCreature.Name + "\nMovement Pattern:\t" + SelectedMovementPattern.Name + "\nEnvironment:\t\t" + SelectedEnvironment.Name, "Simulation", MessageBoxButton.OK, MessageBoxImage.Information);
         }
 
         // ------------------------------------------------------------
@@ -137,7 +91,6 @@ namespace Fomore.UI.ViewModel.Navigation
             EntitiesStorage = entitiesStorage;
 
             // Init commands
-            CreateStuffCommand = new DelegateCommand(CreateCreaturesAction, o => true);
             ResetSelectionCommand = new DelegateCommand(ResetSelectionAction,
                                                         o => SelectedCreature != null ||
                                                              SelectedMovementPattern != null ||

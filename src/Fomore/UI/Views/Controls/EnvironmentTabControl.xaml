@@ -23,14 +23,73 @@
                 <RowDefinition Height="*" />
             </Grid.RowDefinitions>
             <Button Grid.Row="0" Content="Create New Environment" Command="{Binding NewEnvironment}"/>
-            <ListBox Grid.Row="1" Width="350"
+            <ListBox Grid.Row="1" Width="350" Style="{StaticResource EntityList}"
+                     ItemTemplate="{StaticResource EnvironmentListItem}"
                      ItemsSource="{Binding EntitiesStorage.Environments}"
                      SelectedItem="{Binding SelectedEnvironment, Mode=TwoWay}" />
         </Grid>
 
-        <!-- Details grid on the right side -->
-        <Grid Grid.Column="1">
-           
+        <!-- No Selection screen -->
+        <Grid Grid.Column="1" Visibility="{Binding SelectedEnvironment, Converter={StaticResource NullToVisibilityConverter}}">
+            <TextBlock Text="No selection made..." />
+        </Grid>
+
+        <!-- Details pane -->
+        <Grid Grid.Column="1" Style="{StaticResource DetailsContentPane}" Visibility="{Binding SelectedEnvironment, Converter={StaticResource NotNullToVisibilityConverter}}">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+
+                <!-- The Details -->
+                <Grid Grid.Column="0" DataContext="{Binding SelectedEnvironment}">
+                    <StackPanel>
+                        <TextBox Style="{StaticResource DetailsName}" Text="{Binding Name, UpdateSourceTrigger=PropertyChanged}" />
+                        <TextBox Style="{StaticResource DetailsDescription}" Text="{Binding Description, UpdateSourceTrigger=PropertyChanged}" />
+
+                        <Grid Style="{StaticResource DetailsItemGrid}">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition />
+                                <ColumnDefinition />
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition />
+                                <RowDefinition />
+                                <RowDefinition />
+                                <RowDefinition />
+                                <RowDefinition />
+                            </Grid.RowDefinitions>
+
+                            <TextBlock Grid.Column="0" Grid.Row="0" Text="Last changed:" />
+                            <TextBlock Grid.Column="1" Grid.Row="0" Text="{Binding LastAccess}" />
+                            <TextBlock Grid.Column="0" Grid.Row="1" Text="Gravity:" />
+                            <TextBox Grid.Column="1" Grid.Row="1" Text="{Binding Gravity}" />
+                            <TextBlock Grid.Column="0" Grid.Row="2" Text="Friction:" />
+                            <TextBox Grid.Column="1" Grid.Row="2" Text="{Binding Friction}" />
+                        </Grid>
+                    </StackPanel>
+                </Grid>
+
+                <!-- Right side of details (Image and Buttons) -->
+                <Grid Grid.Column="1">
+                    <Grid.RowDefinitions>
+                        <RowDefinition />
+                        <RowDefinition />
+                    </Grid.RowDefinitions>
+
+                    <Image Grid.Row="0" Source="../../assets/images/placeholder.png" />
+
+                    <!-- Button box -->
+                    <StackPanel Grid.Row="1" VerticalAlignment="Bottom">
+                        <!--<Button Content="Train on this Environment" Command="{Binding TrainCommand}" CommandParameter="{Binding SelectedEnvironment}" />
+                        <Button Content="Simulate" Command="{Binding SimulateCommand}" CommandParameter="{Binding SelectedEnvironment}" />
+                        <Button Content="Edit Creature" Command="{Binding EditCreature}" CommandParameter="{Binding SelectedEnvironment}" />-->
+                        <Button Content="Delete" Command="{Binding EntitiesStorage.RemoveEnvironmentCommand}" CommandParameter="{Binding SelectedEnvironment}" />
+                    </StackPanel>
+                </Grid>
+            </Grid>
+
         </Grid>
 
     </Grid>
