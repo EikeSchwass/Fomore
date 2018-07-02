@@ -78,6 +78,7 @@
     <Compile Include="ViewModel\CreatureEditor\Behaviours\FlipVeticalBehaviour.cs" />
     <Compile Include="ViewModel\CreatureEditor\Behaviours\PasteBehaviour.cs" />
     <Compile Include="ViewModel\CreatureEditor\Behaviours\RedoBehaviour.cs" />
+    <Compile Include="ViewModel\CreatureEditor\Behaviours\RotateBehaviour.cs" />
     <Compile Include="ViewModel\CreatureEditor\Behaviours\RotateLeftBehaviour.cs" />
     <Compile Include="ViewModel\CreatureEditor\Behaviours\RotateRightBehaviour.cs" />
     <Compile Include="ViewModel\CreatureEditor\Behaviours\SaveBehaviour.cs" />

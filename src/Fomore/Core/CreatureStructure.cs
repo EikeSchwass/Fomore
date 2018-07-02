@@ -17,9 +17,9 @@ namespace Core
                 var newJoint = joint.Clone();
                 foreach (var bone in Bones)
                 {
-                    if (bone.FirstJoint == joint)
+                    if (Equals(bone.FirstJoint, joint))
                         bone.FirstJoint = newJoint;
-                    if (bone.SecondJoint == joint)
+                    if (Equals(bone.SecondJoint, joint))
                         bone.SecondJoint = newJoint;
                 }
                 clonedStructure.Joints.Add(newJoint);
@@ -28,8 +28,8 @@ namespace Core
             foreach (var bone in Bones)
             {
                 var newBone = bone.Clone();
-                Debug.Assert(!clonedStructure.Joints.Contains(newBone.FirstJoint));
-                Debug.Assert(!clonedStructure.Joints.Contains(newBone.SecondJoint));
+                Debug.Assert(clonedStructure.Joints.Contains(newBone.FirstJoint));
+                Debug.Assert(clonedStructure.Joints.Contains(newBone.SecondJoint));
                 clonedStructure.Bones.Add(newBone);
             }
 

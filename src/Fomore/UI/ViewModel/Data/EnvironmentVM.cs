@@ -38,7 +38,6 @@ namespace Fomore.UI.ViewModel.Data
             get => Model.Gravity;
             set
             {
-                if (value == Model.Gravity) return;
                 Model.Gravity = value;
                 OnPropertyChanged();
                 OnPropertyChanged(nameof(LastAccess));
@@ -50,7 +49,6 @@ namespace Fomore.UI.ViewModel.Data
             get => Model.Friction;
             set
             {
-                if (value == Model.Friction) return;
                 Model.Friction = value;
                 OnPropertyChanged();
                 OnPropertyChanged(nameof(LastAccess));

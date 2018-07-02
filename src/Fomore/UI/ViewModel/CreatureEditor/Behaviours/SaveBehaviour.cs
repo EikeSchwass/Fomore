@@ -19,9 +19,9 @@ namespace Fomore.UI.ViewModel.CreatureEditor.Behaviours
         public override string ToString() => "Save";
 
         /// <inheritdoc />
-        public override void OnInvoked(CreatureEditorPanelVM parameter)
+        public override void OnInvoked(CreatureEditorPanelVM parameter, ModifierKeys modifierKeys)
         {
-            base.OnInvoked(parameter);
+            base.OnInvoked(parameter, modifierKeys);
             var original = parameter.HistoryStack.Original;
             original.CreatureStructureVM.BoneCollectionVM.Clear();
             var current = parameter.HistoryStack.Current;

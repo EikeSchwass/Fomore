@@ -1,43 +1,21 @@
-﻿using System;
-using System.Linq;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
+﻿using System.Linq;
 using Core;
 
 namespace Fomore.UI.ViewModel.CreatureEditor.Behaviours
 {
-    public class FlipHorizontalBehaviour : BaseBehaviour
+    public abstract class RotateBehaviour : BaseBehaviour
     {
-        /// <inheritdoc />
-        public override ImageSource Image { get; } = new BitmapImage(new Uri("/assets/images/fliphorizontal.png", UriKind.Relative));
-
         /// <inheritdoc />
         public override BehaviourType BehaviourType { get; } = BehaviourType.Operations;
 
-        /// <inheritdoc />
-        protected override InputGesture InputGesture { get; } = null;
-
-        /// <inheritdoc />
-        public override string ToString() => "Flip Horizontal";
-
-        /// <inheritdoc />
-        public override void OnInvoked(CreatureEditorPanelVM parameter, ModifierKeys modifierKeys)
+        protected void RotateCreatureStructure(CreatureEditorPanelVM creatureEditorPanelVM, double angleInRadians)
         {
-            base.OnInvoked(parameter, modifierKeys);
-            var creatureVM = parameter.HistoryStack.Current.Clone();
+            var creatureVM = creatureEditorPanelVM.HistoryStack.Current.Clone();
 
             var jointCollectionVM = creatureVM.CreatureStructureVM.JointCollectionVM;
-            var center = new Vector2(jointCollectionVM.Average(j => j.Position.X),
-                                     jointCollectionVM.Average(j => j.Position.Y));
+            var center = new Vector2(jointCollectionVM.Average(j => j.Position.X), jointCollectionVM.Average(j => j.Position.Y));
 
-            foreach (var jointVM in jointCollectionVM)
-            {
-                double y = jointVM.Position.Y;
-                y = -(y - center.Y) + center.Y;
-                jointVM.Position = new Vector2(jointVM.Position.X, y);
-            }
-
+            foreach (var jointVM in jointCollectionVM) jointVM.Position = jointVM.Position.RotateAround(center, angleInRadians);
 
             // Move Horizontically in view
             {
@@ -64,10 +42,7 @@ namespace Fomore.UI.ViewModel.CreatureEditor.Behaviours
                 double min = jointCollectionVM.Min(j => j.Position.Y) - 10;
                 if (min < 0)
                 {
-                    foreach (var jointVM in jointCollectionVM)
-                    {
-                        jointVM.Position = new Vector2(jointVM.Position.X, jointVM.Position.Y - min);
-                    }
+                    foreach (var jointVM in jointCollectionVM) jointVM.Position = new Vector2(jointVM.Position.X, jointVM.Position.Y - min);
                 }
 
                 double max = jointCollectionVM.Max(j => j.Position.Y) + 10;
@@ -81,7 +56,7 @@ namespace Fomore.UI.ViewModel.CreatureEditor.Behaviours
                 }
             }
 
-            parameter.HistoryStack.NewEntry(creatureVM);
+            creatureEditorPanelVM.HistoryStack.NewEntry(creatureVM);
         }
     }
 }

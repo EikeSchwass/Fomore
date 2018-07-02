@@ -1,10 +1,11 @@
 ﻿using System.Windows.Input;
 using System.Windows.Media;
+using Core;
 using FontAwesome.WPF;
 
 namespace Fomore.UI.ViewModel.CreatureEditor.Behaviours
 {
-    public class RotateLeftBehaviour : BaseBehaviour
+    public class RotateLeftBehaviour : RotateBehaviour
     {
         /// <inheritdoc />
         public override ImageSource Image { get; } = ImageAwesome.CreateImageSource(FontAwesomeIcon.RotateLeft, Brushes.Black);
@@ -17,5 +18,14 @@ namespace Fomore.UI.ViewModel.CreatureEditor.Behaviours
 
         /// <inheritdoc />
         public override string ToString() => "Rotate counter clockwise";
+
+        /// <inheritdoc />
+        public override void OnInvoked(CreatureEditorPanelVM parameter, ModifierKeys modifierKeys)
+        {
+            base.OnInvoked(parameter, modifierKeys);
+            double angle = (modifierKeys & ModifierKeys.Shift) > 0 ? -10 : -90;
+            angle *= MathExtensions.DegreesToRadiansFactor;
+            RotateCreatureStructure(parameter, angle);
+        }
     }
 }
