@@ -17,5 +17,22 @@ namespace Fomore.UI.ViewModel.CreatureEditor.Behaviours
 
         /// <inheritdoc />
         public override string ToString() => "Save";
+
+        /// <inheritdoc />
+        public override void OnInvoked(CreatureEditorPanelVM parameter)
+        {
+            base.OnInvoked(parameter);
+            var original = parameter.HistoryStack.Original;
+            original.CreatureStructureVM.BoneCollectionVM.Clear();
+            var current = parameter.HistoryStack.Current;
+            foreach (var boneVM in current.CreatureStructureVM.BoneCollectionVM)
+            {
+                original.CreatureStructureVM.BoneCollectionVM.Add(boneVM);
+            }
+            foreach (var jointVM in current.CreatureStructureVM.JointCollectionVM)
+            {
+                original.CreatureStructureVM.JointCollectionVM.Add(jointVM);
+            }
+        }
     }
 }

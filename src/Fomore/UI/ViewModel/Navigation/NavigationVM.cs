@@ -43,9 +43,9 @@ namespace Fomore.UI.ViewModel.Navigation
                                                   new DelegateCommand(SwitchToSimulationTab, o => !ReferenceEquals(SelectedTab, SimulationTab)));
 
             CreatureTab = new CreatureTabVM(TabNavigationVM, entitiesStorage);
-            EnvironmentTab = new EnvironmentTabVM(entitiesStorage);
-            TrainingTab = new TrainingTabVM(entitiesStorage);
-            SimulationTab = new SimulationTabVM(entitiesStorage);
+            EnvironmentTab = new EnvironmentTabVM(TabNavigationVM, entitiesStorage);
+            TrainingTab = new TrainingTabVM(TabNavigationVM, entitiesStorage);
+            SimulationTab = new SimulationTabVM(TabNavigationVM, entitiesStorage);
 
             TabCollection = new ObservableCollection<TabPageVM> { CreatureTab, EnvironmentTab, TrainingTab, SimulationTab };
         }

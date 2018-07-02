@@ -6,65 +6,91 @@
              xmlns:navigation="clr-namespace:Fomore.UI.ViewModel.Navigation"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800" d:DataContext="{d:DesignInstance navigation:EnvironmentTabVM}">
+
     <Grid>
-        <StackPanel >
-            <Button Content="Add New Environment" Command="{Binding ShowEnvironCreationDialogCommand}" />
-            <ListBox ItemsSource="{Binding Path=EntitiesStorage.Environments}"/>
-        </StackPanel>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
 
-        <Grid Visibility="{Binding Path=CreateEnvironmentDialogVM.Visibility}">
-            <Grid Background="Black" Opacity="0.5"/>
-            <Border
-                MinWidth="400"
-                Background="{StaticResource Level2Brush}" 
-                BorderBrush="Black" 
-                BorderThickness="1" 
-                CornerRadius="0,55,0,55" 
-                HorizontalAlignment="Center" 
-                VerticalAlignment="Center">
-                <StackPanel>
-                    <TextBlock Margin="5" Text="{Binding Path=Header}" FontWeight="Bold" FontFamily="Cambria" />
-
-                    <TextBlock Margin="5" Text="{Binding Path=EnvironmentName}"/>
-                    <TextBox Padding="1" Margin="3" Text="{Binding Path=CreateEnvironmentDialogVM.EnvironmentName, Mode=TwoWay}"  />
-
-                    <TextBlock Margin="5" Text="{Binding Path=Description}"/>
-                    <TextBox  Padding="1" Margin="3" Text="{Binding Path=CreateEnvironmentDialogVM.EnvironmentDescription, Mode=TwoWay}"  />
-
-                    <!-- In my opinion the user shouldn't be forced to make all these settings right now. The name and the description should sufficient to create an environment.
-                    After the user created the environment the environment should be selected and then the user should be able to do the advanced settings in the panel on the right (see Dominicks wireframes).
-                    
-                    <TextBlock Margin="5" Text="{Binding Path=Terrain}"/>
-                    <TextBox  Padding="1" Margin="3" Text="{Binding Path=Terrain, Mode=OneWay}"  />
-
-                    <TextBlock Margin="5" Text="{Binding Path=GroundType}"/>
-                    <TextBox  Padding="1" Margin="3" Text="{Binding Path=GroundType, Mode=OneWay}"  />
-
-                    <TextBlock Margin="5" Text="{Binding Path=Gravity}"/>
-                    <TextBox  Padding="1" Margin="3" Text="{Binding Path=Gravity, Mode=OneWay}"  />
-
-                    <TextBlock Margin="5" Text="{Binding Path=Friction}"/>
-                    <TextBox  Padding="1" Margin="3" Text="{Binding Path=Friction, Mode=OneWay}"  />
-                    
-                    -->
-
-                    <Button Margin="5" Content="{Binding Path=CreateButton}" Command="{Binding Path=CreateEnvironmentDialogVM.CreateEnvironmentCommand}" Background="{x:Null}" />
-
-                    <Button Margin="5" Content="{Binding Path=CancelButton}" Command="{Binding Path=CreateEnvironmentDialogVM.CancelEnvironmentCreationCommand}" Background="{x:Null}" />
-
-                </StackPanel>
-            </Border>
+        <!-- List on the left side -->
+        <Grid Grid.Column="0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+            <Button Grid.Row="0" Content="Create New Environment" Command="{Binding NewEnvironment}"/>
+            <ListBox Grid.Row="1" Width="350" Style="{StaticResource EntityList}"
+                     ItemTemplate="{StaticResource EnvironmentListItem}"
+                     ItemsSource="{Binding EntitiesStorage.Environments}"
+                     SelectedItem="{Binding SelectedEnvironment, Mode=TwoWay}" />
         </Grid>
 
+        <!-- No Selection screen -->
+        <Grid Grid.Column="1" Visibility="{Binding SelectedEnvironment, Converter={StaticResource NullToVisibilityConverter}}">
+            <TextBlock Text="No selection made..." />
+        </Grid>
 
+        <!-- Details pane -->
+        <Grid Grid.Column="1" Style="{StaticResource DetailsContentPane}" Visibility="{Binding SelectedEnvironment, Converter={StaticResource NotNullToVisibilityConverter}}">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
 
+                <!-- The Details -->
+                <Grid Grid.Column="0" DataContext="{Binding SelectedEnvironment}">
+                    <StackPanel>
+                        <TextBox Style="{StaticResource DetailsName}" Text="{Binding Name}" />
+                        <TextBox Style="{StaticResource DetailsDescription}" Text="{Binding Description}" />
 
+                        <Grid Style="{StaticResource DetailsItemGrid}">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition />
+                                <ColumnDefinition />
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition />
+                                <RowDefinition />
+                                <RowDefinition />
+                                <RowDefinition />
+                                <RowDefinition />
+                            </Grid.RowDefinitions>
 
+                            <TextBlock Grid.Column="0" Grid.Row="0" Text="Last changed:" />
+                            <TextBlock Grid.Column="1" Grid.Row="0" Text="{Binding LastAccess}" />
+                            <TextBlock Grid.Column="0" Grid.Row="1" Text="Gravity:" />
+                            <TextBox Grid.Column="1" Grid.Row="1" Text="{Binding Gravity}" />
+                            <TextBlock Grid.Column="0" Grid.Row="2" Text="Friction:" />
+                            <TextBox Grid.Column="1" Grid.Row="2" Text="{Binding Friction}" />
+                        </Grid>
+                    </StackPanel>
+                </Grid>
 
+                <!-- Right side of details (Image and Buttons) -->
+                <Grid Grid.Column="1">
+                    <Grid.RowDefinitions>
+                        <RowDefinition />
+                        <RowDefinition />
+                    </Grid.RowDefinitions>
 
+                    <Image Grid.Row="0" Source="../../assets/images/placeholder.png" />
 
+                    <!-- Button box -->
+                    <StackPanel Grid.Row="1" VerticalAlignment="Bottom">
+                        <!--<Button Content="Train on this Environment" Command="{Binding TrainCommand}" CommandParameter="{Binding SelectedEnvironment}" />
+                        <Button Content="Simulate" Command="{Binding SimulateCommand}" CommandParameter="{Binding SelectedEnvironment}" />
+                        <Button Content="Edit Creature" Command="{Binding EditCreature}" CommandParameter="{Binding SelectedEnvironment}" />-->
+                        <Button Content="Delete" Command="{Binding EntitiesStorage.RemoveEnvironmentCommand}" CommandParameter="{Binding SelectedEnvironment}" />
+                    </StackPanel>
+                </Grid>
+            </Grid>
 
-
+        </Grid>
 
     </Grid>
 </UserControl>

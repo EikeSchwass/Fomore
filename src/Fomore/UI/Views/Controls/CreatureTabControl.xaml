@@ -8,62 +8,93 @@
              d:DesignHeight="450" d:DesignWidth="800" d:DataContext="{d:DesignInstance navigation:CreatureTabVM}">
 
     <Grid>
-        <StackPanel>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
 
+        <!-- List -->
+        <Grid Grid.Column="0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+            <Button Grid.Row="0" Content="Create New Creature" Command="{Binding NewCreature}" />
+            <ListBox Grid.Row="1" Width="350" Style="{StaticResource EntityList}"
+                     ItemTemplate="{StaticResource CreatureListItem}"
+                     ItemsSource="{Binding EntitiesStorage.Creatures}"
+                     SelectedItem="{Binding SelectedCreature, Mode=TwoWay}" />
+        </Grid>
+
+        <!-- No Selection screen -->
+        <Grid Grid.Column="1" Visibility="{Binding SelectedCreature, Converter={StaticResource NullToVisibilityConverter}}">
+            <TextBlock Text="No selection made..." />
+        </Grid>
+
+        <!-- Details pane -->
+        <Grid Grid.Column="1" Style="{StaticResource DetailsContentPane}" Visibility="{Binding SelectedCreature, Converter={StaticResource NotNullToVisibilityConverter}}">
             <Grid>
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="Auto"/>
-                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
                 </Grid.ColumnDefinitions>
 
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="*"/>
-                </Grid.RowDefinitions>
+                <!-- The Details -->
+                <Grid Grid.Column="0" DataContext="{Binding SelectedCreature}">
+                    <StackPanel>
+                        <TextBox Style="{StaticResource DetailsName}" Text="{Binding Name}" />
+                        <TextBox Style="{StaticResource DetailsDescription}" Text="{Binding Description}" />
 
-                <StackPanel Grid.Column="0" Grid.Row="0">
-                    <Button Content="Create New Creature" Command="{Binding ShowCreatureCreationDialogCommand}"/>
-                </StackPanel>
+                        <Grid Style="{StaticResource DetailsItemGrid}">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition />
+                                <ColumnDefinition />
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition />
+                                <RowDefinition />
+                                <RowDefinition />
+                                <RowDefinition />
+                                <RowDefinition />
+                            </Grid.RowDefinitions>
 
-                <ListBox Grid.Column="0" Grid.Row="1" ItemsSource="{Binding Path= EntitiesStorage.Creatures}" SelectedItem="{Binding SelectedCreature, Mode=TwoWay}" />
+                            <TextBlock Grid.Column="0" Grid.Row="0" Text="Last changed:" />
+                            <TextBlock Grid.Column="1" Grid.Row="0" Text="{Binding LastAccess}" />
+                            <TextBlock Grid.Column="0" Grid.Row="1" Text="#Joints:" />
+                            <TextBlock Grid.Column="1" Grid.Row="1" Text="{Binding CreatureStructureVM.JointCollectionVM.Count}" />
+                            <TextBlock Grid.Column="0" Grid.Row="2" Text="#Bones:" />
+                            <TextBlock Grid.Column="1" Grid.Row="2" Text="{Binding CreatureStructureVM.BoneCollectionVM.Count}" />
+                            <TextBlock Grid.Column="0" Grid.Row="3" Text="Total Weight:" />
+                            <TextBlock Grid.Column="1" Grid.Row="3" Text="{Binding CreatureStructureVM.BoneCollectionVM.Count}" />
+                            <TextBlock Grid.Column="0" Grid.Row="4" Text="#Patterns:" />
+                            <TextBlock Grid.Column="1" Grid.Row="4" Text="{Binding MovementPatternCollectionVM.Count}" />
+                        </Grid>
+                    </StackPanel>
+                </Grid>
 
-                <StackPanel Margin="10" Grid.Column="1" Grid.Row="0">
-                    <TextBlock Text="Welcome!"/>
-                    <TextBlock Text="{Binding SelectedCreature.Name}" />
-                    <Button Content="Simulate" Command="{Binding SimulateCommand}" CommandParameter="{Binding SelectedCreature}" />
-                </StackPanel>
+                <!-- Right side of details (Image and Buttons) -->
+                <Grid Grid.Column="1">
+                    <Grid.RowDefinitions>
+                        <RowDefinition />
+                        <RowDefinition />
+                    </Grid.RowDefinitions>
+
+                    <Image Grid.Row="0" Source="../../assets/images/placeholder.png" />
+
+                    <!-- Button box -->
+                    <StackPanel Grid.Row="1" VerticalAlignment="Bottom">
+                        <Button Content="Train" Command="{Binding TrainCommand}" CommandParameter="{Binding SelectedCreature}" />
+                        <Button Content="Simulate" Command="{Binding SimulateCommand}" CommandParameter="{Binding SelectedCreature}" />
+                        <Button Content="Edit Creature" Command="{Binding EditCreature}" CommandParameter="{Binding SelectedCreature}" />
+                        <Button Content="Delete" Command="{Binding EntitiesStorage.RemoveCreatureCommand}" CommandParameter="{Binding SelectedCreature}" />
+                    </StackPanel>
+                </Grid>
             </Grid>
-        </StackPanel>
 
-        <!-- It's important that this is in the end of the XAML as it needs to be on top of everything else! -->
-        <Grid x:Name="CreatureNewBox" Visibility="{Binding Path=CreateCreatureDialogVM.Visibility}">
-            <Grid Background="Black" Opacity="0.5"/>
-            <Border
-                MinWidth="250"
-                Background="{StaticResource Level2Brush}" 
-                BorderBrush="Black" 
-                BorderThickness="1" 
-                CornerRadius="0,0,0,0" 
-                HorizontalAlignment="Center" 
-                VerticalAlignment="Center">
-                <StackPanel>
-                    <TextBlock Margin="5" Text="{Binding Path=Header}" FontWeight="Bold" FontFamily="Cambria" />
-
-                    <TextBlock Margin="5" Text="{Binding Path=EnterName}"/>
-                    <TextBox Padding="5" Margin="5" Text="{Binding Path=CreateCreatureDialogVM.CreatureName, Mode=TwoWay }" />
-
-                        <TextBlock Margin="5" Text="{Binding Path=Description}"/>
-                    <TextBox  Padding="5" Margin="5" Text="{Binding Path=CreateCreatureDialogVM.CreatureDescription, Mode=TwoWay}"  />
-
-                    <CheckBox Command="{Binding Path=CreateCreatureDialogVM.IsOpen, Mode=OneWay}" />
-                    <Label Content="Open the Crature directly in the creature Tab"/>
-                    <Button  Margin="5" Content="{Binding Path=CreateButton}" Command="{Binding Path=CreateCreatureDialogVM.CreateCreatureCommand}" Background="{x:Null}"  />
-
-                    <Button  Margin="5" Content="{Binding Path=CancelButton}" Command="{Binding HideCreatureCreationDialogCommand}" Background="{x:Null}"  />
-
-                </StackPanel>
-            </Border>
         </Grid>
+
     </Grid>
 </UserControl>
-
