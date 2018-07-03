@@ -23,8 +23,10 @@ namespace Fomore.UI.ViewModel.Helper
 
         private static void InputBindingsSource_Changed(DependencyObject obj, DependencyPropertyChangedEventArgs e)
         {
-            if (!(obj is UIElement uiElement))
+            if (!(obj is FrameworkElement uiElement))
                 throw new Exception($"Object of type '{obj.GetType()}' does not support InputBindings");
+
+            var creatureEditorVM = (CreatureEditorVM)uiElement.DataContext;
 
             uiElement.InputBindings.Clear();
             if (e.NewValue == null)
@@ -36,7 +38,10 @@ namespace Fomore.UI.ViewModel.Helper
                                 where binding?.Gesture != null
                                 select binding;
             foreach (var binding in inputBindings)
+            {
+                binding.CommandParameter = creatureEditorVM.CreatureEditorPanelVM;
                 uiElement.InputBindings.Add(binding);
+            }
         }
     }
 }
