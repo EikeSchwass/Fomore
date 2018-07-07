@@ -1,21 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using Core.Training;
-using Core.Training.Evolution;
-
-namespace Core
+﻿namespace Core
 {
     public class Simulation
     {
-        public Simulation()
-        {
-
-        }
-
         /// <summary>
-        /// This method runs the simulation. It uses the creature structure to generate the populations,
-        /// and carries out the evolutionary algorithm to reach a certain goal.
+        ///     This method runs the simulation. It uses the creature structure to generate the populations,
+        ///     and carries out the evolutionary algorithm to reach a certain goal.
         /// </summary>
         public void RunSimulation()
         {
@@ -37,20 +26,16 @@ namespace Core
                 //Run the Evolutionary Algorithm
             }
             */
-
         }
 
         /// <summary>
-        /// This method records the videos of the simulation. I'm not sure yet if it would be possible
-        /// to include videos of certain iterations or of the entire simulation.
+        ///     This method records the videos of the simulation. I'm not sure yet if it would be possible
+        ///     to include videos of certain iterations or of the entire simulation.
         /// </summary>
-        public void CaptureVideo()
-        {
-
-        }
+        public void CaptureVideo() { }
 
         /// <summary>
-        /// This method would be used to show the visuals of the simulation that is being undertaken.
+        ///     This method would be used to show the visuals of the simulation that is being undertaken.
         /// </summary>
         public void ShowSimulation()
         {
@@ -58,15 +43,12 @@ namespace Core
         }
 
         /// <summary>
-        /// This method would be used to store and visualize the statistics of the simulation. This
-        /// includes the progress made towards the goal at each iteration, time taken to achieve the
-        /// goal, and the visual representation of the learning curve (i.e progress toward the goal at
-        /// each iteration for all iterations). Any other statistics could also be added here.
+        ///     This method would be used to store and visualize the statistics of the simulation. This
+        ///     includes the progress made towards the goal at each iteration, time taken to achieve the
+        ///     goal, and the visual representation of the learning curve (i.e progress toward the goal at
+        ///     each iteration for all iterations). Any other statistics could also be added here.
         /// </summary>
-        public void StoreStatistics()
-        {
-
-        }
+        public void StoreStatistics() { }
 
         private double[] TerrainGenerate()
         {
@@ -82,7 +64,7 @@ namespace Core
 
         public Creature Creature;
         public Environment Environment;
-        public MovementPattern Movement_Pattern;
+        public MovementPattern MovementPattern;
         public double Goal;
         public int Population;
 
