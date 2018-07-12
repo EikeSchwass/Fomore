@@ -26,7 +26,7 @@ namespace Testing
         public void NewEntryTest_IsItmAdding_isTrue()
         {
 
-            Creature creature = new Creature();
+            var creature = new Creature();
             HistoryStackVM<Creature> historyStack = new HistoryStackVM<Creature>(creature);
             historyStack.NewEntry(new Creature { CreatureName = "Dog", CreatureDescription = "Can run" });
             var afterCreatureNameCheck = historyStack.Current.CreatureName;
@@ -36,7 +36,7 @@ namespace Testing
         [Test]
         public void NewEntryTest_IsItmAdding_isFail()
         {
-            Creature creature = new Creature();
+            var creature = new Creature();
             HistoryStackVM<Creature> historyStack = new HistoryStackVM<Creature>(creature);
             historyStack.NewEntry(null);
             Assert.Throws<InvalidOperationException>(() => throw new InvalidOperationException());
@@ -47,68 +47,53 @@ namespace Testing
         [Test]
         public void HistoryStackVMTest_AddingToList_IsAdded()
         {
-
-            Creature creature = new Creature { CreatureName = "Dog", CreatureDescription = "Can run" };
+            var creature = new Creature { CreatureName = "Dog", CreatureDescription = "Can run" };
             HistoryStackVM<Creature> historyStack = new HistoryStackVM<Creature>(creature);
             var nam = historyStack.Current.CreatureName;
             Assert.AreEqual("Dog", nam);
-
-
         }
 
         [Test]
         public void HistoryStackVMTest_CanUndo_IsUndoFalse()
         {
-
-            Creature creature = new Creature { CreatureName = "Dog", CreatureDescription = "Can run" };
+            var creature = new Creature { CreatureName = "Dog", CreatureDescription = "Can run" };
             HistoryStackVM<Creature> historyStack = new HistoryStackVM<Creature>(creature);
             var isUndo = historyStack.CanUndo;
             Assert.IsFalse(isUndo);
-
-
         }
 
         [Test]
         public void HistoryStackVMTest_CanUndo_IsUndo()
         {
-
-            Creature creature = new Creature();
+            var creature = new Creature();
             HistoryStackVM<Creature> historyStack = new HistoryStackVM<Creature>(creature);
             historyStack.NewEntry(new Creature { CreatureName = "Dog", CreatureDescription = "Can run" });
             historyStack.NewEntry(new Creature { CreatureName = "Perrot", CreatureDescription = "Can fly" });
             var isUndo = historyStack.CanUndo;
             Assert.IsTrue(isUndo);
-
-
         }
 
         [Test]
         public void HistoryStackVMTest_Undo_IsUndo()
         {
-
-            Creature creature = new Creature();
+            var creature = new Creature();
             HistoryStackVM<Creature> historyStack = new HistoryStackVM<Creature>(creature);
             historyStack.NewEntry(new Creature { CreatureName = "Dog", CreatureDescription = "Can run" });
             historyStack.NewEntry(new Creature { CreatureName = "Perrot", CreatureDescription = "Can fly" });
             historyStack.Undo();
             Assert.Throws<InvalidOperationException>(() => throw new InvalidOperationException());
-
-
         }
 
         [Test]
         public void HistoryStackVMTest_Redo_IsRedo()
         {
-
-            Creature creature = new Creature();
+            var creature = new Creature();
             HistoryStackVM<Creature> historyStack = new HistoryStackVM<Creature>(creature);
             historyStack.NewEntry(new Creature { CreatureName = "Dog", CreatureDescription = "Can run" });
             historyStack.NewEntry(new Creature { CreatureName = "Perrot", CreatureDescription = "Can fly" });
             historyStack.Undo();
             historyStack.Redo();
             Assert.Throws<InvalidOperationException>(() => throw new InvalidOperationException());
-
-
         }
 
     }

@@ -1,9 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Core;
 using Fomore.UI.ViewModel.Helper;
 using NUnit.Framework;
@@ -16,7 +13,7 @@ namespace Testing
         [Test]
         public void ReadOnlyObervationCollectio_CheckingIsEmpty_IsTrue()
         {
-            Creature creature = new Creature();
+            var creature = new Creature();
             CollectionAccess<Creature> collectionAcces = ReadOnlyObservableCollection<Creature>.Create(Enumerable.Empty<Creature>());
 
             Assert.AreEqual(0, collectionAcces.Collection.Count);
@@ -25,13 +22,11 @@ namespace Testing
         [Test]
         public void ReadOnlyObervationCollectio_CheckingIsAddingElement_Adding()
         {
-            Creature creature = new Creature { CreatureName = "Dog", CreatureDescription = "Can run" };
-            Creature creatureTwo = new Creature { CreatureName = "turtle", CreatureDescription = "Can crawl" };
-            Creature creatureThree = new Creature { CreatureName = "Crow", CreatureDescription = "Can fly" };
+            var creature = new Creature { CreatureName = "Dog", CreatureDescription = "Can run" };
+            var creatureTwo = new Creature { CreatureName = "turtle", CreatureDescription = "Can crawl" };
+            var creatureThree = new Creature { CreatureName = "Crow", CreatureDescription = "Can fly" };
 
-            List<Creature> creatureList = new List<Creature>();
-            creatureList.Add(creature);
-            creatureList.Add(creatureTwo);
+            var creatureList = new List<Creature> {creature, creatureTwo};
 
             CollectionAccess<Creature> collectionAcces = ReadOnlyObservableCollection<Creature>.Create(creatureList);
             var beforAddingCollection = collectionAcces.Collection.Count;
@@ -44,12 +39,10 @@ namespace Testing
         [Test]
         public void ReadOnlyObervationCollectio_CheckingIsRemovingingElement_Removing()
         {
-            Creature creature = new Creature { CreatureName = "Dog", CreatureDescription = "Can run" };
-            Creature creatureTwo = new Creature { CreatureName = "turtle", CreatureDescription = "Can crawl" };
+            var creature = new Creature { CreatureName = "Dog", CreatureDescription = "Can run" };
+            var creatureTwo = new Creature { CreatureName = "turtle", CreatureDescription = "Can crawl" };
 
-            List<Creature> creatureList = new List<Creature>();
-            creatureList.Add(creature);
-            creatureList.Add(creatureTwo);
+            var creatureList = new List<Creature> {creature, creatureTwo};
 
             CollectionAccess<Creature> collectionAcces = ReadOnlyObservableCollection<Creature>.Create(creatureList);
             var beforRemovingCollection = collectionAcces.Collection.Count;
@@ -62,12 +55,10 @@ namespace Testing
         [Test]
         public void ReadOnlyObervationCollectio_CheckingIsClearingElements_ClearingElements()
         {
-            Creature creature = new Creature { CreatureName = "Dog", CreatureDescription = "Can run" };
-            Creature creatureTwo = new Creature { CreatureName = "turtle", CreatureDescription = "Can crawl" };
+            var creature = new Creature { CreatureName = "Dog", CreatureDescription = "Can run" };
+            var creatureTwo = new Creature { CreatureName = "turtle", CreatureDescription = "Can crawl" };
 
-            List<Creature> creatureList = new List<Creature>();
-            creatureList.Add(creature);
-            creatureList.Add(creatureTwo);
+            var creatureList = new List<Creature> {creature, creatureTwo};
 
             CollectionAccess<Creature> collectionAcces = ReadOnlyObservableCollection<Creature>.Create(creatureList);
             var beforClearingCollection = collectionAcces.Collection.Count;
