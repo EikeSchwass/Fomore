@@ -50,6 +50,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CollectionAccessTest.cs" />
+    <Compile Include="CreatureVMTest.cs" />
     <Compile Include="DummyTests.cs" />
     <Compile Include="HistoryStackVMTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
