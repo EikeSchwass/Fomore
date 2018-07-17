@@ -10,7 +10,7 @@ using NUnit.Framework;
 namespace Testing
 {
     [TestFixture]
-    class CollectionAccessTest
+    public class CollectionAccessTest
     {
         [Test]
         public void CollectionAccess_AddingCollectionTest_Adding()

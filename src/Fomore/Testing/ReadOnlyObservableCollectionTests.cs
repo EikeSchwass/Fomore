@@ -11,7 +11,7 @@ using NUnit.Framework;
 namespace Testing
 {
     [TestFixture]
-    class ReadOnlyObservableCollectionTests
+    public class ReadOnlyObservableCollectionTests
     {
         [Test]
         public void ReadOnlyObervationCollectio_CheckingIsEmpty_IsTrue()
