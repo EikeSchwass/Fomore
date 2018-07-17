@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Core;
 using Fomore.UI.ViewModel.Helper;
 using NUnit.Framework;
@@ -15,9 +12,9 @@ namespace Testing
         [Test]
         public void CollectionAccess_AddingCollectionTest_Adding()
         {
-            Creature creature = new Creature { CreatureName = "Dog", CreatureDescription = "Can run" };
-            Creature creatureTwo = new Creature { CreatureName = "turtle", CreatureDescription = "Can crawl" };
-            Creature creatureThree = new Creature { CreatureName = "perrot", CreatureDescription = "Can fly" };
+            var creature = new Creature { CreatureName = "Dog", CreatureDescription = "Can run" };
+            var creatureTwo = new Creature { CreatureName = "turtle", CreatureDescription = "Can crawl" };
+            var creatureThree = new Creature { CreatureName = "perrot", CreatureDescription = "Can fly" };
             List<Creature> creatureList = new List<Creature>();
             creatureList.Add(creature);
             creatureList.Add(creatureTwo);
@@ -31,8 +28,8 @@ namespace Testing
         [Test]
         public void CollectionAccess_RemovingCollectionTest_Removing()
         {
-            Creature creature = new Creature { CreatureName = "Dog", CreatureDescription = "Can run" };
-            Creature creatureTwo = new Creature { CreatureName = "turtle", CreatureDescription = "Can crawl" };
+            var creature = new Creature { CreatureName = "Dog", CreatureDescription = "Can run" };
+            var creatureTwo = new Creature { CreatureName = "turtle", CreatureDescription = "Can crawl" };
             List<Creature> creatureList = new List<Creature>();
             creatureList.Add(creature);
             creatureList.Add(creatureTwo);
@@ -47,8 +44,8 @@ namespace Testing
         [Test]
         public void CollectionAccess_ClearingCollectionTest_Clearing()
         {
-            Creature creature = new Creature { CreatureName = "Dog", CreatureDescription = "Can run" };
-            Creature creatureTwo = new Creature { CreatureName = "turtle", CreatureDescription = "Can crawl" };
+            var creature = new Creature { CreatureName = "Dog", CreatureDescription = "Can run" };
+            var creatureTwo = new Creature { CreatureName = "turtle", CreatureDescription = "Can crawl" };
             List<Creature> creatureList = new List<Creature>();
             creatureList.Add(creature);
             creatureList.Add(creatureTwo);
@@ -56,7 +53,6 @@ namespace Testing
             var beforClearningCollection = collectionAcces.Collection.Count;
             collectionAcces.Clear();
             var afterClearingCollection = collectionAcces.Collection.Count;
-            //hello worl
             Assert.AreNotEqual(beforClearningCollection, afterClearingCollection);
         }
     }

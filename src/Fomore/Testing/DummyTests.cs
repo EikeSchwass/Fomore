@@ -1,4 +1,6 @@
-﻿using NUnit.Framework;
+﻿using System.Linq;
+using Core.TerrainGenerator;
+using NUnit.Framework;
 
 namespace Testing
 {
@@ -18,6 +20,15 @@ namespace Testing
         public void PostClass() { }
 
         [Test]
-        public void MethodTest() { }
+        public void MethodTest()
+        {
+            /*
+            var generator = new LinearGenerator
+            {
+                Inclination = 1,
+                StepSize = 10
+            };
+            generator.Generate().Take(200); */
+        }
     }
 }
