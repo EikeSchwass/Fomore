@@ -52,6 +52,8 @@
     <Compile Include="CollectionAccessTest.cs" />
     <Compile Include="CreatureStructureVMTest.cs" />
     <Compile Include="CreatureVMTest.cs" />
+    <Compile Include="Data\BoneVMTest.cs" />
+    <Compile Include="Data\CreatureStructureVMTest.cs" />
     <Compile Include="DummyTests.cs" />
     <Compile Include="EncapsulatingObservableCollectionTest.cs" />
     <Compile Include="HistoryStackVMTests.cs" />
