@@ -9,7 +9,7 @@
         public void RunSimulation()
         {
             //Generate Terrain
-            TerrainGenerate();
+            //TerrainGenerate();
 
             //Acquire Creature  Structure;
             AcquireStructure();
@@ -50,11 +50,12 @@
         /// </summary>
         public void StoreStatistics() { }
 
+        /*
         private double[] TerrainGenerate()
         {
-            terrain = TerrainGenerator.GenerateTerrain(Environment);
-            return terrain;
+            throw new NotImplementedException();
         }
+        */
 
         private CreatureStructure AcquireStructure()
         {
