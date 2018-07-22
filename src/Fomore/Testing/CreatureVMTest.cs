@@ -10,7 +10,7 @@ namespace Testing
         [Test]
         public void Name_GetMethodCall_GettingValue()
         {
-            var creature = new Creature { CreatureName = "Dog", CreatureDescription = "Can run" };
+            var creature = new Creature { Name = "Dog", Description = "Can run" };
             var creatureVM = new CreatureVM(creature);
             Assert.AreEqual("Dog", creatureVM.Name);
         }
@@ -18,7 +18,7 @@ namespace Testing
         [Test]
         public void Name_SetMethodCall_SettingValue()
         {
-            var creature = new Creature { CreatureName = "Dog", CreatureDescription = "Can run" };
+            var creature = new Creature { Name = "Dog", Description = "Can run" };
             var creatureVM = new CreatureVM(creature);
             creatureVM.Name = "Cat";
             Assert.AreEqual("Cat", creatureVM.Name);
@@ -27,7 +27,7 @@ namespace Testing
         [Test]
         public void Name_SetMethodCall_SettingValueOveride()
         {
-            var creature = new Creature { CreatureName = "Dog", CreatureDescription = "Can run" };
+            var creature = new Creature { Name = "Dog", Description = "Can run" };
             var creatureVM = new CreatureVM(creature);
             creatureVM.Name = "Dog";
             Assert.AreEqual("Dog", creatureVM.Name);
@@ -36,7 +36,7 @@ namespace Testing
         [Test]
         public void Description_GetMethodCall_GettingValue()
         {
-            var creature = new Creature { CreatureName = "Dog", CreatureDescription = "Can run" };
+            var creature = new Creature { Name = "Dog", Description = "Can run" };
             CreatureVM creatureVM = new CreatureVM(creature);
             Assert.AreEqual("Can run", creatureVM.Description);
         }
@@ -44,7 +44,7 @@ namespace Testing
         [Test]
         public void Description_SetMethodCall_SettingValue()
         {
-            var creature = new Creature { CreatureName = "Dog", CreatureDescription = "Can run" };
+            var creature = new Creature { Name = "Dog", Description = "Can run" };
             var creatureVM = new CreatureVM(creature);
             creatureVM.Description = "Can Bark";
             Assert.AreEqual("Can Bark", creatureVM.Description);
@@ -53,7 +53,7 @@ namespace Testing
         [Test]
         public void Description_SetMethodCall_SettingValueOveride()
         {
-            var creature = new Creature { CreatureName = "Dog", CreatureDescription = "Can run" };
+            var creature = new Creature { Name = "Dog", Description = "Can run" };
             var creatureVM = new CreatureVM(creature);
             creatureVM.Description = "Can run";
             Assert.AreEqual("Can run", creatureVM.Description);
@@ -63,7 +63,7 @@ namespace Testing
         [Test]
         public void LastAccess_GetMethodCall_GettingValue()
         {
-            var creature = new Creature { CreatureName = "Dog", CreatureDescription = "Can run" };
+            var creature = new Creature { Name = "Dog", Description = "Can run" };
             var creatureVM = new CreatureVM(creature);
             var dateTime = creatureVM.LastAccess;
             Assert.AreEqual(dateTime, creatureVM.LastAccess);

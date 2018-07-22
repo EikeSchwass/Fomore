@@ -12,9 +12,9 @@ namespace Testing
         [Test]
         public void CollectionAccess_AddingCollectionTest_Adding()
         {
-            var creature = new Creature { CreatureName = "Dog", CreatureDescription = "Can run" };
-            var creatureTwo = new Creature { CreatureName = "turtle", CreatureDescription = "Can crawl" };
-            var creatureThree = new Creature { CreatureName = "perrot", CreatureDescription = "Can fly" };
+            var creature = new Creature { Name = "Dog", Description = "Can run" };
+            var creatureTwo = new Creature { Name = "turtle", Description = "Can crawl" };
+            var creatureThree = new Creature { Name = "perrot", Description = "Can fly" };
             List<Creature> creatureList = new List<Creature>();
             creatureList.Add(creature);
             creatureList.Add(creatureTwo);
@@ -28,8 +28,8 @@ namespace Testing
         [Test]
         public void CollectionAccess_RemovingCollectionTest_Removing()
         {
-            var creature = new Creature { CreatureName = "Dog", CreatureDescription = "Can run" };
-            var creatureTwo = new Creature { CreatureName = "turtle", CreatureDescription = "Can crawl" };
+            var creature = new Creature { Name = "Dog", Description = "Can run" };
+            var creatureTwo = new Creature { Name = "turtle", Description = "Can crawl" };
             List<Creature> creatureList = new List<Creature>();
             creatureList.Add(creature);
             creatureList.Add(creatureTwo);
@@ -44,8 +44,8 @@ namespace Testing
         [Test]
         public void CollectionAccess_ClearingCollectionTest_Clearing()
         {
-            var creature = new Creature { CreatureName = "Dog", CreatureDescription = "Can run" };
-            var creatureTwo = new Creature { CreatureName = "turtle", CreatureDescription = "Can crawl" };
+            var creature = new Creature { Name = "Dog", Description = "Can run" };
+            var creatureTwo = new Creature { Name = "turtle", Description = "Can crawl" };
             List<Creature> creatureList = new List<Creature>();
             creatureList.Add(creature);
             creatureList.Add(creatureTwo);

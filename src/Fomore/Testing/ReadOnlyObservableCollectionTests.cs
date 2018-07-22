@@ -22,9 +22,9 @@ namespace Testing
         [Test]
         public void ReadOnlyObervationCollectio_CheckingIsAddingElement_Adding()
         {
-            var creature = new Creature { CreatureName = "Dog", CreatureDescription = "Can run" };
-            var creatureTwo = new Creature { CreatureName = "turtle", CreatureDescription = "Can crawl" };
-            var creatureThree = new Creature { CreatureName = "Crow", CreatureDescription = "Can fly" };
+            var creature = new Creature { Name = "Dog", Description = "Can run" };
+            var creatureTwo = new Creature { Name = "turtle", Description = "Can crawl" };
+            var creatureThree = new Creature { Name = "Crow", Description = "Can fly" };
 
             var creatureList = new List<Creature> {creature, creatureTwo};
 
@@ -39,8 +39,8 @@ namespace Testing
         [Test]
         public void ReadOnlyObervationCollectio_CheckingIsRemovingingElement_Removing()
         {
-            var creature = new Creature { CreatureName = "Dog", CreatureDescription = "Can run" };
-            var creatureTwo = new Creature { CreatureName = "turtle", CreatureDescription = "Can crawl" };
+            var creature = new Creature { Name = "Dog", Description = "Can run" };
+            var creatureTwo = new Creature { Name = "turtle", Description = "Can crawl" };
 
             var creatureList = new List<Creature> {creature, creatureTwo};
 
@@ -55,8 +55,8 @@ namespace Testing
         [Test]
         public void ReadOnlyObervationCollectio_CheckingIsClearingElements_ClearingElements()
         {
-            var creature = new Creature { CreatureName = "Dog", CreatureDescription = "Can run" };
-            var creatureTwo = new Creature { CreatureName = "turtle", CreatureDescription = "Can crawl" };
+            var creature = new Creature { Name = "Dog", Description = "Can run" };
+            var creatureTwo = new Creature { Name = "turtle", Description = "Can crawl" };
 
             var creatureList = new List<Creature> {creature, creatureTwo};
 

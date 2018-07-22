@@ -10,19 +10,19 @@ namespace Testing.Data
         [Test]
         public void Name_SetSameValueTest_ReturnsSameValueTrue()
         {
-            var creature = new Creature { CreatureName = "Dog", CreatureDescription = "Can run" };
+            var creature = new Creature { Name = "Dog", Description = "Can run" };
             var creatureVM = new CreatureVM(creature);
             creatureVM.Name = creatureVM.Name;
 
             string expected = creatureVM.Name;
 
-            Assert.AreEqual(expected, creature.CreatureName);
+            Assert.AreEqual(expected, creature.Name);
         }
 
         [Test]
         public void Name_SetDifferentValueTest_ReturnsSecondValueTrue()
         {
-            var creature = new Creature { CreatureName = "Dog", CreatureDescription = "Can run" };
+            var creature = new Creature { Name = "Dog", Description = "Can run" };
             var creatureVM = new CreatureVM(creature) { Name = "Cat" };
 
             string expected = creatureVM.Name;
@@ -33,7 +33,7 @@ namespace Testing.Data
         [Test]
         public void Name_SetDifferentValueTest_ReturnsFirstValueFalse()
         {
-            var creature = new Creature { CreatureName = "Dog", CreatureDescription = "Can run" };
+            var creature = new Creature { Name = "Dog", Description = "Can run" };
             var creatureVM = new CreatureVM(creature) { Name = "Cat" };
 
             string expected = creatureVM.Name;
@@ -44,7 +44,7 @@ namespace Testing.Data
         [Test]
         public void Description_SetSameValue_ReturnsSameValueTrue()
         {
-            var creature = new Creature { CreatureName = "Dog", CreatureDescription = "Can run" };
+            var creature = new Creature { Name = "Dog", Description = "Can run" };
             var creatureVM = new CreatureVM(creature);
             creatureVM.Description = creatureVM.Description;
 
@@ -56,7 +56,7 @@ namespace Testing.Data
         [Test]
         public void Description_SetDifferentValue_ReturnsSecondValueTrue()
         {
-            var creature = new Creature { CreatureName = "Dog", CreatureDescription = "Can run" };
+            var creature = new Creature { Name = "Dog", Description = "Can run" };
             var creatureVM = new CreatureVM(creature) { Description = "Can Bark" };
 
             string expected = creatureVM.Description;
@@ -67,7 +67,7 @@ namespace Testing.Data
         [Test]
         public void Description_SetDifferentValue_ReturnsFirstValueFalse()
         {
-            var creature = new Creature { CreatureName = "Dog", CreatureDescription = "Can run" };
+            var creature = new Creature { Name = "Dog", Description = "Can run" };
             var creatureVM = new CreatureVM(creature) { Description = "Can Bark" };
 
             string expected = creatureVM.Description;
@@ -79,7 +79,7 @@ namespace Testing.Data
         [Test]
         public void LastAccess_SetSameTime_ReturnsSameTimeTrue()
         {
-            var creature = new Creature { CreatureName = "Dog", CreatureDescription = "Can run" };
+            var creature = new Creature { Name = "Dog", Description = "Can run" };
             var creatureVM = new CreatureVM(creature);
             System.Threading.Thread.Sleep(100);
             creatureVM.Description = "Can Bark";
@@ -94,7 +94,7 @@ namespace Testing.Data
         [Test]
         public void LastAccess_SetDifferentTime_ReturnsSameTimeFalse()
         {
-            var creature = new Creature { CreatureName = "Dog", CreatureDescription = "Can run" };
+            var creature = new Creature { Name = "Dog", Description = "Can run" };
             var creatureVM = new CreatureVM(creature);
             var expected = creatureVM.LastAccess;
             System.Threading.Thread.Sleep(1000);

@@ -10,7 +10,7 @@ namespace Testing
         [Test]
         public void CreatureStructure_Consturctor_Testing()
         {
-            var creature = new Creature { CreatureName = "Dog", CreatureDescription = "Can run" };
+            var creature = new Creature { Name = "Dog", Description = "Can run" };
             var creatureVM = new CreatureVM(creature);
             var creatureSturStructure = new CreatureStructure();
 
