@@ -54,6 +54,10 @@
     <Compile Include="CreatureVMTest.cs" />
     <Compile Include="Data\BoneVMTest.cs" />
     <Compile Include="Data\CreatureStructureVMTest.cs" />
+    <Compile Include="Data\CreatureVMTest.cs" />
+    <Compile Include="Data\EnvironmentVMTest.cs" />
+    <Compile Include="Data\JointVMTest.cs" />
+    <Compile Include="Data\MovementPatternVMTest.cs" />
     <Compile Include="DummyTests.cs" />
     <Compile Include="EncapsulatingObservableCollectionTest.cs" />
     <Compile Include="HistoryStackVMTests.cs" />
