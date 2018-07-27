@@ -1,20 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using Core;
 using Fomore.UI.ViewModel.Helper;
 using NUnit.Framework;
 
-namespace Testing
+namespace Testing.Helper
 {
     [TestFixture]
-    class ReadOnlyObservableCollectionTests
+    public class ReadOnlyObservableCollectionTests
     {
         [Test]
         public void ReadOnlyObervationCollectio_CheckingIsEmpty_IsTrue()
         {
-            var creature = new Creature();
-            CollectionAccess<Creature> collectionAcces = ReadOnlyObservableCollection<Creature>.Create(Enumerable.Empty<Creature>());
+            var collectionAcces = ReadOnlyObservableCollection<Creature>.Create(Enumerable.Empty<Creature>());
 
             Assert.AreEqual(0, collectionAcces.Collection.Count);
         }
@@ -26,12 +24,12 @@ namespace Testing
             var creatureTwo = new Creature { Name = "turtle", Description = "Can crawl" };
             var creatureThree = new Creature { Name = "Crow", Description = "Can fly" };
 
-            var creatureList = new List<Creature> {creature, creatureTwo};
+            var creatureList = new List<Creature> { creature, creatureTwo };
 
-            CollectionAccess<Creature> collectionAcces = ReadOnlyObservableCollection<Creature>.Create(creatureList);
-            var beforAddingCollection = collectionAcces.Collection.Count;
+            var collectionAcces = ReadOnlyObservableCollection<Creature>.Create(creatureList);
+            int beforAddingCollection = collectionAcces.Collection.Count;
             collectionAcces.Add(creatureThree);
-            var afterAddingCollection = collectionAcces.Collection.Count;
+            int afterAddingCollection = collectionAcces.Collection.Count;
 
             Assert.AreNotEqual(beforAddingCollection, afterAddingCollection);
         }
@@ -42,12 +40,12 @@ namespace Testing
             var creature = new Creature { Name = "Dog", Description = "Can run" };
             var creatureTwo = new Creature { Name = "turtle", Description = "Can crawl" };
 
-            var creatureList = new List<Creature> {creature, creatureTwo};
+            var creatureList = new List<Creature> { creature, creatureTwo };
 
-            CollectionAccess<Creature> collectionAcces = ReadOnlyObservableCollection<Creature>.Create(creatureList);
-            var beforRemovingCollection = collectionAcces.Collection.Count;
+            var collectionAcces = ReadOnlyObservableCollection<Creature>.Create(creatureList);
+            int beforRemovingCollection = collectionAcces.Collection.Count;
             collectionAcces.Remove(creatureTwo);
-            var afterRemovinCollection = collectionAcces.Collection.Count;
+            int afterRemovinCollection = collectionAcces.Collection.Count;
 
             Assert.AreNotEqual(beforRemovingCollection, afterRemovinCollection);
         }
@@ -58,13 +56,12 @@ namespace Testing
             var creature = new Creature { Name = "Dog", Description = "Can run" };
             var creatureTwo = new Creature { Name = "turtle", Description = "Can crawl" };
 
-            var creatureList = new List<Creature> {creature, creatureTwo};
+            var creatureList = new List<Creature> { creature, creatureTwo };
 
-            CollectionAccess<Creature> collectionAcces = ReadOnlyObservableCollection<Creature>.Create(creatureList);
-            var beforClearingCollection = collectionAcces.Collection.Count;
+            var collectionAcces = ReadOnlyObservableCollection<Creature>.Create(creatureList);
+            int beforClearingCollection = collectionAcces.Collection.Count;
             collectionAcces.Clear();
-            var afterClearingCollection = collectionAcces.Collection.Count;
-            Console.WriteLine("Clearing collection  ", afterClearingCollection);
+            int afterClearingCollection = collectionAcces.Collection.Count;
             Assert.AreNotEqual(beforClearingCollection, afterClearingCollection);
         }
     }
