@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.Linq;
 
 namespace Core
@@ -52,6 +53,7 @@ namespace Core
         public List<MovementPattern> MovementPatterns { get; } = new List<MovementPattern>();
         public CreatureStructure CreatureStructure { get; } = new CreatureStructure();
 
+        // TODO Don't know how it behaves with the structure observers after cloning! 
         public Creature Clone()
         {
             var creature =

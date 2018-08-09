@@ -3,7 +3,7 @@ using System.Diagnostics;
 
 namespace Core
 {
-    public class CreatureStructure
+    public class CreatureStructure : ICloneable<CreatureStructure>
     {
         public IList<Bone> Bones { get; } = new List<Bone>();
         public IList<Joint> Joints { get; } = new List<Joint>();

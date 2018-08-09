@@ -1,6 +1,6 @@
 ﻿namespace Core
 {
-    public class MovementPattern
+    public class MovementPattern : ICloneable<MovementPattern>
     {
         public MovementPattern Clone()
         {

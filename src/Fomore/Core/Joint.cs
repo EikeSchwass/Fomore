@@ -1,6 +1,6 @@
 ﻿namespace Core
 {
-    public class Joint
+    public class Joint : ICloneable<Joint>
     {
         public Vector2 Position { get; set; }
 

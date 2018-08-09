@@ -1,6 +1,6 @@
 ﻿namespace Core
 {
-    public class Bone
+    public class Bone : ICloneable<Bone>
     {
         public float Density { get; set; }
         public Joint FirstJoint { get; set; }
