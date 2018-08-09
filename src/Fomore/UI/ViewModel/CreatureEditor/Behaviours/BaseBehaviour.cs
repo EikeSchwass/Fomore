@@ -36,11 +36,5 @@ namespace Fomore.UI.ViewModel.CreatureEditor.Behaviours
         public abstract override string ToString();
     }
 
-    public enum BehaviourType
-    {
-        Clipboard,
-        Storage,
-        History,
-        Operations
-    }
+    
 }

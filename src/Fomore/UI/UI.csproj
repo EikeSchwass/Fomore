@@ -70,6 +70,7 @@
     <Compile Include="ViewModel\Commands\CommandParameters.cs" />
     <Compile Include="ViewModel\Commands\DelegateHandleCommand.cs" />
     <Compile Include="ViewModel\CreatureEditor\Behaviours\BaseBehaviour.cs" />
+    <Compile Include="ViewModel\CreatureEditor\Behaviours\BehaviourType.cs" />
     <Compile Include="ViewModel\CreatureEditor\Behaviours\ClearBehaviour.cs" />
     <Compile Include="ViewModel\CreatureEditor\Behaviours\CopyBehaviour.cs" />
     <Compile Include="ViewModel\CreatureEditor\Behaviours\CutBehaviour.cs" />
