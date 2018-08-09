@@ -13,7 +13,18 @@ namespace Fomore.UI.ViewModel.CreatureEditor.Behaviours
         public override BehaviourType BehaviourType { get; } = BehaviourType.Operations;
 
         /// <inheritdoc />
-        protected override InputGesture InputGesture { get; } = new KeyGesture(Key.Delete, ModifierKeys.Shift);
+        protected override InputGesture InputGesture { get; } = new KeyGesture(Key.Delete, ModifierKeys.Control);
+
+        public override void OnInvoked(CreatureEditorPanelVM parameter, ModifierKeys modifierKeys)
+        {
+            base.OnInvoked(parameter, modifierKeys);
+            var creatureVM = parameter.HistoryStack.Current.Clone();
+
+            creatureVM.CreatureStructureVM.BoneCollectionVM.Clear();
+            creatureVM.CreatureStructureVM.JointCollectionVM.Clear();
+
+            parameter.HistoryStack.NewEntry(creatureVM);
+        }
 
         /// <inheritdoc />
         public override string ToString() => "Clear All";

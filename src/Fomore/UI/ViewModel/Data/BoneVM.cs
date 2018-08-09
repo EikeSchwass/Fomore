@@ -43,5 +43,10 @@ namespace Fomore.UI.ViewModel.Data
         }
 
         public BoneVM(Bone model) : base(model) { }
+
+        // public override bool Equals(object obj)
+        // {
+        //
+        // }
     }
 }

@@ -7,10 +7,10 @@ using Core;
 
 namespace Fomore.UI.ViewModel.CreatureEditor.Behaviours
 {
-    public class FlipHorizontalBehaviour : BaseBehaviour
+    public class FlipVerticalBehaviour : BaseBehaviour
     {
         /// <inheritdoc />
-        public override ImageSource Image { get; } = new BitmapImage(new Uri("/assets/images/fliphorizontal.png", UriKind.Relative));
+        public override ImageSource Image { get; } = new BitmapImage(new Uri("/assets/images/flipvertical.png", UriKind.Relative));
 
         /// <inheritdoc />
         public override BehaviourType BehaviourType { get; } = BehaviourType.Operations;
@@ -19,7 +19,7 @@ namespace Fomore.UI.ViewModel.CreatureEditor.Behaviours
         protected override InputGesture InputGesture { get; } = null;
 
         /// <inheritdoc />
-        public override string ToString() => "Flip Horizontal";
+        public override string ToString() => "Flip Vertical";
 
         /// <inheritdoc />
         public override void OnInvoked(CreatureEditorPanelVM parameter, ModifierKeys modifierKeys)
@@ -33,7 +33,7 @@ namespace Fomore.UI.ViewModel.CreatureEditor.Behaviours
 
             foreach (var jointVM in jointCollectionVM)
             {
-                jointVM.Position = new Vector2(2 * center.X - jointVM.Position.X, jointVM.Position.Y);
+                jointVM.Position = new Vector2(jointVM.Position.X, 2 * center.Y - jointVM.Position.Y);
             }
 
             // // Move Horizontically in view
@@ -52,28 +52,6 @@ namespace Fomore.UI.ViewModel.CreatureEditor.Behaviours
             //         {
             //             jointVM.Position = new Vector2(jointVM.Position.X - (max - CreatureStructureEditorCanvasVM.CanvasWidth),
             //                                            jointVM.Position.Y);
-            //         }
-            //     }
-            // }
-            //
-            // // Move Vertically in view
-            // {
-            //     double min = jointCollectionVM.Min(j => j.Position.Y) - 10;
-            //     if (min < 0)
-            //     {
-            //         foreach (var jointVM in jointCollectionVM)
-            //         {
-            //             jointVM.Position = new Vector2(jointVM.Position.X, jointVM.Position.Y - min);
-            //         }
-            //     }
-            //
-            //     double max = jointCollectionVM.Max(j => j.Position.Y) + 10;
-            //     if (max > CreatureStructureEditorCanvasVM.CanvasHeight)
-            //     {
-            //         foreach (var jointVM in jointCollectionVM)
-            //         {
-            //             jointVM.Position = new Vector2(jointVM.Position.X,
-            //                                            jointVM.Position.Y - (max - CreatureStructureEditorCanvasVM.CanvasHeight));
             //         }
             //     }
             // }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.ObjectModel;
+using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Linq;
 using System.Windows;
@@ -7,6 +8,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using Fomore.UI.ViewModel.Commands;
+using Fomore.UI.ViewModel.CreatureEditor.Behaviours;
 using Fomore.UI.ViewModel.CreatureEditor.Tools;
 using Fomore.UI.ViewModel.Data;
 using Fomore.UI.ViewModel.Helper;
@@ -27,6 +29,7 @@ namespace Fomore.UI.ViewModel.CreatureEditor
 
         public CameraVM CameraVM { get; }
         public ToolCollectionVM ToolCollectionVM { get; }
+        public ObservableCollection<BaseBehaviour> Behaviours { get; }
         public HistoryStackVM<CreatureVM> HistoryStack { get; } 
 
         public ObservableCollection<JointVM> SelectedJoints { get; } = new ObservableCollection<JointVM>();
@@ -57,12 +60,15 @@ namespace Fomore.UI.ViewModel.CreatureEditor
 
         public DelegateHandleCommand<SizeChange> CanvasSizeChangedCommand { get; }
 
-        public CreatureStructureEditorCanvasVM(HistoryStackVM<CreatureVM> historyStack, ToolCollectionVM toolCollectionVM)
+        public CreatureStructureEditorCanvasVM(HistoryStackVM<CreatureVM> historyStack,
+                                               ToolCollectionVM toolCollectionVM,
+                                               ObservableCollection<BaseBehaviour> behaviours)
         {
             HistoryStack = historyStack;
             HistoryStack.PropertyChanged += HistoryStackChanged;
             CameraVM = new CameraVM {OffsetX = -CanvasWidth / 2, OffsetY = -CanvasHeight / 2};
             ToolCollectionVM = toolCollectionVM;
+            Behaviours = behaviours;
             SetBackgroundImageCommand = new DelegateCommand(o => SetBackgroundImage(), o => true);
             RemoveBackgroundImageCommand = new DelegateCommand(o => RemoveBackgroundImage(), o => BackgroundImageSource != null);
 
@@ -100,6 +106,9 @@ namespace Fomore.UI.ViewModel.CreatureEditor
                 new DelegateCommand(o => ToolCollectionVM.SelectedTool?.OnCanvasMouseEnter(this, Keyboard.Modifiers), o => true);
             CanvasMouseLeaveCommand =
                 new DelegateCommand(o => ToolCollectionVM.SelectedTool?.OnCanvasMouseLeave(this, Keyboard.Modifiers), o => true);
+
+            SelectedJoints.CollectionChanged += SelectionChanged;
+            SelectedBones.CollectionChanged += SelectionChanged;
         }
 
         private void HistoryStackChanged(object sender, PropertyChangedEventArgs e)
@@ -109,6 +118,14 @@ namespace Fomore.UI.ViewModel.CreatureEditor
             PreviewBone.HighlightedJoints.Clear();
             PreviewBone.Visibility = Visibility.Hidden;
             ToolCollectionVM.Tools.OfType<PlaceBoneTool>().First().Reset();
+        }
+
+        private void SelectionChanged(object sender, NotifyCollectionChangedEventArgs notifyCollectionChangedEventArgs)
+        {
+            foreach (var behaviour in Behaviours)
+            {
+                behaviour.Command.OnCanExecuteChanged();
+            }
         }
 
         private bool CanvasSizeChanged(SizeChange sizeChange)

@@ -27,8 +27,7 @@ namespace Fomore.UI.ViewModel.CreatureEditor
             ToolCollectionVM.Tools.Add(new PanTool());
             ToolCollectionVM.Tools.Add(new PlaceJointTool());
             ToolCollectionVM.Tools.Add(new PlaceBoneTool());
-            CreatureStructureEditorCanvasVM = new CreatureStructureEditorCanvasVM(HistoryStack, ToolCollectionVM);
-
+          
             Behaviours = new ObservableCollection<BaseBehaviour>
             {
                 new UndoBehaviour(HistoryStack),
@@ -39,7 +38,7 @@ namespace Fomore.UI.ViewModel.CreatureEditor
                 new RotateLeftBehaviour(),
                 new RotateRightBehaviour(),
                 new FlipHorizontalBehaviour(),
-                new FlipVeticalBehaviour(),
+                new FlipVerticalBehaviour(),
                 new SaveBehaviour(),
                 new DeleteBehaviour(),
                 new ClearBehaviour()
@@ -47,6 +46,8 @@ namespace Fomore.UI.ViewModel.CreatureEditor
 
             Behaviours.CollectionChanged += CollectionChanged;
             ToolCollectionVM.Tools.CollectionChanged += CollectionChanged;
+
+            CreatureStructureEditorCanvasVM = new CreatureStructureEditorCanvasVM(HistoryStack, ToolCollectionVM, Behaviours);
         }
 
         private void CollectionChanged(object sender, NotifyCollectionChangedEventArgs e) => OnPropertyChanged(nameof(InputBindings));

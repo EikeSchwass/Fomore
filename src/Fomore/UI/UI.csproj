@@ -75,7 +75,7 @@
     <Compile Include="ViewModel\CreatureEditor\Behaviours\CutBehaviour.cs" />
     <Compile Include="ViewModel\CreatureEditor\Behaviours\DeleteBehaviour.cs" />
     <Compile Include="ViewModel\CreatureEditor\Behaviours\FlipHorizontalBehaviour.cs" />
-    <Compile Include="ViewModel\CreatureEditor\Behaviours\FlipVeticalBehaviour.cs" />
+    <Compile Include="ViewModel\CreatureEditor\Behaviours\FlipVerticalBehaviour.cs" />
     <Compile Include="ViewModel\CreatureEditor\Behaviours\PasteBehaviour.cs" />
     <Compile Include="ViewModel\CreatureEditor\Behaviours\RedoBehaviour.cs" />
     <Compile Include="ViewModel\CreatureEditor\Behaviours\RotateBehaviour.cs" />
@@ -246,9 +246,6 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="assets\images\splash.png" />
-  </ItemGroup>
-  <ItemGroup>
     <Folder Include="assets\fonts\" />
   </ItemGroup>
   <ItemGroup>
@@ -262,32 +259,21 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="assets\images\icon.ico" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="assets\images\placeholder.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="assets\images\bone.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="assets\images\joint.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="assets\images\terraindummy.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="assets\images\creature_icon.png" />
-    <Resource Include="assets\images\environment_icon.png" />
-    <Resource Include="assets\images\movementpattern_icon.png" />
-  </ItemGroup>
-  <ItemGroup>
     <Resource Include="assets\images\arrowselectionall.png" />
     <Resource Include="assets\images\arrowselectionbones.png" />
     <Resource Include="assets\images\arrowselectionjoints.png" />
+    <Resource Include="assets\images\bone.png" />
+    <Resource Include="assets\images\creature_icon.png" />
+    <Resource Include="assets\images\environment_icon.png" />
+    <Resource Include="assets\images\fliphorizontal.png" />
+    <Resource Include="assets\images\icon.ico" />
+    <Resource Include="assets\images\joint.png" />
+    <Resource Include="assets\images\movementpattern_icon.png" />
+    <Resource Include="assets\images\placeholder.png" />
+    <Resource Include="assets\images\splash.png" />
+    <Resource Include="assets\images\terraindummy.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="assets\images\fliphorizontal.png" />
     <Resource Include="assets\images\flipvertical.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

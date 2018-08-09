@@ -25,6 +25,7 @@ namespace Fomore.UI.ViewModel.CreatureEditor.Behaviours
             var original = parameter.HistoryStack.Original;
             original.CreatureStructureVM.BoneCollectionVM.Clear();
             var current = parameter.HistoryStack.Current;
+            // TODO this duplicates all elements in case of multiple saves
             foreach (var boneVM in current.CreatureStructureVM.BoneCollectionVM)
             {
                 original.CreatureStructureVM.BoneCollectionVM.Add(boneVM);

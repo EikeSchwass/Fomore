@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media;
@@ -167,6 +168,12 @@ namespace Fomore.UI.ViewModel.CreatureEditor.Tools
                 CanvasVM.SelectedJoints.Add(jointVM);
             foreach (var boneVM in bonesInRectangle)
                 CanvasVM.SelectedBones.Add(boneVM);
+
+            foreach (var b in bonesInRectangle)
+                Console.WriteLine("Rectangle bone: " + b.GetHashCode());
+
+            foreach (var b in CanvasVM.SelectedBones)
+                Console.WriteLine("Selected bone: " + b.GetHashCode());
         }
 
         private void Reset()
