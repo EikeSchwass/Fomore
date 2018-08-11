@@ -22,41 +22,41 @@ namespace Fomore.UI.ViewModel.CreatureEditor.Behaviours
         public override string ToString() => "Flip Vertical";
 
         /// <inheritdoc />
-        public override void OnInvoked(CreatureEditorPanelVM parameter, ModifierKeys modifierKeys)
+        public override void OnInvoked(ModifierKeys modifierKeys)
         {
-            base.OnInvoked(parameter, modifierKeys);
-            var creatureVM = parameter.HistoryStack.Current.Clone();
-
-            var jointCollectionVM = creatureVM.CreatureStructureVM.JointCollectionVM;
-            var center = new Vector2((jointCollectionVM.Max(j => j.Position.X) + jointCollectionVM.Min(j => j.Position.X)) / 2,
-                                     (jointCollectionVM.Max(j => j.Position.Y) + jointCollectionVM.Min(j => j.Position.Y)) / 2);
-
-            foreach (var jointVM in jointCollectionVM)
-            {
-                jointVM.Position = new Vector2(jointVM.Position.X, 2 * center.Y - jointVM.Position.Y);
-            }
-
-            // // Move Horizontically in view
-            // {
-            //     double min = jointCollectionVM.Min(j => j.Position.X) - 10;
-            //     if (min < 0)
-            //     {
-            //         foreach (var jointVM in jointCollectionVM)
-            //             jointVM.Position = new Vector2(jointVM.Position.X - min, jointVM.Position.Y);
-            //     }
+            // base.OnInvoked(parameter, modifierKeys);
+            // var creatureVM = parameter.HistoryStack.Current.Clone();
             //
-            //     double max = jointCollectionVM.Max(j => j.Position.X) + 10;
-            //     if (max > CreatureStructureEditorCanvasVM.CanvasWidth)
-            //     {
-            //         foreach (var jointVM in jointCollectionVM)
-            //         {
-            //             jointVM.Position = new Vector2(jointVM.Position.X - (max - CreatureStructureEditorCanvasVM.CanvasWidth),
-            //                                            jointVM.Position.Y);
-            //         }
-            //     }
+            // var jointCollectionVM = creatureVM.CreatureStructureVM.JointCollectionVM;
+            // var center = new Vector2((jointCollectionVM.Max(j => j.Position.X) + jointCollectionVM.Min(j => j.Position.X)) / 2,
+            //                          (jointCollectionVM.Max(j => j.Position.Y) + jointCollectionVM.Min(j => j.Position.Y)) / 2);
+            //
+            // foreach (var jointVM in jointCollectionVM)
+            // {
+            //     jointVM.Position = new Vector2(jointVM.Position.X, 2 * center.Y - jointVM.Position.Y);
             // }
-
-            parameter.HistoryStack.NewEntry(creatureVM);
+            //
+            // // // Move Horizontically in view
+            // // {
+            // //     double min = jointCollectionVM.Min(j => j.Position.X) - 10;
+            // //     if (min < 0)
+            // //     {
+            // //         foreach (var jointVM in jointCollectionVM)
+            // //             jointVM.Position = new Vector2(jointVM.Position.X - min, jointVM.Position.Y);
+            // //     }
+            // //
+            // //     double max = jointCollectionVM.Max(j => j.Position.X) + 10;
+            // //     if (max > CreatureStructureEditorCanvasVM.CanvasWidth)
+            // //     {
+            // //         foreach (var jointVM in jointCollectionVM)
+            // //         {
+            // //             jointVM.Position = new Vector2(jointVM.Position.X - (max - CreatureStructureEditorCanvasVM.CanvasWidth),
+            // //                                            jointVM.Position.Y);
+            // //         }
+            // //     }
+            // // }
+            //
+            // parameter.HistoryStack.NewEntry(creatureVM);
         }
     }
 }

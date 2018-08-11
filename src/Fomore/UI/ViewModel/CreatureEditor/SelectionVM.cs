@@ -1,71 +1,34 @@
-﻿using System;
-using System.Windows;
+﻿// : Fomore/UI/SelectionVM.cs (2018/08/11)
+
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Linq;
 using Core;
+using Fomore.UI.ViewModel.Data;
 
 namespace Fomore.UI.ViewModel.CreatureEditor
 {
-    public class SelectionVM : ViewModelBase
+    public class SelectionVM : ICloneable<SelectionVM>
     {
-        private double height;
-        private Vector2 startPosition = new Vector2(200, 200);
-        private Visibility visibility = Visibility.Hidden;
-        private double width;
+        public List<JointVM> Joints { get; } = new List<JointVM>();
+        public List<BoneVM> Bones { get; } = new List<BoneVM>();
 
-        public Visibility Visibility
+        public int Count => Joints.Count + Bones.Count;
+
+        public float Weight => Bones.Sum(bone => bone.Density);
+
+        public void Clear()
         {
-            get => visibility;
-            set
-            {
-                if (value == visibility) return;
-                visibility = value;
-                OnPropertyChanged();
-            }
+            Joints.Clear();
+            Bones.Clear();
         }
 
-        public Vector2 StartPosition
+        public SelectionVM Clone()
         {
-            get => startPosition;
-            set
-            {
-                if (value.Equals(startPosition)) return;
-                startPosition = value;
-                OnPropertyChanged();
-                OnPropertyChanged(nameof(Rectangle));
-            }
-        }
-
-        public Rect Rectangle
-        {
-            get
-            {
-                double minX = Math.Min(StartPosition.X, StartPosition.X + Width);
-                double minY = Math.Min(StartPosition.Y, StartPosition.Y + Height);
-                return new Rect(minX, minY, Math.Abs(Width), Math.Abs(Height));
-            }
-        }
-
-        public double Width
-        {
-            get => width;
-            set
-            {
-                if (value.Equals(width)) return;
-                width = value;
-                OnPropertyChanged();
-                OnPropertyChanged(nameof(Rectangle));
-            }
-        }
-
-        public double Height
-        {
-            get => height;
-            set
-            {
-                if (value.Equals(height)) return;
-                height = value;
-                OnPropertyChanged();
-                OnPropertyChanged(nameof(Rectangle));
-            }
+            SelectionVM clone = new SelectionVM();
+            clone.Joints.AddRange(Joints);
+            clone.Bones.AddRange(Bones);
+            return clone;
         }
     }
 }

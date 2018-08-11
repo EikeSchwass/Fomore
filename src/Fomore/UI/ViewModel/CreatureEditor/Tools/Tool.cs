@@ -37,7 +37,7 @@ namespace Fomore.UI.ViewModel.CreatureEditor.Tools
 
         private PanTool PanTool { get; }
 
-        public DelegateCommand<CreatureEditorPanelVM> PressedCommand { get; }
+        public DelegateCommand<CreatureEditorVM> PressedCommand { get; }
 
         public string ToolTip =>
             $"{GetType().Name} ({(InputGesture as KeyGesture)?.GetDisplayStringForCulture(CultureInfo.CurrentCulture)})";
@@ -49,7 +49,7 @@ namespace Fomore.UI.ViewModel.CreatureEditor.Tools
             if (!(this is PanTool))
                 PanTool = new PanTool();
             PressedCommand =
-                new DelegateCommand<CreatureEditorPanelVM>(o => SelectionRequested?.Invoke(this, new ToolEventArgs(this, null)),
+                new DelegateCommand<CreatureEditorVM>(o => SelectionRequested?.Invoke(this, new ToolEventArgs(this, null)),
                                                            o => CanBeSelected());
         }
 

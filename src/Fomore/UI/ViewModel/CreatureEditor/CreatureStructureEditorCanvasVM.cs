@@ -9,6 +9,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using Fomore.UI.ViewModel.Commands;
 using Fomore.UI.ViewModel.CreatureEditor.Behaviours;
+using Fomore.UI.ViewModel.CreatureEditor.Changes;
 using Fomore.UI.ViewModel.CreatureEditor.Tools;
 using Fomore.UI.ViewModel.Data;
 using Fomore.UI.ViewModel.Helper;
@@ -25,7 +26,7 @@ namespace Fomore.UI.ViewModel.CreatureEditor
 
         public PreviewJointVM PreviewJoint { get; } = new PreviewJointVM();
         public PreviewBoneVM PreviewBone { get; } = new PreviewBoneVM();
-        public SelectionVM SelectionVM { get; } = new SelectionVM();
+        public SelectionBoxVM SelectionVM { get; } = new SelectionBoxVM();
 
         public CameraVM CameraVM { get; }
         public ToolCollectionVM ToolCollectionVM { get; }
@@ -60,12 +61,11 @@ namespace Fomore.UI.ViewModel.CreatureEditor
 
         public DelegateHandleCommand<SizeChange> CanvasSizeChangedCommand { get; }
 
-        public CreatureStructureEditorCanvasVM(HistoryStackVM<CreatureVM> historyStack,
+        public CreatureStructureEditorCanvasVM(ChangeStackVM changeStack,
                                                ToolCollectionVM toolCollectionVM,
                                                ObservableCollection<BaseBehaviour> behaviours)
         {
-            HistoryStack = historyStack;
-            HistoryStack.PropertyChanged += HistoryStackChanged;
+            changeStack.PropertyChanged += ChangeStackChanged;
             CameraVM = new CameraVM {OffsetX = -CanvasWidth / 2, OffsetY = -CanvasHeight / 2};
             ToolCollectionVM = toolCollectionVM;
             Behaviours = behaviours;
@@ -111,7 +111,7 @@ namespace Fomore.UI.ViewModel.CreatureEditor
             SelectedBones.CollectionChanged += SelectionChanged;
         }
 
-        private void HistoryStackChanged(object sender, PropertyChangedEventArgs e)
+        private void ChangeStackChanged(object sender, PropertyChangedEventArgs e)
         {
             SelectedJoints.Clear();
             SelectedBones.Clear();

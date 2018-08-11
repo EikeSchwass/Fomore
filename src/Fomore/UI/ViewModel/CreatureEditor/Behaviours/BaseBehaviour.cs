@@ -20,14 +20,14 @@ namespace Fomore.UI.ViewModel.CreatureEditor.Behaviours
 
         protected BaseBehaviour()
         {
-            Command = new DelegateCommand<CreatureEditorPanelVM>(vm => OnInvoked(vm, Keyboard.Modifiers), CanExecute);
+            Command = new DelegateCommand(o => OnInvoked(Keyboard.Modifiers), o=>CanExecute());
         }
 
         protected void OnCanExecuteChanged() => Command.OnCanExecuteChanged();
 
-        protected virtual bool CanExecute(CreatureEditorPanelVM parameter) => true;
+        protected virtual bool CanExecute() => true;
 
-        public virtual void OnInvoked(CreatureEditorPanelVM parameter, ModifierKeys modifierKeys) { }
+        public virtual void OnInvoked(ModifierKeys modifierKeys) { }
 
         /// <inheritdoc />
         public InputBinding GetInputBinding() => new InputBinding(Command, InputGesture ?? new KeyGesture(Key.None));

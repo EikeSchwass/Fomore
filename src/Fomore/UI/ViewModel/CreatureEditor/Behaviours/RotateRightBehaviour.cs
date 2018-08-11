@@ -20,12 +20,12 @@ namespace Fomore.UI.ViewModel.CreatureEditor.Behaviours
         public override string ToString() => "Rotate clockwise";
 
         /// <inheritdoc />
-        public override void OnInvoked(CreatureEditorPanelVM parameter, ModifierKeys modifierKeys)
+        public override void OnInvoked(ModifierKeys modifierKeys)
         {
-            base.OnInvoked(parameter, modifierKeys);
-            double angle = (modifierKeys & ModifierKeys.Shift) > 0 ? 10 : 90;
-            angle *= MathExtensions.DegreesToRadiansFactor;
-            RotateCreatureStructure(parameter, angle);
+            // base.OnInvoked(parameter, modifierKeys);
+            // double angle = (modifierKeys & ModifierKeys.Shift) > 0 ? 10 : 90;
+            // angle *= MathExtensions.DegreesToRadiansFactor;
+            // RotateCreatureStructure(parameter, angle);
         }
     }
 }

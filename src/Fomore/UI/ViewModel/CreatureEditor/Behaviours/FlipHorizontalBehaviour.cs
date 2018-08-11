@@ -22,19 +22,19 @@ namespace Fomore.UI.ViewModel.CreatureEditor.Behaviours
         public override string ToString() => "Flip Horizontal";
 
         /// <inheritdoc />
-        public override void OnInvoked(CreatureEditorPanelVM parameter, ModifierKeys modifierKeys)
+        public override void OnInvoked(ModifierKeys modifierKeys)
         {
-            base.OnInvoked(parameter, modifierKeys);
-            var creatureVM = parameter.HistoryStack.Current.Clone();
-
-            var jointCollectionVM = creatureVM.CreatureStructureVM.JointCollectionVM;
-            var center = new Vector2((jointCollectionVM.Max(j => j.Position.X) + jointCollectionVM.Min(j => j.Position.X)) / 2,
-                                     (jointCollectionVM.Max(j => j.Position.Y) + jointCollectionVM.Min(j => j.Position.Y)) / 2);
-
-            foreach (var jointVM in jointCollectionVM)
-            {
-                jointVM.Position = new Vector2(2 * center.X - jointVM.Position.X, jointVM.Position.Y);
-            }
+            // base.OnInvoked(parameter, modifierKeys);
+            // var creatureVM = parameter.HistoryStack.Current.Clone();
+            //
+            // var jointCollectionVM = creatureVM.CreatureStructureVM.JointCollectionVM;
+            // var center = new Vector2((jointCollectionVM.Max(j => j.Position.X) + jointCollectionVM.Min(j => j.Position.X)) / 2,
+            //                          (jointCollectionVM.Max(j => j.Position.Y) + jointCollectionVM.Min(j => j.Position.Y)) / 2);
+            //
+            // foreach (var jointVM in jointCollectionVM)
+            // {
+            //     jointVM.Position = new Vector2(2 * center.X - jointVM.Position.X, jointVM.Position.Y);
+            // }
 
             // // Move Horizontically in view
             // {
@@ -78,7 +78,7 @@ namespace Fomore.UI.ViewModel.CreatureEditor.Behaviours
             //     }
             // }
 
-            parameter.HistoryStack.NewEntry(creatureVM);
+            // parameter.HistoryStack.NewEntry(creatureVM);
         }
     }
 }

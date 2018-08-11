@@ -15,15 +15,15 @@ namespace Fomore.UI.ViewModel.CreatureEditor.Behaviours
         /// <inheritdoc />
         protected override InputGesture InputGesture { get; } = new KeyGesture(Key.Delete, ModifierKeys.Control);
 
-        public override void OnInvoked(CreatureEditorPanelVM parameter, ModifierKeys modifierKeys)
+        public override void OnInvoked(ModifierKeys modifierKeys)
         {
-            base.OnInvoked(parameter, modifierKeys);
-            var creatureVM = parameter.HistoryStack.Current.Clone();
-
-            creatureVM.CreatureStructureVM.BoneCollectionVM.Clear();
-            creatureVM.CreatureStructureVM.JointCollectionVM.Clear();
-
-            parameter.HistoryStack.NewEntry(creatureVM);
+            base.OnInvoked(modifierKeys);
+            // var creatureVM = parameter.HistoryStack.Current.Clone();
+            //
+            // creatureVM.CreatureStructureVM.BoneCollectionVM.Clear();
+            // creatureVM.CreatureStructureVM.JointCollectionVM.Clear();
+            //
+            // parameter.HistoryStack.NewEntry(creatureVM);
         }
 
         /// <inheritdoc />

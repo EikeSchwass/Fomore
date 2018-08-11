@@ -1,5 +1,6 @@
 ﻿using System.Windows.Input;
 using System.Windows.Media;
+using Fomore.UI.ViewModel.Commands;
 using Fomore.UI.ViewModel.Data;
 using Fomore.UI.ViewModel.Helper;
 using FontAwesome.WPF;
@@ -17,9 +18,9 @@ namespace Fomore.UI.ViewModel.CreatureEditor.Behaviours
         /// <inheritdoc />
         protected override InputGesture InputGesture { get; } = new KeyGesture(Key.Z, ModifierKeys.Control);
 
-        public UndoBehaviour(HistoryStackVM<CreatureVM> historyStack)
+        public UndoBehaviour(DelegateCommand command)
         {
-            Command = historyStack.UndoCommand;
+            Command = command;
         }
 
         /// <inheritdoc />
