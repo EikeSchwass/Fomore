@@ -9,8 +9,8 @@ namespace Fomore.UI.Converter
         /// <inheritdoc />
         public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
         {
-            double targetPosition = (double)values[0];
-            double size = (double)values[1];
+            double targetPosition = values[0] as double? ?? 0;
+            double size = values[1] as double? ?? 0;
 
             return targetPosition - size / 2;
         }

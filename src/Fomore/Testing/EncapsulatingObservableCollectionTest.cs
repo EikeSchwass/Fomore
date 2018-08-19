@@ -7,7 +7,7 @@ using System.Collections.ObjectModel;
 namespace Testing
 {
     [TestFixture]
-    class EncapsulatingObservableCollectionTest
+    public class EncapsulatingObservableCollectionTest
     {
         [Test]
         public void EncapsulatingObservableCollection_Test_List()
