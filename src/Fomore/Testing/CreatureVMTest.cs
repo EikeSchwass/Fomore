@@ -5,7 +5,7 @@ using NUnit.Framework;
 namespace Testing
 {
     [TestFixture]
-    class CreatureVMTest
+    public class CreatureVMTest
     {
         [Test]
         public void Name_GetMethodCall_GettingValue()

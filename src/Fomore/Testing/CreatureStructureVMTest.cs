@@ -5,7 +5,7 @@ using NUnit.Framework;
 namespace Testing
 {
     [TestFixture]
-    class CreatureStructureVMTest
+    public class CreatureStructureVMTest
     {
         [Test]
         public void CreatureStructure_Consturctor_Testing()

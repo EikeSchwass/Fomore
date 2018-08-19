@@ -7,7 +7,7 @@ using System;
 namespace Testing
 {
     [TestFixture]
-    class HistoryStackVMTests
+    public class HistoryStackVMTests
     {
         public void Redo_Test_isTrue()
         {
