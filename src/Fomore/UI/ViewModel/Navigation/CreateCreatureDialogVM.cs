@@ -64,7 +64,7 @@ namespace Fomore.UI.ViewModel.Navigation
         private void CreateCreature(object obj)
         {
             Visibility = Visibility.Hidden;
-            var creature = new Creature {CreatureName = CreatureName, CreatureDescription = creatureDescription};
+            var creature = new Creature {Name = CreatureName, Description = creatureDescription};
             var creatureVM = new CreatureVM(creature);
             EntitiesStorage.AddCreatureCommand.Execute(creatureVM);
         }

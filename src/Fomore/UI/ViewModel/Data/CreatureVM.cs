@@ -13,37 +13,28 @@ namespace Fomore.UI.ViewModel.Data
 
         public string Name
         {
-            get => Model.CreatureName;
+            get => Model.Name;
             set
             {
-                if (value == Model.CreatureName) return;
-                Model.CreatureName = value;
+                if (value == Model.Name) return;
+                Model.Name = value;
                 OnPropertyChanged();
-                OnAccess();
+                OnPropertyChanged(nameof(LastAccess));
             }
         }
         public string Description
         {
-            get => Model.CreatureDescription;
+            get => Model.Description;
             set
             {
-                if (value == Model.CreatureDescription) return;
-                Model.CreatureDescription = value;
+                if (value == Model.Description) return;
+                Model.Description = value;
                 OnPropertyChanged();
-                OnAccess();
+                OnPropertyChanged(nameof(LastAccess));
             }
         }
 
-        public DateTime LastAccess
-        {
-            get => lastAccess;
-            private set
-            {
-                if (value.Equals(lastAccess)) return;
-                lastAccess = value;
-                OnPropertyChanged();
-            }
-        }
+        public DateTime LastAccess => Model.LastAccess;
 
         public EncapsulatingObservableCollection<MovementPatternVM, MovementPattern> MovementPatternCollectionVM { get; }
 
@@ -54,12 +45,6 @@ namespace Fomore.UI.ViewModel.Data
         {
             MovementPatternCollectionVM = new EncapsulatingObservableCollection<MovementPatternVM, MovementPattern>(creature.MovementPatterns, m => new MovementPatternVM(m));
             CreatureStructureVM = new CreatureStructureVM(Model.CreatureStructure);
-        }
-
-        // Todo update on Structure updates as well
-        private void OnAccess()
-        {
-            LastAccess = DateTime.Now;
         }
 
         /// <inheritdoc />

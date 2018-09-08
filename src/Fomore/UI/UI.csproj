@@ -58,6 +58,8 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Converter\NotNullVisibilityConverter.cs" />
+    <Compile Include="Converter\NullVisibilityConverter.cs" />
     <Compile Include="Converter\BooleanVisibilityConverter.cs" />
     <Compile Include="Converter\CenterElementConverter.cs" />
     <Compile Include="Converter\DescriptionWidthConverter.cs" />
@@ -115,6 +117,10 @@
     <Page Include="Themes\ListBoxStyles.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Themes\MainWindowStyles.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\Controls\CreatureEditorPanel.xaml">
       <SubType>Designer</SubType>

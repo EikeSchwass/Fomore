@@ -6,78 +6,51 @@
              xmlns:navigation="clr-namespace:Fomore.UI.ViewModel.Navigation"
              mc:Ignorable="d"
              d:DesignHeight="450" d:DesignWidth="800" d:DataContext="{d:DesignInstance navigation:TrainingTabVM}">
-<Border>
-    <Grid Margin="5">
-            <Grid.RowDefinitions>
-                <RowDefinition></RowDefinition>
-                <RowDefinition Height="Auto"></RowDefinition>
-            </Grid.RowDefinitions>
-            <Grid Grid.Row="0">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition/>
-                    <ColumnDefinition/>
-                    <ColumnDefinition/>
-                    <ColumnDefinition/>
-                </Grid.ColumnDefinitions>
-                <!--Creature-->
-                <ScrollViewer Grid.Column="0">
-                    <StackPanel>
-                        <TextBlock Text="Creature" FontWeight="Bold" FontSize="18"/>
-                        <TextBlock Text=" select Creature" FontSize="14"/>
-                        <ListBox ItemsSource="{Binding EntityStorageVM.Creatures}" SelectedItem="{Binding SelectCreature, Mode=TwoWay}" Margin="5"></ListBox>
-                    </StackPanel>
-                </ScrollViewer>
 
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition />
+            <ColumnDefinition />
+            <ColumnDefinition />
+            <ColumnDefinition />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="auto" />
+        </Grid.RowDefinitions>
 
-                <!--Movment Pattern-->
-                <ScrollViewer Grid.Column="1">
-                    <StackPanel>
-                        <TextBlock Text="Movment Pattern" FontWeight="Bold" FontSize="18"/>
-                        <TextBlock Text=" select Movment Pattern" FontSize="14"/>
-                        <ListBox ItemsSource="{Binding SelectCreature.MovementPatternCollectionVM}" SelectedItem="{Binding SelecMovementPattern, Mode=TwoWay}" Margin="5"></ListBox>
-                    </StackPanel>
-                </ScrollViewer>
-                
-                <!--Environment-->
-                <ScrollViewer Grid.Column="2">
-                    <StackPanel>
-                        <TextBlock Text="Environment" FontWeight="Bold" FontSize="18"/>
-                        <TextBlock Text=" select Environment" FontSize="14"/>
-                        <ListBox   ItemsSource="{Binding EntityStorageVM.Environments}" SelectedItem="{Binding SelectEnvironment, Mode=TwoWay}" Margin="5"></ListBox>
-                    </StackPanel>
-                </ScrollViewer>
-                
-                <!--Setting-->
-                <StackPanel Grid.Column="3">
-                    <TextBlock Text="Settings" FontWeight="Bold" FontSize="18"/>
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition/>
-                            <ColumnDefinition/>
-                        </Grid.ColumnDefinitions>
-                        <StackPanel Grid.Column="0">
-                            <TextBlock Text="Target Speed" FontSize="14" Margin="0 20"/>
-                        </StackPanel>
-                        <StackPanel Grid.Column="1">
-                            <TextBox Background="White" Foreground="Black" Text="{Binding Path=SelectSpeed}" Margin="0 15"/>
-                        </StackPanel>
-                    </Grid>
-                </StackPanel>
-            </Grid>
-            <StackPanel Grid.Row="1">
-                <Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition/>
-                        <ColumnDefinition/>
-                        <ColumnDefinition/>
-                    </Grid.ColumnDefinitions>
-                    <CheckBox Grid.Column="0" Content="Show training progress" FontSize="14"  IsChecked="{Binding SelectShow, Mode=TwoWay}"/>
-                    <Button Margin="90 0 10 0" Grid.Column="1" Content="Reset" Height="50" Background="White" FontSize="14" FontWeight="Bold" Command="{Binding ResetCommand}"/>
-                    <Button Margin="0 0 100 0" Grid.Column="2" Content="Start Training" Height="50" Background="White" FontSize="14" FontWeight="Bold" Command="{Binding StartTrainingCommand}"/>
-                </Grid>
-            </StackPanel>
+        <TextBlock Grid.Column="0" Grid.Row="0" HorizontalAlignment="Center" FontWeight="Bold" Text="Step 1: Chose Creature"
+                   VerticalAlignment="Center" />
+        <ListBox Grid.Column="0" Grid.Row="1" Style="{StaticResource EntityList}"
+                 ItemTemplate="{StaticResource CreatureListItem}"
+                 ItemsSource="{Binding EntitiesStorage.Creatures}"
+                 SelectedItem="{Binding SelectedCreature, Mode=TwoWay}" />
+
+        <TextBlock Grid.Column="1" Grid.Row="0" HorizontalAlignment="Center" FontWeight="Bold" Text="Step 2: Chose Movement pattern"
+                   VerticalAlignment="Center" />
+        <ListBox Grid.Column="1" Grid.Row="1" Style="{StaticResource EntityList}"
+                 ItemTemplate="{StaticResource MovementPatternListItem}"
+                 ItemsSource="{Binding SelectedCreature.MovementPatternCollectionVM}"
+                 SelectedItem="{Binding SelectedMovementPattern, Mode=TwoWay}" />
+
+        <TextBlock Grid.Column="2" Grid.Row="0" HorizontalAlignment="Center" FontWeight="Bold" Text="Step 3: Chose Environment"
+                   VerticalAlignment="Center" />
+        <ListBox Grid.Column="2" Grid.Row="1" Style="{StaticResource EntityList}"
+                 ItemTemplate="{StaticResource EnvironmentListItem}"
+                 ItemsSource="{Binding EntitiesStorage.Environments}"
+                 SelectedItem="{Binding SelectedEnvironment, Mode=TwoWay}" />
+
+        <TextBlock Grid.Column="3" Grid.Row="0" HorizontalAlignment="Center" FontWeight="Bold" Text="Step 4: Additional Settings"
+                   VerticalAlignment="Center" />
+        <StackPanel Grid.Column="3" Grid.Row="1">
+            <TextBlock Text="Target Speed:" />
+            <TextBox Text="{Binding TargetSpeed}" />
+        </StackPanel>
+
+        <CheckBox Grid.Column="0" Grid.Row="2" VerticalAlignment="Center" IsChecked="{Binding ShowTraining}" Content="Show Training Progress" />
+        <Button Grid.Column="2" Grid.Row="2" Command="{Binding ResetSelectionCommand}" Content="Reset Selection" />
+        <Button Grid.Column="3" Grid.Row="2" IsDefault="True" Command="{Binding StartTrainingCommand}" Content="Start Training" />
+
     </Grid>
-</Border>
-
-
 </UserControl>
