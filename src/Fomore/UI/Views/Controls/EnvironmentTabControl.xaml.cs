@@ -1,6 +1,4 @@
-﻿using System.Windows;
-
-namespace Fomore.UI.Views.Controls
+﻿namespace Fomore.UI.Views.Controls
 {
     /// <summary>
     /// Interaction logic for EnvironmentTabControl.xaml
