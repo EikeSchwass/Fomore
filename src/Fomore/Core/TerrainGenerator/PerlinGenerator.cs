@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Numerics;
+﻿using System.Collections.Generic;
 
 namespace Core.TerrainGenerator
 {
@@ -16,8 +13,8 @@ namespace Core.TerrainGenerator
         {
 
             // Compute the distance vector
-            double dx = x - (double)ix;
-            double dy = y - (double)iy;
+            double dx = x - ix;
+            double dy = y - iy;
 
             // Compute the Gradient
             double gradient = dy / dx;

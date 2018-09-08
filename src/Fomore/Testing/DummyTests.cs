@@ -1,6 +1,4 @@
-﻿using System.Linq;
-using Core.TerrainGenerator;
-using NUnit.Framework;
+﻿using NUnit.Framework;
 
 namespace Testing
 {

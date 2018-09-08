@@ -72,11 +72,10 @@ namespace Testing.Helper
                 },
                 Joints = { new Joint() { Position = new Vector2(5, 10) }, new Joint() { Position = new Vector2(5, 10) } }
             };
-            var collObjectCollection = new EncapsulatingObservableCollection<BoneVM, Bone>(creatureStructure.Bones, b => new BoneVM(b));
             var boneVM = new BoneVM(new Bone() { SecondJoint = secondJoint, FirstJoint = firstJoint, Density = density });
-            collObjectCollection.Add(boneVM);
+            new EncapsulatingObservableCollection<BoneVM, Bone>(creatureStructure.Bones, b => new BoneVM(b)).Add(boneVM);
 
-            Assert.Throws<NotSupportedException>(() => collObjectCollection.Add(boneVM));
+            Assert.Throws<NotSupportedException>(() => new EncapsulatingObservableCollection<BoneVM, Bone>(creatureStructure.Bones, b => new BoneVM(b)).Add(boneVM));
         }
 
         [Test]
@@ -94,13 +93,12 @@ namespace Testing.Helper
                 },
                 Joints = { new Joint() { Position = new Vector2(5, 10) }, new Joint() { Position = new Vector2(5, 10) } }
             };
-            var collObjectCollection = new EncapsulatingObservableCollection<BoneVM, Bone>(creatureStructure.Bones, b => new BoneVM(b));
             var model = new Bone() { SecondJoint = secondJoint, FirstJoint = firstJoint, Density = density };
             var boneVM = new BoneVM(model);
-            collObjectCollection.Add(boneVM);
+            new EncapsulatingObservableCollection<BoneVM, Bone>(creatureStructure.Bones, b => new BoneVM(b)).Add(boneVM);
             var boneVM2 = new BoneVM(model);
 
-            Assert.Throws<NotSupportedException>(() => collObjectCollection.Add(boneVM2));
+            Assert.Throws<NotSupportedException>(() => new EncapsulatingObservableCollection<BoneVM, Bone>(creatureStructure.Bones, b => new BoneVM(b)).Add(boneVM2));
         }
 
         [Test]
