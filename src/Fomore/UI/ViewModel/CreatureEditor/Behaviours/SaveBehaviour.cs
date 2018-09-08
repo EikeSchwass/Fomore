@@ -1,7 +1,9 @@
-﻿using System.Windows.Media;
+﻿using System.Windows.Input;
+using System.Windows.Media;
 using FontAwesome.WPF;
 
-namespace Fomore.UI.ViewModel.CreatureEditor.Behaviours {
+namespace Fomore.UI.ViewModel.CreatureEditor.Behaviours
+{
     public class SaveBehaviour : BaseBehaviour
     {
         /// <inheritdoc />
@@ -11,9 +13,15 @@ namespace Fomore.UI.ViewModel.CreatureEditor.Behaviours {
         public override BehaviourType BehaviourType { get; } = BehaviourType.Storage;
 
         /// <inheritdoc />
-        public override void OnInvoked(CreatureEditorPanelVM parameter)
+        protected override InputGesture InputGesture { get; } = new KeyGesture(Key.S, ModifierKeys.Control);
+
+        /// <inheritdoc />
+        public override string ToString() => "Save";
+
+        /// <inheritdoc />
+        public override void OnInvoked(CreatureEditorPanelVM parameter, ModifierKeys modifierKeys)
         {
-            base.OnInvoked(parameter);
+            base.OnInvoked(parameter, modifierKeys);
             var original = parameter.HistoryStack.Original;
             original.CreatureStructureVM.BoneCollectionVM.Clear();
             var current = parameter.HistoryStack.Current;

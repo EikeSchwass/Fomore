@@ -78,6 +78,7 @@
     <Compile Include="ViewModel\CreatureEditor\Behaviours\FlipVeticalBehaviour.cs" />
     <Compile Include="ViewModel\CreatureEditor\Behaviours\PasteBehaviour.cs" />
     <Compile Include="ViewModel\CreatureEditor\Behaviours\RedoBehaviour.cs" />
+    <Compile Include="ViewModel\CreatureEditor\Behaviours\RotateBehaviour.cs" />
     <Compile Include="ViewModel\CreatureEditor\Behaviours\RotateLeftBehaviour.cs" />
     <Compile Include="ViewModel\CreatureEditor\Behaviours\RotateRightBehaviour.cs" />
     <Compile Include="ViewModel\CreatureEditor\Behaviours\SaveBehaviour.cs" />
@@ -85,6 +86,7 @@
     <Compile Include="ViewModel\CreatureEditor\CreatureEditorPanelVM.cs" />
     <Compile Include="ViewModel\CreatureEditor\CreatureEditorVM.cs" />
     <Compile Include="ViewModel\CreatureEditor\CreatureStructureEditorCanvasVM.cs" />
+    <Compile Include="ViewModel\CreatureEditor\IHasInputBinding.cs" />
     <Compile Include="ViewModel\CreatureEditor\PreviewBoneVM.cs" />
     <Compile Include="ViewModel\CreatureEditor\PreviewJointVM.cs" />
     <Compile Include="ViewModel\CreatureEditor\SelectionVM.cs" />
@@ -164,12 +166,13 @@
     </Compile>
     <Compile Include="ViewModel\Data\JointVM.cs" />
     <Compile Include="ViewModel\Data\MovementPatternVM.cs" />
+    <Compile Include="ViewModel\Helper\AttachedProperties.cs" />
     <Compile Include="ViewModel\Helper\CollectionAccess.cs" />
+    <Compile Include="ViewModel\Helper\GeometryExtensions.cs" />
     <Compile Include="ViewModel\Helper\HistoryStackVM.cs" />
     <Compile Include="ViewModel\Helper\EncapsulatingObservableCollection.cs" />
     <Compile Include="ViewModel\Helper\ImageSourceExtensions.cs" />
     <Compile Include="ViewModel\Helper\ReadOnlyObservableCollection.cs" />
-    <Compile Include="ViewModel\Helper\VectorExtensions.cs" />
     <Compile Include="ViewModel\Navigation\CreateEnvironDialogVM.cs" />
     <Compile Include="ViewModel\Navigation\CreateCreatureDialogVM.cs" />
     <Compile Include="ViewModel\Navigation\CreatureTabVM.cs" />
@@ -247,7 +250,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="assets\fonts\" />
-    <Folder Include="Views\Templates\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Core\Core.csproj">

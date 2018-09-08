@@ -9,10 +9,10 @@ namespace Fomore.UI.ViewModel.Helper
     {
         private List<T> Collection { get; } = new List<T>();
 
-        private ReadOnlyObservableCollection()
-        {
+        /// <inheritdoc />
+        public int Count => Collection.Count;
 
-        }
+        private ReadOnlyObservableCollection() { }
 
         public static CollectionAccess<T> Create() => Create(Enumerable.Empty<T>());
 
@@ -27,7 +27,8 @@ namespace Fomore.UI.ViewModel.Helper
         private void Add(T item)
         {
             Collection.Add(item);
-            CollectionChanged?.Invoke(this, new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Add, item, Collection.Count - 1));
+            CollectionChanged?.Invoke(this,
+                                      new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Add, item, Collection.Count - 1));
             OnPropertyChanged(nameof(Count));
         }
 
@@ -41,18 +42,15 @@ namespace Fomore.UI.ViewModel.Helper
 
         private void Clear()
         {
+            Collection.Clear();
             OnPropertyChanged(nameof(Count));
         }
-
 
         /// <inheritdoc />
         public IEnumerator<T> GetEnumerator() => Collection.GetEnumerator();
 
         /// <inheritdoc />
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
-
-        /// <inheritdoc />
-        public int Count => Collection.Count;
 
         /// <inheritdoc />
         public event NotifyCollectionChangedEventHandler CollectionChanged;

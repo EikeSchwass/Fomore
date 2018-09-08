@@ -9,8 +9,6 @@ namespace Fomore.UI.ViewModel.Data
     /// </summary>
     public class CreatureVM : ViewModelBase<Creature>, ICloneable<CreatureVM>
     {
-        private DateTime lastAccess;
-
         public string Name
         {
             get => Model.Name;

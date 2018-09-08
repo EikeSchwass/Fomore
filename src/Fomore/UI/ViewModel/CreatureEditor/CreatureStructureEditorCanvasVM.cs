@@ -3,6 +3,7 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Windows;
+using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using Fomore.UI.ViewModel.Commands;
@@ -26,7 +27,7 @@ namespace Fomore.UI.ViewModel.CreatureEditor
 
         public CameraVM CameraVM { get; }
         public ToolCollectionVM ToolCollectionVM { get; }
-        public HistoryStackVM<CreatureVM> HistoryStack { get; }
+        public HistoryStackVM<CreatureVM> HistoryStack { get; } 
 
         public ObservableCollection<JointVM> SelectedJoints { get; } = new ObservableCollection<JointVM>();
         public ObservableCollection<BoneVM> SelectedBones { get; } = new ObservableCollection<BoneVM>();
@@ -67,21 +68,38 @@ namespace Fomore.UI.ViewModel.CreatureEditor
 
             CanvasSizeChangedCommand = new DelegateHandleCommand<SizeChange>(CanvasSizeChanged, o => true);
             CanvasMouseDownCommand =
-                new DelegateHandleCommand<MouseInfo>(mouseInfo => ToolCollectionVM.SelectedTool?.OnCanvasMouseDown(mouseInfo, this) == true,
+                new DelegateHandleCommand<MouseInfo>(mouseInfo =>
+                                                         ToolCollectionVM.SelectedTool?.OnCanvasMouseDown(mouseInfo,
+                                                                                                          this,
+                                                                                                          Keyboard.Modifiers) ==
+                                                         true,
                                                      o => true);
             CanvasMouseUpCommand =
-                new DelegateHandleCommand<MouseInfo>(mouseInfo => ToolCollectionVM.SelectedTool?.OnCanvasMouseUp(mouseInfo, this) == true,
+                new DelegateHandleCommand<MouseInfo>(mouseInfo =>
+                                                         ToolCollectionVM.SelectedTool?.OnCanvasMouseUp(mouseInfo,
+                                                                                                        this,
+                                                                                                        Keyboard.Modifiers) ==
+                                                         true,
                                                      o => true);
             CanvasMouseMoveCommand =
-                new DelegateHandleCommand<MouseInfo>(mouseInfo => ToolCollectionVM.SelectedTool?.OnCanvasMouseMove(mouseInfo, this) == true,
+                new DelegateHandleCommand<MouseInfo>(mouseInfo =>
+                                                         ToolCollectionVM.SelectedTool?.OnCanvasMouseMove(mouseInfo,
+                                                                                                          this,
+                                                                                                          Keyboard.Modifiers) ==
+                                                         true,
                                                      o => true);
-            CanvasMouseWheelCommand =
-                new DelegateHandleCommand<MouseWheelInfo>(mouseWheelInfo =>
-                                                              ToolCollectionVM.SelectedTool?.OnCanvasMouseWheel(mouseWheelInfo, this) ==
-                                                              true,
-                                                          o => true);
-            CanvasMouseEnterCommand = new DelegateCommand(o => ToolCollectionVM.SelectedTool?.OnCanvasMouseEnter(this), o => true);
-            CanvasMouseLeaveCommand = new DelegateCommand(o => ToolCollectionVM.SelectedTool?.OnCanvasMouseLeave(this), o => true);
+            CanvasMouseWheelCommand = new DelegateHandleCommand<MouseWheelInfo>(mouseWheelInfo =>
+                                                                                    ToolCollectionVM
+                                                                                       .SelectedTool?.OnCanvasMouseWheel(mouseWheelInfo,
+                                                                                                                         this,
+                                                                                                                         Keyboard
+                                                                                                                            .Modifiers) ==
+                                                                                    true,
+                                                                                o => true);
+            CanvasMouseEnterCommand =
+                new DelegateCommand(o => ToolCollectionVM.SelectedTool?.OnCanvasMouseEnter(this, Keyboard.Modifiers), o => true);
+            CanvasMouseLeaveCommand =
+                new DelegateCommand(o => ToolCollectionVM.SelectedTool?.OnCanvasMouseLeave(this, Keyboard.Modifiers), o => true);
         }
 
         private void HistoryStackChanged(object sender, PropertyChangedEventArgs e)

@@ -5,15 +5,20 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:creatureEditor="clr-namespace:Fomore.UI.ViewModel.CreatureEditor"
         xmlns:controls="clr-namespace:Fomore.UI.Views.Controls"
+        xmlns:helper="clr-namespace:Fomore.UI.ViewModel.Helper"
         mc:Ignorable="d"
-        Title="CreatureStructureEditor" Height="618" Width="1000" WindowState="Maximized" d:DataContext="{d:DesignInstance creatureEditor:CreatureEditorVM}" Background="{StaticResource Level0Brush}">
+        Title="CreatureStructureEditor" Height="618" Width="1000" WindowState="Maximized"
+        d:DataContext="{d:DesignInstance creatureEditor:CreatureEditorVM}" Background="{StaticResource Level0Brush}"
+        helper:AttachedProperties.InputBindingsSource="{Binding CreatureEditorPanelVM.InputBindings}"
+        KeyDown="CreatureStructureEditor_OnKeyDown">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="3*" />
             <ColumnDefinition Width="*" MinWidth="180" />
         </Grid.ColumnDefinitions>
         <!-- Editor Panel -->
-        <Grid Grid.Column="0" DataContext="{Binding CreatureEditorPanelVM}" Margin="6" Background="{StaticResource Level1Brush}">
+        <Grid Grid.Column="0" DataContext="{Binding CreatureEditorPanelVM}" Margin="6"
+              Background="{StaticResource Level1Brush}">
             <controls:CreatureEditorPanel />
         </Grid>
         <!-- Info Panel -->
@@ -24,8 +29,10 @@
                 <RowDefinition Height="2*" />
             </Grid.RowDefinitions>
             <Grid Grid.Row="0" Background="{StaticResource Level1Brush}" Margin="6">
-                <Border HorizontalAlignment="Center" VerticalAlignment="Center" MinHeight="128" MinWidth="128" Style="{StaticResource DefaultBorder}" Margin="6" Background="Black">
-                    <Image Source="/../../../assets/images/placeholder.png" Width="128" Height="128" HorizontalAlignment="Center" VerticalAlignment="Center"></Image>
+                <Border HorizontalAlignment="Center" VerticalAlignment="Center" MinHeight="128" MinWidth="128"
+                        Style="{StaticResource DefaultBorder}" Margin="6" Background="Black">
+                    <Image Source="/../../../assets/images/placeholder.png" Width="128" Height="128"
+                           HorizontalAlignment="Center" VerticalAlignment="Center" />
                 </Border>
             </Grid>
             <Grid Grid.Row="1" Background="{StaticResource Level1Brush}" Margin="6">
@@ -40,11 +47,12 @@
                     </Grid.RowDefinitions>
                     <TextBlock Grid.Row="0" Grid.Column="0" Text="Bone Count" />
                     <TextBlock Grid.Row="1" Grid.Column="0" Text="Joint Count" />
-                    <TextBlock Grid.Row="0" Grid.Column="1" Text="{Binding CreatureHistoryStackVM.Current.CreatureStructureVM.BoneCollectionVM.Count}" />
-                    <TextBlock Grid.Row="1" Grid.Column="1" Text="{Binding CreatureHistoryStackVM.Current.CreatureStructureVM.JointCollectionVM.Count}" />
+                    <TextBlock Grid.Row="0" Grid.Column="1"
+                               Text="{Binding CreatureHistoryStackVM.Current.CreatureStructureVM.BoneCollectionVM.Count}" />
+                    <TextBlock Grid.Row="1" Grid.Column="1"
+                               Text="{Binding CreatureHistoryStackVM.Current.CreatureStructureVM.JointCollectionVM.Count}" />
                 </Grid>
             </Grid>
         </Grid>
     </Grid>
 </Window>
-

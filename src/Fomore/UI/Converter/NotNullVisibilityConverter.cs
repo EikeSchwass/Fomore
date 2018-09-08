@@ -15,7 +15,7 @@ namespace Fomore.UI.Converter
         /// <inheritdoc />
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            return value != null ? VisibleOption : HiddenOption; ;
+            return value != null ? VisibleOption : HiddenOption;
         }
 
         /// <inheritdoc />

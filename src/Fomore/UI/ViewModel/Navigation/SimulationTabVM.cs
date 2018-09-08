@@ -1,10 +1,7 @@
 ﻿using System.Windows;
-using System.Windows.Input;
-using Core;
 using Fomore.UI.ViewModel.Application;
 using Fomore.UI.ViewModel.Commands;
 using Fomore.UI.ViewModel.Data;
-using Environment = Core.Environment;
 
 namespace Fomore.UI.ViewModel.Navigation
 {
