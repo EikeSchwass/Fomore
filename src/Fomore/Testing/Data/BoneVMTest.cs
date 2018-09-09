@@ -13,7 +13,7 @@ namespace Testing.Data
             const float density = 2;
             var firstJoint = new Joint() { Position = new Vector2(5, 10) };
             var secondJoint = new Joint() { Position = new Vector2(5, 10) };
-            var bone = new Bone() { Density = density, FirstJoint = firstJoint, SecondJoint = secondJoint };
+            var bone = new Bone(firstJoint,secondJoint) { Density = density, FirstJoint = firstJoint, SecondJoint = secondJoint };
             var boneVM = new BoneVM(bone) { Density = 2 };
 
             float densityResult = boneVM.Density;
@@ -27,7 +27,7 @@ namespace Testing.Data
             const float density = 2;
             var firstJoint = new Joint() { Position = new Vector2(5, 10) };
             var secondJoint = new Joint() { Position = new Vector2(5, 10) };
-            var bone = new Bone() { Density = density, FirstJoint = firstJoint, SecondJoint = secondJoint };
+            var bone = new Bone(firstJoint, secondJoint) { Density = density, FirstJoint = firstJoint, SecondJoint = secondJoint };
             var boneVM = new BoneVM(bone) { Density = 3 };
 
             float densityResult = boneVM.Density;
@@ -41,7 +41,7 @@ namespace Testing.Data
             const float density = 2;
             var firstJoint = new Joint() { Position = new Vector2(5, 10) };
             var secondJoint = new Joint() { Position = new Vector2(5, 10) };
-            var bone = new Bone() { Density = density, FirstJoint = firstJoint, SecondJoint = secondJoint };
+            var bone = new Bone(firstJoint, secondJoint) { Density = density, FirstJoint = firstJoint, SecondJoint = secondJoint };
             var boneVM = new BoneVM(bone) { Density = 3 };
 
             float densityResult = boneVM.Density;
@@ -55,7 +55,7 @@ namespace Testing.Data
             const float density = 2;
             var firstJoint = new Joint() { Position = new Vector2(5, 10) };
             var secondJoint = new Joint() { Position = new Vector2(5, 10) };
-            var bone = new Bone() { Density = density, FirstJoint = firstJoint, SecondJoint = secondJoint };
+            var bone = new Bone(firstJoint,secondJoint) { Density = density, FirstJoint = firstJoint, SecondJoint = secondJoint };
             var boneVM = new BoneVM(bone);
             boneVM.FirstJoint = boneVM.FirstJoint;
 
@@ -70,7 +70,7 @@ namespace Testing.Data
             const float density = 2;
             var firstJoint = new Joint() { Position = new Vector2(5, 10) };
             var secondJoint = new Joint() { Position = new Vector2(3, 10) };
-            var bone = new Bone() { Density = density, FirstJoint = firstJoint, SecondJoint = secondJoint };
+            var bone = new Bone(firstJoint,secondJoint) { Density = density, FirstJoint = firstJoint, SecondJoint = secondJoint };
             var boneVM = new BoneVM(bone) { FirstJoint = new JointVM(secondJoint) };
 
             double lengthRLength = boneVM.FirstJoint.Position.Length;
@@ -84,7 +84,7 @@ namespace Testing.Data
             const float density = 2;
             var firstJoint = new Joint() { Position = new Vector2(5, 10) };
             var secondJoint = new Joint() { Position = new Vector2(3, 10) };
-            var bone = new Bone() { Density = density, FirstJoint = firstJoint, SecondJoint = secondJoint };
+            var bone = new Bone(firstJoint,secondJoint) { Density = density, FirstJoint = firstJoint, SecondJoint = secondJoint };
             var boneVM = new BoneVM(bone) { FirstJoint = new JointVM(secondJoint) };
 
             double lengthRLength = boneVM.FirstJoint.Position.Length;
@@ -98,7 +98,7 @@ namespace Testing.Data
             const float density = 2;
             var firstJoint = new Joint() { Position = new Vector2(5, 10) };
             var secondJoint = new Joint() { Position = new Vector2(5, 10) };
-            var bone = new Bone() { Density = density, FirstJoint = firstJoint, SecondJoint = secondJoint };
+            var bone = new Bone(firstJoint,secondJoint) { Density = density, FirstJoint = firstJoint, SecondJoint = secondJoint };
             var boneVM = new BoneVM(bone);
             boneVM.SecondJoint = boneVM.SecondJoint;
 
@@ -113,7 +113,7 @@ namespace Testing.Data
             const float density = 2;
             var firstJoint = new Joint() { Position = new Vector2(5, 10) };
             var secondJoint = new Joint() { Position = new Vector2(3, 10) };
-            var bone = new Bone() { Density = density, FirstJoint = firstJoint, SecondJoint = secondJoint };
+            var bone = new Bone(firstJoint,secondJoint) { Density = density, FirstJoint = firstJoint, SecondJoint = secondJoint };
             var boneVM = new BoneVM(bone) { SecondJoint = new JointVM(firstJoint) };
 
             double lengthRLength = boneVM.SecondJoint.Position.Length;
@@ -127,7 +127,7 @@ namespace Testing.Data
             const float density = 2;
             var firstJoint = new Joint() { Position = new Vector2(5, 10) };
             var secondJoint = new Joint() { Position = new Vector2(3, 10) };
-            var bone = new Bone() { Density = density, FirstJoint = firstJoint, SecondJoint = secondJoint };
+            var bone = new Bone(firstJoint,secondJoint) { Density = density, FirstJoint = firstJoint, SecondJoint = secondJoint };
             var boneVM = new BoneVM(bone) { SecondJoint = new JointVM(firstJoint) };
 
             double lengthRLength = boneVM.SecondJoint.Position.Length;

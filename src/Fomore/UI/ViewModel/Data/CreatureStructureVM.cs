@@ -1,4 +1,5 @@
-﻿using Core;
+﻿using System.Linq;
+using Core;
 using Fomore.UI.ViewModel.Helper;
 
 namespace Fomore.UI.ViewModel.Data
@@ -10,8 +11,26 @@ namespace Fomore.UI.ViewModel.Data
 
         public CreatureStructureVM(CreatureStructure creatureStructure) : base(creatureStructure)
         {
-            BoneCollectionVM = new EncapsulatingObservableCollection<BoneVM, Bone>(creatureStructure.Bones, b => new BoneVM(b));
-            JointCollectionVM = new EncapsulatingObservableCollection<JointVM, Joint>(creatureStructure.Joints, j => new JointVM(j));
+            BoneCollectionVM = new EncapsulatingObservableCollection<BoneVM, Bone>(creatureStructure.Bones,
+                                                                                   creatureStructure.Bones.Select(b => new BoneVM(b)
+                                                                                                     {
+                                                                                                         FirstJoint =
+                                                                                                             new JointVM(creatureStructure
+                                                                                                                        .Joints.First(j =>
+                                                                                                                                          j.Tracker ==
+                                                                                                                                          b.FirstJoint
+                                                                                                                                           .Tracker)),
+                                                                                                         SecondJoint =
+                                                                                                             new JointVM(creatureStructure
+                                                                                                                        .Joints.First(j =>
+                                                                                                                                          j.Tracker ==
+                                                                                                                                          b.SecondJoint
+                                                                                                                                           .Tracker))
+                                                                                                     })
+                                                                                                    .ToList());
+            JointCollectionVM =
+                new EncapsulatingObservableCollection<JointVM, Joint>(creatureStructure.Joints,
+                                                                      creatureStructure.Joints.Select(j => new JointVM(j)).ToList());
         }
     }
 }

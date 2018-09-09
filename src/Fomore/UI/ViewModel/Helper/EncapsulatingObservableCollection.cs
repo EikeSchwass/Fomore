@@ -36,10 +36,10 @@ namespace Fomore.UI.ViewModel.Helper
             }
         }*/
 
-        public EncapsulatingObservableCollection(IList<TModel> encapsulatedList, Func<TModel, TViewModel> viewModelCreation)
+        public EncapsulatingObservableCollection(IList<TModel> encapsulatedList, IList<TViewModel> viewModels)
         {
             EncapsulatedList = encapsulatedList;
-            ViewModels = EncapsulatedList.Select(viewModelCreation).ToList();
+            ViewModels = viewModels.ToList();
             AddItemCommand = new DelegateCommand<TViewModel>(Add, o => true);
             RemoveItemCommand = new DelegateCommand<TViewModel>(item => Remove(item), o => ViewModels.Any());
             ClearItemCsommand = new DelegateCommand(o => Clear(), o => ViewModels.Any());

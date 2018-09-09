@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 
 namespace Core
 {
@@ -15,19 +16,14 @@ namespace Core
             foreach (var joint in Joints)
             {
                 var newJoint = joint.Clone();
-                foreach (var bone in Bones)
-                {
-                    if (Equals(bone.FirstJoint, joint))
-                        bone.FirstJoint = newJoint;
-                    if (Equals(bone.SecondJoint, joint))
-                        bone.SecondJoint = newJoint;
-                }
                 clonedStructure.Joints.Add(newJoint);
             }
 
             foreach (var bone in Bones)
             {
                 var newBone = bone.Clone();
+                newBone.FirstJoint = clonedStructure.Joints.First(j => j.Tracker == bone.FirstJoint.Tracker);
+                newBone.SecondJoint = clonedStructure.Joints.First(j => j.Tracker == bone.SecondJoint.Tracker);
                 Debug.Assert(clonedStructure.Joints.Contains(newBone.FirstJoint));
                 Debug.Assert(clonedStructure.Joints.Contains(newBone.SecondJoint));
                 clonedStructure.Bones.Add(newBone);

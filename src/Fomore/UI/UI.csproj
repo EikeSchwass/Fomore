@@ -71,12 +71,9 @@
     <Compile Include="ViewModel\Commands\DelegateHandleCommand.cs" />
     <Compile Include="ViewModel\CreatureEditor\Behaviours\BaseBehaviour.cs" />
     <Compile Include="ViewModel\CreatureEditor\Behaviours\ClearBehaviour.cs" />
-    <Compile Include="ViewModel\CreatureEditor\Behaviours\CopyBehaviour.cs" />
-    <Compile Include="ViewModel\CreatureEditor\Behaviours\CutBehaviour.cs" />
     <Compile Include="ViewModel\CreatureEditor\Behaviours\DeleteBehaviour.cs" />
     <Compile Include="ViewModel\CreatureEditor\Behaviours\FlipHorizontalBehaviour.cs" />
     <Compile Include="ViewModel\CreatureEditor\Behaviours\FlipVeticalBehaviour.cs" />
-    <Compile Include="ViewModel\CreatureEditor\Behaviours\PasteBehaviour.cs" />
     <Compile Include="ViewModel\CreatureEditor\Behaviours\RedoBehaviour.cs" />
     <Compile Include="ViewModel\CreatureEditor\Behaviours\RotateBehaviour.cs" />
     <Compile Include="ViewModel\CreatureEditor\Behaviours\RotateLeftBehaviour.cs" />
@@ -91,6 +88,7 @@
     <Compile Include="ViewModel\CreatureEditor\PreviewJointVM.cs" />
     <Compile Include="ViewModel\CreatureEditor\SelectionVM.cs" />
     <Compile Include="ViewModel\CreatureEditor\ToolCollectionVM.cs" />
+    <Compile Include="ViewModel\CreatureEditor\Tools\MoveTool.cs" />
     <Compile Include="ViewModel\CreatureEditor\Tools\PanTool.cs" />
     <Compile Include="ViewModel\CreatureEditor\Tools\PlaceBoneTool.cs" />
     <Compile Include="ViewModel\CreatureEditor\Tools\PlaceJointTool.cs" />

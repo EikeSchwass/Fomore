@@ -4,6 +4,7 @@ namespace Fomore.UI.ViewModel.Data
 {
     public class JointVM : ViewModelBase<Joint>
     {
+
         public Vector2 Position
         {
             get => Model.Position;
@@ -15,6 +16,8 @@ namespace Fomore.UI.ViewModel.Data
             }
         }
 
-        public JointVM(Joint model) : base(model) { }
+        public JointVM(Joint model) : base(model)
+        {
+        }
     }
 }

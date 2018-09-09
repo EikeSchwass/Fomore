@@ -17,8 +17,8 @@ namespace Testing.Data
             {
                 Bones =
                 {
-                    new Bone() {SecondJoint = secondJoint, FirstJoint = firstJoint, Density = density},
-                    new Bone() {SecondJoint = secondJoint, FirstJoint = firstJoint, Density = density}
+                    new Bone(firstJoint,secondJoint) {SecondJoint = secondJoint, FirstJoint = firstJoint, Density = density},
+                    new Bone(firstJoint,secondJoint) {SecondJoint = secondJoint, FirstJoint = firstJoint, Density = density}
                 },
                 Joints = { new Joint() { Position = new Vector2(5, 10) }, new Joint() { Position = new Vector2(5, 10) } }
             };
@@ -39,14 +39,14 @@ namespace Testing.Data
             {
                 Bones =
                 {
-                    new Bone() {SecondJoint = secondJoint, FirstJoint = firstJoint, Density = density},
-                    new Bone() {SecondJoint = secondJoint, FirstJoint = firstJoint, Density = density}
+                    new Bone(firstJoint,secondJoint) {SecondJoint = secondJoint, FirstJoint = firstJoint, Density = density},
+                    new Bone(firstJoint,secondJoint) {SecondJoint = secondJoint, FirstJoint = firstJoint, Density = density}
                 },
                 Joints = { new Joint() { Position = new Vector2(5, 10) }, new Joint() { Position = new Vector2(5, 10) } }
             };
             int actual = creatureStructure.Bones.Count;
             var creatureStructureVM = new CreatureStructureVM(creatureStructure);
-            creatureStructureVM.BoneCollectionVM.Add(new BoneVM(new Bone() { SecondJoint = secondJoint, FirstJoint = firstJoint, Density = density }));
+            creatureStructureVM.BoneCollectionVM.Add(new BoneVM(new Bone(firstJoint, secondJoint) { SecondJoint = secondJoint, FirstJoint = firstJoint, Density = density }));
             int expected = creatureStructureVM.BoneCollectionVM.Count;
 
             Assert.AreNotEqual(expected, actual);
@@ -62,8 +62,8 @@ namespace Testing.Data
             {
                 Bones =
                 {
-                    new Bone() {SecondJoint = secondJoint, FirstJoint = firstJoint, Density = density},
-                    new Bone() {SecondJoint = secondJoint, FirstJoint = firstJoint, Density = density}
+                    new Bone(firstJoint,secondJoint) {SecondJoint = secondJoint, FirstJoint = firstJoint, Density = density},
+                    new Bone(firstJoint,secondJoint) {SecondJoint = secondJoint, FirstJoint = firstJoint, Density = density}
                 },
                 Joints = { new Joint() { Position = new Vector2(5, 10) }, new Joint() { Position = new Vector2(5, 10) } }
             };
@@ -84,8 +84,8 @@ namespace Testing.Data
             {
                 Bones =
                 {
-                    new Bone() {SecondJoint = secondJoint, FirstJoint = firstJoint, Density = density},
-                    new Bone() {SecondJoint = secondJoint, FirstJoint = firstJoint, Density = density}
+                    new Bone(firstJoint,secondJoint) {SecondJoint = secondJoint, FirstJoint = firstJoint, Density = density},
+                    new Bone(firstJoint,secondJoint) {SecondJoint = secondJoint, FirstJoint = firstJoint, Density = density}
                 },
                 Joints = { new Joint() { Position = new Vector2(5, 10) }, new Joint() { Position = new Vector2(5, 10) } }
             };

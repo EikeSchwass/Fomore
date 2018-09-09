@@ -123,7 +123,7 @@ namespace Testing.Data
             var creatureVM = new CreatureVM(creature);
 
             var creatureStructureVM = creatureVM.CreatureStructureVM;
-            creatureStructureVM.BoneCollectionVM.Add(new BoneVM(new Bone()
+            creatureStructureVM.BoneCollectionVM.Add(new BoneVM(new Bone(null, null)
             {
                 Density = 2,
                 SecondJoint = new Joint() { Position = new Vector2(5, 10) }

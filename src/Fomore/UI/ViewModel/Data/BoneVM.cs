@@ -20,7 +20,7 @@ namespace Fomore.UI.ViewModel.Data
 
         public JointVM FirstJoint
         {
-            get => firstJoint = firstJoint ?? new JointVM(Model.FirstJoint);
+            get => firstJoint=firstJoint ?? new JointVM(Model.FirstJoint);
             set
             {
                 if (Equals(value, FirstJoint)) return;
@@ -32,7 +32,7 @@ namespace Fomore.UI.ViewModel.Data
 
         public JointVM SecondJoint
         {
-            get => secondJoint = secondJoint ?? new JointVM(Model.SecondJoint);
+            get => secondJoint=secondJoint??new JointVM(Model.SecondJoint);
             set
             {
                 if (Equals(value, SecondJoint)) return;
@@ -42,6 +42,8 @@ namespace Fomore.UI.ViewModel.Data
             }
         }
 
-        public BoneVM(Bone model) : base(model) { }
+        public BoneVM(Bone model) : base(model)
+        {
+        }
     }
 }

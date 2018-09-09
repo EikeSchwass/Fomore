@@ -2,11 +2,23 @@
 {
     public class Joint
     {
+        public object Tracker { get; }
+
         public Vector2 Position { get; set; }
+
+        public Joint()
+        {
+            Tracker = new object();
+        }
+
+        private Joint(object tracker)
+        {
+            Tracker = tracker;
+        }
 
         public Joint Clone()
         {
-            return new Joint {Position = new Vector2(Position.X, Position.Y)};
+            return new Joint(Tracker) { Position = new Vector2(Position.X, Position.Y) };
         }
 
         protected bool Equals(Joint other) => Position.Equals(other.Position);

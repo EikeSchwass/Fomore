@@ -24,6 +24,7 @@ namespace Fomore.UI.ViewModel.CreatureEditor
             HistoryStack = historyStack;
             ToolCollectionVM = new ToolCollectionVM();
             ToolCollectionVM.Tools.Add(new SelectAllTool());
+            ToolCollectionVM.Tools.Add(new MoveTool());
             ToolCollectionVM.Tools.Add(new PanTool());
             ToolCollectionVM.Tools.Add(new PlaceJointTool());
             ToolCollectionVM.Tools.Add(new PlaceBoneTool());
@@ -33,9 +34,6 @@ namespace Fomore.UI.ViewModel.CreatureEditor
             {
                 new UndoBehaviour(HistoryStack),
                 new RedoBehaviour(HistoryStack),
-                new CopyBehaviour(),
-                new CutBehaviour(),
-                new PasteBehaviour(),
                 new RotateLeftBehaviour(),
                 new RotateRightBehaviour(),
                 new FlipHorizontalBehaviour(),

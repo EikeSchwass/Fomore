@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using Core;
 using Fomore.UI.ViewModel.Helper;
 
@@ -41,7 +42,7 @@ namespace Fomore.UI.ViewModel.Data
         /// <inheritdoc />
         public CreatureVM(Creature creature) : base(creature)
         {
-            MovementPatternCollectionVM = new EncapsulatingObservableCollection<MovementPatternVM, MovementPattern>(creature.MovementPatterns, m => new MovementPatternVM(m));
+            MovementPatternCollectionVM = new EncapsulatingObservableCollection<MovementPatternVM, MovementPattern>(creature.MovementPatterns, creature.MovementPatterns.Select(m => new MovementPatternVM(m)).ToList());
             CreatureStructureVM = new CreatureStructureVM(Model.CreatureStructure);
         }
 

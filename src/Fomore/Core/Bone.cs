@@ -6,9 +6,15 @@
         public Joint FirstJoint { get; set; }
         public Joint SecondJoint { get; set; }
 
+        public Bone(Joint firstJoint, Joint secondJoint)
+        {
+            FirstJoint = firstJoint;
+            SecondJoint = secondJoint;
+        }
+
         public Bone Clone()
         {
-            return new Bone { Density = Density, FirstJoint = FirstJoint, SecondJoint = SecondJoint };
+            return new Bone(FirstJoint, SecondJoint) { Density = Density };
         }
     }
 }

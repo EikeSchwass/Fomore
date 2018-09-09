@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using Core;
 using Fomore.UI.ViewModel.Data;
 using Fomore.UI.ViewModel.Helper;
@@ -19,13 +20,15 @@ namespace Testing.Helper
             {
                 Bones =
                 {
-                    new Bone() {SecondJoint = secondJoint, FirstJoint = firstJoint, Density = density},
-                    new Bone() {SecondJoint = secondJoint, FirstJoint = firstJoint, Density = density}
+                    new Bone(firstJoint,secondJoint) {SecondJoint = secondJoint, FirstJoint = firstJoint, Density = density},
+                    new Bone(firstJoint,secondJoint) {SecondJoint = secondJoint, FirstJoint = firstJoint, Density = density}
                 },
                 Joints = { new Joint() { Position = new Vector2(5, 10) }, new Joint() { Position = new Vector2(5, 10) } }
             };
-            var collObjectCollection = new EncapsulatingObservableCollection<BoneVM, Bone>(creatureStructure.Bones, b => new BoneVM(b));
-            var boneVM = new BoneVM(new Bone() { SecondJoint = secondJoint, FirstJoint = firstJoint, Density = density });
+            // creatureStructure.Bones.Select(b=>new BoneVM(b)).ToList()
+            // creatureStructure.Bones.Select(b=>new BoneVM(b)).ToList()
+            var collObjectCollection = new EncapsulatingObservableCollection<BoneVM, Bone>(creatureStructure.Bones, creatureStructure.Bones.Select(b=>new BoneVM(b)).ToList());
+            var boneVM = new BoneVM(new Bone(firstJoint, secondJoint) { SecondJoint = secondJoint, FirstJoint = firstJoint, Density = density });
             collObjectCollection.Add(boneVM);
 
             int afterCount = collObjectCollection.Count;
@@ -43,13 +46,13 @@ namespace Testing.Helper
             {
                 Bones =
                 {
-                    new Bone() {SecondJoint = secondJoint, FirstJoint = firstJoint, Density = density},
-                    new Bone() {SecondJoint = secondJoint, FirstJoint = firstJoint, Density = density}
+                    new Bone(firstJoint,secondJoint) {SecondJoint = secondJoint, FirstJoint = firstJoint, Density = density},
+                    new Bone(firstJoint,secondJoint) {SecondJoint = secondJoint, FirstJoint = firstJoint, Density = density}
                 },
                 Joints = { new Joint() { Position = new Vector2(5, 10) }, new Joint() { Position = new Vector2(5, 10) } }
             };
-            var collObjectCollection = new EncapsulatingObservableCollection<BoneVM, Bone>(creatureStructure.Bones, b => new BoneVM(b));
-            var boneVM = new BoneVM(new Bone() { SecondJoint = secondJoint, FirstJoint = firstJoint, Density = density });
+            var collObjectCollection = new EncapsulatingObservableCollection<BoneVM, Bone>(creatureStructure.Bones, creatureStructure.Bones.Select(b=>new BoneVM(b)).ToList());
+            var boneVM = new BoneVM(new Bone(firstJoint,secondJoint) { SecondJoint = secondJoint, FirstJoint = firstJoint, Density = density });
             collObjectCollection.Add(boneVM);
 
             int afterCount = collObjectCollection.Count;
@@ -67,15 +70,15 @@ namespace Testing.Helper
             {
                 Bones =
                 {
-                    new Bone() {SecondJoint = secondJoint, FirstJoint = firstJoint, Density = density},
-                    new Bone() {SecondJoint = secondJoint, FirstJoint = firstJoint, Density = density}
+                    new Bone(firstJoint,secondJoint) {SecondJoint = secondJoint, FirstJoint = firstJoint, Density = density},
+                    new Bone(firstJoint,secondJoint) {SecondJoint = secondJoint, FirstJoint = firstJoint, Density = density}
                 },
                 Joints = { new Joint() { Position = new Vector2(5, 10) }, new Joint() { Position = new Vector2(5, 10) } }
             };
-            var boneVM = new BoneVM(new Bone() { SecondJoint = secondJoint, FirstJoint = firstJoint, Density = density });
-            new EncapsulatingObservableCollection<BoneVM, Bone>(creatureStructure.Bones, b => new BoneVM(b)).Add(boneVM);
+            var boneVM = new BoneVM(new Bone(firstJoint,secondJoint) { SecondJoint = secondJoint, FirstJoint = firstJoint, Density = density });
+            new EncapsulatingObservableCollection<BoneVM, Bone>(creatureStructure.Bones, creatureStructure.Bones.Select(b=>new BoneVM(b)).ToList()).Add(boneVM);
 
-            Assert.Throws<NotSupportedException>(() => new EncapsulatingObservableCollection<BoneVM, Bone>(creatureStructure.Bones, b => new BoneVM(b)).Add(boneVM));
+            Assert.Throws<NotSupportedException>(() => new EncapsulatingObservableCollection<BoneVM, Bone>(creatureStructure.Bones, creatureStructure.Bones.Select(b=>new BoneVM(b)).ToList()).Add(boneVM));
         }
 
         [Test]
@@ -88,17 +91,17 @@ namespace Testing.Helper
             {
                 Bones =
                 {
-                    new Bone() {SecondJoint = secondJoint, FirstJoint = firstJoint, Density = density},
-                    new Bone() {SecondJoint = secondJoint, FirstJoint = firstJoint, Density = density}
+                    new Bone(firstJoint,secondJoint) {SecondJoint = secondJoint, FirstJoint = firstJoint, Density = density},
+                    new Bone(firstJoint,secondJoint) {SecondJoint = secondJoint, FirstJoint = firstJoint, Density = density}
                 },
                 Joints = { new Joint() { Position = new Vector2(5, 10) }, new Joint() { Position = new Vector2(5, 10) } }
             };
-            var model = new Bone() { SecondJoint = secondJoint, FirstJoint = firstJoint, Density = density };
+            var model = new Bone(firstJoint,secondJoint) { SecondJoint = secondJoint, FirstJoint = firstJoint, Density = density };
             var boneVM = new BoneVM(model);
-            new EncapsulatingObservableCollection<BoneVM, Bone>(creatureStructure.Bones, b => new BoneVM(b)).Add(boneVM);
+            new EncapsulatingObservableCollection<BoneVM, Bone>(creatureStructure.Bones, creatureStructure.Bones.Select(b=>new BoneVM(b)).ToList()).Add(boneVM);
             var boneVM2 = new BoneVM(model);
 
-            Assert.Throws<NotSupportedException>(() => new EncapsulatingObservableCollection<BoneVM, Bone>(creatureStructure.Bones, b => new BoneVM(b)).Add(boneVM2));
+            Assert.Throws<NotSupportedException>(() => new EncapsulatingObservableCollection<BoneVM, Bone>(creatureStructure.Bones, creatureStructure.Bones.Select(b=>new BoneVM(b)).ToList()).Add(boneVM2));
         }
 
         [Test]
@@ -111,13 +114,13 @@ namespace Testing.Helper
             {
                 Bones =
                 {
-                    new Bone() {SecondJoint = secondJoint, FirstJoint = firstJoint, Density = density},
-                    new Bone() {SecondJoint = secondJoint, FirstJoint = firstJoint, Density = density}
+                    new Bone(firstJoint,secondJoint) {SecondJoint = secondJoint, FirstJoint = firstJoint, Density = density},
+                    new Bone(firstJoint,secondJoint) {SecondJoint = secondJoint, FirstJoint = firstJoint, Density = density}
                 },
                 Joints = { new Joint() { Position = new Vector2(5, 10) }, new Joint() { Position = new Vector2(5, 10) } }
             };
-            var collObjectCollection = new EncapsulatingObservableCollection<BoneVM, Bone>(creatureStructure.Bones, b => new BoneVM(b));
-            var model = new Bone() { SecondJoint = secondJoint, FirstJoint = firstJoint, Density = density };
+            var collObjectCollection = new EncapsulatingObservableCollection<BoneVM, Bone>(creatureStructure.Bones, creatureStructure.Bones.Select(b=>new BoneVM(b)).ToList());
+            var model = new Bone(firstJoint,secondJoint) { SecondJoint = secondJoint, FirstJoint = firstJoint, Density = density };
             var boneVM = new BoneVM(model);
             collObjectCollection.Add(boneVM);
 
@@ -136,13 +139,13 @@ namespace Testing.Helper
             {
                 Bones =
                 {
-                    new Bone() {SecondJoint = secondJoint, FirstJoint = firstJoint, Density = density},
-                    new Bone() {SecondJoint = secondJoint, FirstJoint = firstJoint, Density = density}
+                    new Bone(firstJoint,secondJoint) {SecondJoint = secondJoint, FirstJoint = firstJoint, Density = density},
+                    new Bone(firstJoint,secondJoint) {SecondJoint = secondJoint, FirstJoint = firstJoint, Density = density}
                 },
                 Joints = { new Joint() { Position = new Vector2(5, 10) }, new Joint() { Position = new Vector2(5, 10) } }
             };
-            var collObjectCollection = new EncapsulatingObservableCollection<BoneVM, Bone>(creatureStructure.Bones, b => new BoneVM(b));
-            var model = new Bone() { SecondJoint = secondJoint, FirstJoint = firstJoint, Density = density };
+            var collObjectCollection = new EncapsulatingObservableCollection<BoneVM, Bone>(creatureStructure.Bones, creatureStructure.Bones.Select(b=>new BoneVM(b)).ToList());
+            var model = new Bone(firstJoint,secondJoint) { SecondJoint = secondJoint, FirstJoint = firstJoint, Density = density };
             var boneVM = new BoneVM(model);
             collObjectCollection.Add(boneVM);
 
@@ -161,13 +164,13 @@ namespace Testing.Helper
             {
                 Bones =
                 {
-                    new Bone() {SecondJoint = secondJoint, FirstJoint = firstJoint, Density = density},
-                    new Bone() {SecondJoint = secondJoint, FirstJoint = firstJoint, Density = density}
+                    new Bone(firstJoint,secondJoint) {SecondJoint = secondJoint, FirstJoint = firstJoint, Density = density},
+                    new Bone(firstJoint,secondJoint) {SecondJoint = secondJoint, FirstJoint = firstJoint, Density = density}
                 },
                 Joints = { new Joint() { Position = new Vector2(5, 10) }, new Joint() { Position = new Vector2(5, 10) } }
             };
-            var collObjectCollection = new EncapsulatingObservableCollection<BoneVM, Bone>(creatureStructure.Bones, b => new BoneVM(b));
-            var model = new Bone() { SecondJoint = secondJoint, FirstJoint = firstJoint, Density = density };
+            var collObjectCollection = new EncapsulatingObservableCollection<BoneVM, Bone>(creatureStructure.Bones, creatureStructure.Bones.Select(b=>new BoneVM(b)).ToList());
+            var model = new Bone(firstJoint,secondJoint) { SecondJoint = secondJoint, FirstJoint = firstJoint, Density = density };
             var boneVM = new BoneVM(model);
             collObjectCollection.Add(boneVM);
 
@@ -186,13 +189,13 @@ namespace Testing.Helper
             {
                 Bones =
                 {
-                    new Bone() {SecondJoint = secondJoint, FirstJoint = firstJoint, Density = density},
-                    new Bone() {SecondJoint = secondJoint, FirstJoint = firstJoint, Density = density}
+                    new Bone(firstJoint,secondJoint) {SecondJoint = secondJoint, FirstJoint = firstJoint, Density = density},
+                    new Bone(firstJoint,secondJoint) {SecondJoint = secondJoint, FirstJoint = firstJoint, Density = density}
                 },
                 Joints = { new Joint() { Position = new Vector2(5, 10) }, new Joint() { Position = new Vector2(5, 10) } }
             };
-            var collObjectCollection = new EncapsulatingObservableCollection<BoneVM, Bone>(creatureStructure.Bones, b => new BoneVM(b));
-            var model = new Bone() { SecondJoint = secondJoint, FirstJoint = firstJoint, Density = density };
+            var collObjectCollection = new EncapsulatingObservableCollection<BoneVM, Bone>(creatureStructure.Bones, creatureStructure.Bones.Select(b=>new BoneVM(b)).ToList());
+            var model = new Bone(firstJoint,secondJoint) { SecondJoint = secondJoint, FirstJoint = firstJoint, Density = density };
             var boneVM = new BoneVM(model);
             collObjectCollection.Add(boneVM);
 
@@ -211,13 +214,13 @@ namespace Testing.Helper
             {
                 Bones =
                 {
-                    new Bone() {SecondJoint = secondJoint, FirstJoint = firstJoint, Density = density},
-                    new Bone() {SecondJoint = secondJoint, FirstJoint = firstJoint, Density = density}
+                    new Bone(firstJoint,secondJoint) {SecondJoint = secondJoint, FirstJoint = firstJoint, Density = density},
+                    new Bone(firstJoint,secondJoint) {SecondJoint = secondJoint, FirstJoint = firstJoint, Density = density}
                 },
                 Joints = { new Joint() { Position = new Vector2(5, 10) }, new Joint() { Position = new Vector2(5, 10) } }
             };
-            var collObjectCollection = new EncapsulatingObservableCollection<BoneVM, Bone>(creatureStructure.Bones, b => new BoneVM(b));
-            var boneVM = new BoneVM(new Bone() { SecondJoint = secondJoint, FirstJoint = firstJoint, Density = density });
+            var collObjectCollection = new EncapsulatingObservableCollection<BoneVM, Bone>(creatureStructure.Bones, creatureStructure.Bones.Select(b=>new BoneVM(b)).ToList());
+            var boneVM = new BoneVM(new Bone(firstJoint,secondJoint) { SecondJoint = secondJoint, FirstJoint = firstJoint, Density = density });
             collObjectCollection.Insert(0, boneVM);
 
             int afterCount = collObjectCollection.Count;
@@ -235,13 +238,13 @@ namespace Testing.Helper
             {
                 Bones =
                 {
-                    new Bone() {SecondJoint = secondJoint, FirstJoint = firstJoint, Density = density},
-                    new Bone() {SecondJoint = secondJoint, FirstJoint = firstJoint, Density = density}
+                    new Bone(firstJoint,secondJoint) {SecondJoint = secondJoint, FirstJoint = firstJoint, Density = density},
+                    new Bone(firstJoint,secondJoint) {SecondJoint = secondJoint, FirstJoint = firstJoint, Density = density}
                 },
                 Joints = { new Joint() { Position = new Vector2(5, 10) }, new Joint() { Position = new Vector2(5, 10) } }
             };
-            var collObjectCollection = new EncapsulatingObservableCollection<BoneVM, Bone>(creatureStructure.Bones, b => new BoneVM(b));
-            var boneVM = new BoneVM(new Bone() { SecondJoint = secondJoint, FirstJoint = firstJoint, Density = density });
+            var collObjectCollection = new EncapsulatingObservableCollection<BoneVM, Bone>(creatureStructure.Bones, creatureStructure.Bones.Select(b=>new BoneVM(b)).ToList());
+            var boneVM = new BoneVM(new Bone(firstJoint,secondJoint) { SecondJoint = secondJoint, FirstJoint = firstJoint, Density = density });
             collObjectCollection.Insert(0, boneVM);
 
             int afterCount = collObjectCollection.Count;
@@ -259,13 +262,13 @@ namespace Testing.Helper
             {
                 Bones =
                 {
-                    new Bone() {SecondJoint = secondJoint, FirstJoint = firstJoint, Density = density},
-                    new Bone() {SecondJoint = secondJoint, FirstJoint = firstJoint, Density = density}
+                    new Bone(firstJoint,secondJoint) {SecondJoint = secondJoint, FirstJoint = firstJoint, Density = density},
+                    new Bone(firstJoint,secondJoint) {SecondJoint = secondJoint, FirstJoint = firstJoint, Density = density}
                 },
                 Joints = { new Joint() { Position = new Vector2(5, 10) }, new Joint() { Position = new Vector2(5, 10) } }
             };
-            var collObjectCollection = new EncapsulatingObservableCollection<BoneVM, Bone>(creatureStructure.Bones, b => new BoneVM(b));
-            var boneVM = new BoneVM(new Bone() { SecondJoint = secondJoint, FirstJoint = firstJoint, Density = density });
+            var collObjectCollection = new EncapsulatingObservableCollection<BoneVM, Bone>(creatureStructure.Bones, creatureStructure.Bones.Select(b=>new BoneVM(b)).ToList());
+            var boneVM = new BoneVM(new Bone(firstJoint,secondJoint) { SecondJoint = secondJoint, FirstJoint = firstJoint, Density = density });
             collObjectCollection.Insert(0, boneVM);
 
             Assert.Throws<NotSupportedException>(() => collObjectCollection.Insert(0, boneVM));
@@ -281,13 +284,13 @@ namespace Testing.Helper
             {
                 Bones =
                 {
-                    new Bone() {SecondJoint = secondJoint, FirstJoint = firstJoint, Density = density},
-                    new Bone() {SecondJoint = secondJoint, FirstJoint = firstJoint, Density = density}
+                    new Bone(firstJoint,secondJoint) {SecondJoint = secondJoint, FirstJoint = firstJoint, Density = density},
+                    new Bone(firstJoint,secondJoint) {SecondJoint = secondJoint, FirstJoint = firstJoint, Density = density}
                 },
                 Joints = { new Joint() { Position = new Vector2(5, 10) }, new Joint() { Position = new Vector2(5, 10) } }
             };
-            var collObjectCollection = new EncapsulatingObservableCollection<BoneVM, Bone>(creatureStructure.Bones, b => new BoneVM(b));
-            var model = new Bone() { SecondJoint = secondJoint, FirstJoint = firstJoint, Density = density };
+            var collObjectCollection = new EncapsulatingObservableCollection<BoneVM, Bone>(creatureStructure.Bones, creatureStructure.Bones.Select(b => new BoneVM(b)).ToList());
+            var model = new Bone(firstJoint,secondJoint) { SecondJoint = secondJoint, FirstJoint = firstJoint, Density = density };
             var boneVM = new BoneVM(model);
             collObjectCollection.Insert(0, boneVM);
             var boneVM2 = new BoneVM(model);
@@ -305,12 +308,12 @@ namespace Testing.Helper
             {
                 Bones =
                 {
-                    new Bone() {SecondJoint = secondJoint, FirstJoint = firstJoint, Density = density},
-                    new Bone() {SecondJoint = secondJoint, FirstJoint = firstJoint, Density = density}
+                    new Bone(firstJoint,secondJoint) {SecondJoint = secondJoint, FirstJoint = firstJoint, Density = density},
+                    new Bone(firstJoint,secondJoint) {SecondJoint = secondJoint, FirstJoint = firstJoint, Density = density}
                 },
                 Joints = { new Joint() { Position = new Vector2(5, 10) }, new Joint() { Position = new Vector2(5, 10) } }
             };
-            var collObjectCollection = new EncapsulatingObservableCollection<BoneVM, Bone>(creatureStructure.Bones, b => new BoneVM(b));
+            var collObjectCollection = new EncapsulatingObservableCollection<BoneVM, Bone>(creatureStructure.Bones, creatureStructure.Bones.Select(b => new BoneVM(b)).ToList());
 
             collObjectCollection.RemoveAt(0);
 
@@ -327,12 +330,12 @@ namespace Testing.Helper
             {
                 Bones =
                 {
-                    new Bone() {SecondJoint = secondJoint, FirstJoint = firstJoint, Density = density},
-                    new Bone() {SecondJoint = secondJoint, FirstJoint = firstJoint, Density = density}
+                    new Bone(firstJoint,secondJoint) {SecondJoint = secondJoint, FirstJoint = firstJoint, Density = density},
+                    new Bone(firstJoint,secondJoint) {SecondJoint = secondJoint, FirstJoint = firstJoint, Density = density}
                 },
                 Joints = { new Joint() { Position = new Vector2(5, 10) }, new Joint() { Position = new Vector2(5, 10) } }
             };
-            var collObjectCollection = new EncapsulatingObservableCollection<BoneVM, Bone>(creatureStructure.Bones, b => new BoneVM(b));
+            var collObjectCollection = new EncapsulatingObservableCollection<BoneVM, Bone>(creatureStructure.Bones, creatureStructure.Bones.Select(b => new BoneVM(b)).ToList());
 
             collObjectCollection.RemoveAt(0);
 
@@ -345,17 +348,17 @@ namespace Testing.Helper
             const float density = 2;
             var firstJoint = new Joint() { Position = new Vector2(5, 10) };
             var secondJoint = new Joint() { Position = new Vector2(5, 10) };
-            var model = new Bone() { SecondJoint = secondJoint, FirstJoint = firstJoint, Density = density };
+            var model = new Bone(firstJoint,secondJoint) { SecondJoint = secondJoint, FirstJoint = firstJoint, Density = density };
             var creatureStructure = new CreatureStructure()
             {
                 Bones =
                 {
-                    new Bone() {SecondJoint = secondJoint, FirstJoint = firstJoint, Density = density},
+                    new Bone(firstJoint,secondJoint) {SecondJoint = secondJoint, FirstJoint = firstJoint, Density = density},
                     model
                 },
                 Joints = { new Joint() { Position = new Vector2(5, 10) }, new Joint() { Position = new Vector2(5, 10) } }
             };
-            var collObjectCollection = new EncapsulatingObservableCollection<BoneVM, Bone>(creatureStructure.Bones, b => new BoneVM(b));
+            var collObjectCollection = new EncapsulatingObservableCollection<BoneVM, Bone>(creatureStructure.Bones, creatureStructure.Bones.Select(b => new BoneVM(b)).ToList());
 
             int index = collObjectCollection.IndexOf(model);
 
@@ -368,17 +371,17 @@ namespace Testing.Helper
             const float density = 2;
             var firstJoint = new Joint() { Position = new Vector2(5, 10) };
             var secondJoint = new Joint() { Position = new Vector2(5, 10) };
-            var model = new Bone() { SecondJoint = secondJoint, FirstJoint = firstJoint, Density = density };
+            var model = new Bone(firstJoint,secondJoint) { SecondJoint = secondJoint, FirstJoint = firstJoint, Density = density };
             var creatureStructure = new CreatureStructure()
             {
                 Bones =
                 {
-                    new Bone() {SecondJoint = secondJoint, FirstJoint = firstJoint, Density = density},
+                    new Bone(firstJoint,secondJoint) {SecondJoint = secondJoint, FirstJoint = firstJoint, Density = density},
                     model
                 },
                 Joints = { new Joint() { Position = new Vector2(5, 10) }, new Joint() { Position = new Vector2(5, 10) } }
             };
-            var collObjectCollection = new EncapsulatingObservableCollection<BoneVM, Bone>(creatureStructure.Bones, b => new BoneVM(b));
+            var collObjectCollection = new EncapsulatingObservableCollection<BoneVM, Bone>(creatureStructure.Bones, creatureStructure.Bones.Select(b => new BoneVM(b)).ToList());
 
             int index = collObjectCollection.IndexOf(model);
 
@@ -395,13 +398,13 @@ namespace Testing.Helper
             {
                 Bones =
                 {
-                    new Bone() {SecondJoint = secondJoint, FirstJoint = firstJoint, Density = density},
-                    new Bone() {SecondJoint = secondJoint, FirstJoint = firstJoint, Density = density}
+                    new Bone(firstJoint,secondJoint) {SecondJoint = secondJoint, FirstJoint = firstJoint, Density = density},
+                    new Bone(firstJoint,secondJoint) {SecondJoint = secondJoint, FirstJoint = firstJoint, Density = density}
                 },
                 Joints = { new Joint() { Position = new Vector2(5, 10) }, new Joint() { Position = new Vector2(5, 10) } }
             };
-            var collObjectCollection = new EncapsulatingObservableCollection<BoneVM, Bone>(creatureStructure.Bones, b => new BoneVM(b));
-            var model = new Bone() { SecondJoint = secondJoint, FirstJoint = firstJoint, Density = density };
+            var collObjectCollection = new EncapsulatingObservableCollection<BoneVM, Bone>(creatureStructure.Bones, creatureStructure.Bones.Select(b => new BoneVM(b)).ToList());
+            var model = new Bone(firstJoint,secondJoint) { SecondJoint = secondJoint, FirstJoint = firstJoint, Density = density };
             var boneVM = new BoneVM(model);
             collObjectCollection.Insert(1, boneVM);
 
@@ -420,13 +423,13 @@ namespace Testing.Helper
             {
                 Bones =
                 {
-                    new Bone() {SecondJoint = secondJoint, FirstJoint = firstJoint, Density = density},
-                    new Bone() {SecondJoint = secondJoint, FirstJoint = firstJoint, Density = density}
+                    new Bone(firstJoint,secondJoint) {SecondJoint = secondJoint, FirstJoint = firstJoint, Density = density},
+                    new Bone(firstJoint,secondJoint) {SecondJoint = secondJoint, FirstJoint = firstJoint, Density = density}
                 },
                 Joints = { new Joint() { Position = new Vector2(5, 10) }, new Joint() { Position = new Vector2(5, 10) } }
             };
-            var collObjectCollection = new EncapsulatingObservableCollection<BoneVM, Bone>(creatureStructure.Bones, b => new BoneVM(b));
-            var model = new Bone() { SecondJoint = secondJoint, FirstJoint = firstJoint, Density = density };
+            var collObjectCollection = new EncapsulatingObservableCollection<BoneVM, Bone>(creatureStructure.Bones, creatureStructure.Bones.Select(b => new BoneVM(b)).ToList());
+            var model = new Bone(firstJoint,secondJoint) { SecondJoint = secondJoint, FirstJoint = firstJoint, Density = density };
             var boneVM = new BoneVM(model);
             collObjectCollection.Insert(1, boneVM);
 
@@ -445,13 +448,13 @@ namespace Testing.Helper
             {
                 Bones =
                 {
-                    new Bone() {SecondJoint = secondJoint, FirstJoint = firstJoint, Density = density},
-                    new Bone() {SecondJoint = secondJoint, FirstJoint = firstJoint, Density = density}
+                    new Bone(firstJoint,secondJoint) {SecondJoint = secondJoint, FirstJoint = firstJoint, Density = density},
+                    new Bone(firstJoint,secondJoint) {SecondJoint = secondJoint, FirstJoint = firstJoint, Density = density}
                 },
                 Joints = { new Joint() { Position = new Vector2(5, 10) }, new Joint() { Position = new Vector2(5, 10) } }
             };
-            var collObjectCollection = new EncapsulatingObservableCollection<BoneVM, Bone>(creatureStructure.Bones, b => new BoneVM(b));
-            var model = new Bone() { SecondJoint = secondJoint, FirstJoint = firstJoint, Density = density };
+            var collObjectCollection = new EncapsulatingObservableCollection<BoneVM, Bone>(creatureStructure.Bones, creatureStructure.Bones.Select(b => new BoneVM(b)).ToList());
+            var model = new Bone(firstJoint,secondJoint) { SecondJoint = secondJoint, FirstJoint = firstJoint, Density = density };
             var boneVM = new BoneVM(model);
             collObjectCollection.Insert(1, boneVM);
 
@@ -470,13 +473,13 @@ namespace Testing.Helper
             {
                 Bones =
                 {
-                    new Bone() {SecondJoint = secondJoint, FirstJoint = firstJoint, Density = density},
-                    new Bone() {SecondJoint = secondJoint, FirstJoint = firstJoint, Density = density}
+                    new Bone(firstJoint,secondJoint) {SecondJoint = secondJoint, FirstJoint = firstJoint, Density = density},
+                    new Bone(firstJoint,secondJoint) {SecondJoint = secondJoint, FirstJoint = firstJoint, Density = density}
                 },
                 Joints = { new Joint() { Position = new Vector2(5, 10) }, new Joint() { Position = new Vector2(5, 10) } }
             };
-            var collObjectCollection = new EncapsulatingObservableCollection<BoneVM, Bone>(creatureStructure.Bones, b => new BoneVM(b));
-            var model = new Bone() { SecondJoint = secondJoint, FirstJoint = firstJoint, Density = density };
+            var collObjectCollection = new EncapsulatingObservableCollection<BoneVM, Bone>(creatureStructure.Bones, creatureStructure.Bones.Select(b => new BoneVM(b)).ToList());
+            var model = new Bone(firstJoint,secondJoint) { SecondJoint = secondJoint, FirstJoint = firstJoint, Density = density };
             var boneVM = new BoneVM(model);
             collObjectCollection.Insert(1, boneVM);
 
@@ -495,13 +498,13 @@ namespace Testing.Helper
             {
                 Bones =
                 {
-                    new Bone() {SecondJoint = secondJoint, FirstJoint = firstJoint, Density = density},
-                    new Bone() {SecondJoint = secondJoint, FirstJoint = firstJoint, Density = density}
+                    new Bone(firstJoint,secondJoint) {SecondJoint = secondJoint, FirstJoint = firstJoint, Density = density},
+                    new Bone(firstJoint,secondJoint) {SecondJoint = secondJoint, FirstJoint = firstJoint, Density = density}
                 },
                 Joints = { new Joint() { Position = new Vector2(5, 10) }, new Joint() { Position = new Vector2(5, 10) } }
             };
-            var collObjectCollection = new EncapsulatingObservableCollection<BoneVM, Bone>(creatureStructure.Bones, b => new BoneVM(b));
-            var model = new Bone() { SecondJoint = secondJoint, FirstJoint = firstJoint, Density = density };
+            var collObjectCollection = new EncapsulatingObservableCollection<BoneVM, Bone>(creatureStructure.Bones, creatureStructure.Bones.Select(b => new BoneVM(b)).ToList());
+            var model = new Bone(firstJoint,secondJoint) { SecondJoint = secondJoint, FirstJoint = firstJoint, Density = density };
             var boneVM = new BoneVM(model);
             collObjectCollection.Insert(1, boneVM);
             var boneVms = new BoneVM[collObjectCollection.Count];
@@ -523,13 +526,13 @@ namespace Testing.Helper
             {
                 Bones =
                 {
-                    new Bone() {SecondJoint = secondJoint, FirstJoint = firstJoint, Density = density},
-                    new Bone() {SecondJoint = secondJoint, FirstJoint = firstJoint, Density = density}
+                    new Bone(firstJoint,secondJoint) {SecondJoint = secondJoint, FirstJoint = firstJoint, Density = density},
+                    new Bone(firstJoint,secondJoint) {SecondJoint = secondJoint, FirstJoint = firstJoint, Density = density}
                 },
                 Joints = { new Joint() { Position = new Vector2(5, 10) }, new Joint() { Position = new Vector2(5, 10) } }
             };
-            var collObjectCollection = new EncapsulatingObservableCollection<BoneVM, Bone>(creatureStructure.Bones, b => new BoneVM(b));
-            var model = new Bone() { SecondJoint = secondJoint, FirstJoint = firstJoint, Density = density };
+            var collObjectCollection = new EncapsulatingObservableCollection<BoneVM, Bone>(creatureStructure.Bones, creatureStructure.Bones.Select(b => new BoneVM(b)).ToList());
+            var model = new Bone(firstJoint,secondJoint) { SecondJoint = secondJoint, FirstJoint = firstJoint, Density = density };
             var boneVM = new BoneVM(model);
             collObjectCollection.Insert(1, boneVM);
 

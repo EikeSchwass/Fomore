@@ -26,7 +26,7 @@ namespace Fomore.UI.ViewModel.CreatureEditor.Tools
         public override bool OnCanvasMouseDown(MouseInfo mouseInfo, CreatureStructureEditorCanvasVM canvasVM, ModifierKeys modifierKeys)
         {
             CanvasVM = CanvasVM ?? canvasVM;
-            if (base.OnCanvasMouseDown(mouseInfo, canvasVM,  modifierKeys))
+            if (base.OnCanvasMouseDown(mouseInfo, canvasVM, modifierKeys))
                 return true;
 
 
@@ -36,7 +36,7 @@ namespace Fomore.UI.ViewModel.CreatureEditor.Tools
 
         private void PlaceBone(JointVM firstJoint, JointVM secondJoint)
         {
-            var bone = new Bone { FirstJoint = firstJoint.Model.Clone(), SecondJoint = secondJoint.Model.Clone() };
+            var bone = new Bone(firstJoint.Model, secondJoint.Model);
             var boneVM = new BoneVM(bone);
             var creatureVM = CanvasVM.HistoryStack.Current.Clone();
             creatureVM.CreatureStructureVM.BoneCollectionVM.Add(boneVM);
@@ -50,7 +50,7 @@ namespace Fomore.UI.ViewModel.CreatureEditor.Tools
         public override bool OnCanvasMouseUp(MouseInfo mouseInfo, CreatureStructureEditorCanvasVM canvasVM, ModifierKeys modifierKeys)
         {
             CanvasVM = CanvasVM ?? canvasVM;
-            if (base.OnCanvasMouseUp(mouseInfo, canvasVM,modifierKeys))
+            if (base.OnCanvasMouseUp(mouseInfo, canvasVM, modifierKeys))
                 return true;
 
             if (mouseInfo.RightMouseButtonDown)
@@ -89,7 +89,7 @@ namespace Fomore.UI.ViewModel.CreatureEditor.Tools
         public override bool OnCanvasMouseMove(MouseInfo mouseInfo, CreatureStructureEditorCanvasVM canvasVM, ModifierKeys modifierKeys)
         {
             CanvasVM = CanvasVM ?? canvasVM;
-            if (base.OnCanvasMouseMove(mouseInfo, canvasVM,modifierKeys))
+            if (base.OnCanvasMouseMove(mouseInfo, canvasVM, modifierKeys))
                 return true;
 
             var mousePosition = new Vector2(mouseInfo.RelativePosition.X, mouseInfo.RelativePosition.Y);
@@ -130,7 +130,7 @@ namespace Fomore.UI.ViewModel.CreatureEditor.Tools
         public override bool OnCanvasMouseWheel(MouseWheelInfo mouseWheelInfo, CreatureStructureEditorCanvasVM canvasVM, ModifierKeys modifierKeys)
         {
             CanvasVM = CanvasVM ?? canvasVM;
-            bool result = base.OnCanvasMouseWheel(mouseWheelInfo, canvasVM,modifierKeys);
+            bool result = base.OnCanvasMouseWheel(mouseWheelInfo, canvasVM, modifierKeys);
             canvasVM.PreviewBone.Visibility = Visibility.Hidden;
             return result;
         }
@@ -139,7 +139,7 @@ namespace Fomore.UI.ViewModel.CreatureEditor.Tools
         public override void OnCanvasMouseLeave(CreatureStructureEditorCanvasVM canvasVM, ModifierKeys modifierKeys)
         {
             CanvasVM = CanvasVM ?? canvasVM;
-            base.OnCanvasMouseLeave(canvasVM,modifierKeys);
+            base.OnCanvasMouseLeave(canvasVM, modifierKeys);
             canvasVM.PreviewBone.Visibility = Visibility.Hidden;
         }
 
@@ -147,7 +147,7 @@ namespace Fomore.UI.ViewModel.CreatureEditor.Tools
         public override void OnCanvasMouseEnter(CreatureStructureEditorCanvasVM canvasVM, ModifierKeys modifierKeys)
         {
             CanvasVM = CanvasVM ?? canvasVM;
-            base.OnCanvasMouseEnter(canvasVM,modifierKeys);
+            base.OnCanvasMouseEnter(canvasVM, modifierKeys);
         }
 
         public void Reset()

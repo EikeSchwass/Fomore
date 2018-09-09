@@ -25,6 +25,9 @@ namespace Fomore.UI.ViewModel.CreatureEditor.Tools
         private bool IsSelecting { get; set; }
 
         /// <inheritdoc />
+        public override InputGesture InputGesture { get; } = new KeyGesture(Key.Q, ModifierKeys.Control);
+
+        /// <inheritdoc />
         public override bool OnCanvasMouseDown(MouseInfo mouseInfo, CreatureStructureEditorCanvasVM canvasVM, ModifierKeys modifierKeys)
         {
             CanvasVM = CanvasVM ?? canvasVM;
@@ -54,9 +57,6 @@ namespace Fomore.UI.ViewModel.CreatureEditor.Tools
             IsSelecting = false;
             CanvasVM.SelectionVM.Visibility = Visibility.Hidden;
         }
-
-        /// <inheritdoc />
-        public override InputGesture InputGesture { get; } = new KeyGesture(Key.Q, ModifierKeys.Control);
 
         /// <inheritdoc />
         public override bool OnCanvasMouseMove(MouseInfo mouseInfo, CreatureStructureEditorCanvasVM canvasVM, ModifierKeys modifierKeys)
@@ -108,7 +108,6 @@ namespace Fomore.UI.ViewModel.CreatureEditor.Tools
 
         private void PointSelection(Vector2 relativePosition, ModifierKeys modifierKeys)
         {
-
             if ((modifierKeys & ModifierKeys.Shift) == 0)
                 Reset();
             if (CanvasVM == null)
@@ -134,7 +133,6 @@ namespace Fomore.UI.ViewModel.CreatureEditor.Tools
 
             if ((modifierKeys & ModifierKeys.Control) == 0)
             {
-
                 var boneVM = (from bone in CanvasVM.HistoryStack?.Current?.CreatureStructureVM?.BoneCollectionVM
                               let distance = relativePosition.GetDistanceToBone(bone.Model)
                               where distance < SinglePointSelectionTolerance
@@ -182,7 +180,7 @@ namespace Fomore.UI.ViewModel.CreatureEditor.Tools
         public override void OnDeselected()
         {
             base.OnDeselected();
-            Reset();
+            //Reset();
         }
     }
 }
