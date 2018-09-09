@@ -4,8 +4,15 @@ namespace Core.TerrainGenerator
 {
     public abstract class TerrainGenerator
     {
+        /// <summary>
+        /// Describes the horizontal resolution of the generated terrain. Lower values yield smoother terrains but might negativly impact performance.
+        /// </summary>
         public double StepSize { get; set; }
 
+        /// <summary>
+        /// Generates a never ending series of height values.
+        /// </summary>
+        /// <returns>A never ending series of height values.</returns>
         public abstract IEnumerable<double> Generate();
     }
 }
