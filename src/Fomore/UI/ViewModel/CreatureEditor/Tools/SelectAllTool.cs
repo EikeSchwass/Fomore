@@ -97,7 +97,7 @@ namespace Fomore.UI.ViewModel.CreatureEditor.Tools
                     CanvasVM.SelectionVM.Visibility = Visibility.Hidden;
                 }
                 else
-                    SelectElementsInSelectionArea(canvasVM, modifierKeys);
+                    SelectElementsInSelectionArea(canvasVM);
 
                 IsSelecting = false;
                 return true;
@@ -148,7 +148,7 @@ namespace Fomore.UI.ViewModel.CreatureEditor.Tools
             }
         }
 
-        private void SelectElementsInSelectionArea(CreatureStructureEditorCanvasVM canvasVM, ModifierKeys modifierKeys)
+        private void SelectElementsInSelectionArea(CreatureStructureEditorCanvasVM canvasVM)
         {
             CanvasVM = CanvasVM ?? canvasVM;
             Reset();
@@ -174,13 +174,6 @@ namespace Fomore.UI.ViewModel.CreatureEditor.Tools
             CanvasVM.SelectionVM.Visibility = Visibility.Hidden;
             CanvasVM.SelectedJoints.Clear();
             CanvasVM.SelectedBones.Clear();
-        }
-
-        /// <inheritdoc />
-        public override void OnDeselected()
-        {
-            base.OnDeselected();
-            //Reset();
         }
     }
 }

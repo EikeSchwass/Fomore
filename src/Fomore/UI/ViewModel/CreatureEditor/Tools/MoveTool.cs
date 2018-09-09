@@ -26,6 +26,9 @@ namespace Fomore.UI.ViewModel.CreatureEditor.Tools
         public double SinglePointSelectionTolerance { get; } = 5; //px
 
         /// <inheritdoc />
+        public override string ToString() => "Move Joints";
+
+        /// <inheritdoc />
         public override bool OnCanvasMouseDown(MouseInfo mouseInfo, CreatureStructureEditorCanvasVM canvasVM, ModifierKeys modifierKeys)
         {
             CanvasVM = CanvasVM ?? canvasVM;
@@ -33,12 +36,12 @@ namespace Fomore.UI.ViewModel.CreatureEditor.Tools
 
             var currentCreature = CanvasVM.HistoryStack.Current.Clone();
 
-            var selectedJoint =
-                (from joint in CanvasVM.HistoryStack?.Current?.CreatureStructureVM?.JointCollectionVM
-                 let distance = (joint.Position - new Vector2(mouseInfo.RelativePosition.X, mouseInfo.RelativePosition.Y)).Length
-                 where distance < SinglePointSelectionTolerance
-                 orderby distance
-                 select joint).FirstOrDefault();
+            var selectedJoint = (from joint in CanvasVM.HistoryStack?.Current?.CreatureStructureVM?.JointCollectionVM
+                                 let distance =
+                                     (joint.Position - new Vector2(mouseInfo.RelativePosition.X, mouseInfo.RelativePosition.Y)).Length
+                                 where distance < SinglePointSelectionTolerance
+                                 orderby distance
+                                 select joint).FirstOrDefault();
             if (selectedJoint != null)
             {
                 if (CanvasVM.SelectedJoints.Count >= 1 && !CanvasVM.SelectedJoints.Contains(selectedJoint))
@@ -47,9 +50,7 @@ namespace Fomore.UI.ViewModel.CreatureEditor.Tools
                     CanvasVM.SelectedJoints.Add(selectedJoint);
             }
             else
-            {
                 CanvasVM.SelectedJoints.Clear();
-            }
 
             var selectedJoins = CanvasVM.SelectedJoints.Select(j => j.Model.Tracker).ToList();
             LastPosition = mouseInfo.RelativePosition;
@@ -102,19 +103,10 @@ namespace Fomore.UI.ViewModel.CreatureEditor.Tools
         }
 
         /// <inheritdoc />
-        public override void OnCanvasMouseEnter(CreatureStructureEditorCanvasVM canvasVM, ModifierKeys modifierKeys)
-        {
-            base.OnCanvasMouseEnter(canvasVM, modifierKeys);
-        }
-
-        /// <inheritdoc />
         public override void OnCanvasMouseLeave(CreatureStructureEditorCanvasVM canvasVM, ModifierKeys modifierKeys)
         {
             base.OnCanvasMouseLeave(canvasVM, modifierKeys);
             LastPosition = null;
         }
-
-        /// <inheritdoc />
-        public override bool CanBeSelected() => base.CanBeSelected();
     }
 }

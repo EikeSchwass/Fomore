@@ -17,5 +17,14 @@ namespace Fomore.UI.ViewModel.CreatureEditor.Behaviours
 
         /// <inheritdoc />
         public override string ToString() => "Clear All";
+
+        /// <inheritdoc />
+        public override void OnInvoked(CreatureEditorPanelVM parameter, ModifierKeys modifierKeys)
+        {
+            var creatureVM = parameter.CreatureStructureEditorCanvasVM.HistoryStack.Current.Clone();
+            creatureVM.CreatureStructureVM.JointCollectionVM.Clear();
+            creatureVM.CreatureStructureVM.BoneCollectionVM.Clear();
+            parameter.CreatureStructureEditorCanvasVM.HistoryStack.NewEntry(creatureVM);
+        }
     }
 }
