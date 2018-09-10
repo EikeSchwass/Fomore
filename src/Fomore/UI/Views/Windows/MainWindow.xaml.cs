@@ -17,9 +17,6 @@ namespace Fomore.UI.Views.Windows
                 throw new NotSupportedException("Only one main window can exist at a time");
             Instance = this;
             InitializeComponent();
-            var creatureStructureEditor = new CreatureStructureEditor { DataContext = new CreatureEditorVM(new CreatureVM(new Creature())) };
-            creatureStructureEditor.ShowDialog();
-            Close();
         }
 
         private void MainWindow_OnLoaded(object sender, RoutedEventArgs e)

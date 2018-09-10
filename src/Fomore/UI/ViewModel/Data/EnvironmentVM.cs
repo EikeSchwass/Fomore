@@ -165,8 +165,8 @@ namespace Fomore.UI.ViewModel.Data
                             {
                                 try
                                 {
-                                    const int width = 1150;
-                                    const int height = 150;
+                                    const int width = 230;
+                                    const int height = 30;
                                     var bitmap = new Bitmap(width, height);
 
                                     using (var g = Graphics.FromImage(bitmap))

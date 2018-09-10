@@ -128,7 +128,7 @@
                                         <RotateTransform Angle="-90" />
                                     </TextBlock.LayoutTransform>
                                 </TextBlock>
-                                <TextBlock Text="1150" DockPanel.Dock="Bottom" HorizontalAlignment="Center" Margin="4" />
+                                <TextBlock Text="230" DockPanel.Dock="Bottom" HorizontalAlignment="Center" Margin="4" />
                                 <ProgressBar IsIndeterminate="True" DockPanel.Dock="Top" Margin="4" Height="8" Visibility="{Binding SelectedEnvironment.IsRenderingImage, Converter={StaticResource BooleanHiddenVisibilityConverter}, ConverterParameter=True}" />
                                 <TextBlock DockPanel.Dock="Right" Margin="4" Text="">
                                     <TextBlock.LayoutTransform>
@@ -144,6 +144,12 @@
                                 </Grid.ColumnDefinitions>
                                 <ListView Grid.Column="0" Background="{StaticResource Level3Brush}" Margin="8" ItemsSource="{Binding SelectedEnvironment.TerrainGenerators}">
                                     <ListView.Resources>
+                                        <Style TargetType="{x:Type Slider}">
+                                            <Setter Property="Margin" Value="4,1" />
+                                        </Style>
+                                        <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource {x:Type TextBlock}}">
+                                            <Setter Property="Margin" Value="4,1" />
+                                        </Style>
                                         <DataTemplate DataType="{x:Type data:LinearGeneratorVM}">
                                             <StackPanel Margin="20,4">
                                                 <TextBlock Text="Inclination" Margin="4" />
@@ -152,9 +158,9 @@
                                                         <ColumnDefinition />
                                                         <ColumnDefinition Width="Auto" />
                                                     </Grid.ColumnDefinitions>
-                                                    <Slider Grid.Column="0" Minimum="-1" Maximum="1" Margin="4" SmallChange="0.05" Value="{Binding Inclination, Mode=TwoWay}" />
-                                                    <TextBlock Grid.Column="1" Text="{Binding Inclination, StringFormat={}{0:#.000}}" Margin="4" HorizontalAlignment="Right" />
-                                                    <TextBlock Grid.Column="1" Text="-1.000" Margin="4" Visibility="Hidden" HorizontalAlignment="Right" />
+                                                    <Slider Grid.Column="0" Minimum="-1" Maximum="1" SmallChange="0.05" Value="{Binding Inclination, Mode=TwoWay}" />
+                                                    <TextBlock Grid.Column="1" Text="{Binding Inclination, StringFormat={}{0:#.000}}" HorizontalAlignment="Right" />
+                                                    <TextBlock Grid.Column="1" Text="-1.000" Visibility="Hidden" HorizontalAlignment="Right" />
                                                 </Grid>
                                             </StackPanel>
                                         </DataTemplate>
@@ -173,15 +179,15 @@
                                                     <ColumnDefinition Width="Auto" />
                                                 </Grid.ColumnDefinitions>
                                                 <TextBlock Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2" Text="Offset (moving the hills to the side)" />
-                                                <Slider Grid.Column="0" Grid.Row="1" Minimum="0" Maximum="6.2831" Margin="4" SmallChange="0.1571" Value="{Binding Offset, Mode=TwoWay}" />
+                                                <Slider Grid.Column="0" Grid.Row="1" Minimum="0" Maximum="6.2831" SmallChange="0.1571" Value="{Binding Offset, Mode=TwoWay}" />
                                                 <TextBlock Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="2" Text="Amplitude (height)" />
-                                                <Slider Grid.Column="0" Grid.Row="3" Minimum="0.1" Maximum="50" Margin="4" SmallChange="0.5" Value="{Binding Amplitude, Mode=TwoWay}" />
-                                                <TextBlock Grid.Column="1" Grid.Row="3" Text="{Binding Amplitude, StringFormat={}{0:#0.0}}" Margin="4" HorizontalAlignment="Right" />
-                                                <TextBlock Grid.Column="1" Grid.Row="3" Text="50.0" Margin="4" Visibility="Hidden" HorizontalAlignment="Right" />
+                                                <Slider Grid.Column="0" Grid.Row="3" Minimum="0.1" Maximum="50" SmallChange="0.5" Value="{Binding Amplitude, Mode=TwoWay}" />
+                                                <TextBlock Grid.Column="1" Grid.Row="3" Text="{Binding Amplitude, StringFormat={}{0:#0.0}}" HorizontalAlignment="Right" />
+                                                <TextBlock Grid.Column="1" Grid.Row="3" Text="50.0" Visibility="Hidden" HorizontalAlignment="Right" />
                                                 <TextBlock Grid.Column="0" Grid.Row="4" Grid.ColumnSpan="2" Text="Frequency (steepness)" />
-                                                <Slider Grid.Column="0" Grid.Row="5" Minimum="0.05" Maximum="2" Margin="4" SmallChange="0.05" Value="{Binding Frequency, Mode=TwoWay}" />
-                                                <TextBlock Grid.Column="1" Grid.Row="5" Text="{Binding Frequency, StringFormat={}{0:0.00}}" Margin="4" HorizontalAlignment="Right" />
-                                                <TextBlock Grid.Column="1" Grid.Row="5" Text="0.05" Margin="4" Visibility="Hidden" HorizontalAlignment="Right" />
+                                                <Slider Grid.Column="0" Grid.Row="5" Minimum="0.05" Maximum="2" SmallChange="0.05" Value="{Binding Frequency, Mode=TwoWay}" />
+                                                <TextBlock Grid.Column="1" Grid.Row="5" Text="{Binding Frequency, StringFormat={}{0:0.00}}" HorizontalAlignment="Right" />
+                                                <TextBlock Grid.Column="1" Grid.Row="5" Text="0.05" Visibility="Hidden" HorizontalAlignment="Right" />
                                             </Grid>
                                         </DataTemplate>
                                         <DataTemplate DataType="{x:Type data:PerlinGeneratorVM}">
@@ -194,12 +200,12 @@
                                                     <RowDefinition Height="Auto" />
                                                     <RowDefinition Height="Auto" />
                                                 </Grid.RowDefinitions>
-                                                <TextBlock Grid.Column="0" Grid.Row="0" Margin="4" Text="Phase (gradually changes terrain)" />
-                                                <Slider Grid.Column="0" Grid.Row="1" Margin="4" Minimum="1" Maximum="10" SmallChange="0.1" Value="{Binding Phase, Mode=TwoWay}" />
-                                                <TextBlock Grid.Column="0" Grid.Row="2" Margin="4" Text="Amplitude (height)" />
-                                                <Slider Grid.Column="0" Grid.Row="3" Margin="4" Minimum="1" Maximum="100" SmallChange="0.5" Value="{Binding Amplitude, Mode=TwoWay}" />
-                                                <TextBlock Grid.Column="0" Grid.Row="4" Margin="4" Text="Smoothness" />
-                                                <Slider Grid.Column="0" Grid.Row="5" Margin="4" Minimum="10" Maximum="1000" SmallChange="1" Value="{Binding Smoothness, Mode=TwoWay}" />
+                                                <TextBlock Grid.Column="0" Grid.Row="0" Text="Phase (gradually changes terrain)" />
+                                                <Slider Grid.Column="0" Grid.Row="1" Minimum="1" Maximum="10" SmallChange="0.1" Value="{Binding Phase, Mode=TwoWay}" />
+                                                <TextBlock Grid.Column="0" Grid.Row="2" Text="Amplitude (height)" />
+                                                <Slider Grid.Column="0" Grid.Row="3" Minimum="1" Maximum="100" SmallChange="0.5" Value="{Binding Amplitude, Mode=TwoWay}" />
+                                                <TextBlock Grid.Column="0" Grid.Row="4" Text="Smoothness" />
+                                                <Slider Grid.Column="0" Grid.Row="5" Minimum="10" Maximum="1000" SmallChange="1" Value="{Binding Smoothness, Mode=TwoWay}" />
                                             </Grid>
                                         </DataTemplate>
                                         <DataTemplate DataType="{x:Type data:PowerGeneratorVM}">
@@ -212,12 +218,12 @@
                                                     <RowDefinition Height="Auto" />
                                                     <RowDefinition Height="Auto" />
                                                 </Grid.RowDefinitions>
-                                                <TextBlock Grid.Column="0" Grid.Row="0" Margin="4" Text="Offset (the time when the rise shall begin)" />
-                                                <Slider Grid.Column="0" Grid.Row="1" Margin="4" Minimum="0" Maximum="100" SmallChange="1" Value="{Binding Offset, Mode=TwoWay}" />
-                                                <TextBlock Grid.Column="0" Grid.Row="2" Margin="4" Text="Gradualness (the overall steepness)" />
-                                                <Slider Grid.Column="0" Grid.Row="3" Margin="4" Minimum="0.5" Maximum="4" SmallChange="0.1" Value="{Binding Gradualness, Mode=TwoWay}" />
-                                                <TextBlock Grid.Column="0" Grid.Row="4" Margin="4" Text="Power (the change rate)" />
-                                                <Slider Grid.Column="0" Grid.Row="5" Margin="4" Minimum="1" Maximum="3" SmallChange="0.1" Value="{Binding Power, Mode=TwoWay}" />
+                                                <TextBlock Grid.Column="0" Grid.Row="0" Text="Offset (the time when the rise shall begin)" />
+                                                <Slider Grid.Column="0" Grid.Row="1" Minimum="0" Maximum="100" SmallChange="1" Value="{Binding Offset, Mode=TwoWay}" />
+                                                <TextBlock Grid.Column="0" Grid.Row="2" Text="Steepness" />
+                                                <Slider Grid.Column="0" Grid.Row="3" Minimum="0.01" Maximum="1" SmallChange="0.1" Value="{Binding Gradualness, Mode=TwoWay}" />
+                                                <TextBlock Grid.Column="0" Grid.Row="4" Text="Power (the change rate)" />
+                                                <Slider Grid.Column="0" Grid.Row="5" Minimum="1" Maximum="1.5" SmallChange="0.1" Value="{Binding Power, Mode=TwoWay}" />
                                             </Grid>
                                         </DataTemplate>
                                     </ListView.Resources>
@@ -228,7 +234,7 @@
                                     </ListView.ItemContainerStyle>
                                     <ListView.ItemTemplate>
                                         <DataTemplate DataType="{x:Type data:TerrainGeneratorVM}">
-                                            <Border Margin="4" BorderThickness="1" BorderBrush="Black">
+                                            <Border Margin="4" BorderThickness="1" BorderBrush="Black" VerticalAlignment="Top">
                                                 <Grid>
                                                     <Grid.ColumnDefinitions>
                                                         <ColumnDefinition Width="*" />
@@ -239,8 +245,8 @@
                                                         <RowDefinition Height="*" />
                                                     </Grid.RowDefinitions>
                                                     <ComboBox Grid.Row="0" Width="100" HorizontalAlignment="Left" ItemsSource="{Binding TerrainGenerators}" SelectedItem="{Binding TerrainGeneratorType}" Margin="4" />
-                                                    <controls:CustomizableButton Grid.Row="0" Grid.RowSpan="2" Grid.Column="1" VerticalAlignment="Top" Command="{Binding Path=DataContext.SelectedEnvironment.DeleteTerrainGeneratorCommand, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}" CommandParameter="{Binding}">
-                                                        <fa:ImageAwesome Icon="Trash" VerticalAlignment="Top" Height="32" />
+                                                    <controls:CustomizableButton Grid.Row="0" Grid.RowSpan="2" Grid.Column="1" Height="64" Width="64" Padding="4" VerticalAlignment="Top" Command="{Binding Path=DataContext.SelectedEnvironment.DeleteTerrainGeneratorCommand, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}" CommandParameter="{Binding}">
+                                                        <fa:ImageAwesome Icon="Trash" Height="48" HorizontalAlignment="Center" Width="48" />
                                                     </controls:CustomizableButton>
                                                     <ContentControl Grid.Row="1" Grid.Column="0" Content="{Binding TerrainGenerator}" Margin="4" />
                                                 </Grid>
