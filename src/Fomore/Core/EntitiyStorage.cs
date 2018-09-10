@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Runtime.Serialization.Formatters.Binary;
 
 namespace Core
 {
@@ -10,6 +12,12 @@ namespace Core
 
         public event EventHandler EntitiesLoaded;
 
+        public void SaveEntities()
+        {
+            SaveCreatures();
+            SaveEnvironments();
+        }
+
         public void LoadEntities()
         {
             var creatures = LoadCreatures();
@@ -19,16 +27,64 @@ namespace Core
             EntitiesLoaded?.Invoke(this, new EventArgs());
         }
 
-        private IEnumerable<Creature> LoadCreatures() => throw new NotImplementedException();
-        private IEnumerable<Environment> LoadEnvironments() => throw new NotImplementedException();
-
-        public void SaveEntities()
+        public string GetFolderPath()
         {
-            SaveCreatures();
-            SaveEnvironments();
+            string localAppData = System.Environment.GetFolderPath(System.Environment.SpecialFolder.LocalApplicationData);
+            localAppData = Path.Combine(localAppData, "Fomore");
+            if (!Directory.Exists(localAppData))
+                Directory.CreateDirectory(localAppData);
+            localAppData = Path.Combine(localAppData, "Data");
+            if (!Directory.Exists(localAppData))
+                Directory.CreateDirectory(localAppData);
+            return localAppData;
         }
 
-        private void SaveCreatures() => throw new NotImplementedException();
-        private void SaveEnvironments() => throw new NotImplementedException();
+        private IEnumerable<Creature> LoadCreatures()
+        {
+            string creaturePath = Path.Combine(GetFolderPath(), "creatures.data");
+            if (!File.Exists(creaturePath))
+            {
+                return new List<Creature>();
+            }
+            using (var fileStream = new FileStream(creaturePath, FileMode.OpenOrCreate, FileAccess.ReadWrite))
+            {
+                var bf = new BinaryFormatter();
+                return (IEnumerable<Creature>)bf.Deserialize(fileStream);
+            }
+        }
+
+        private IEnumerable<Environment> LoadEnvironments()
+        {
+            string environmentPath = Path.Combine(GetFolderPath(), "environments.data");
+            if (!File.Exists(environmentPath))
+            {
+                return new List<Environment>();
+            }
+            using (var fileStream = new FileStream(environmentPath, FileMode.OpenOrCreate, FileAccess.ReadWrite))
+            {
+                var bf = new BinaryFormatter();
+                return (IEnumerable<Environment>)bf.Deserialize(fileStream);
+            }
+        }
+
+        private void SaveCreatures()
+        {
+            string creaturePath = Path.Combine(GetFolderPath(), "creatures.data");
+            using (var fileStream = new FileStream(creaturePath, FileMode.OpenOrCreate, FileAccess.ReadWrite))
+            {
+                var bf = new BinaryFormatter();
+                bf.Serialize(fileStream, Creatures);
+            }
+        }
+
+        private void SaveEnvironments()
+        {
+            string environmentPath = Path.Combine(GetFolderPath(), "environments.data");
+            using (var fileStream = new FileStream(environmentPath, FileMode.OpenOrCreate, FileAccess.ReadWrite))
+            {
+                var bf = new BinaryFormatter();
+                bf.Serialize(fileStream, Environments);
+            }
+        }
     }
 }

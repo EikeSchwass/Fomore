@@ -17,5 +17,11 @@ namespace Core
             newY += pivot.Y;
             return new Vector2(newX, newY);
         }
+
+        public static Vector2 Normalize(this Vector2 original)
+        {
+            double length = original.Length;
+            return new Vector2(original.X / length, original.Y / length);
+        }
     }
 }

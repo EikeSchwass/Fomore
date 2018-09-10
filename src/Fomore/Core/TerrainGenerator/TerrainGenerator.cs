@@ -1,7 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace Core.TerrainGenerator
 {
+    [Serializable]
     public abstract class TerrainGenerator
     {
         /// <summary>

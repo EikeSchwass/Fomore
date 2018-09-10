@@ -13,7 +13,8 @@ namespace Fomore.UI.ViewModel.Data
         {
             Data.TerrainGenerators.Linear,
             Data.TerrainGenerators.Sine,
-            Data.TerrainGenerators.Perlin
+            Data.TerrainGenerators.Perlin,
+            Data.TerrainGenerators.Power
         };
 
         public TerrainGenerators TerrainGeneratorType
@@ -34,6 +35,9 @@ namespace Fomore.UI.ViewModel.Data
                     case Data.TerrainGenerators.Sine:
                         TerrainGenerator = new SineGeneratorVM(new SineGenerator { StepSize = StepSize });
                         break;
+                    case Data.TerrainGenerators.Power:
+                        TerrainGenerator = new PowerGeneratorVM(new PowerGenerator() { StepSize = StepSize });
+                        break;
                 }
                 OnPropertyChanged();
             }
@@ -51,9 +55,33 @@ namespace Fomore.UI.ViewModel.Data
                         return sineGenerator.Model;
                     case PerlinGeneratorVM perlinGenerator:
                         return perlinGenerator.Model;
+                    case PowerGeneratorVM powerGenerator:
+                        return powerGenerator.Model;
                 }
 
                 return null;
+            }
+            set
+            {
+                switch (value)
+                {
+                    case SineGenerator sineGenerator:
+                        TerrainGenerator = new SineGeneratorVM(sineGenerator);
+                        terrainGeneratorType = Data.TerrainGenerators.Sine;
+                        break;
+                    case LinearGenerator linearGenerator:
+                        TerrainGenerator = new LinearGeneratorVM(linearGenerator);
+                        terrainGeneratorType = Data.TerrainGenerators.Linear;
+                        break;
+                    case PerlinGenerator perlinGenerator:
+                        TerrainGenerator = new PerlinGeneratorVM(perlinGenerator);
+                        terrainGeneratorType = Data.TerrainGenerators.Perlin;
+                        break;
+                    case PowerGenerator powerGenerator:
+                        TerrainGenerator = new PowerGeneratorVM(powerGenerator);
+                        terrainGeneratorType = Data.TerrainGenerators.Power;
+                        break;
+                }
             }
         }
 

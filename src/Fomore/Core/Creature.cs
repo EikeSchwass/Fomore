@@ -4,6 +4,7 @@ using System.Linq;
 
 namespace Core
 {
+    [Serializable]
     public class Creature : ICloneable<Creature>
     {
         private string name;

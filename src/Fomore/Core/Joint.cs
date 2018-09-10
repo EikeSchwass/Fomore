@@ -1,5 +1,8 @@
-﻿namespace Core
+﻿using System;
+
+namespace Core
 {
+    [Serializable]
     public class Joint
     {
         public object Tracker { get; }

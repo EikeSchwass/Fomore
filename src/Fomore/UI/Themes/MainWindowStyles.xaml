@@ -2,24 +2,24 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
     <Style x:Key="DetailsContentPanel" TargetType="Grid">
-        <Setter Property="Margin" Value="20" />
+        <Setter Property="Margin" Value="4" />
     </Style>
 
     <Style x:Key="DetailsName" TargetType="TextBox">
-        <Setter Property="Margin" Value="8" />
+        <Setter Property="Margin" Value="4" />
         <Setter Property="VerticalAlignment" Value="Center" />
     </Style>
 
     <Style x:Key="DetailsDescription" TargetType="TextBox">
         <Setter Property="MinHeight" Value="50" />
         <Setter Property="MaxHeight" Value="200" />
-        <Setter Property="Margin" Value="8" />
+        <Setter Property="Margin" Value="4" />
         <Setter Property="VerticalScrollBarVisibility" Value="Auto" />
         <Setter Property="TextWrapping" Value="Wrap" />
     </Style>
 
     <Style x:Key="DetailsItemGrid" TargetType="Grid">
-        <Setter Property="Margin" Value="10" />
+        <Setter Property="Margin" Value="4" />
     </Style>
 
 </ResourceDictionary>

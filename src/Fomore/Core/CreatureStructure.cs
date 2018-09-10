@@ -1,9 +1,11 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 
 namespace Core
 {
+    [Serializable]
     public class CreatureStructure
     {
         public IList<Bone> Bones { get; } = new List<Bone>();

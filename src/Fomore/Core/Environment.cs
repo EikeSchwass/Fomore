@@ -1,18 +1,15 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace Core
 {
+    [Serializable]
     public class Environment
     {
-        private string name;
         private string description;
-        private double gravity;
         private double friction;
-
-        public Environment()
-        {
-            OnAccess();
-        }
+        private double gravity;
+        private string name;
 
         public string Name
         {
@@ -55,6 +52,13 @@ namespace Core
         }
 
         public DateTime LastAccess { get; private set; }
+
+        public List<TerrainGenerator.TerrainGenerator> TerrainGenerators { get; } = new List<TerrainGenerator.TerrainGenerator>();
+
+        public Environment()
+        {
+            OnAccess();
+        }
 
         private void OnAccess()
         {

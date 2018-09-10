@@ -167,6 +167,7 @@
     <Compile Include="ViewModel\Data\LinearGeneratorVM.cs" />
     <Compile Include="ViewModel\Data\MovementPatternVM.cs" />
     <Compile Include="ViewModel\Data\PerlinGeneratorVM.cs" />
+    <Compile Include="ViewModel\Data\PowerGeneratorVM.cs" />
     <Compile Include="ViewModel\Data\SineGeneratorVM.cs" />
     <Compile Include="ViewModel\Data\TerrainGenerators.cs" />
     <Compile Include="ViewModel\Data\TerrainGeneratorVM.cs" />

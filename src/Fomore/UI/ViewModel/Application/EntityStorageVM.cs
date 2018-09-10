@@ -91,10 +91,14 @@ namespace Fomore.UI.ViewModel.Application
 
         public void Load()
         {
-            // Todo implement Model EntityStorage.Load call
-            // Model.LoadEntities();
+            Model.LoadEntities();
             CreatureCollectionAccess.AddRange(Model.Creatures.Select(c => new CreatureVM(c)));
             EnvironmentCollectionAccess.AddRange(Model.Environments.Select(e => new EnvironmentVM(e)));
+        }
+
+        public void Save()
+        {
+            Model.SaveEntities();
         }
     }
 }

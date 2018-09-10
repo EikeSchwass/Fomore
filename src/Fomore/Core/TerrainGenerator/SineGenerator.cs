@@ -3,6 +3,7 @@ using System.Collections.Generic;
 
 namespace Core.TerrainGenerator
 {
+    [Serializable]
     public class SineGenerator : TerrainGenerator
     {
         /// <summary>
@@ -19,14 +20,14 @@ namespace Core.TerrainGenerator
         /// <summary>
         /// The frequency describes the amount of waves per step. So higher frequency yields steeper terrains.
         /// </summary>
-        public double Frequency { get; set; } = 0.1 / Math.PI;
+        public double Frequency { get; set; } = 0.05;
 
         /// <inheritdoc />
         public override IEnumerable<Vector2> Generate()
         {
             for (double x = 0; ; x += StepSize)
             {
-                double y = Amplitude * Math.Sin((x + Offset) * Frequency);
+                double y = Amplitude * Math.Sin(x * Frequency+Offset);
                 yield return new Vector2(x, y);
             }
         }

@@ -1,6 +1,7 @@
 ﻿using System.Globalization;
 using System.Threading;
 using System.Windows;
+using Fomore.UI.ViewModel.Application;
 
 namespace Fomore.UI
 {
@@ -11,6 +12,35 @@ namespace Fomore.UI
         public App()
         {
             Instance = Instance ?? this;
+            DispatcherUnhandledException += (o, e) =>
+                                            {
+                                                if (
+                                                    MessageBox
+                                                       .Show($"An error occured ({e.Exception.Message}). Do you want to save everything, although data may be corrupted?",
+                                                             "Error",
+                                                             MessageBoxButton.YesNo,
+                                                             MessageBoxImage.Error) ==
+                                                    MessageBoxResult.Yes)
+                                                {
+                                                    Cleanup();
+                                                }
+
+                                                e.Handled = true;
+                                                Shutdown(-1);
+                                            };
+        }
+
+        /// <inheritdoc />
+        protected override void OnExit(ExitEventArgs e)
+        {
+            base.OnExit(e);
+            Cleanup();
+        }
+
+        private void Cleanup()
+        {
+            var appStateVM = (AppStateVM)Views.Windows.MainWindow.Instance.DataContext;
+            appStateVM?.EntitiesStorageVM.Save();
         }
 
         private void ApplicationStartUp(object sender, StartupEventArgs e)

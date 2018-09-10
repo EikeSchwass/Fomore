@@ -2,7 +2,7 @@
 
 namespace Fomore.UI.ViewModel.Data
 {
-    public class SineGeneratorVM : ViewModelBase<SineGenerator>
+    public class PowerGeneratorVM : ViewModelBase<PowerGenerator>
     {
 
         public double Offset
@@ -16,29 +16,28 @@ namespace Fomore.UI.ViewModel.Data
             }
         }
 
-        public double Amplitude
+        public double Gradualness
         {
-            get => Model.Amplitude;
+            get => Model.Gradualness;
             set
             {
-                if (value.Equals(Model.Amplitude)) return;
-                Model.Amplitude = value;
+                if (value.Equals(Model.Gradualness)) return;
+                Model.Gradualness = value;
                 OnPropertyChanged();
             }
         }
 
-        public double Frequency
+        public double Power
         {
-            get => Model.Frequency;
+            get => Model.Power;
             set
             {
-                if (value.Equals(Model.Frequency)) return;
-                Model.Frequency = value;
+                if (value.Equals(Model.Power)) return;
+                Model.Power = value;
                 OnPropertyChanged();
             }
         }
 
-        /// <inheritdoc />
-        public SineGeneratorVM(SineGenerator model) : base(model) { }
+        public PowerGeneratorVM(PowerGenerator model) : base(model) { }
     }
 }

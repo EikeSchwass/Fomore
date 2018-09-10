@@ -2,8 +2,7 @@
 
 namespace Core
 {
-    // TODO mark this as obsolete
-    //[Obsolete("This class is only a placeholder for the actual Vector2 class of FarseerPhysics")]
+    [Serializable]
     public struct Vector2
     {
         public double X { get; }

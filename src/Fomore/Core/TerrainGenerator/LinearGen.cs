@@ -1,7 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace Core.TerrainGenerator
 {
+    [Serializable]
     public class LinearGenerator : TerrainGenerator
     {
         public double Inclination { get; set; } = .025;
