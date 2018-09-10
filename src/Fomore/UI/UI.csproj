@@ -40,6 +40,7 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
@@ -163,7 +164,12 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="ViewModel\Data\JointVM.cs" />
+    <Compile Include="ViewModel\Data\LinearGeneratorVM.cs" />
     <Compile Include="ViewModel\Data\MovementPatternVM.cs" />
+    <Compile Include="ViewModel\Data\PerlinGeneratorVM.cs" />
+    <Compile Include="ViewModel\Data\SineGeneratorVM.cs" />
+    <Compile Include="ViewModel\Data\TerrainGenerators.cs" />
+    <Compile Include="ViewModel\Data\TerrainGeneratorVM.cs" />
     <Compile Include="ViewModel\Helper\AttachedProperties.cs" />
     <Compile Include="ViewModel\Helper\CollectionAccess.cs" />
     <Compile Include="ViewModel\Helper\GeometryExtensions.cs" />

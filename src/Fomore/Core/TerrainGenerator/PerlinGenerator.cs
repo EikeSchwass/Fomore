@@ -50,11 +50,11 @@ namespace Core.TerrainGenerator
             return value;
         }
 
-        public override IEnumerable<double> Generate()
+        public override IEnumerable<Vector2> Generate()
         {
             for (double x = 0; ; x += StepSize)
             {
-                yield return Perlin(x, 1);
+                yield return new Vector2(x, Perlin(x+1, 1));
             }
         }
     }

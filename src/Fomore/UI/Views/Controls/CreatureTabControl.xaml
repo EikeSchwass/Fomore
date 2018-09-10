@@ -35,7 +35,7 @@
         </Grid>
 
         <!-- Details pane -->
-        <Grid Grid.Column="1" Style="{StaticResource DetailsContentPane}" Visibility="{Binding SelectedCreature, Converter={StaticResource NotNullToVisibilityConverter}}">
+        <Grid Grid.Column="1" Style="{StaticResource DetailsContentPanel}" Visibility="{Binding SelectedCreature, Converter={StaticResource NotNullToVisibilityConverter}}">
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*" />

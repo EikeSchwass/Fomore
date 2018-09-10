@@ -4,17 +4,17 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:navigation="clr-namespace:Fomore.UI.ViewModel.Navigation"
+             xmlns:controls="clr-namespace:Fomore.UI.Views.Controls"
+             xmlns:data="clr-namespace:Fomore.UI.ViewModel.Data"
+             xmlns:fa="http://schemas.fontawesome.io/icons/"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800" d:DataContext="{d:DesignInstance navigation:EnvironmentTabVM}">
+             d:DesignHeight="900" d:DesignWidth="1440" d:DataContext="{d:DesignInstance navigation:EnvironmentTabVM}" Background="{StaticResource Level0Brush}">
 
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto" />
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="*" />
-        </Grid.RowDefinitions>
 
         <!-- List on the left side -->
         <Grid Grid.Column="0">
@@ -22,7 +22,7 @@
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="*" />
             </Grid.RowDefinitions>
-            <Button Grid.Row="0" Content="Create New Environment" Command="{Binding NewEnvironment}"/>
+            <controls:CustomizableButton Grid.Row="0" Content="Create New Environment" Command="{Binding NewEnvironment}" Margin="8" Padding="6" />
             <ListBox Grid.Row="1" Width="350" Style="{StaticResource EntityList}"
                      ItemTemplate="{StaticResource EnvironmentListItem}"
                      ItemsSource="{Binding EntitiesStorage.Environments}"
@@ -31,65 +31,182 @@
 
         <!-- No Selection screen -->
         <Grid Grid.Column="1" Visibility="{Binding SelectedEnvironment, Converter={StaticResource NullToVisibilityConverter}}">
-            <TextBlock Text="No selection made..." />
+            <TextBlock Text="No environment selected" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="18" Foreground="White" FontStyle="Italic" />
         </Grid>
 
         <!-- Details pane -->
-        <Grid Grid.Column="1" Style="{StaticResource DetailsContentPane}" Visibility="{Binding SelectedEnvironment, Converter={StaticResource NotNullToVisibilityConverter}}">
+        <Grid Grid.Column="1" Style="{StaticResource DetailsContentPanel}" Visibility="{Binding SelectedEnvironment, Converter={StaticResource NotNullToVisibilityConverter}}">
             <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="Auto" />
-                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
 
-                <!-- The Details -->
-                <Grid Grid.Column="0" DataContext="{Binding SelectedEnvironment}">
+                <GroupBox Grid.Row="0" Grid.Column="0" Header="" Background="{StaticResource Level4Brush}" FontSize="22" Margin="8" Foreground="White" FontWeight="Bold">
                     <StackPanel>
-                        <TextBox Style="{StaticResource DetailsName}" Text="{Binding Name}" />
-                        <TextBox Style="{StaticResource DetailsDescription}" Text="{Binding Description}" />
-
-                        <Grid Style="{StaticResource DetailsItemGrid}">
+                        <TextBlock Text="General" Margin="8,-6,8,8" />
+                        <Grid TextBlock.FontWeight="Normal" TextBlock.FontSize="14">
+                            <Grid.RowDefinitions>
+                                <RowDefinition />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                            </Grid.RowDefinitions>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition />
                                 <ColumnDefinition />
                             </Grid.ColumnDefinitions>
-                            <Grid.RowDefinitions>
-                                <RowDefinition />
-                                <RowDefinition />
-                                <RowDefinition />
-                                <RowDefinition />
-                                <RowDefinition />
-                            </Grid.RowDefinitions>
+                            <Grid Grid.Column="0">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="5*"/>
+                                    <ColumnDefinition Width="18*"/>
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                </Grid.RowDefinitions>
+                                <TextBlock Grid.Row="0" Text="Name:" Margin="8,8,8,7" Grid.ColumnSpan="2" />
+                                <TextBox Grid.Row="1" Grid.Column="0" Style="{StaticResource DetailsName}" Text="{Binding SelectedEnvironment.Name}" Grid.ColumnSpan="2" Margin="8,8,8,7" />
 
-                            <TextBlock Grid.Column="0" Grid.Row="0" Text="Last changed:" />
-                            <TextBlock Grid.Column="1" Grid.Row="0" Text="{Binding LastAccess}" />
-                            <TextBlock Grid.Column="0" Grid.Row="1" Text="Gravity:" />
-                            <TextBox Grid.Column="1" Grid.Row="1" Text="{Binding Gravity}" />
-                            <TextBlock Grid.Column="0" Grid.Row="2" Text="Friction:" />
-                            <TextBox Grid.Column="1" Grid.Row="2" Text="{Binding Friction}" />
+                                <Grid Grid.Column="0" Grid.Row="4" Style="{StaticResource DetailsItemGrid}" Grid.ColumnSpan="2">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition />
+                                        <ColumnDefinition />
+                                    </Grid.ColumnDefinitions>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition />
+                                        <RowDefinition />
+                                        <RowDefinition />
+                                        <RowDefinition />
+                                        <RowDefinition />
+                                    </Grid.RowDefinitions>
+
+                                    <TextBlock Grid.Column="0" Grid.Row="0" Text="Last changed:" />
+                                    <TextBlock Grid.Column="1" Grid.Row="0" Text="{Binding SelectedEnvironment.LastAccess, StringFormat=g}" Margin="8" />
+                                    <TextBlock Grid.Column="0" Grid.Row="1" Text="Gravity:" />
+                                    <TextBox Grid.Column="1" Grid.Row="1" Text="{Binding SelectedEnvironment.Gravity}" Style="{StaticResource DetailsName}" />
+                                    <TextBlock Grid.Column="0" Grid.Row="2" Text="Friction:" />
+                                    <TextBox Grid.Column="1" Grid.Row="2" Text="{Binding SelectedEnvironment.Friction}" Style="{StaticResource DetailsName}" />
+                                </Grid>
+                            </Grid>
+
+                            <Grid Grid.Column="1" Grid.Row="0">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="*" />
+                                    <RowDefinition Height="Auto" />
+                                </Grid.RowDefinitions>
+                                <TextBlock Grid.Row="0" Text="Description:" Margin="8" />
+                                <TextBox Grid.Row="1" Style="{StaticResource DetailsDescription}" Text="{Binding SelectedEnvironment.Description}" />
+                            </Grid>
                         </Grid>
                     </StackPanel>
-                </Grid>
+                </GroupBox>
 
-                <!-- Right side of details (Image and Buttons) -->
-                <Grid Grid.Column="1">
-                    <Grid.RowDefinitions>
-                        <RowDefinition />
-                        <RowDefinition />
-                    </Grid.RowDefinitions>
+                <GroupBox Grid.Row="1" Grid.Column="0" Header="" Background="{StaticResource Level4Brush}" FontSize="22" Margin="8" Foreground="White" FontWeight="Bold">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="*" />
+                        </Grid.RowDefinitions>
+                        <TextBlock Text="Terrain" Margin="8,-6,8,8" />
+                        <Grid Grid.Row="1" TextBlock.FontWeight="Normal" TextBlock.FontSize="14">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="150" />
+                                <RowDefinition Height="*" />
+                            </Grid.RowDefinitions>
+                            <DockPanel Grid.Row="0" Background="{StaticResource Level3Brush}" Margin="8" LastChildFill="True">
+                                <TextBlock Text="{Binding SelectedEnvironment.PreviewHeight, StringFormat=F2}" Margin="4" DockPanel.Dock="Left" HorizontalAlignment="Center">
+                                    <TextBlock.LayoutTransform>
+                                        <RotateTransform Angle="-90" />
+                                    </TextBlock.LayoutTransform>
+                                </TextBlock>
+                                <TextBlock Text="1150" DockPanel.Dock="Bottom" HorizontalAlignment="Center" Margin="4" />
+                                <TextBlock DockPanel.Dock="Top" Margin="4" />
+                                <TextBlock DockPanel.Dock="Right" Margin="4" Text="">
+                                    <TextBlock.LayoutTransform>
+                                        <RotateTransform Angle="90" />
+                                    </TextBlock.LayoutTransform>
+                                </TextBlock>
+                                <Image Source="{Binding SelectedEnvironment.TerrainPreviewImage}" VerticalAlignment="Center" HorizontalAlignment="Center" Stretch="Fill" />
+                            </DockPanel>
+                            <Grid Grid.Row="1">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition />
+                                    <ColumnDefinition Width="Auto" />
+                                </Grid.ColumnDefinitions>
+                                <ListView Grid.Column="0" Background="{StaticResource Level3Brush}" Margin="8" ItemsSource="{Binding SelectedEnvironment.TerrainGenerators}">
+                                    <ListView.Resources>
+                                        <DataTemplate DataType="{x:Type data:LinearGeneratorVM}">
+                                            <StackPanel Margin="20,4">
+                                                <TextBlock Text="Inclination" Margin="4" />
+                                                <Grid>
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition />
+                                                        <ColumnDefinition Width="Auto" />
+                                                    </Grid.ColumnDefinitions>
+                                                    <Slider Grid.Column="0" Minimum="-1" Maximum="1" Margin="4" SmallChange="0.05" Value="{Binding Inclination, Mode=TwoWay}" />
+                                                    <TextBlock Grid.Column="1" Text="{Binding Inclination, StringFormat={}{0:#.000}}" Margin="4" HorizontalAlignment="Right" />
+                                                    <TextBlock Grid.Column="1" Text="-1.000" Margin="4" Visibility="Hidden" HorizontalAlignment="Right" />
+                                                </Grid>
+                                            </StackPanel>
+                                        </DataTemplate>
+                                        <DataTemplate DataType="{x:Type data:SineGeneratorVM}"></DataTemplate>
+                                        <DataTemplate DataType="{x:Type data:PerlinGeneratorVM}"></DataTemplate>
+                                    </ListView.Resources>
+                                    <ListView.ItemContainerStyle>
+                                        <Style TargetType="ListViewItem">
+                                            <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                                        </Style>
+                                    </ListView.ItemContainerStyle>
+                                    <ListView.ItemTemplate>
+                                        <DataTemplate DataType="{x:Type data:TerrainGeneratorVM}">
+                                            <Border Margin="4" BorderThickness="1" BorderBrush="Black">
+                                                <Grid>
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition Width="*" />
+                                                        <ColumnDefinition Width="Auto" />
+                                                    </Grid.ColumnDefinitions>
+                                                    <Grid.RowDefinitions>
+                                                        <RowDefinition Height="Auto" />
+                                                        <RowDefinition Height="*" />
+                                                    </Grid.RowDefinitions>
+                                                    <ComboBox Grid.Row="0" Width="100" HorizontalAlignment="Left" ItemsSource="{Binding TerrainGenerators}" SelectedItem="{Binding TerrainGeneratorType}" Margin="4" />
+                                                    <controls:CustomizableButton Grid.Row="0" Grid.RowSpan="2" Grid.Column="1">
+                                                        <fa:ImageAwesome Icon="Trash" VerticalAlignment="Top" Height="32" />
+                                                    </controls:CustomizableButton>
+                                                    <ContentControl Grid.Row="1" Grid.Column="0" Content="{Binding TerrainGenerator}" Margin="4" />
+                                                </Grid>
+                                            </Border>
+                                        </DataTemplate>
+                                    </ListView.ItemTemplate>
+                                </ListView>
+                                <TextBlock Grid.Column="0" FontSize="18" FontStyle="Italic" Text="No Terrain Generators" HorizontalAlignment="Center" VerticalAlignment="Center" Visibility="{Binding SelectedEnvironment.TerrainGenerators.Count, Converter={StaticResource NumberVisibilityConverter}}" />
+                                <StackPanel Grid.Column="1" Margin="8" VerticalAlignment="Center">
+                                    <TextBlock Text="Step Size" />
+                                    <Grid ToolTip="Higher Values mean lower resolution but higher performance">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition />
+                                            <ColumnDefinition Width="Auto" />
+                                        </Grid.ColumnDefinitions>
+                                        <Slider Grid.Column="0" Minimum="1" Maximum="100" Margin="4" Value="{Binding SelectedEnvironment.TerrainGenerationStepSize, Mode=TwoWay}"></Slider>
+                                        <TextBlock Grid.Column="1" Text="{Binding SelectedEnvironment.TerrainGenerationStepSize, StringFormat={}{0:###.0}}" Margin="4" HorizontalAlignment="Right" />
+                                        <TextBlock Grid.Column="1" Text="100.0" Margin="4" Visibility="Hidden" />
+                                    </Grid>
+                                    <controls:CustomizableButton Content="Add Terrain Generator" Command="{Binding SelectedEnvironment.AddTerrainGeneratorCommand}" />
+                                </StackPanel>
+                            </Grid>
+                        </Grid>
+                    </Grid>
+                </GroupBox>
 
-                    <Image Grid.Row="0" Source="../../assets/images/placeholder.png" />
-
-                    <!-- Button box -->
-                    <StackPanel Grid.Row="1" VerticalAlignment="Bottom">
-                        <!--<Button Content="Train on this Environment" Command="{Binding TrainCommand}" CommandParameter="{Binding SelectedEnvironment}" />
-                        <Button Content="Simulate" Command="{Binding SimulateCommand}" CommandParameter="{Binding SelectedEnvironment}" />
-                        <Button Content="Edit Creature" Command="{Binding EditCreature}" CommandParameter="{Binding SelectedEnvironment}" />-->
-                        <Button Content="Delete" Command="{Binding EntitiesStorage.RemoveEnvironmentCommand}" CommandParameter="{Binding SelectedEnvironment}" />
-                    </StackPanel>
-                </Grid>
+                <GroupBox Grid.Row="2" Grid.Column="0" Margin="8" Background="{StaticResource Level4Brush}">
+                    <controls:CustomizableButton HorizontalAlignment="Center" VerticalAlignment="Center" Content="Delete" Margin="8,8,8,2" Padding="60,4" Foreground="White" FontSize="16" Command="{Binding EntitiesStorage.RemoveEnvironmentCommand}" CommandParameter="{Binding SelectedEnvironment}" />
+                </GroupBox>
             </Grid>
-
         </Grid>
 
     </Grid>
