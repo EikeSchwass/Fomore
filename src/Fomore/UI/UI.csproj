@@ -65,7 +65,6 @@
     <Compile Include="Converter\CenterElementConverter.cs" />
     <Compile Include="Converter\DescriptionWidthConverter.cs" />
     <Compile Include="Converter\ItemInCollectionVisibilityConverter.cs" />
-    <Compile Include="Converter\NonEmptyCollectionConverter.cs" />
     <Compile Include="Converter\NumberVisibilityConverter.cs" />
     <Compile Include="ViewModel\Application\AppStateVM.cs" />
     <Compile Include="ViewModel\Application\EntityStorageVM.cs" />

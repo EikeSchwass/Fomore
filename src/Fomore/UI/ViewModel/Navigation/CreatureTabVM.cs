@@ -21,7 +21,6 @@ namespace Fomore.UI.ViewModel.Navigation
         // ------------------------------------------------------------
 
         private CreatureVM selectedCreature;
-        private MovementPatternVM selectedMovementPattern;
 
         public CreatureVM SelectedCreature
         {
@@ -30,17 +29,6 @@ namespace Fomore.UI.ViewModel.Navigation
             {
                 if (Equals(value, selectedCreature)) return;
                 selectedCreature = value;
-                OnPropertyChanged();
-            }
-        }
-
-        public MovementPatternVM SelectedMovementPattern
-        {
-            get => selectedMovementPattern;
-            set
-            {
-                if (Equals(value, selectedMovementPattern)) return;
-                selectedMovementPattern = value;
                 OnPropertyChanged();
             }
         }
