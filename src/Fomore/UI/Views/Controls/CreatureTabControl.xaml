@@ -4,6 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:navigation="clr-namespace:Fomore.UI.ViewModel.Navigation"
+             xmlns:controls="clr-namespace:Fomore.UI.Views.Controls"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800" d:DataContext="{d:DesignInstance navigation:CreatureTabVM}" Background="{StaticResource Level0Brush}">
 
@@ -22,7 +23,7 @@
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="*" />
             </Grid.RowDefinitions>
-            <Button Grid.Row="0" Content="Create New Creature" Command="{Binding NewCreature}" />
+            <controls:CustomizableButton Grid.Row="0" Content="Create New Creature" Command="{Binding NewCreature}" />
             <ListBox Grid.Row="1" Width="350" Style="{StaticResource EntityList}"
                      ItemTemplate="{StaticResource CreatureListItem}"
                      ItemsSource="{Binding EntitiesStorage.Creatures}"
@@ -86,10 +87,10 @@
 
                     <!-- Button box -->
                     <StackPanel Grid.Row="1" VerticalAlignment="Bottom">
-                        <Button Content="Train" Command="{Binding TrainCommand}" CommandParameter="{Binding SelectedCreature}" />
-                        <Button Content="Simulate" Command="{Binding SimulateCommand}" CommandParameter="{Binding SelectedCreature}" />
-                        <Button Content="Edit Creature" Command="{Binding EditCreature}" CommandParameter="{Binding SelectedCreature}" />
-                        <Button Content="Delete" Command="{Binding EntitiesStorage.RemoveCreatureCommand}" CommandParameter="{Binding SelectedCreature}" />
+                        <controls:CustomizableButton Content="Train" Command="{Binding TrainCommand}" CommandParameter="{Binding SelectedCreature}" />
+                        <controls:CustomizableButton Content="Simulate" Command="{Binding SimulateCommand}" CommandParameter="{Binding SelectedCreature}" />
+                        <controls:CustomizableButton Content="Edit Creature" Command="{Binding EditCreature}" CommandParameter="{Binding SelectedCreature}" />
+                        <controls:CustomizableButton Content="Delete" Command="{Binding EntitiesStorage.RemoveCreatureCommand}" CommandParameter="{Binding SelectedCreature}" />
                     </StackPanel>
                 </Grid>
             </Grid>
