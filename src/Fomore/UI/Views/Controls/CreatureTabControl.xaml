@@ -73,6 +73,11 @@
                             <TextBlock Grid.Column="0" Grid.Row="4" Text="#Patterns:" />
                             <TextBlock Grid.Column="1" Grid.Row="4" Text="{Binding MovementPatternCollectionVM.Count}" />
                         </Grid>
+
+                        <ListBox Style="{StaticResource EntityList}"
+                                 ItemTemplate="{StaticResource MovementPatternListItem}"
+                                 ItemsSource="{Binding MovementPatternCollectionVM}" 
+                                 Visibility="{Binding MovementPatternCollectionVM, Converter={StaticResource NonEmptyCollectionConverter}}"/>
                     </StackPanel>
                 </Grid>
 

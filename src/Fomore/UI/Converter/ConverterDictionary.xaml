@@ -1,7 +1,9 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:local="clr-namespace:Fomore.UI.Converter">
+    <local:ItemInCollectionVisibilityConverter x:Key="ItemInCollectionVisibilityConverter" />
     <local:NumberVisibilityConverter x:Key="NumberVisibilityConverter" />
+    <local:NonEmptyCollectionConverter x:Key="NonEmptyCollectionConverter" />
     <local:NotNullToVisibilityConverter x:Key="NotNullToVisibilityConverter" />
     <local:NullToVisibilityConverter x:Key="NullToVisibilityConverter" />
     <local:BooleanVisibilityConverter x:Key="BooleanVisibilityConverter" />
