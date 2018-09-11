@@ -1,4 +1,5 @@
 ﻿using System.Windows;
+using Core;
 using Fomore.UI.ViewModel.Application;
 using Fomore.UI.ViewModel.Commands;
 using Fomore.UI.ViewModel.Data;
@@ -32,6 +33,7 @@ namespace Fomore.UI.ViewModel.Navigation
                 if (Equals(value, selectedCreature)) return;
                 selectedCreature = value;
                 OnPropertyChanged();
+                NewMovementPatternCommand.OnCanExecuteChanged();
                 ResetSelectionCommand.OnCanExecuteChanged();
                 StartTrainingCommand.OnCanExecuteChanged();
             }
@@ -88,8 +90,17 @@ namespace Fomore.UI.ViewModel.Navigation
         // ------------------------------------------------------------
         // Commands and Actions
         // ------------------------------------------------------------
+
+        public DelegateCommand NewMovementPatternCommand { get; }
         public DelegateCommand ResetSelectionCommand { get; }
         public DelegateCommand StartTrainingCommand { get; }
+
+        private void NewMovementPatternAction(object obj)
+        {
+            MovementPatternVM movementPattern = new MovementPatternVM(new MovementPattern());
+            SelectedCreature.MovementPatternCollectionVM.Add(movementPattern);
+            SelectedMovementPattern = movementPattern;
+        }
 
         private void ResetSelectionAction(object obj)
         {
@@ -116,6 +127,7 @@ namespace Fomore.UI.ViewModel.Navigation
             EntitiesStorage = entitiesStorage;
 
             // Init commands
+            NewMovementPatternCommand = new DelegateCommand(NewMovementPatternAction, o => SelectedCreature != null);
             ResetSelectionCommand = new DelegateCommand(ResetSelectionAction,
                                                         o => SelectedCreature != null ||
                                                              SelectedMovementPattern != null ||
@@ -125,6 +137,8 @@ namespace Fomore.UI.ViewModel.Navigation
                                                               SelectedMovementPattern != null &&
                                                               SelectedEnvironment != null);
         }
+
+
 
         public override void OnSelect(object obj)
         {
