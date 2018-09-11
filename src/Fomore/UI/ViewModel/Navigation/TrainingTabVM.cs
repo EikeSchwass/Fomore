@@ -24,6 +24,8 @@ namespace Fomore.UI.ViewModel.Navigation
         private CreatureVM selectedCreature;
         private bool showTraining;
         private double targetSpeed;
+        private bool newMovementPattern;
+        private MovementPatternVM previouslySelectedMovementPattern;
 
         public CreatureVM SelectedCreature
         {
@@ -62,6 +64,27 @@ namespace Fomore.UI.ViewModel.Navigation
                 OnPropertyChanged();
                 ResetSelectionCommand.OnCanExecuteChanged();
                 StartTrainingCommand.OnCanExecuteChanged();
+            }
+        }
+
+        public bool NewMovementPattern
+        {
+            get => newMovementPattern;
+            set
+            {
+                if (value == newMovementPattern) return;
+                newMovementPattern = value;
+                if (value)
+                {
+                    previouslySelectedMovementPattern = SelectedMovementPattern;
+                    SelectedMovementPattern = null;
+                }
+                else
+                {
+                    SelectedMovementPattern = previouslySelectedMovementPattern;
+                    previouslySelectedMovementPattern = null;
+                }
+                OnPropertyChanged();
             }
         }
 

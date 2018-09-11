@@ -35,7 +35,8 @@
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="*" />
             </Grid.RowDefinitions>
-            <controls:CustomizableButton Grid.Row="0" Command="{Binding NewMovementPatternCommand}" Content="New Movement Pattern" />
+            <ToggleButton Grid.Row="0" IsChecked="{Binding NewMovementPattern}" Content="New" />
+            <!-- <controls:CustomizableButton Grid.Row="0" Command="{Binding NewMovementPatternCommand}" Content="New Movement Pattern" /> -->
             <ListBox Grid.Row="1" Style="{StaticResource EntityList}"
                      ItemTemplate="{StaticResource MovementPatternListItem}"
                      ItemsSource="{Binding SelectedCreature.MovementPatternCollectionVM}"
