@@ -10,6 +10,8 @@ namespace Fomore.UI.ViewModel.CreatureEditor.Behaviours
 
         protected void RotateCreatureStructure(CreatureEditorPanelVM creatureEditorPanelVM, double angleInRadians)
         {
+            if (!creatureEditorPanelVM.HistoryStack.Current.CreatureStructureVM.JointCollectionVM.Any())
+                return;
             var creatureVM = creatureEditorPanelVM.HistoryStack.Current.Clone();
 
             var jointCollectionVM = creatureVM.CreatureStructureVM.JointCollectionVM;

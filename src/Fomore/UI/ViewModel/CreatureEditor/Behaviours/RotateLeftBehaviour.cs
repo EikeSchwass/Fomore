@@ -1,4 +1,5 @@
-﻿using System.Windows.Input;
+﻿using System.Linq;
+using System.Windows.Input;
 using System.Windows.Media;
 using Core;
 using FontAwesome.WPF;
@@ -22,6 +23,8 @@ namespace Fomore.UI.ViewModel.CreatureEditor.Behaviours
         /// <inheritdoc />
         public override void OnInvoked(CreatureEditorPanelVM parameter, ModifierKeys modifierKeys)
         {
+            if (!parameter.HistoryStack.Current.CreatureStructureVM.JointCollectionVM.Any())
+                return;
             base.OnInvoked(parameter, modifierKeys);
             double angle = (modifierKeys & ModifierKeys.Shift) > 0 ? -10 : -90;
             angle *= MathExtensions.DegreesToRadiansFactor;
