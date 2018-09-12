@@ -6,8 +6,8 @@
         <Setter Property="MinWidth" Value="250" />
         <Setter Property="MaxWidth" Value="500" />
         <Setter Property="HorizontalContentAlignment" Value="Stretch" />
-        <Setter Property="Background" Value="{StaticResource Level4Brush}" />
-        <Setter Property="Margin" Value="5 0 5 5" />
+        <!-- <Setter Property="Background" Value="{StaticResource Level4Brush}" /> -->
+        <!-- <Setter Property="Margin" Value="5 0 5 5" /> -->
     </Style>
     
     <!-- Generic List Item style -->
@@ -54,6 +54,7 @@
                 </Grid.RowDefinitions>
                 <Image Grid.Column="0" Grid.RowSpan="2" Style="{StaticResource ListBoxIcon}" Source="../assets/images/creature_icon.png" />
                 <TextBlock Grid.Column="1" Grid.Row="0" Style="{StaticResource ListBoxItemName}" Text="{Binding Name}" />
+                <TextBlock Grid.Column="1" Grid.Row="1" Style="{StaticResource ListBoxItemInfo}" Text="{Binding ShortDescription}" />
             </Grid>
         </Border>
     </DataTemplate>

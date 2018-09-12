@@ -29,7 +29,18 @@ namespace Fomore.UI.ViewModel.Data
                 if (value == Model.Description) return;
                 Model.Description = value;
                 OnPropertyChanged();
+                OnPropertyChanged(nameof(ShortDescription));
                 OnPropertyChanged(nameof(LastAccess));
+            }
+        }
+
+        public string ShortDescription
+        {
+            get
+            {
+                if (Description.Length < 50)
+                    return Description;
+                return Description.Substring(0, 50) + " [...]";
             }
         }
 
