@@ -25,6 +25,8 @@ namespace Fomore.UI.ViewModel.CreatureEditor.Behaviours
         public override void OnInvoked(CreatureEditorPanelVM parameter, ModifierKeys modifierKeys)
         {
             base.OnInvoked(parameter, modifierKeys);
+            if (!parameter.HistoryStack.Current.CreatureStructureVM.JointCollectionVM.Any())
+                return;
             var creatureVM = parameter.HistoryStack.Current.Clone();
 
             var jointCollectionVM = creatureVM.CreatureStructureVM.JointCollectionVM;
