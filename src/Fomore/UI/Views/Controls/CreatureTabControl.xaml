@@ -6,7 +6,7 @@
              xmlns:navigation="clr-namespace:Fomore.UI.ViewModel.Navigation"
              xmlns:controls="clr-namespace:Fomore.UI.Views.Controls"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800" d:DataContext="{d:DesignInstance navigation:CreatureTabVM}" Background="{StaticResource Level0Brush}">
+             d:DesignHeight="450" d:DesignWidth="800" d:DataContext="{d:DesignInstance navigation:CreatureTabVM}">
 
     <Grid>
         <Grid.ColumnDefinitions>
