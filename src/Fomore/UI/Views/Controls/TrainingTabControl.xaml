@@ -9,58 +9,84 @@
              d:DesignHeight="450" d:DesignWidth="800" d:DataContext="{d:DesignInstance navigation:TrainingTabVM}">
 
     <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition />
-            <ColumnDefinition />
-            <ColumnDefinition />
-            <ColumnDefinition />
-        </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height="auto" />
             <RowDefinition Height="*" />
-            <RowDefinition Height="auto" />
+            <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
 
-        <TextBlock Grid.Column="0" Grid.Row="0" HorizontalAlignment="Center" FontWeight="Bold" Text="Step 1: Chose Creature"
-                   VerticalAlignment="Center" Margin="10" />
-        <ListBox Grid.Column="0" Grid.Row="1" Style="{StaticResource EntityList}"
-                 ItemTemplate="{StaticResource CreatureListItem}"
-                 ItemsSource="{Binding EntitiesStorage.Creatures}"
-                 SelectedItem="{Binding SelectedCreature, Mode=TwoWay}" />
+        <GroupBox Grid.Row="0" Header=" Training Assistant ">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
 
-        <TextBlock Grid.Column="1" Grid.Row="0" HorizontalAlignment="Center" FontWeight="Bold" Text="Step 2: Chose Movement pattern"
-                   VerticalAlignment="Center" Margin="10" />
-        <Grid Grid.Column="1" Grid.Row="1">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="*" />
-            </Grid.RowDefinitions>
-            <ToggleButton Grid.Row="0" Height="80" IsChecked="{Binding NewMovementPattern, Mode=TwoWay}" IsEnabled="{Binding SelectedCreature, Converter={StaticResource NullBooleanConverter}, ConverterParameter=false}" Content="New" />
-            <!-- <controls:CustomizableButton Grid.Row="0" Command="{Binding NewMovementPatternCommand}" Content="New Movement Pattern" /> -->
-            <ListBox Grid.Row="1" Style="{StaticResource EntityList}" IsEnabled="{Binding MovementPatternSelectionEnabled}"
-                     ItemTemplate="{StaticResource MovementPatternListItem}"
-                     ItemsSource="{Binding SelectedCreature.MovementPatternCollectionVM}"
-                     SelectedItem="{Binding SelectedMovementPattern, Mode=TwoWay}"/>
-        </Grid>
-        
+                <TextBlock Grid.Column="0" Grid.Row="0" HorizontalAlignment="Center" FontWeight="Bold"
+                           Text="Step 1: Chose Creature"
+                           VerticalAlignment="Center" Margin="10" />
+                <ListBox Grid.Column="0" Grid.Row="1" Style="{StaticResource EntityList}"
+                         ItemTemplate="{StaticResource CreatureListItem}"
+                         ItemsSource="{Binding EntitiesStorage.Creatures}"
+                         SelectedItem="{Binding SelectedCreature, Mode=TwoWay}" />
 
-        <TextBlock Grid.Column="2" Grid.Row="0" HorizontalAlignment="Center" FontWeight="Bold" Text="Step 3: Chose Environment"
-                   VerticalAlignment="Center" Margin="10" />
-        <ListBox Grid.Column="2" Grid.Row="1" Style="{StaticResource EntityList}"
-                 ItemTemplate="{StaticResource EnvironmentListItem}"
-                 ItemsSource="{Binding EntitiesStorage.Environments}"
-                 SelectedItem="{Binding SelectedEnvironment, Mode=TwoWay}" />
+                <TextBlock Grid.Column="1" Grid.Row="0" HorizontalAlignment="Center" FontWeight="Bold"
+                           Text="Step 2: Chose Movement pattern"
+                           VerticalAlignment="Center" Margin="10" />
+                <Grid Grid.Column="1" Grid.Row="1">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+                    <ToggleButton Grid.Row="0" Height="80" IsChecked="{Binding NewMovementPattern, Mode=TwoWay}"
+                                  IsEnabled="{Binding SelectedCreature, Converter={StaticResource NullBooleanConverter}, ConverterParameter=false}"
+                                  Content="New" />
+                    <!-- <controls:CustomizableButton Grid.Row="0" Command="{Binding NewMovementPatternCommand}" Content="New Movement Pattern" /> -->
+                    <ListBox Grid.Row="1" Style="{StaticResource EntityList}"
+                             IsEnabled="{Binding MovementPatternSelectionEnabled}"
+                             ItemTemplate="{StaticResource MovementPatternListItem}"
+                             ItemsSource="{Binding SelectedCreature.MovementPatternCollectionVM}"
+                             SelectedItem="{Binding SelectedMovementPattern, Mode=TwoWay}" />
+                </Grid>
 
-        <TextBlock Grid.Column="3" Grid.Row="0" HorizontalAlignment="Center" FontWeight="Bold" Text="Step 4: Additional Settings"
-                   VerticalAlignment="Center" Margin="10" />
-        <StackPanel Grid.Column="3" Grid.Row="1">
-            <TextBlock Text="Target Speed:" />
-            <TextBox Text="{Binding TargetSpeed}" />
-        </StackPanel>
 
-        <CheckBox Grid.Column="0" Grid.Row="2" VerticalAlignment="Center" IsChecked="{Binding ShowTraining}" Content="Show Training Progress" />
-        <controls:CustomizableButton Grid.Column="2" Grid.Row="2" Command="{Binding ResetSelectionCommand}" Content="Reset Selection" />
-        <controls:CustomizableButton Grid.Column="3" Grid.Row="2" IsDefault="True" Command="{Binding StartTrainingCommand}" Content="Start Training" />
+                <TextBlock Grid.Column="2" Grid.Row="0" HorizontalAlignment="Center" FontWeight="Bold"
+                           Text="Step 3: Chose Environment"
+                           VerticalAlignment="Center" Margin="10" />
+                <ListBox Grid.Column="2" Grid.Row="1" Style="{StaticResource EntityList}"
+                         ItemTemplate="{StaticResource EnvironmentListItem}"
+                         ItemsSource="{Binding EntitiesStorage.Environments}"
+                         SelectedItem="{Binding SelectedEnvironment, Mode=TwoWay}" />
 
+            </Grid>
+        </GroupBox>
+        <GroupBox Grid.Row="1" Header=" Additional Settings and Actions " Height="80">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
+
+                <StackPanel Grid.Column="0" Orientation="Horizontal" HorizontalAlignment="Center">
+                    <TextBlock Text="Target Speed:" />
+                    <TextBox Text="{Binding TargetSpeed}" />
+                </StackPanel>
+
+                <CheckBox Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" IsChecked="{Binding ShowTraining}"
+                          Content="Show Training Progress" />
+
+                <StackPanel Grid.Column="2" Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Right">
+                    <controls:CustomizableButton Command="{Binding ResetSelectionCommand}"
+                                                 Content="Reset Selection" />
+                    <controls:CustomizableButton IsDefault="True"
+                                                 Command="{Binding StartTrainingCommand}" Content="Start Training" />
+                </StackPanel>
+            </Grid>
+        </GroupBox>
     </Grid>
 </UserControl>
