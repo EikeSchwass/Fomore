@@ -1,11 +1,11 @@
 ﻿<UserControl x:Class="Fomore.UI.Views.Controls.CreatureTabControl"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:navigation="clr-namespace:Fomore.UI.ViewModel.Navigation"
              xmlns:controls="clr-namespace:Fomore.UI.Views.Controls"
-             mc:Ignorable="d" 
+             mc:Ignorable="d"
              d:DesignHeight="450" d:DesignWidth="800" d:DataContext="{d:DesignInstance navigation:CreatureTabVM}">
 
     <Grid>
@@ -23,7 +23,9 @@
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="*" />
             </Grid.RowDefinitions>
-            <controls:CustomizableButton Grid.Row="0" Content="Create New Creature" Command="{Binding NewCreature}" />
+            <controls:CustomizableButton Grid.Row="0" Content="Create New Creature" Margin="0" Height="80"
+                                         Command="{Binding NewCreature}" />
+
             <ListBox Grid.Row="1" Width="350" Style="{StaticResource EntityList}"
                      ItemTemplate="{StaticResource CreatureListItem}"
                      ItemsSource="{Binding EntitiesStorage.Creatures}"
@@ -31,29 +33,32 @@
         </Grid>
 
         <!-- No Selection screen -->
-        <Grid Grid.Column="1" Visibility="{Binding SelectedCreature, Converter={StaticResource NullToVisibilityConverter}}">
+        <Grid Grid.Column="1"
+              Visibility="{Binding SelectedCreature, Converter={StaticResource NullToVisibilityConverter}}">
             <TextBlock Text="No selection made..." />
         </Grid>
 
         <!-- Details pane -->
-        <Grid Grid.Column="1" Style="{StaticResource DetailsContentPanel}" Visibility="{Binding SelectedCreature, Converter={StaticResource NotNullToVisibilityConverter}}">
+        <Grid Grid.Column="1" Style="{StaticResource DetailsContentPanel}"
+              Visibility="{Binding SelectedCreature, Converter={StaticResource NotNullToVisibilityConverter}}">
             <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="Auto" />
-                </Grid.ColumnDefinitions>
+                <!-- Grid rows contain the group boxes -->
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
 
-                <!-- The Details -->
-                <Grid Grid.Column="0" DataContext="{Binding SelectedCreature}">
-                    <StackPanel>
-                        <TextBox Style="{StaticResource DetailsName}" Text="{Binding Name}" />
-                        <TextBox Style="{StaticResource DetailsDescription}" Text="{Binding Description}" />
+                <!-- The general details group box -->
+                <GroupBox Grid.Row="0" Header="General">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition />
+                            <ColumnDefinition />
+                        </Grid.ColumnDefinitions>
 
-                        <Grid Style="{StaticResource DetailsItemGrid}">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition />
-                                <ColumnDefinition />
-                            </Grid.ColumnDefinitions>
+                        <!-- The detail information -->
+                        <Grid Grid.Column="0">
                             <Grid.RowDefinitions>
                                 <RowDefinition />
                                 <RowDefinition />
@@ -62,37 +67,58 @@
                                 <RowDefinition />
                             </Grid.RowDefinitions>
 
-                            <TextBlock Grid.Column="0" Grid.Row="0" Text="Last changed:" />
-                            <TextBlock Grid.Column="1" Grid.Row="0" Text="{Binding LastAccess}" />
-                            <TextBlock Grid.Column="0" Grid.Row="1" Text="#Joints:" />
-                            <TextBlock Grid.Column="1" Grid.Row="1" Text="{Binding CreatureStructureVM.JointCollectionVM.Count}" />
-                            <TextBlock Grid.Column="0" Grid.Row="2" Text="#Bones:" />
-                            <TextBlock Grid.Column="1" Grid.Row="2" Text="{Binding CreatureStructureVM.BoneCollectionVM.Count}" />
-                            <TextBlock Grid.Column="0" Grid.Row="3" Text="Total Weight:" />
-                            <TextBlock Grid.Column="1" Grid.Row="3" Text="{Binding CreatureStructureVM.BoneCollectionVM.Count}" />
-                            <TextBlock Grid.Column="0" Grid.Row="4" Text="#Patterns:" />
-                            <TextBlock Grid.Column="1" Grid.Row="4" Text="{Binding MovementPatternCollectionVM.Count}" />
+                            <TextBlock Grid.Row="0" Text="Name:" />
+                            <TextBox Grid.Row="1" Style="{StaticResource DetailsName}"
+                                     Text="{Binding SelectedCreature.Name}" />
+                            
+                            <TextBlock Grid.Row="2" Text="Description:" />
+                            <TextBox Grid.Row="3" Style="{StaticResource DetailsDescription}" Text="{Binding SelectedCreature.Description}" />
+
+                            <Grid Grid.Row="4" Style="{StaticResource DetailsItemGrid}">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition />
+                                    <ColumnDefinition />
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition />
+                                    <RowDefinition />
+                                    <RowDefinition />
+                                </Grid.RowDefinitions>
+
+                                <TextBlock Grid.Column="0" Grid.Row="0" Text="Last changed:" />
+                                <TextBlock Grid.Column="1" Grid.Row="0"
+                                           Text="{Binding SelectedCreature.LastAccess, StringFormat=g}" Margin="4" />
+                                <TextBlock Grid.Column="0" Grid.Row="1" Text="Number of Joints:" />
+                                <TextBlock Grid.Column="1" Grid.Row="1"
+                                           Text="{Binding SelectedCreature.CreatureStructureVM.JointCollectionVM.Count}" />
+                                <TextBlock Grid.Column="0" Grid.Row="2" Text="Number of Bones:" />
+                                <TextBlock Grid.Column="1" Grid.Row="2"
+                                           Text="{Binding SelectedCreature.CreatureStructureVM.BoneCollectionVM.Count}" />
+                            </Grid>
                         </Grid>
+
+                        <!-- The creature structure image -->
+                        <Image Grid.Column="1" Grid.Row="0" Source="../../assets/images/placeholder.png" Width="200" Height="200" />
+                    </Grid>
+                </GroupBox>
+
+                <!-- The Movement patterns group box -->
+                <GroupBox Grid.Row="1" Header="Movement Patterns">
+                    <ListBox Style="{StaticResource EntityList}" 
+                             ItemsSource="{Binding SelectedCreature.MovementPatternCollectionVM}"
+                             ItemTemplate="{StaticResource MovementPatternListItem}"
+                             SelectedItem="{Binding SelectedMovementPattern}" />
+                </GroupBox>
+
+                <!-- Action buttons group box -->
+                <GroupBox Grid.Row="2" Header="Actions">
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                        <controls:CustomizableButton Command="{Binding EditCreature}" CommandParameter="{Binding SelectedCreature}" Content="Edit creature structure" />
+                        <controls:CustomizableButton Command="{Binding TrainCommand}" CommandParameter="{Binding SelectedCreature}" Content="Train this creature" />
+                        <controls:CustomizableButton Command="{Binding SimulateCommand}" CommandParameter="{Binding SelectedCreature}" Content="Simulate this creature" />
+                        <controls:CustomizableButton Command="{Binding EntitiesStorage.RemoveCreatureCommand}" CommandParameter="{Binding SelectedCreature}" Content="Delete" />
                     </StackPanel>
-                </Grid>
-
-                <!-- Right side of details (Image and Buttons) -->
-                <Grid Grid.Column="1">
-                    <Grid.RowDefinitions>
-                        <RowDefinition />
-                        <RowDefinition />
-                    </Grid.RowDefinitions>
-
-                    <Image Grid.Row="0" Source="../../assets/images/placeholder.png" />
-
-                    <!-- Button box -->
-                    <StackPanel Grid.Row="1" VerticalAlignment="Bottom">
-                        <controls:CustomizableButton Content="Train" Command="{Binding TrainCommand}" CommandParameter="{Binding SelectedCreature}" />
-                        <controls:CustomizableButton Content="Simulate" Command="{Binding SimulateCommand}" CommandParameter="{Binding SelectedCreature}" />
-                        <controls:CustomizableButton Content="Edit Creature" Command="{Binding EditCreature}" CommandParameter="{Binding SelectedCreature}" />
-                        <controls:CustomizableButton Content="Delete" Command="{Binding EntitiesStorage.RemoveCreatureCommand}" CommandParameter="{Binding SelectedCreature}" />
-                    </StackPanel>
-                </Grid>
+                </GroupBox>
             </Grid>
 
         </Grid>
