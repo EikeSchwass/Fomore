@@ -35,7 +35,7 @@
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="*" />
             </Grid.RowDefinitions>
-            <ToggleButton Grid.Row="0" Margin="5 0" Height="80" IsChecked="{Binding NewMovementPattern, Mode=TwoWay}" IsEnabled="{Binding SelectedCreature, Converter={StaticResource NullBooleanConverter}, ConverterParameter=false}" Content="New" />
+            <ToggleButton Grid.Row="0" Height="80" IsChecked="{Binding NewMovementPattern, Mode=TwoWay}" IsEnabled="{Binding SelectedCreature, Converter={StaticResource NullBooleanConverter}, ConverterParameter=false}" Content="New" />
             <!-- <controls:CustomizableButton Grid.Row="0" Command="{Binding NewMovementPatternCommand}" Content="New Movement Pattern" /> -->
             <ListBox Grid.Row="1" Style="{StaticResource EntityList}" IsEnabled="{Binding MovementPatternSelectionEnabled}"
                      ItemTemplate="{StaticResource MovementPatternListItem}"
