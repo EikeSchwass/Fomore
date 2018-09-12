@@ -24,6 +24,7 @@ namespace Fomore.UI.ViewModel.CreatureEditor.Behaviours
             base.OnInvoked(parameter, modifierKeys);
             var original = parameter.HistoryStack.Original;
             original.CreatureStructureVM.BoneCollectionVM.Clear();
+            original.CreatureStructureVM.JointCollectionVM.Clear();
             var current = parameter.HistoryStack.Current;
             foreach (var boneVM in current.CreatureStructureVM.BoneCollectionVM)
             {
