@@ -69,6 +69,7 @@ namespace Fomore.UI.ViewModel.Navigation
         public ICommand TrainCommand { get; }
         public ICommand SimulateCommand { get; }
         public ICommand EditCreature { get; }
+        public ICommand CloneCommand { get; }
 
         private void NewCreatureAction(object obj)
         {
@@ -97,6 +98,17 @@ namespace Fomore.UI.ViewModel.Navigation
             }
         }
 
+        private void CloneAction(object obj)
+        {
+            if (obj is CreatureVM creature)
+            {
+                CreatureVM clone = creature.Clone();
+                clone.Name = "Clone of " + clone.Name;
+                EntitiesStorage.AddCreatureCommand.Execute(clone);
+                SelectedCreature = clone;
+            }
+        }
+
         // ------------------------------------------------------------
         // Entry point & other methods
         // ------------------------------------------------------------
@@ -110,6 +122,7 @@ namespace Fomore.UI.ViewModel.Navigation
             TrainCommand = new DelegateCommand(TrainAction, o => true);
             SimulateCommand = new DelegateCommand(SimulateAction, o => true);
             EditCreature = new DelegateCommand(EditAction, o => true);
+            CloneCommand = new DelegateCommand(CloneAction, o => true);
         }
     }
 }

@@ -113,6 +113,7 @@
                 <!-- Action buttons group box -->
                 <GroupBox Grid.Row="2" Header="Actions">
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                        <controls:CustomizableButton Command="{Binding CloneCommand}" CommandParameter="{Binding SelectedCreature}" Content="Clone this creature" />
                         <controls:CustomizableButton Command="{Binding EditCreature}" CommandParameter="{Binding SelectedCreature}" Content="Edit creature structure" />
                         <controls:CustomizableButton Command="{Binding TrainCommand}" CommandParameter="{Binding SelectedCreatureMovementPattern}" Content="Train this creature" />
                         <controls:CustomizableButton Command="{Binding SimulateCommand}" CommandParameter="{Binding SelectedCreatureMovementPattern}" Content="Simulate this creature" />
