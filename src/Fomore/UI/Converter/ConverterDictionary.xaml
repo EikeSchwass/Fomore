@@ -4,6 +4,7 @@
     <local:NumberVisibilityConverter x:Key="NumberVisibilityConverter" />
     <local:NotNullToVisibilityConverter x:Key="NotNullToVisibilityConverter" />
     <local:NullToVisibilityConverter x:Key="NullToVisibilityConverter" />
+    <local:NullBooleanConverter x:Key="NullBooleanConverter" />
     <local:BooleanVisibilityConverter x:Key="BooleanVisibilityConverter" />
     <local:DescriptionWidthConverter x:Key="DescriptionWidthConverter" />
 </ResourceDictionary>

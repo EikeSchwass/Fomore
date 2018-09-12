@@ -7,7 +7,7 @@
         <Setter Property="MaxWidth" Value="500" />
         <Setter Property="HorizontalContentAlignment" Value="Stretch" />
         <Setter Property="Background" Value="{StaticResource Level4Brush}" />
-        <Setter Property="Margin" Value="8" />
+        <Setter Property="Margin" Value="5 0 5 5" />
     </Style>
     
     <!-- Generic List Item style -->

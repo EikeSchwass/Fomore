@@ -35,7 +35,6 @@ namespace Fomore.UI.ViewModel.Navigation
                 if (Equals(value, selectedCreature)) return;
                 selectedCreature = value;
                 OnPropertyChanged();
-                NewMovementPatternCommand.OnCanExecuteChanged();
                 ResetSelectionCommand.OnCanExecuteChanged();
                 StartTrainingCommand.OnCanExecuteChanged();
             }
@@ -85,8 +84,13 @@ namespace Fomore.UI.ViewModel.Navigation
                     previouslySelectedMovementPattern = null;
                 }
                 OnPropertyChanged();
+                OnPropertyChanged(nameof(MovementPatternSelectionEnabled));
+                ResetSelectionCommand.OnCanExecuteChanged();
+                StartTrainingCommand.OnCanExecuteChanged();
             }
         }
+
+        public bool MovementPatternSelectionEnabled => !NewMovementPattern;
 
         public double TargetSpeed
         {
@@ -113,20 +117,13 @@ namespace Fomore.UI.ViewModel.Navigation
         // ------------------------------------------------------------
         // Commands and Actions
         // ------------------------------------------------------------
-
-        public DelegateCommand NewMovementPatternCommand { get; }
+        
         public DelegateCommand ResetSelectionCommand { get; }
         public DelegateCommand StartTrainingCommand { get; }
 
-        private void NewMovementPatternAction(object obj)
-        {
-            MovementPatternVM movementPattern = new MovementPatternVM(new MovementPattern());
-            SelectedCreature.MovementPatternCollectionVM.Add(movementPattern);
-            SelectedMovementPattern = movementPattern;
-        }
-
         private void ResetSelectionAction(object obj)
         {
+            NewMovementPattern = false;
             SelectedCreature = null;
             SelectedMovementPattern = null;
             SelectedEnvironment = null;
@@ -136,6 +133,13 @@ namespace Fomore.UI.ViewModel.Navigation
 
         private void StartTrainingAction(object obj)
         {
+            if (NewMovementPattern)
+            {
+                MovementPatternVM movementPattern = new MovementPatternVM(new MovementPattern() {Name = "" + SelectedCreature.Name + " - " + SelectedEnvironment.Name});
+                SelectedCreature.MovementPatternCollectionVM.Add((movementPattern));
+                NewMovementPattern = false;
+                SelectedMovementPattern = movementPattern; 
+            }
             SelectedMovementPattern.Iterations++;
             MessageBox.Show("The training process has started...\n\nParameters:\nCreature:\t\t\t" + SelectedCreature.Name + "\nMovement Pattern:\t" + SelectedMovementPattern.Name + "\nEnvironment:\t\t" + SelectedEnvironment.Name + "\nShow Progress:\t\t" + (ShowTraining ? "Yes" : "No"), "Training", MessageBoxButton.OK, MessageBoxImage.Information);
         }
@@ -150,14 +154,13 @@ namespace Fomore.UI.ViewModel.Navigation
             EntitiesStorage = entitiesStorage;
 
             // Init commands
-            NewMovementPatternCommand = new DelegateCommand(NewMovementPatternAction, o => SelectedCreature != null);
             ResetSelectionCommand = new DelegateCommand(ResetSelectionAction,
                                                         o => SelectedCreature != null ||
                                                              SelectedMovementPattern != null ||
                                                              SelectedEnvironment != null);
             StartTrainingCommand = new DelegateCommand(StartTrainingAction,
                                                          o => SelectedCreature != null &&
-                                                              SelectedMovementPattern != null &&
+                                                              (SelectedMovementPattern != null || NewMovementPattern) &&
                                                               SelectedEnvironment != null);
         }
 
