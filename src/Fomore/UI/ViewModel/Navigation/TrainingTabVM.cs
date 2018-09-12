@@ -173,9 +173,8 @@ namespace Fomore.UI.ViewModel.Navigation
             // if (obj is CreatureVM vm)
             // SelectedCreature = vm;
 
-            if (obj is CreatureTabVM.CreatureMovementPattern)
+            if (obj is CreatureTabVM.CreatureMovementPattern cmp)
             {
-                var cmp = (CreatureTabVM.CreatureMovementPattern)obj;
                 if (cmp.Creature != null)
                     SelectedCreature = cmp.Creature;
                 if (cmp.MovementPattern != null)
