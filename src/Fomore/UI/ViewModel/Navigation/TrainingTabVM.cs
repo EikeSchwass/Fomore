@@ -135,7 +135,7 @@ namespace Fomore.UI.ViewModel.Navigation
         {
             if (NewMovementPattern)
             {
-                MovementPatternVM movementPattern = new MovementPatternVM(new MovementPattern() {Name = "" + SelectedCreature.Name + " - " + SelectedEnvironment.Name});
+                MovementPatternVM movementPattern = new MovementPatternVM(new MovementPattern() {Name = "" + SelectedCreature.Name + " on " + SelectedEnvironment.Name + " with " + TargetSpeed + "m/s²"});
                 SelectedCreature.MovementPatternCollectionVM.Add((movementPattern));
                 NewMovementPattern = false;
                 SelectedMovementPattern = movementPattern; 
