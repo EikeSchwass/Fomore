@@ -123,8 +123,17 @@ namespace Fomore.UI.ViewModel.Navigation
 
         public override void OnSelect(object obj)
         {
-            if (obj is CreatureVM vm)
-                SelectedCreature = vm;
+            // if (obj is CreatureVM vm)
+            // SelectedCreature = vm;
+
+            if (obj is CreatureTabVM.CreatureMovementPattern)
+            {
+                var cmp = (CreatureTabVM.CreatureMovementPattern)obj;
+                if (cmp.Creature != null)
+                    SelectedCreature = cmp.Creature;
+                if (cmp.MovementPattern != null)
+                    SelectedMovementPattern = cmp.MovementPattern;
+            }
         }
     }
 }

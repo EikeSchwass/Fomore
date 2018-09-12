@@ -31,6 +31,7 @@ namespace Fomore.UI.ViewModel.Navigation
                 if (Equals(value, selectedCreature)) return;
                 selectedCreature = value;
                 OnPropertyChanged();
+                OnPropertyChanged(nameof(SelectedCreatureMovementPattern));
             }
         }
 
@@ -42,6 +43,21 @@ namespace Fomore.UI.ViewModel.Navigation
                 if (Equals(value, selectedMovementPattern)) return;
                 selectedMovementPattern = value;
                 OnPropertyChanged();
+                OnPropertyChanged(nameof(SelectedCreatureMovementPattern));
+            }
+        }
+
+        public CreatureMovementPattern SelectedCreatureMovementPattern => new CreatureMovementPattern(SelectedCreature, SelectedMovementPattern);
+
+        public struct CreatureMovementPattern
+        {
+            public CreatureVM Creature { get; }
+            public MovementPatternVM MovementPattern { get; }
+
+            public CreatureMovementPattern(CreatureVM creature, MovementPatternVM movementPattern)
+            {
+                Creature = creature;
+                MovementPattern = movementPattern;
             }
         }
 
