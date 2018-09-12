@@ -43,6 +43,7 @@ namespace Fomore.UI.ViewModel.CreatureEditor.Tools
             $"{GetType().Name} ({(InputGesture as KeyGesture)?.GetDisplayStringForCulture(CultureInfo.CurrentCulture)})";
 
         public abstract InputGesture InputGesture { get; }
+        protected InfoMessageCollection InfoMessageCollection { get; private set; }
 
         protected Tool()
         {
@@ -55,8 +56,9 @@ namespace Fomore.UI.ViewModel.CreatureEditor.Tools
 
         public event ToolEventHandler SelectionRequested;
 
-        public void Select()
+        public void Select(InfoMessageCollection infoMessageCollection)
         {
+            InfoMessageCollection = infoMessageCollection;
             if (IsSelected) return;
             IsSelected = true;
             OnSelected();

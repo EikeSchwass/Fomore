@@ -23,21 +23,47 @@ namespace Fomore.UI.ViewModel.CreatureEditor.Tools
         private JointVM FirstJoint { get; set; }
 
         /// <inheritdoc />
+        public override InputGesture InputGesture { get; } = new KeyGesture(Key.B, ModifierKeys.Control);
+
+        /// <inheritdoc />
         public override bool OnCanvasMouseDown(MouseInfo mouseInfo, CreatureStructureEditorCanvasVM canvasVM, ModifierKeys modifierKeys)
         {
             CanvasVM = CanvasVM ?? canvasVM;
             if (base.OnCanvasMouseDown(mouseInfo, canvasVM, modifierKeys))
                 return true;
 
-
-
             return true;
+        }
+
+        /// <inheritdoc />
+        public override void OnSelected()
+        {
+            var shortCut =
+                new InfoMessage("You can quickly switch between tools via their shortcuts. Just hover over the icons to see them",
+                                TimeSpan.FromSeconds(10));
+            if (!InfoMessageCollection.HasShownMessage(shortCut))
+                InfoMessageCollection.AddInfoMessage(shortCut);
         }
 
         private void PlaceBone(JointVM firstJoint, JointVM secondJoint)
         {
             var bone = new Bone(firstJoint.Model, secondJoint.Model);
             var boneVM = new BoneVM(bone);
+            if (CanvasVM.HistoryStack.Current.CreatureStructureVM.BoneCollectionVM.Any(b =>
+                                                                    {
+                                                                        if (b.FirstJoint.Model.Tracker == firstJoint.Model.Tracker &&
+                                                                            b.SecondJoint.Model.Tracker == secondJoint.Model.Tracker)
+                                                                            return true;
+                                                                        if (b.FirstJoint.Model.Tracker == secondJoint.Model.Tracker &&
+                                                                            b.SecondJoint.Model.Tracker == firstJoint.Model.Tracker)
+                                                                            return true;
+                                                                        return false;
+                                                                    }))
+            {
+                var infoMessage = new InfoMessage("Bone already placed between those joints", TimeSpan.FromSeconds(2), Brushes.Red);
+                InfoMessageCollection.AddInfoMessageWithoutTracking(infoMessage);
+                return;
+            }
             var creatureVM = CanvasVM.HistoryStack.Current.Clone();
             creatureVM.CreatureStructureVM.BoneCollectionVM.Add(boneVM);
             CanvasVM.HistoryStack.NewEntry(creatureVM);
@@ -70,7 +96,21 @@ namespace Fomore.UI.ViewModel.CreatureEditor.Tools
                  select jointVM).FirstOrDefault();
 
             if (closestJointInRange == null)
+            {
+                if (FirstJoint != null)
+                {
+                    var infoMessage = new InfoMessage("To cancel the bone placement just right click anywhere on the canvas", TimeSpan.FromSeconds(5));
+                    if (!InfoMessageCollection.InfoMessages.Any(m => string.Equals(m.Message, infoMessage.Message, StringComparison.Ordinal)))
+                        InfoMessageCollection.AddInfoMessageWithoutTracking(infoMessage);
+                }
+                else
+                {
+                    var infoMessage = new InfoMessage("To place a bone, first place joints with the respective tool and then connect them with this tool", TimeSpan.FromSeconds(5));
+                    if (!InfoMessageCollection.InfoMessages.Any(m => string.Equals(m.Message, infoMessage.Message, StringComparison.Ordinal)))
+                        InfoMessageCollection.AddInfoMessageWithoutTracking(infoMessage);
+                }
                 return true;
+            }
 
             canvasVM.PreviewBone.To = mousePosition;
             if (FirstJoint == null)
@@ -124,10 +164,9 @@ namespace Fomore.UI.ViewModel.CreatureEditor.Tools
         }
 
         /// <inheritdoc />
-        public override InputGesture InputGesture { get; } = new KeyGesture(Key.B, ModifierKeys.Control);
-
-        /// <inheritdoc />
-        public override bool OnCanvasMouseWheel(MouseWheelInfo mouseWheelInfo, CreatureStructureEditorCanvasVM canvasVM, ModifierKeys modifierKeys)
+        public override bool OnCanvasMouseWheel(MouseWheelInfo mouseWheelInfo,
+                                                CreatureStructureEditorCanvasVM canvasVM,
+                                                ModifierKeys modifierKeys)
         {
             CanvasVM = CanvasVM ?? canvasVM;
             bool result = base.OnCanvasMouseWheel(mouseWheelInfo, canvasVM, modifierKeys);

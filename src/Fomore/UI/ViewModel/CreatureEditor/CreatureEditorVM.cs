@@ -13,7 +13,7 @@ namespace Fomore.UI.ViewModel.CreatureEditor
 
         public CreatureEditorVM(CreatureVM creatureVM)
         {
-            CreatureHistoryStackVM=new HistoryStackVM<CreatureVM>(creatureVM);
+            CreatureHistoryStackVM = new HistoryStackVM<CreatureVM>(creatureVM);
             CreatureEditorPanelVM = new CreatureEditorPanelVM(CreatureHistoryStackVM);
         }
     }

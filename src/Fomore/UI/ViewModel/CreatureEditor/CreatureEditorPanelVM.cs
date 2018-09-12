@@ -23,12 +23,13 @@ namespace Fomore.UI.ViewModel.CreatureEditor
         {
             HistoryStack = historyStack;
             ToolCollectionVM = new ToolCollectionVM();
+            CreatureStructureEditorCanvasVM = new CreatureStructureEditorCanvasVM(HistoryStack, ToolCollectionVM);
+            ToolCollectionVM.InfoMessageCollection = CreatureStructureEditorCanvasVM.InfoMessageCollection;
             ToolCollectionVM.Tools.Add(new SelectAllTool());
             ToolCollectionVM.Tools.Add(new MoveTool());
             ToolCollectionVM.Tools.Add(new PanTool());
             ToolCollectionVM.Tools.Add(new PlaceJointTool());
             ToolCollectionVM.Tools.Add(new PlaceBoneTool());
-            CreatureStructureEditorCanvasVM = new CreatureStructureEditorCanvasVM(HistoryStack, ToolCollectionVM);
 
             Behaviours = new ObservableCollection<BaseBehaviour>
             {

@@ -59,6 +59,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Converter\InvertedNumberVisibilityConverter.cs" />
     <Compile Include="Converter\NotNullVisibilityConverter.cs" />
     <Compile Include="Converter\NullVisibilityConverter.cs" />
     <Compile Include="Converter\BooleanVisibilityConverter.cs" />
@@ -89,6 +90,8 @@
     <Compile Include="ViewModel\CreatureEditor\PreviewJointVM.cs" />
     <Compile Include="ViewModel\CreatureEditor\SelectionVM.cs" />
     <Compile Include="ViewModel\CreatureEditor\ToolCollectionVM.cs" />
+    <Compile Include="ViewModel\CreatureEditor\Tools\InfoMessage.cs" />
+    <Compile Include="ViewModel\CreatureEditor\Tools\InfoMessageCollection.cs" />
     <Compile Include="ViewModel\CreatureEditor\Tools\MoveTool.cs" />
     <Compile Include="ViewModel\CreatureEditor\Tools\PanTool.cs" />
     <Compile Include="ViewModel\CreatureEditor\Tools\PlaceBoneTool.cs" />

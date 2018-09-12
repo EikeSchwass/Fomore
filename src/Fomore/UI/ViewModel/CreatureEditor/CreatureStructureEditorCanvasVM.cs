@@ -24,10 +24,11 @@ namespace Fomore.UI.ViewModel.CreatureEditor
         public PreviewJointVM PreviewJoint { get; } = new PreviewJointVM();
         public PreviewBoneVM PreviewBone { get; } = new PreviewBoneVM();
         public SelectionVM SelectionVM { get; } = new SelectionVM();
+        public InfoMessageCollection InfoMessageCollection { get; } = new InfoMessageCollection();
 
         public CameraVM CameraVM { get; }
         public ToolCollectionVM ToolCollectionVM { get; }
-        public HistoryStackVM<CreatureVM> HistoryStack { get; } 
+        public HistoryStackVM<CreatureVM> HistoryStack { get; }
 
         public ObservableCollection<JointVM> SelectedJoints { get; } = new ObservableCollection<JointVM>();
         public ObservableCollection<BoneVM> SelectedBones { get; } = new ObservableCollection<BoneVM>();

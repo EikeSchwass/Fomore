@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media;
@@ -107,6 +108,14 @@ namespace Fomore.UI.ViewModel.CreatureEditor.Tools
         {
             base.OnCanvasMouseLeave(canvasVM, modifierKeys);
             LastPosition = null;
+        }
+
+        /// <inheritdoc />
+        public override void OnSelected()
+        {
+            var shortCut = new InfoMessage("You can quickly switch between tools via their shortcuts. Just hover over the icons to see them", TimeSpan.FromSeconds(10));
+            if (!InfoMessageCollection.HasShownMessage(shortCut))
+                InfoMessageCollection.AddInfoMessage(shortCut);
         }
     }
 }

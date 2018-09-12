@@ -9,13 +9,15 @@ namespace Fomore.UI.ViewModel.Helper
         private Action<T> AddCallback { get; }
         private Action<T> RemoveCallback { get; }
         private Action ClearCallback { get; }
+        private Action<T, int> InsertCallback { get; }
 
-        public CollectionAccess(ReadOnlyObservableCollection<T> collection, Action<T> add, Action<T> remove, Action clear)
+        public CollectionAccess(ReadOnlyObservableCollection<T> collection, Action<T> add, Action<T> remove, Action clear, Action<T, int> insert)
         {
             Collection = collection;
             AddCallback = add;
             RemoveCallback = remove;
             ClearCallback = clear;
+            InsertCallback = insert;
         }
 
         public void Add(T item)
@@ -36,6 +38,11 @@ namespace Fomore.UI.ViewModel.Helper
         public void Clear()
         {
             ClearCallback?.Invoke();
+        }
+
+        public void InsertAt(T item, int index)
+        {
+            InsertCallback?.Invoke(item, index);
         }
     }
 }

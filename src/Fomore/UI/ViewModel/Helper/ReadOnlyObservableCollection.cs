@@ -20,8 +20,17 @@ namespace Fomore.UI.ViewModel.Helper
         {
             var collection = new ReadOnlyObservableCollection<T>();
             collection.Collection.AddRange(elements);
-            var collectionAccess = new CollectionAccess<T>(collection, collection.Add, collection.Remove, collection.Clear);
+            var collectionAccess = new CollectionAccess<T>(collection, collection.Add, collection.Remove, collection.Clear, collection.Insert);
             return collectionAccess;
+        }
+
+        private void Insert(T item, int index)
+        {
+            Collection.Insert(index, item);
+            CollectionChanged?.Invoke(this,
+                                      new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Add, item, index));
+            OnPropertyChanged(nameof(Count));
+
         }
 
         private void Add(T item)

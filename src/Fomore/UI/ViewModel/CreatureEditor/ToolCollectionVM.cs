@@ -6,6 +6,7 @@ namespace Fomore.UI.ViewModel.CreatureEditor
 {
     public class ToolCollectionVM : ViewModelBase
     {
+        public InfoMessageCollection InfoMessageCollection { get; set; }
         private Tool selectedTool;
 
         public Tool SelectedTool
@@ -18,7 +19,7 @@ namespace Fomore.UI.ViewModel.CreatureEditor
                 selectedTool?.Deselect();
                 selectedTool = value;
                 OnPropertyChanged();
-                selectedTool?.Select();
+                selectedTool?.Select(InfoMessageCollection);
             }
         }
 

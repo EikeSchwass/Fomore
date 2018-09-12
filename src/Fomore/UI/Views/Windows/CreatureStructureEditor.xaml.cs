@@ -1,4 +1,6 @@
-﻿using System.Windows.Input;
+﻿using System.ComponentModel;
+using System.Windows.Input;
+using Fomore.UI.ViewModel.CreatureEditor;
 
 namespace Fomore.UI.Views.Windows
 {
@@ -16,6 +18,14 @@ namespace Fomore.UI.Views.Windows
         {
             if (e.Key == Key.System)
                 e.Handled = true;
+        }
+
+        /// <inheritdoc />
+        protected override void OnClosing(CancelEventArgs e)
+        {
+            base.OnClosing(e);
+            if (DataContext is CreatureEditorVM creatureEditor)
+                creatureEditor.CreatureEditorPanelVM.CreatureStructureEditorCanvasVM.InfoMessageCollection.CancelAll();
         }
     }
 }

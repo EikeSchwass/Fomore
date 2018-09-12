@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media;
@@ -97,7 +98,7 @@ namespace Fomore.UI.ViewModel.CreatureEditor.Tools
                     CanvasVM.SelectionVM.Visibility = Visibility.Hidden;
                 }
                 else
-                    SelectElementsInSelectionArea(canvasVM);
+                    SelectElementsInSelectionArea(canvasVM, modifierKeys);
 
                 IsSelecting = false;
                 return true;
@@ -148,10 +149,12 @@ namespace Fomore.UI.ViewModel.CreatureEditor.Tools
             }
         }
 
-        private void SelectElementsInSelectionArea(CreatureStructureEditorCanvasVM canvasVM)
+        private void SelectElementsInSelectionArea(CreatureStructureEditorCanvasVM canvasVM, ModifierKeys modifierKeys)
         {
             CanvasVM = CanvasVM ?? canvasVM;
-            Reset();
+            if ((modifierKeys & ModifierKeys.Shift) == 0)
+                Reset();
+            CanvasVM.SelectionVM.Visibility = Visibility.Hidden;
 
             var creatureStructureVM = CanvasVM.HistoryStack.Current.CreatureStructureVM;
             var jointsInRectangle =
@@ -161,10 +164,39 @@ namespace Fomore.UI.ViewModel.CreatureEditor.Tools
                                                                boneVM.FirstJoint.Position.IsInsideRect(CanvasVM.SelectionVM.Rectangle) ||
                                                                boneVM.SecondJoint.Position.IsInsideRect(CanvasVM.SelectionVM.Rectangle) ||
                                                                CanvasVM.SelectionVM.Rectangle.IsBoneInside(boneVM.Model));
-            foreach (var jointVM in jointsInRectangle)
-                CanvasVM.SelectedJoints.Add(jointVM);
-            foreach (var boneVM in bonesInRectangle)
-                CanvasVM.SelectedBones.Add(boneVM);
+            if ((modifierKeys & ModifierKeys.Alt) == 0)
+            {
+                foreach (var jointVM in jointsInRectangle)
+                {
+                    if ((modifierKeys & ModifierKeys.Shift) == 0)
+                        CanvasVM.SelectedJoints.Add(jointVM);
+                    else
+                    {
+                        var joint = CanvasVM.SelectedJoints.FirstOrDefault(j => j.Model.Tracker == jointVM.Model.Tracker);
+                        if (joint != null)
+                            CanvasVM.SelectedJoints.Remove(joint);
+                        else
+                            CanvasVM.SelectedJoints.Add(jointVM);
+                    }
+                }
+            }
+
+            if ((modifierKeys & ModifierKeys.Control) == 0)
+            {
+                foreach (var boneVM in bonesInRectangle)
+                {
+                    if ((modifierKeys & ModifierKeys.Shift) == 0)
+                        CanvasVM.SelectedBones.Add(boneVM);
+                    else
+                    {
+                        var bone = CanvasVM.SelectedBones.FirstOrDefault(b => b.Model.Tracker == boneVM.Model.Tracker);
+                        if (bone != null)
+                            CanvasVM.SelectedBones.Remove(bone);
+                        else
+                            CanvasVM.SelectedBones.Add(boneVM);
+                    }
+                }
+            }
         }
 
         private void Reset()
@@ -174,6 +206,34 @@ namespace Fomore.UI.ViewModel.CreatureEditor.Tools
             CanvasVM.SelectionVM.Visibility = Visibility.Hidden;
             CanvasVM.SelectedJoints.Clear();
             CanvasVM.SelectedBones.Clear();
+        }
+
+        /// <inheritdoc />
+        public override void OnSelected()
+        {
+            var jointMessage = new InfoMessage("By pressing the Ctrl-Key you will only select joints", TimeSpan.FromSeconds(10));
+            var boneMessage = new InfoMessage("By pressing the Alt-Key you will only select bones", TimeSpan.FromSeconds(10));
+            var shiftMessage = new InfoMessage("By pressing the Shift-Key you can select multiple elements", TimeSpan.FromSeconds(10));
+            var panMessage = new InfoMessage("Hold down the middle mouse button to move the canvas around", TimeSpan.FromSeconds(10));
+            if (!InfoMessageCollection.HasShownMessage(jointMessage))
+            {
+                InfoMessageCollection.AddInfoMessage(jointMessage);
+            }
+
+            if (!InfoMessageCollection.HasShownMessage(boneMessage))
+            {
+                InfoMessageCollection.AddInfoMessage(boneMessage);
+            }
+
+            if (!InfoMessageCollection.HasShownMessage(shiftMessage))
+            {
+                InfoMessageCollection.AddInfoMessage(shiftMessage);
+            }
+
+            if (!InfoMessageCollection.HasShownMessage(panMessage))
+            {
+                InfoMessageCollection.AddInfoMessage(panMessage);
+            }
         }
     }
 }
