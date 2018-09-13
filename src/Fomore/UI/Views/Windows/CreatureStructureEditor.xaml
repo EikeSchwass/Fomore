@@ -6,6 +6,7 @@
         xmlns:creatureEditor="clr-namespace:Fomore.UI.ViewModel.CreatureEditor"
         xmlns:controls="clr-namespace:Fomore.UI.Views.Controls"
         xmlns:helper="clr-namespace:Fomore.UI.ViewModel.Helper"
+        xmlns:fa="http://schemas.fontawesome.io/icons/"
         mc:Ignorable="d"
         Title="CreatureStructureEditor" Height="618" Width="1000" WindowState="Maximized"
         d:DataContext="{d:DesignInstance creatureEditor:CreatureEditorVM}" Background="{StaticResource Level0Brush}"
@@ -24,19 +25,19 @@
         <!-- Info Panel -->
         <Grid Grid.Column="1">
             <Grid.RowDefinitions>
-                <RowDefinition Height="*" />
+                <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="2*" />
             </Grid.RowDefinitions>
-            <Grid Grid.Row="0" Background="{StaticResource Level1Brush}" Margin="6">
-                <Border HorizontalAlignment="Center" VerticalAlignment="Center" MinHeight="128" MinWidth="128"
-                        Style="{StaticResource DefaultBorder}" Margin="6" Background="Black">
-                    <Image Source="/../../../assets/images/placeholder.png" Width="128" Height="128"
-                           HorizontalAlignment="Center" VerticalAlignment="Center" />
-                </Border>
-            </Grid>
-            <Grid Grid.Row="1" Background="{StaticResource Level1Brush}" Margin="6">
-                <Grid Margin="6">
+            <GroupBox Grid.Row="0" Background="{StaticResource Level1Brush}" Header="General" Margin="8"
+                      Foreground="White" FontSize="16">
+                <Grid>
+                    <Grid.Resources>
+                        <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource {x:Type TextBlock}}">
+                            <Setter Property="Margin" Value="2" />
+                            <Setter Property="FontSize" Value="14" />
+                        </Style>
+                    </Grid.Resources>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition />
                         <ColumnDefinition />
@@ -44,15 +45,45 @@
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto" />
                         <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
                     </Grid.RowDefinitions>
-                    <TextBlock Grid.Row="0" Grid.Column="0" Text="Bone Count" />
-                    <TextBlock Grid.Row="1" Grid.Column="0" Text="Joint Count" />
-                    <TextBlock Grid.Row="0" Grid.Column="1"
+                    <TextBlock Grid.Row="0" Grid.Column="0" Text="Total Width:" />
+                    <TextBlock Grid.Row="1" Grid.Column="0" Text="Total Height:" />
+                    <TextBlock Grid.Row="2" Grid.Column="0" Text="Number of Bones:" />
+                    <TextBlock Grid.Row="3" Grid.Column="0" Text="Number of Joints:" />
+                    <TextBlock Grid.Row="4" Grid.Column="0" Text="Total weight of bones:" />
+                    <StackPanel Grid.Row="0" Grid.Column="1" Orientation="Horizontal">
+                        <TextBlock
+                            Text="{Binding CreatureHistoryStackVM.Current.CreatureStructureVM.TotalWidth, StringFormat={}{0:#####0.00}}" />
+                        <TextBlock Text="m" Margin="1,4" />
+                    </StackPanel>
+                    <StackPanel Grid.Row="1" Grid.Column="1" Orientation="Horizontal">
+                        <TextBlock
+                            Text="{Binding CreatureHistoryStackVM.Current.CreatureStructureVM.TotalHeight, StringFormat={}{0:#####0.00}}" />
+                        <TextBlock Text="m" Margin="1,4" />
+                    </StackPanel>
+                    <TextBlock Grid.Row="2" Grid.Column="1"
                                Text="{Binding CreatureHistoryStackVM.Current.CreatureStructureVM.BoneCollectionVM.Count}" />
-                    <TextBlock Grid.Row="1" Grid.Column="1"
+                    <TextBlock Grid.Row="3" Grid.Column="1"
                                Text="{Binding CreatureHistoryStackVM.Current.CreatureStructureVM.JointCollectionVM.Count}" />
+                    <Grid Grid.Row="4" Grid.Column="1">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Grid.Column="0"
+                                   Text="{Binding CreatureHistoryStackVM.Current.CreatureStructureVM.TotalWeight, StringFormat={}{0:#####0.00}, TargetNullValue=Recalculation required}" />
+                        <controls:CustomizableButton Grid.Column="1" Margin="4,0" Padding="4"
+                                                     VerticalAlignment="Center"
+                                                     Command="{Binding CreatureHistoryStackVM.Current.CreatureStructureVM.RecalculateWeightCommand}">
+                            <fa:ImageAwesome Icon="Refresh" />
+                        </controls:CustomizableButton>
+                    </Grid>
                 </Grid>
-            </Grid>
+            </GroupBox>
+
         </Grid>
     </Grid>
 </Window>

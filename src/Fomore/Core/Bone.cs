@@ -6,9 +6,10 @@ namespace Core
     public class Bone
     {
         public object Tracker { get; }
-        public float Density { get; set; }
+        public float Density { get; set; } = 0.75f;
         public Joint FirstJoint { get; set; }
         public Joint SecondJoint { get; set; }
+        public float Width { get; set; } = 0.05f;
 
         public Bone(Joint firstJoint, Joint secondJoint) : this(new object())
         {

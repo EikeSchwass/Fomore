@@ -10,6 +10,7 @@ namespace Core
     {
         public IList<Bone> Bones { get; } = new List<Bone>();
         public IList<Joint> Joints { get; } = new List<Joint>();
+        public float Scale { get; set; } = 0.001f;
 
         public CreatureStructure Clone()
         {

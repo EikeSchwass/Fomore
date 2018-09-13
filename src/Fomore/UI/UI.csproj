@@ -260,12 +260,6 @@
     <Folder Include="assets\fonts\" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Core\Core.csproj">
-      <Project>{9bda5a67-14f6-450a-8919-8a5884ae9b60}</Project>
-      <Name>Core</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <Resource Include="assets\images\icon.ico" />
   </ItemGroup>
   <ItemGroup>
@@ -293,6 +287,12 @@
   <ItemGroup>
     <Resource Include="assets\images\fliphorizontal.png" />
     <Resource Include="assets\images\flipvertical.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Core\Core.csproj">
+      <Project>{ec8bbbe5-eac0-4f73-b106-e2f7cfbafa9f}</Project>
+      <Name>Core</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
