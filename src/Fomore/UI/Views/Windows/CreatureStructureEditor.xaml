@@ -84,6 +84,11 @@
                 </Grid>
             </GroupBox>
 
+
+            <GroupBox Grid.Row="1" Background="{StaticResource Level1Brush}" Header="Settings" Margin="8"
+                      Foreground="White" FontSize="16">
+            </GroupBox>
+
         </Grid>
     </Grid>
 </Window>
