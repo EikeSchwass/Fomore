@@ -1,5 +1,7 @@
-﻿using System.Windows.Input;
+﻿using System.Linq;
+using System.Windows.Input;
 using System.Windows.Media;
+using Fomore.UI.ViewModel.Helper;
 using FontAwesome.WPF;
 
 namespace Fomore.UI.ViewModel.CreatureEditor.Behaviours
@@ -21,10 +23,21 @@ namespace Fomore.UI.ViewModel.CreatureEditor.Behaviours
         /// <inheritdoc />
         public override void OnInvoked(CreatureEditorPanelVM parameter, ModifierKeys modifierKeys)
         {
-            var creatureVM = parameter.CreatureStructureEditorCanvasVM.HistoryStack.Current.Clone();
-            creatureVM.CreatureStructureVM.JointCollectionVM.Clear();
-            creatureVM.CreatureStructureVM.BoneCollectionVM.Clear();
-            parameter.CreatureStructureEditorCanvasVM.HistoryStack.NewEntry(creatureVM);
+            var joints = parameter.Creature.CreatureStructureVM.JointCollectionVM.ToList();
+            var bones = parameter.Creature.CreatureStructureVM.BoneCollectionVM.ToList();
+            var changeOperation = new ChangeOperation(c =>
+                                                      {
+                                                          c.Creature.CreatureStructureVM.JointCollectionVM.Clear();
+                                                          c.Creature.CreatureStructureVM.BoneCollectionVM.Clear();
+                                                      },
+                                                      c =>
+                                                      {
+                                                          foreach (var joint in joints)
+                                                              c.Creature.CreatureStructureVM.JointCollectionVM.Add(joint);
+                                                          foreach (var bone in bones)
+                                                              c.Creature.CreatureStructureVM.BoneCollectionVM.Add(bone);
+                                                      });
+            parameter.CreatureStructureEditorCanvasVM.HistoryStack.AddOperation(changeOperation);
         }
     }
 }

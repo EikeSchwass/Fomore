@@ -7,6 +7,7 @@ using System.Windows.Media.Imaging;
 using Core;
 using Fomore.UI.ViewModel.Commands;
 using Fomore.UI.ViewModel.Data;
+using Fomore.UI.ViewModel.Helper;
 
 namespace Fomore.UI.ViewModel.CreatureEditor.Tools
 {
@@ -49,7 +50,7 @@ namespace Fomore.UI.ViewModel.CreatureEditor.Tools
         {
             var bone = new Bone(firstJoint.Model, secondJoint.Model);
             var boneVM = new BoneVM(bone);
-            if (CanvasVM.HistoryStack.Current.CreatureStructureVM.BoneCollectionVM.Any(b =>
+            if (CanvasVM.Creature.CreatureStructureVM.BoneCollectionVM.Any(b =>
                                                                     {
                                                                         if (b.FirstJoint.Model.Tracker == firstJoint.Model.Tracker &&
                                                                             b.SecondJoint.Model.Tracker == secondJoint.Model.Tracker)
@@ -64,9 +65,10 @@ namespace Fomore.UI.ViewModel.CreatureEditor.Tools
                 InfoMessageCollection.AddInfoMessageWithoutTracking(infoMessage);
                 return;
             }
-            var creatureVM = CanvasVM.HistoryStack.Current.Clone();
-            creatureVM.CreatureStructureVM.BoneCollectionVM.Add(boneVM);
-            CanvasVM.HistoryStack.NewEntry(creatureVM);
+
+            var changeOperation = new ChangeOperation(c => { c.Creature.CreatureStructureVM.BoneCollectionVM.Add(boneVM); },
+                                                      c => { c.Creature.CreatureStructureVM.BoneCollectionVM.Remove(boneVM); });
+            CanvasVM.HistoryStack.AddOperation(changeOperation);
             Reset();
             FirstJoint = secondJoint;
             CanvasVM.PreviewBone.From = FirstJoint.Position;
@@ -87,7 +89,7 @@ namespace Fomore.UI.ViewModel.CreatureEditor.Tools
             }
 
             var mousePosition = new Vector2(mouseInfo.RelativePosition.X, mouseInfo.RelativePosition.Y);
-            var jointCollectionVM = canvasVM.HistoryStack.Current.CreatureStructureVM.JointCollectionVM;
+            var jointCollectionVM = canvasVM.Creature.CreatureStructureVM.JointCollectionVM;
             var closestJointInRange =
                 (from jointVM in jointCollectionVM
                  let distance = (jointVM.Position - mousePosition).Length
@@ -133,7 +135,7 @@ namespace Fomore.UI.ViewModel.CreatureEditor.Tools
                 return true;
 
             var mousePosition = new Vector2(mouseInfo.RelativePosition.X, mouseInfo.RelativePosition.Y);
-            var jointCollectionVM = canvasVM.HistoryStack.Current.CreatureStructureVM.JointCollectionVM;
+            var jointCollectionVM = canvasVM.Creature.CreatureStructureVM.JointCollectionVM;
             var closestJointInRange =
                 (from jointVM in jointCollectionVM
                  let distance = (jointVM.Position - mousePosition).Length

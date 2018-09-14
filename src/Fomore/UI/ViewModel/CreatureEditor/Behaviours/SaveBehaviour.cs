@@ -1,4 +1,5 @@
-﻿using System.Windows.Input;
+﻿using System;
+using System.Windows.Input;
 using System.Windows.Media;
 using FontAwesome.WPF;
 
@@ -21,19 +22,7 @@ namespace Fomore.UI.ViewModel.CreatureEditor.Behaviours
         /// <inheritdoc />
         public override void OnInvoked(CreatureEditorPanelVM parameter, ModifierKeys modifierKeys)
         {
-            base.OnInvoked(parameter, modifierKeys);
-            var original = parameter.HistoryStack.Original;
-            original.CreatureStructureVM.BoneCollectionVM.Clear();
-            original.CreatureStructureVM.JointCollectionVM.Clear();
-            var current = parameter.HistoryStack.Current;
-            foreach (var boneVM in current.CreatureStructureVM.BoneCollectionVM)
-            {
-                original.CreatureStructureVM.BoneCollectionVM.Add(boneVM);
-            }
-            foreach (var jointVM in current.CreatureStructureVM.JointCollectionVM)
-            {
-                original.CreatureStructureVM.JointCollectionVM.Add(jointVM);
-            }
+            throw new NotImplementedException();
         }
     }
 }

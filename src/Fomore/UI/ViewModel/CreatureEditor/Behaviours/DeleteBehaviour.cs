@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Windows.Input;
 using System.Windows.Media;
 using FontAwesome.WPF;
@@ -27,7 +28,7 @@ namespace Fomore.UI.ViewModel.CreatureEditor.Behaviours
         {
             base.OnInvoked(parameter, modifierKeys);
             var canvasVM = parameter.CreatureStructureEditorCanvasVM;
-            var creatureVM = canvasVM.HistoryStack.Current.Clone();
+            var creatureVM = parameter.Creature;
             var jointsToRemove = creatureVM.CreatureStructureVM.JointCollectionVM.Where(j => canvasVM.SelectedJoints.Any(k => k.Model.Tracker == j.Model.Tracker)).ToList();
             var bonesToRemove = creatureVM.CreatureStructureVM.BoneCollectionVM.Where(b => canvasVM.SelectedBones.Any(k => k.Model.Tracker == b.Model.Tracker))
                                     .ToList();
@@ -41,7 +42,7 @@ namespace Fomore.UI.ViewModel.CreatureEditor.Behaviours
             {
                 creatureVM.CreatureStructureVM.BoneCollectionVM.Remove(boneVM);
             }
-            canvasVM.HistoryStack.NewEntry(creatureVM);
+            throw new NotImplementedException();
         }
     }
 }

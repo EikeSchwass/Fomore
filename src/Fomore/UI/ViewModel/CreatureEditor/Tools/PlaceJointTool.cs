@@ -6,6 +6,7 @@ using System.Windows.Media.Imaging;
 using Core;
 using Fomore.UI.ViewModel.Commands;
 using Fomore.UI.ViewModel.Data;
+using Fomore.UI.ViewModel.Helper;
 
 namespace Fomore.UI.ViewModel.CreatureEditor.Tools
 {
@@ -29,11 +30,10 @@ namespace Fomore.UI.ViewModel.CreatureEditor.Tools
             if (base.OnCanvasMouseDown(mouseInfo, canvasVM, modifierKeys))
                 return true;
 
-            var jointVM = new JointVM(new Joint {Position = canvasVM.PreviewJoint.Position});
-            var creatureVM = canvasVM.HistoryStack.Current.Clone();
-            creatureVM.CreatureStructureVM.JointCollectionVM.Add(jointVM);
-            canvasVM.HistoryStack.NewEntry(creatureVM);
-
+            var jointVM = new JointVM(new Joint { Position = canvasVM.PreviewJoint.Position });
+            var changeOperation = new ChangeOperation(c => c.Creature.CreatureStructureVM.JointCollectionVM.Add(jointVM),
+                                                      c => c.Creature.CreatureStructureVM.JointCollectionVM.Remove(jointVM));
+            canvasVM.HistoryStack.AddOperation(changeOperation);
             return true;
         }
 

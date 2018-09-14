@@ -117,7 +117,7 @@ namespace Fomore.UI.ViewModel.CreatureEditor.Tools
 
             if ((modifierKeys & ModifierKeys.Alt) == 0)
             {
-                var jointVM = (from joint in CanvasVM.HistoryStack?.Current?.CreatureStructureVM?.JointCollectionVM
+                var jointVM = (from joint in CanvasVM.Creature?.CreatureStructureVM?.JointCollectionVM
                                let distance = (joint.Position - relativePosition).Length
                                where distance < SinglePointSelectionTolerance
                                orderby distance
@@ -134,7 +134,7 @@ namespace Fomore.UI.ViewModel.CreatureEditor.Tools
 
             if ((modifierKeys & ModifierKeys.Control) == 0)
             {
-                var boneVM = (from bone in CanvasVM.HistoryStack?.Current?.CreatureStructureVM?.BoneCollectionVM
+                var boneVM = (from bone in CanvasVM.Creature?.CreatureStructureVM?.BoneCollectionVM
                               let distance = relativePosition.GetDistanceToBone(bone.Model)
                               where distance < SinglePointSelectionTolerance
                               orderby distance
@@ -156,7 +156,7 @@ namespace Fomore.UI.ViewModel.CreatureEditor.Tools
                 Reset();
             CanvasVM.SelectionVM.Visibility = Visibility.Hidden;
 
-            var creatureStructureVM = CanvasVM.HistoryStack.Current.CreatureStructureVM;
+            var creatureStructureVM = CanvasVM.Creature.CreatureStructureVM;
             var jointsInRectangle =
                 creatureStructureVM.JointCollectionVM.Where(jointVM => jointVM.Position.IsInsideRect(CanvasVM.SelectionVM.Rectangle));
             var bonesInRectangle =

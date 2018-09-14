@@ -4,6 +4,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using Core;
+using Fomore.UI.ViewModel.Helper;
 
 namespace Fomore.UI.ViewModel.CreatureEditor.Behaviours
 {
@@ -25,65 +26,38 @@ namespace Fomore.UI.ViewModel.CreatureEditor.Behaviours
         public override void OnInvoked(CreatureEditorPanelVM parameter, ModifierKeys modifierKeys)
         {
             base.OnInvoked(parameter, modifierKeys);
-            if (!parameter.HistoryStack.Current.CreatureStructureVM.JointCollectionVM.Any())
+            if (!parameter.Creature.CreatureStructureVM.JointCollectionVM.Any())
                 return;
-            var creatureVM = parameter.HistoryStack.Current.Clone();
+            var creatureVM = parameter.Creature;
 
             var jointCollectionVM = creatureVM.CreatureStructureVM.JointCollectionVM;
-            var center = new Vector2(jointCollectionVM.Average(j => j.Position.X),
-                                     jointCollectionVM.Average(j => j.Position.Y));
+            double maxX = jointCollectionVM.Max(j => j.Position.X);
+            double minX = jointCollectionVM.Min(j => j.Position.X);
+            double maxY = jointCollectionVM.Max(j => j.Position.Y);
+            double minY = jointCollectionVM.Min(j => j.Position.Y);
+            var center = new Vector2(minX + (maxX - minX) / 2, minY + (maxY - minY) / 2);
 
-            foreach (var jointVM in jointCollectionVM)
-            {
-                double y = jointVM.Position.Y;
-                y = -(y - center.Y) + center.Y;
-                jointVM.Position = new Vector2(jointVM.Position.X, y);
-            }
-
-
-            // Move Horizontically in view
-            {
-                double min = jointCollectionVM.Min(j => j.Position.X) - 10;
-                if (min < 0)
-                {
-                    foreach (var jointVM in jointCollectionVM)
-                        jointVM.Position = new Vector2(jointVM.Position.X - min, jointVM.Position.Y);
-                }
-
-                double max = jointCollectionVM.Max(j => j.Position.X) + 10;
-                if (max > CreatureStructureEditorCanvasVM.CanvasWidth)
-                {
-                    foreach (var jointVM in jointCollectionVM)
-                    {
-                        jointVM.Position = new Vector2(jointVM.Position.X - (max - CreatureStructureEditorCanvasVM.CanvasWidth),
-                                                       jointVM.Position.Y);
-                    }
-                }
-            }
-
-            // Move Vertically in view
-            {
-                double min = jointCollectionVM.Min(j => j.Position.Y) - 10;
-                if (min < 0)
-                {
-                    foreach (var jointVM in jointCollectionVM)
-                    {
-                        jointVM.Position = new Vector2(jointVM.Position.X, jointVM.Position.Y - min);
-                    }
-                }
-
-                double max = jointCollectionVM.Max(j => j.Position.Y) + 10;
-                if (max > CreatureStructureEditorCanvasVM.CanvasHeight)
-                {
-                    foreach (var jointVM in jointCollectionVM)
-                    {
-                        jointVM.Position = new Vector2(jointVM.Position.X,
-                                                       jointVM.Position.Y - (max - CreatureStructureEditorCanvasVM.CanvasHeight));
-                    }
-                }
-            }
-
-            parameter.HistoryStack.NewEntry(creatureVM);
+            var changeOperation = new ChangeOperation(c =>
+                                                      {
+                                                          var jointCollection = c.Creature.CreatureStructureVM.JointCollectionVM;
+                                                          foreach (var jointVM in jointCollection)
+                                                          {
+                                                              double y = jointVM.Position.Y;
+                                                              y = -(y - center.Y) + center.Y;
+                                                              jointVM.Position = new Vector2(jointVM.Position.X, y);
+                                                          }
+                                                      },
+                                                      c =>
+                                                      {
+                                                          var jointCollection = c.Creature.CreatureStructureVM.JointCollectionVM;
+                                                          foreach (var jointVM in jointCollection)
+                                                          {
+                                                              double y = jointVM.Position.Y;
+                                                              y = -(y - center.Y) + center.Y;
+                                                              jointVM.Position = new Vector2(jointVM.Position.X, y);
+                                                          }
+                                                      });
+            parameter.CreatureStructureEditorCanvasVM.HistoryStack.AddOperation(changeOperation);
         }
     }
 }

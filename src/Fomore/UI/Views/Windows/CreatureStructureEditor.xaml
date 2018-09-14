@@ -56,28 +56,28 @@
                     <TextBlock Grid.Row="4" Grid.Column="0" Text="Total weight of bones:" />
                     <StackPanel Grid.Row="0" Grid.Column="1" Orientation="Horizontal">
                         <TextBlock
-                            Text="{Binding CreatureHistoryStackVM.Current.CreatureStructureVM.TotalWidth, StringFormat={}{0:#####0.00}}" />
+                            Text="{Binding CreatureEditorPanelVM.CreatureStructureEditorCanvasVM.HistoryStack.Entity.Creature.CreatureStructureVM.TotalWidth, StringFormat={}{0:#####0.00}}" />
                         <TextBlock Text="m" Margin="1,4" />
                     </StackPanel>
                     <StackPanel Grid.Row="1" Grid.Column="1" Orientation="Horizontal">
                         <TextBlock
-                            Text="{Binding CreatureHistoryStackVM.Current.CreatureStructureVM.TotalHeight, StringFormat={}{0:#####0.00}}" />
+                            Text="{Binding CreatureEditorPanelVM.CreatureStructureEditorCanvasVM.HistoryStack.Entity.Creature.CreatureStructureVM.TotalHeight, StringFormat={}{0:#####0.00}}" />
                         <TextBlock Text="m" Margin="1,4" />
                     </StackPanel>
                     <TextBlock Grid.Row="2" Grid.Column="1"
-                               Text="{Binding CreatureHistoryStackVM.Current.CreatureStructureVM.BoneCollectionVM.Count}" />
+                               Text="{Binding CreatureEditorPanelVM.CreatureStructureEditorCanvasVM.HistoryStack.Entity.Creature.CreatureStructureVM.BoneCollectionVM.Count}" />
                     <TextBlock Grid.Row="3" Grid.Column="1"
-                               Text="{Binding CreatureHistoryStackVM.Current.CreatureStructureVM.JointCollectionVM.Count}" />
+                               Text="{Binding CreatureEditorPanelVM.CreatureStructureEditorCanvasVM.HistoryStack.Entity.Creature.CreatureStructureVM.JointCollectionVM.Count}" />
                     <Grid Grid.Row="4" Grid.Column="1">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition />
                             <ColumnDefinition Width="Auto" />
                         </Grid.ColumnDefinitions>
                         <TextBlock Grid.Column="0"
-                                   Text="{Binding CreatureHistoryStackVM.Current.CreatureStructureVM.TotalWeight, StringFormat={}{0:#####0.00}, TargetNullValue=Recalculation required}" />
+                                   Text="{Binding CreatureEditorPanelVM.Creature.CreatureStructureVM.TotalWeight, StringFormat={}{0:#####0.00}, TargetNullValue=Recalculation required}" />
                         <controls:CustomizableButton Grid.Column="1" Margin="4,0" Padding="4"
                                                      VerticalAlignment="Center"
-                                                     Command="{Binding CreatureHistoryStackVM.Current.CreatureStructureVM.RecalculateWeightCommand}">
+                                                     Command="{Binding CreatureEditorPanelVM.Creature.CreatureStructureVM.RecalculateWeightCommand}">
                             <fa:ImageAwesome Icon="Refresh" />
                         </controls:CustomizableButton>
                     </Grid>

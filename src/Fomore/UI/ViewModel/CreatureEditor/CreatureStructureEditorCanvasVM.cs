@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.ObjectModel;
-using System.ComponentModel;
 using System.Linq;
 using System.Windows;
 using System.Windows.Input;
@@ -28,7 +27,7 @@ namespace Fomore.UI.ViewModel.CreatureEditor
 
         public CameraVM CameraVM { get; }
         public ToolCollectionVM ToolCollectionVM { get; }
-        public HistoryStackVM<CreatureVM> HistoryStack { get; }
+        public CreatureVM Creature { get; }
 
         public ObservableCollection<JointVM> SelectedJoints { get; } = new ObservableCollection<JointVM>();
         public ObservableCollection<BoneVM> SelectedBones { get; } = new ObservableCollection<BoneVM>();
@@ -58,11 +57,14 @@ namespace Fomore.UI.ViewModel.CreatureEditor
 
         public DelegateHandleCommand<SizeChange> CanvasSizeChangedCommand { get; }
 
-        public CreatureStructureEditorCanvasVM(HistoryStackVM<CreatureVM> historyStack, ToolCollectionVM toolCollectionVM)
+        public HistoryStackVM<CreatureStructureEditorCanvasVM> HistoryStack { get; }
+
+        public CreatureStructureEditorCanvasVM(CreatureVM creature, ToolCollectionVM toolCollectionVM)
         {
-            HistoryStack = historyStack;
-            HistoryStack.PropertyChanged += HistoryStackChanged;
-            CameraVM = new CameraVM {OffsetX = -CanvasWidth / 2, OffsetY = -CanvasHeight / 2};
+            HistoryStack = new HistoryStackVM<CreatureStructureEditorCanvasVM>(this);
+            HistoryStack.PropertyChanged += (o, e) => Reset();
+            Creature = creature;
+            CameraVM = new CameraVM { OffsetX = -CanvasWidth / 2, OffsetY = -CanvasHeight / 2 };
             ToolCollectionVM = toolCollectionVM;
             SetBackgroundImageCommand = new DelegateCommand(o => SetBackgroundImage(), o => true);
             RemoveBackgroundImageCommand = new DelegateCommand(o => RemoveBackgroundImage(), o => BackgroundImageSource != null);
@@ -103,7 +105,7 @@ namespace Fomore.UI.ViewModel.CreatureEditor
                 new DelegateCommand(o => ToolCollectionVM.SelectedTool?.OnCanvasMouseLeave(this, Keyboard.Modifiers), o => true);
         }
 
-        private void HistoryStackChanged(object sender, PropertyChangedEventArgs e)
+        public void Reset()
         {
             SelectedJoints.Clear();
             SelectedBones.Clear();

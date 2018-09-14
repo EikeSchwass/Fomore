@@ -23,7 +23,7 @@ namespace Fomore.UI.ViewModel.CreatureEditor.Behaviours
         /// <inheritdoc />
         public override void OnInvoked(CreatureEditorPanelVM parameter, ModifierKeys modifierKeys)
         {
-            if (!parameter.HistoryStack.Current.CreatureStructureVM.JointCollectionVM.Any())
+            if (!parameter.Creature.CreatureStructureVM.JointCollectionVM.Any())
                 return;
             base.OnInvoked(parameter, modifierKeys);
             double angle = (modifierKeys & ModifierKeys.Shift) > 0 ? 10 : 90;

@@ -1,6 +1,5 @@
 ﻿using System.Windows.Input;
 using System.Windows.Media;
-using Fomore.UI.ViewModel.Data;
 using Fomore.UI.ViewModel.Helper;
 using FontAwesome.WPF;
 
@@ -20,7 +19,7 @@ namespace Fomore.UI.ViewModel.CreatureEditor.Behaviours
         /// <inheritdoc />
         public override string ToString() => "Redo last operation";
 
-        public RedoBehaviour(HistoryStackVM<CreatureVM> historyStack)
+        public RedoBehaviour(HistoryStackVM<CreatureStructureEditorCanvasVM> historyStack)
         {
             Command = historyStack.RedoCommand;
         }

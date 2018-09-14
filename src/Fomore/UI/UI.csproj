@@ -175,11 +175,14 @@
     <Compile Include="ViewModel\Data\TerrainGenerators.cs" />
     <Compile Include="ViewModel\Data\TerrainGeneratorVM.cs" />
     <Compile Include="ViewModel\Helper\AttachedProperties.cs" />
+    <Compile Include="ViewModel\Helper\ChangeOperation.cs" />
+    <Compile Include="ViewModel\Helper\IOperation.cs" />
     <Compile Include="ViewModel\Helper\CollectionAccess.cs" />
     <Compile Include="ViewModel\Helper\GeometryExtensions.cs" />
     <Compile Include="ViewModel\Helper\HistoryStackVM.cs" />
     <Compile Include="ViewModel\Helper\EncapsulatingObservableCollection.cs" />
     <Compile Include="ViewModel\Helper\ImageSourceExtensions.cs" />
+    <Compile Include="ViewModel\Helper\OperationDelegate.cs" />
     <Compile Include="ViewModel\Helper\ReadOnlyObservableCollection.cs" />
     <Compile Include="ViewModel\Navigation\CreateEnvironDialogVM.cs" />
     <Compile Include="ViewModel\Navigation\CreateCreatureDialogVM.cs" />

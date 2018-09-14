@@ -1,57 +1,57 @@
 ﻿using System;
 using System.Collections.Generic;
-using Core;
+using System.Linq;
 using Fomore.UI.ViewModel.Commands;
 
 namespace Fomore.UI.ViewModel.Helper
 {
-    public class HistoryStackVM<T> : ViewModelBase where T : ICloneable<T>
+    public class HistoryStackVM<T> : ViewModelBase
     {
-        private LinkedList<T> History { get; } = new LinkedList<T>();
+        private List<IOperation<T>> History { get; } = new List<IOperation<T>>();
+        private int CurrentIndex { get; set; }
 
-        private LinkedListNode<T> CurrentNode { get; set; }
-
-        public T Current => CurrentNode.Value;
-
-        public bool CanUndo => CurrentNode.Previous != null;
-        public bool CanRedo => CurrentNode.Next != null;
-        public T Original { get; }
+        public bool CanUndo => CurrentIndex > 0;
+        public bool CanRedo => CurrentIndex<History.Count;
+        public T Entity { get; }
 
         public DelegateCommand UndoCommand { get; }
         public DelegateCommand RedoCommand { get; }
 
-        public HistoryStackVM(T original)
+        public HistoryStackVM(T entity)
         {
-            Original = original;
-            History.AddFirst(original.Clone());
-            CurrentNode = History.First;
+            Entity = entity;
             UndoCommand = new DelegateCommand(o => Undo(), o => CanUndo);
             RedoCommand = new DelegateCommand(o => Redo(), o => CanRedo);
-        }
-
-        public void NewEntry(T item)
-        {
-            History.AddAfter(CurrentNode ?? throw new InvalidOperationException(), item);
-            CurrentNode = CurrentNode.Next;
-            while (CurrentNode?.Next != null)
-                History.Remove(CurrentNode.Next);
-            NotifyChanges();
         }
 
         private void NotifyChanges()
         {
             OnPropertyChanged(nameof(CanRedo));
             OnPropertyChanged(nameof(CanUndo));
-            OnPropertyChanged(nameof(Current));
+            OnPropertyChanged(nameof(Entity));
             UndoCommand.OnCanExecuteChanged();
             RedoCommand.OnCanExecuteChanged();
+        }
+
+        public void AddOperation(IOperation<T> operation)
+        {
+            operation.PerformOperation(Entity);
+            History.Insert(CurrentIndex, operation);
+            CurrentIndex++;
+            var operations = History.Where((o, i) => i >= CurrentIndex).ToList();
+            foreach (var operationToRemove in operations) History.Remove(operationToRemove);
+
+            NotifyChanges();
         }
 
         public void Undo()
         {
             if (!CanUndo)
                 throw new InvalidOperationException("Cant undo right now");
-            CurrentNode = CurrentNode.Previous;
+
+            CurrentIndex--;
+            History[CurrentIndex].Undo(Entity);
+
             NotifyChanges();
         }
 
@@ -59,7 +59,8 @@ namespace Fomore.UI.ViewModel.Helper
         {
             if (!CanRedo)
                 throw new InvalidOperationException("Cant redo right now");
-            CurrentNode = CurrentNode.Next;
+            History[CurrentIndex].PerformOperation(Entity);
+            CurrentIndex++;
             NotifyChanges();
         }
     }

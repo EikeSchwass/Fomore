@@ -1,17 +1,21 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media;
 using Core;
 using Fomore.UI.ViewModel.Commands;
+using Fomore.UI.ViewModel.Data;
+using Fomore.UI.ViewModel.Helper;
 using FontAwesome.WPF;
 
 namespace Fomore.UI.ViewModel.CreatureEditor.Tools
 {
     public class MoveTool : Tool
     {
-        private Point? LastPosition { get; set; }
+        private Point? StartPosition { get; set; }
 
         public CreatureStructureEditorCanvasVM CanvasVM { get; set; }
 
@@ -29,15 +33,17 @@ namespace Fomore.UI.ViewModel.CreatureEditor.Tools
         /// <inheritdoc />
         public override string ToString() => "Move Joints";
 
+        private Dictionary<JointVM, Vector2> StartPositions { get; } = new Dictionary<JointVM, Vector2>();
+
         /// <inheritdoc />
         public override bool OnCanvasMouseDown(MouseInfo mouseInfo, CreatureStructureEditorCanvasVM canvasVM, ModifierKeys modifierKeys)
         {
             CanvasVM = CanvasVM ?? canvasVM;
             base.OnCanvasMouseDown(mouseInfo, CanvasVM, modifierKeys);
 
-            var currentCreature = CanvasVM.HistoryStack.Current.Clone();
+            StartPositions.Clear();
 
-            var selectedJoint = (from joint in CanvasVM.HistoryStack?.Current?.CreatureStructureVM?.JointCollectionVM
+            var selectedJoint = (from joint in CanvasVM.Creature.CreatureStructureVM.JointCollectionVM
                                  let distance =
                                      (joint.Position - new Vector2(mouseInfo.RelativePosition.X, mouseInfo.RelativePosition.Y)).Length
                                  where distance < SinglePointSelectionTolerance
@@ -54,12 +60,15 @@ namespace Fomore.UI.ViewModel.CreatureEditor.Tools
                 CanvasVM.SelectedJoints.Clear();
 
             var selectedJoins = CanvasVM.SelectedJoints.Select(j => j.Model.Tracker).ToList();
-            LastPosition = mouseInfo.RelativePosition;
-            CanvasVM.HistoryStack.NewEntry(currentCreature);
+            StartPosition = mouseInfo.RelativePosition;
 
             foreach (var jointVM in
-                CanvasVM.HistoryStack.Current.CreatureStructureVM.JointCollectionVM.Where(j => selectedJoins.Contains(j.Model.Tracker)))
+                CanvasVM.Creature.CreatureStructureVM.JointCollectionVM.Where(j => selectedJoins.Contains(j.Model.Tracker)))
+            {
                 CanvasVM.SelectedJoints.Add(jointVM);
+                StartPositions.Add(jointVM, jointVM.Position);
+            }
+
             return true;
         }
 
@@ -69,21 +78,23 @@ namespace Fomore.UI.ViewModel.CreatureEditor.Tools
             CanvasVM = CanvasVM ?? canvasVM;
             if (base.OnCanvasMouseMove(mouseInfo, canvasVM, modifierKeys))
                 return true;
-            if (LastPosition == null)
+            if (StartPosition == null)
                 return false;
-            var delta = mouseInfo.RelativePosition - LastPosition.Value;
-            LastPosition = mouseInfo.RelativePosition;
-            foreach (var boneVM in CanvasVM.HistoryStack.Current.CreatureStructureVM.BoneCollectionVM)
+            var delta = mouseInfo.RelativePosition - StartPosition.Value;
+            foreach (var boneVM in CanvasVM.Creature.CreatureStructureVM.BoneCollectionVM)
             {
                 boneVM.FirstJoint =
-                    CanvasVM.HistoryStack.Current.CreatureStructureVM.JointCollectionVM.First(j => boneVM.FirstJoint.Model.Tracker ==
-                                                                                                   j.Model.Tracker);
+                    CanvasVM.Creature.CreatureStructureVM.JointCollectionVM.First(j => boneVM.FirstJoint.Model.Tracker == j.Model.Tracker);
                 boneVM.SecondJoint =
-                    CanvasVM.HistoryStack.Current.CreatureStructureVM.JointCollectionVM.First(j => boneVM.SecondJoint.Model.Tracker ==
-                                                                                                   j.Model.Tracker);
+                    CanvasVM.Creature.CreatureStructureVM.JointCollectionVM.First(j => boneVM.SecondJoint.Model.Tracker == j.Model.Tracker);
             }
 
-            foreach (var jointVM in CanvasVM.SelectedJoints) jointVM.Position += new Vector2(delta.X, delta.Y);
+            foreach (var jointVM in CanvasVM.SelectedJoints)
+            {
+                var pos = StartPositions[jointVM];
+                pos = new Vector2(delta.X + pos.X, delta.Y + pos.Y);
+                jointVM.Position = pos;
+            }
 
             return true;
         }
@@ -94,26 +105,69 @@ namespace Fomore.UI.ViewModel.CreatureEditor.Tools
             CanvasVM = CanvasVM ?? canvasVM;
             if (base.OnCanvasMouseMove(mouseInfo, canvasVM, modifierKeys))
                 return true;
+
+            CreateChangeOperation(canvasVM);
+
             Reset();
             return true;
         }
 
+        [SuppressMessage("ReSharper", "ImplicitlyCapturedClosure")]
+        private void CreateChangeOperation(CreatureStructureEditorCanvasVM canvasVM)
+        {
+            var startPositions = StartPositions.ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
+            var currentPositions = new Dictionary<JointVM, Vector2>();
+            var movedJoints = StartPositions.Keys;
+            foreach (var jointVM in movedJoints)
+            {
+                currentPositions.Add(jointVM, jointVM.Position);
+            }
+
+            var changeOperation = new ChangeOperation(c =>
+                                                      {
+                                                          foreach (var movedJoint in movedJoints)
+                                                          {
+                                                              movedJoint.Position = currentPositions[movedJoint];
+                                                          }
+                                                      },
+                                                      c =>
+                                                      {
+                                                          foreach (var movedJoint in movedJoints)
+                                                          {
+                                                              movedJoint.Position = startPositions[movedJoint];
+                                                          }
+                                                      });
+            canvasVM.HistoryStack.AddOperation(changeOperation);
+        }
+
         private void Reset()
         {
-            LastPosition = null;
+            StartPosition = null;
         }
 
         /// <inheritdoc />
         public override void OnCanvasMouseLeave(CreatureStructureEditorCanvasVM canvasVM, ModifierKeys modifierKeys)
         {
             base.OnCanvasMouseLeave(canvasVM, modifierKeys);
-            LastPosition = null;
+            if (StartPosition != null)
+                CreateChangeOperation(canvasVM);
+            StartPosition = null;
+        }
+
+        /// <inheritdoc />
+        public override void OnDeselected()
+        {
+            base.OnDeselected();
+            if (StartPosition != null && CanvasVM != null)
+                CreateChangeOperation(CanvasVM);
         }
 
         /// <inheritdoc />
         public override void OnSelected()
         {
-            var shortCut = new InfoMessage("You can quickly switch between tools via their shortcuts. Just hover over the icons to see them", TimeSpan.FromSeconds(10));
+            var shortCut =
+                new InfoMessage("You can quickly switch between tools via their shortcuts. Just hover over the icons to see them",
+                                TimeSpan.FromSeconds(10));
             if (!InfoMessageCollection.HasShownMessage(shortCut))
                 InfoMessageCollection.AddInfoMessage(shortCut);
         }

@@ -5,13 +5,12 @@ using System.Linq;
 using Fomore.UI.ViewModel.CreatureEditor.Behaviours;
 using Fomore.UI.ViewModel.CreatureEditor.Tools;
 using Fomore.UI.ViewModel.Data;
-using Fomore.UI.ViewModel.Helper;
 
 namespace Fomore.UI.ViewModel.CreatureEditor
 {
     public class CreatureEditorPanelVM : ViewModelBase
     {
-        public HistoryStackVM<CreatureVM> HistoryStack { get; }
+        public CreatureVM Creature { get; }
         public ToolCollectionVM ToolCollectionVM { get; }
         public ObservableCollection<BaseBehaviour> Behaviours { get; }
 
@@ -19,11 +18,11 @@ namespace Fomore.UI.ViewModel.CreatureEditor
 
         public CreatureStructureEditorCanvasVM CreatureStructureEditorCanvasVM { get; }
 
-        public CreatureEditorPanelVM(HistoryStackVM<CreatureVM> historyStack)
+        public CreatureEditorPanelVM(CreatureVM creature)
         {
-            HistoryStack = historyStack;
+            Creature = creature;
             ToolCollectionVM = new ToolCollectionVM();
-            CreatureStructureEditorCanvasVM = new CreatureStructureEditorCanvasVM(HistoryStack, ToolCollectionVM);
+            CreatureStructureEditorCanvasVM = new CreatureStructureEditorCanvasVM(Creature, ToolCollectionVM);
             ToolCollectionVM.InfoMessageCollection = CreatureStructureEditorCanvasVM.InfoMessageCollection;
             ToolCollectionVM.Tools.Add(new SelectAllTool());
             ToolCollectionVM.Tools.Add(new MoveTool());
@@ -33,8 +32,8 @@ namespace Fomore.UI.ViewModel.CreatureEditor
 
             Behaviours = new ObservableCollection<BaseBehaviour>
             {
-                new UndoBehaviour(HistoryStack),
-                new RedoBehaviour(HistoryStack),
+                new UndoBehaviour(CreatureStructureEditorCanvasVM.HistoryStack),
+                new RedoBehaviour(CreatureStructureEditorCanvasVM.HistoryStack),
                 new RotateLeftBehaviour(),
                 new RotateRightBehaviour(),
                 new FlipHorizontalBehaviour(),

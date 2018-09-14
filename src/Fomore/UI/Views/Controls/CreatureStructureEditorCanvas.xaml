@@ -92,7 +92,7 @@
         </Grid>
 
         <!-- Bones -->
-        <ItemsControl ItemsSource="{Binding HistoryStack.Current.CreatureStructureVM.BoneCollectionVM}">
+        <ItemsControl ItemsSource="{Binding HistoryStack.Entity.Creature.CreatureStructureVM.BoneCollectionVM}">
             <ItemsControl.ItemTemplate>
                 <DataTemplate DataType="{x:Type data:BoneVM}">
                     <Grid>
@@ -144,7 +144,7 @@
               Visibility="{Binding PreviewBone.Visibility}" Opacity="0.75" />
 
         <!-- Joints -->
-        <ItemsControl ItemsSource="{Binding HistoryStack.Current.CreatureStructureVM.JointCollectionVM}">
+        <ItemsControl ItemsSource="{Binding HistoryStack.Entity.Creature.CreatureStructureVM.JointCollectionVM}">
             <ItemsControl.ItemTemplate>
                 <DataTemplate DataType="{x:Type data:JointVM}">
                     <Grid HorizontalAlignment="Center" VerticalAlignment="Center">
