@@ -57,7 +57,7 @@
                        Source="../assets/images/creature_icon.png" />
                 <TextBlock Grid.Column="1" Grid.Row="0" Style="{StaticResource ListBoxItemName}" Text="{Binding Name}" />
                 <TextBlock Grid.Column="1" Grid.Row="1" Style="{StaticResource ListBoxItemInfo}"
-                           Text="{Binding ShortDescription}" />
+                           Text="{Binding Description, Converter={StaticResource StringShortenerConverter}, ConverterParameter=50}" />
             </Grid>
         </Border>
     </DataTemplate>

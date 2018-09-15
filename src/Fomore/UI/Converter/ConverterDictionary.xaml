@@ -7,5 +7,6 @@
     <local:NullBooleanConverter x:Key="NullBooleanConverter" />
     <local:BooleanVisibilityConverter x:Key="BooleanVisibilityConverter" />
     <local:DescriptionWidthConverter x:Key="DescriptionWidthConverter" />
+    <local:StringShortenerConverter x:Key="StringShortenerConverter" />
     <local:TabSizeConverter x:Key="TabSizeConverter" />
 </ResourceDictionary>

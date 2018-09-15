@@ -7,51 +7,32 @@ namespace Core
     [Serializable]
     public class Creature : ICloneable<Creature>
     {
-        private string name;
-        private string description;
+        public string Name { get; set; }
+
+        public string Description { get; set; }
+
+        public DateTime CreationDate { get; private set; }
+        
+
+        public List<MovementPattern> MovementPatterns { get; } = new List<MovementPattern>();
+        public CreatureStructure CreatureStructure { get; } = new CreatureStructure();
 
         public Creature()
         {
-            OnAccess();
+            OnCreate();
         }
 
         private Creature(CreatureStructure creatureStructure, IEnumerable<MovementPattern> movementPatterns)
         {
             MovementPatterns = movementPatterns.ToList();
             CreatureStructure = creatureStructure;
-            OnAccess();
+            OnCreate();
         }
 
-        public string Name
+        private void OnCreate()
         {
-            get => name;
-            set
-            {
-                name = value;
-                OnAccess();
-            }
+            CreationDate = DateTime.Now;
         }
-
-        public string Description
-        {
-            get => description;
-            set
-            {
-                description = value;
-                OnAccess();
-            }
-        }
-
-        public DateTime LastAccess { get; private set; }
-
-        // Todo update on Structure updates as well
-        private void OnAccess()
-        {
-            LastAccess = DateTime.Now;
-        }
-
-        public List<MovementPattern> MovementPatterns { get; } = new List<MovementPattern>();
-        public CreatureStructure CreatureStructure { get; } = new CreatureStructure();
 
         public Creature Clone()
         {

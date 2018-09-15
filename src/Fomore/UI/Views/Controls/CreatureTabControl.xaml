@@ -83,9 +83,9 @@
                                     <RowDefinition />
                                 </Grid.RowDefinitions>
 
-                                <TextBlock Grid.Column="0" Grid.Row="0" Text="Last changed:" />
+                                <TextBlock Grid.Column="0" Grid.Row="0" Text="Creation time:" />
                                 <TextBlock Grid.Column="1" Grid.Row="0"
-                                           Text="{Binding SelectedCreature.LastAccess, StringFormat=g}" />
+                                           Text="{Binding SelectedCreature.CreationDate, StringFormat=g}" />
                                 <TextBlock Grid.Column="0" Grid.Row="1" Text="Number of Joints:" />
                                 <TextBlock Grid.Column="1" Grid.Row="1"
                                            Text="{Binding SelectedCreature.CreatureStructureVM.JointCollectionVM.Count}" />

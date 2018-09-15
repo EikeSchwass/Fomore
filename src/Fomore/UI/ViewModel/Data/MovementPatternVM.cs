@@ -27,7 +27,7 @@ namespace Fomore.UI.ViewModel.Data
             }
         }
 
-        public DateTime LastAccess => Model.LastAccess;
+        public DateTime LastAccess => Model.CreationDate;
 
         /// <inheritdoc />
         public MovementPatternVM(MovementPattern model) : base(model) { }

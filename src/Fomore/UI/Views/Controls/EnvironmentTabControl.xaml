@@ -86,8 +86,8 @@
                                         <RowDefinition />
                                     </Grid.RowDefinitions>
 
-                                    <TextBlock Grid.Column="0" Grid.Row="0" Text="Last changed:" />
-                                    <TextBlock Grid.Column="1" Grid.Row="0" Text="{Binding SelectedEnvironment.LastAccess, StringFormat=g}" Margin="4" />
+                                    <TextBlock Grid.Column="0" Grid.Row="0" Text="Creation time:" />
+                                    <TextBlock Grid.Column="1" Grid.Row="0" Text="{Binding SelectedEnvironment.CreationDate, StringFormat=g}" Margin="4" />
                                     <TextBlock Grid.Column="0" Grid.Row="1" Text="Gravity:" />
                                     <TextBox Grid.Column="1" Grid.Row="1" Text="{Binding SelectedEnvironment.Gravity}" Style="{StaticResource DetailsName}" />
                                     <TextBlock Grid.Column="0" Grid.Row="2" Text="Friction:" />
