@@ -42,6 +42,10 @@
         <Grid Grid.Column="1" Style="{StaticResource DetailsContentPanel}"
               Visibility="{Binding SelectedCreature, Converter={StaticResource NotNullToVisibilityConverter}}">
             <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
                 <!-- Grid rows contain the group boxes -->
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto" />
@@ -50,7 +54,7 @@
                 </Grid.RowDefinitions>
 
                 <!-- The general details group box -->
-                <GroupBox Grid.Row="0" Header=" General ">
+                <GroupBox Grid.ColumnSpan="2" Grid.Row="0" Header=" General ">
                     <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition />
@@ -63,18 +67,13 @@
                                 <RowDefinition />
                                 <RowDefinition />
                                 <RowDefinition />
-                                <RowDefinition />
-                                <RowDefinition />
                             </Grid.RowDefinitions>
 
                             <TextBlock Grid.Row="0" Text="Name:" />
                             <TextBox Grid.Row="1" Style="{StaticResource DetailsName}"
                                      Text="{Binding SelectedCreature.Name}" />
                             
-                            <TextBlock Grid.Row="2" Text="Description:" />
-                            <TextBox Grid.Row="3" Style="{StaticResource DetailsDescription}" Text="{Binding SelectedCreature.Description}" />
-
-                            <Grid Grid.Row="4" Style="{StaticResource DetailsItemGrid}">
+                            <Grid Grid.Row="2" Style="{StaticResource DetailsItemGrid}">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition />
                                     <ColumnDefinition />
@@ -96,22 +95,34 @@
                                            Text="{Binding SelectedCreature.CreatureStructureVM.BoneCollectionVM.Count}" />
                             </Grid>
                         </Grid>
+                        <Grid Grid.Column="1">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="*" />
+                            </Grid.RowDefinitions>
 
-                        <!-- The creature structure image -->
-                        <Image Grid.Column="1" Grid.Row="0" Source="../../assets/images/placeholder.png" Width="200" Height="200" />
+                            <TextBlock Grid.Row="0" Text="Description:" />
+                            <TextBox Grid.Row="1" Style="{StaticResource DetailsDescription}" Text="{Binding SelectedCreature.Description}" />
+                        </Grid>
+                        
                     </Grid>
                 </GroupBox>
 
                 <!-- The Movement patterns group box -->
-                <GroupBox Grid.Row="1" Header=" Movement Patterns ">
+                <GroupBox Grid.Column="0" Grid.Row="1" Header=" Movement Patterns ">
                     <ListBox Style="{StaticResource EntityList}" 
                              ItemsSource="{Binding SelectedCreature.MovementPatternCollectionVM}"
                              ItemTemplate="{StaticResource MovementPatternListItem}"
                              SelectedItem="{Binding SelectedMovementPattern}" />
                 </GroupBox>
 
+                <GroupBox Grid.Column="1" Grid.Row="1" Header=" Preview ">
+                    <!-- The creature structure image -->
+                    <Image Source="../../assets/images/placeholder.png" />
+                </GroupBox>
+
                 <!-- Action buttons group box -->
-                <GroupBox Grid.Row="2" Header=" Actions ">
+                <GroupBox Grid.ColumnSpan="2" Grid.Column="0" Grid.Row="2" Header=" Actions ">
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
                         <controls:CustomizableButton Command="{Binding CloneCommand}" CommandParameter="{Binding SelectedCreature}" Content="Clone this creature" />
                         <controls:CustomizableButton Command="{Binding EditCreature}" CommandParameter="{Binding SelectedCreature}" Content="Edit creature structure" />
