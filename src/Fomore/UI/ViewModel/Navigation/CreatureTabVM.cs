@@ -34,6 +34,7 @@ namespace Fomore.UI.ViewModel.Navigation
         // Properties and private members
         // ------------------------------------------------------------
 
+        private const int PreviewDimension = 500;
         private const int PreviewImageBorder = 10;
 
         private CreatureVM selectedCreature;
@@ -55,8 +56,11 @@ namespace Fomore.UI.ViewModel.Navigation
                 OnPropertyChanged();
                 OnPropertyChanged(nameof(SelectedCreatureMovementPattern));
                 OnPropertyChanged(nameof(CreaturePreview));
-                selectedCreature.CreatureStructureVM.BoneCollectionVM.CollectionChanged += CreatureStructureChanged;
-                selectedCreature.CreatureStructureVM.JointCollectionVM.CollectionChanged += CreatureStructureChanged;
+                if (selectedCreature != null)
+                {
+                    selectedCreature.CreatureStructureVM.BoneCollectionVM.CollectionChanged += CreatureStructureChanged;
+                    selectedCreature.CreatureStructureVM.JointCollectionVM.CollectionChanged += CreatureStructureChanged;
+                }
             }
         }
 
@@ -158,17 +162,29 @@ namespace Fomore.UI.ViewModel.Navigation
             var bones = SelectedCreature?.CreatureStructureVM.BoneCollectionVM;
             var joints = SelectedCreature?.CreatureStructureVM.JointCollectionVM;
 
+            Pen bonePen = new Pen(Brushes.Blue) {Width = 5};
+            Pen jointPen = new Pen(Brushes.Red);
+
             if (joints == null || joints.Count == 0 || bones == null)
                 return new Bitmap(100, 100);
 
+            // Weird special case..
+            if (joints.Count == 1)
+            {
+                var specialOneDotBitmap = new Bitmap(PreviewDimension, PreviewDimension);
+                using (Graphics g = Graphics.FromImage(specialOneDotBitmap))
+                {
+                    g.SmoothingMode = SmoothingMode.HighQuality;
+                    g.FillEllipse(jointPen.Brush, PreviewDimension / 2 - 5, PreviewDimension / 2 - 5, 10, 10);
+                }
+
+                return specialOneDotBitmap;
+            }
+
             Vector2 min = new Vector2(joints.Min(j => j.Position.X), joints.Min(j => j.Position.Y));
             Vector2 max = new Vector2(joints.Max(j => j.Position.X), joints.Max(j => j.Position.Y));
-            Vector2 size = max - min;
 
-            var bitmap = new Bitmap((int) size.X + PreviewImageBorder * 2, (int) size.Y + PreviewImageBorder * 2);
-
-            Pen bonePen = new Pen(Brushes.Blue) {Width = 5};
-            Pen jointPen = new Pen(Brushes.Red);
+            var bitmap = new Bitmap(PreviewDimension, PreviewDimension);
 
             using (Graphics g = Graphics.FromImage(bitmap))
             {
@@ -176,20 +192,14 @@ namespace Fomore.UI.ViewModel.Navigation
 
                 foreach (var bone in bones)
                 {
-                    // g.DrawLine(bonePen,
-                    //            (float)bone.FirstJoint.Position.X,
-                    //            (float)bone.FirstJoint.Position.Y,
-                    //            (float)bone.SecondJoint.Position.X,
-                    //            (float)bone.SecondJoint.Position.Y);
                     g.DrawLine(bonePen,
-                               NormalizePoint(bone.FirstJoint.Position, min),
-                               NormalizePoint(bone.SecondJoint.Position, min));
+                               NormalizePoint(bone.FirstJoint.Position, min, max),
+                               NormalizePoint(bone.SecondJoint.Position, min, max));
                 }
 
                 foreach (var joint in joints)
                 {
-                    // g.FillEllipse(Brushes.Red, (float)joint.Position.X - 5.0f, (float)joint.Position.Y - 5.0f, 10.0f, 10.0f);
-                    Point n = NormalizePoint(joint.Position, min);
+                    Point n = NormalizePoint(joint.Position, min, max);
                     g.FillEllipse(jointPen.Brush, n.X - 5, n.Y - 5, 10, 10);
                 }
             }
@@ -197,40 +207,31 @@ namespace Fomore.UI.ViewModel.Navigation
             return bitmap;
         }
 
-        // private Point NormalizePoint(Vector2 v, Vector2 min, Vector2 max, int width, int height)
-        // {
-        //     double xDiff = max.X - min.X;
-        //     double yDiff = max.Y - min.Y;
-        //     double size;
-        //     double xRelativeOffset, yRelativeOffset;
-        //
-        //     if (xDiff > yDiff)
-        //     {
-        //         size = xDiff;
-        //         xRelativeOffset = 0;
-        //         yRelativeOffset = (xDiff - yDiff) / size;
-        //     }
-        //     else
-        //     {
-        //         size = yDiff;
-        //         xRelativeOffset = (yDiff - xDiff) / size;
-        //         yRelativeOffset = 0;
-        //     }
-        //
-        //     v -= min;
-        //     double relativeX = v.X / size;
-        //     double relativeY = v.Y / size;
-        //
-        //     int x = (int)(width * (relativeX + xRelativeOffset));
-        //     int y = (int)(height * (relativeY + yRelativeOffset));
-        //
-        //     return new Point(x, y);
-        // }
+        private Point NormalizePoint(Vector2 v, Vector2 min, Vector2 max)
+        {
+            double xDiff = max.X - min.X;
+            double yDiff = max.Y - min.Y;
+            double scale;
+            double xOffset = 0, yOffset = 0;
 
-         private Point NormalizePoint(Vector2 v, Vector2 min)
-         {
-             return new Point((int) (v.X - min.X) + PreviewImageBorder, (int) (v.Y - min.Y) + PreviewImageBorder);
-         }
+            if (xDiff > yDiff)
+            {
+                scale = (PreviewDimension - PreviewImageBorder * 2) / xDiff;
+                yOffset = (xDiff - yDiff) / 2;
+            }
+            else
+            {
+                scale = (PreviewDimension - PreviewImageBorder * 2) / yDiff;
+                xOffset = (yDiff - xDiff) / 2;
+            }
+
+            v -= min;
+
+            int x = (int)((v.X + xOffset) * scale) + PreviewImageBorder;
+            int y = (int)((v.Y + yOffset) * scale) + PreviewImageBorder;
+
+            return new Point(x, y);
+        }
 
         // ------------------------------------------------------------
         // Entry point & other methods
