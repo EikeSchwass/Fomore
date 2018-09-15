@@ -125,7 +125,9 @@
 
     <Style x:Key="NewListEntryButton" BasedOn="{StaticResource {x:Type controls:CustomizableButton}}"
            TargetType="{x:Type controls:CustomizableButton}">
-        <Setter Property="Height" Value="80" />
+        <Setter Property="Height" Value="68" />
+        <Setter Property="FontSize" Value="20" />
+        <Setter Property="FontWeight" Value="Bold" />
         <Setter Property="Background" Value="{StaticResource NewColor}" />
         <Setter Property="IsMouseOverBackground" Value="{StaticResource NewHoverColor}" />
         <Setter Property="IsPressedBackground" Value="{StaticResource NewPressedColor}" />
@@ -141,4 +143,5 @@
         <Setter Property="IsPressedBackground" Value="{StaticResource DeletePressedColor}" />
     </Style>
 
+    
 </ResourceDictionary>

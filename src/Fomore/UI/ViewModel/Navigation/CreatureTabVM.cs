@@ -35,7 +35,7 @@ namespace Fomore.UI.ViewModel.Navigation
         // ------------------------------------------------------------
 
         private const int PreviewDimension = 500;
-        private const int PreviewImageBorder = 10;
+        private const int PreviewImageBorder = 30;
 
         private CreatureVM selectedCreature;
         private MovementPatternVM selectedMovementPattern;
@@ -162,8 +162,9 @@ namespace Fomore.UI.ViewModel.Navigation
             var bones = SelectedCreature?.CreatureStructureVM.BoneCollectionVM;
             var joints = SelectedCreature?.CreatureStructureVM.JointCollectionVM;
 
-            Pen bonePen = new Pen(Color.FromArgb(85, 85, 85)) {Width = 5};
-            Pen jointPen = new Pen(Color.FromArgb(51, 51, 51));
+            Pen bonePen = new Pen(Color.FromArgb(119, 119, 119)) {Width = 5};
+            Pen jointPen = new Pen(Color.FromArgb(85, 85, 85));
+            Pen backgroundPen = new Pen(Color.FromArgb(40, 40, 40));
 
             if (joints == null || joints.Count == 0 || bones == null)
                 return new Bitmap(100, 100);
@@ -189,6 +190,8 @@ namespace Fomore.UI.ViewModel.Navigation
             using (Graphics g = Graphics.FromImage(bitmap))
             {
                 g.SmoothingMode = SmoothingMode.HighQuality;
+
+                g.FillRectangle(backgroundPen.Brush, -1, -1, PreviewDimension + 2, PreviewDimension + 2);
 
                 foreach (var bone in bones)
                 {

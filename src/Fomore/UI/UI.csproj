@@ -294,5 +294,14 @@
     <Resource Include="assets\images\fliphorizontal.png" />
     <Resource Include="assets\images\flipvertical.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="assets\images\creature_icon_new.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="assets\images\environment_icon_new.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="assets\images\movementpattern_icon_new.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

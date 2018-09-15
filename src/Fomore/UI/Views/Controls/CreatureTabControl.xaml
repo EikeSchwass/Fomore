@@ -44,7 +44,7 @@
         <!-- Details pane -->
         <Grid Grid.Column="1"
               Visibility="{Binding SelectedCreature, Converter={StaticResource NotNullToVisibilityConverter}}">
-            <Grid>
+            <Grid Style="{StaticResource DetailsGrid}">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition />
                     <ColumnDefinition />
@@ -79,7 +79,7 @@
                             </Grid.RowDefinitions>
 
                             <TextBlock Grid.ColumnSpan="2" Grid.Row="0" Text="Name:" />
-                            <TextBox Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="1" Style="{StaticResource DetailsTextBox}"
+                            <TextBox Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="1" Style="{StaticResource DefaultTextBox}"
                                     Text="{Binding SelectedCreature.Name, Mode=TwoWay}" />
 
                             <TextBlock Grid.Column="0" Grid.Row="2" Text="Creation time:" />
@@ -100,7 +100,7 @@
                             </Grid.RowDefinitions>
 
                             <TextBlock Grid.Row="0" Text="Description:" />
-                            <TextBox Grid.Row="1" Style="{StaticResource DetailsTextBox}"
+                            <TextBox Grid.Row="1" Style="{StaticResource DefaultTextBox}"
                                      Text="{Binding SelectedCreature.Description, Mode=TwoWay}" />
                         </Grid>
                     </Grid>
@@ -126,7 +126,7 @@
                 </GroupBox>
 
                 <!-- Action buttons group box -->
-                <GroupBox Grid.ColumnSpan="2" Grid.Column="0" Grid.Row="2" Style="{StaticResource ActionGroupBox}" Header="Actions">
+                <GroupBox Grid.ColumnSpan="2" Grid.Column="0" Grid.Row="2" Header="Actions">
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
                         <controls:CustomizableButton Style="{StaticResource DefaultButton}"
                                                      Command="{Binding CloneCommand}"

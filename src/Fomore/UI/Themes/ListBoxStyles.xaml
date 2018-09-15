@@ -9,6 +9,7 @@
         <Setter Property="HorizontalContentAlignment" Value="Stretch" />
         <Setter Property="Background" Value="{StaticResource ListColor}" />
         <Setter Property="Foreground" Value="White" />
+        <Setter Property="BorderThickness" Value="0" />
         <!-- <Setter Property="Margin" Value="5 0 5 5" /> -->
     </Style>
 
@@ -19,9 +20,9 @@
 
     <!-- Border -->
     <Style x:Key="ListBoxItemBorder" TargetType="Border">
-        <Setter Property="BorderThickness" Value="2" />
+        <Setter Property="BorderThickness" Value="4" />
         <Setter Property="CornerRadius" Value="3" />
-        <Setter Property="Margin" Value="2" />
+        <Setter Property="Margin" Value="1" />
     </Style>
 
     <!-- Inner List Box styles -->
@@ -44,7 +45,7 @@
     </Style>
 
     <DataTemplate x:Key="CreatureListItem" DataType="{x:Type data:CreatureVM}">
-        <Border Style="{StaticResource ListBoxItemBorder}" BorderBrush="Red">
+        <Border Style="{StaticResource ListBoxItemBorder}" BorderBrush="{StaticResource CreatureColor}">
             <Grid Style="{StaticResource ListBoxItemGrid}">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto" />
@@ -55,7 +56,7 @@
                     <RowDefinition Height="*" />
                 </Grid.RowDefinitions>
                 <Image Grid.Column="0" Grid.RowSpan="2" Style="{StaticResource ListBoxIcon}"
-                       Source="../assets/images/creature_icon.png" />
+                       Source="../assets/images/creature_icon_new.png" />
                 <TextBlock Grid.Column="1" Grid.Row="0" Style="{StaticResource ListBoxItemName}" Text="{Binding Name}" />
                 <TextBlock Grid.Column="1" Grid.Row="1" Style="{StaticResource ListBoxItemInfo}"
                            Text="{Binding Description, Converter={StaticResource StringShortenerConverter}, ConverterParameter=50}" />
@@ -64,7 +65,7 @@
     </DataTemplate>
 
     <DataTemplate x:Key="MovementPatternListItem" DataType="{x:Type data:MovementPatternVM}">
-        <Border Style="{StaticResource ListBoxItemBorder}" BorderBrush="Blue">
+        <Border Style="{StaticResource ListBoxItemBorder}" BorderBrush="{StaticResource MovementPatternColor}">
             <Grid Style="{StaticResource ListBoxItemGrid}">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto" />
@@ -75,7 +76,7 @@
                     <RowDefinition />
                 </Grid.RowDefinitions>
                 <Image Grid.Column="0" Grid.RowSpan="2" Style="{StaticResource ListBoxIcon}"
-                       Source="../../assets/images/movementpattern_icon.png" />
+                       Source="../../assets/images/movementpattern_icon_new.png" />
                 <TextBlock Grid.Column="1" Grid.Row="0" Style="{StaticResource ListBoxItemName}" Text="{Binding Name}" />
                 <StackPanel Grid.Column="1" Grid.Row="1">
                     <TextBlock Style="{StaticResource ListBoxItemInfo}" FontWeight="Bold" Text="Iterations:" />
@@ -86,7 +87,7 @@
     </DataTemplate>
 
     <DataTemplate x:Key="EnvironmentListItem" DataType="{x:Type data:EnvironmentVM}">
-        <Border Style="{StaticResource ListBoxItemBorder}" BorderBrush="Green">
+        <Border Style="{StaticResource ListBoxItemBorder}" BorderBrush="{StaticResource EnvironmentColor}">
             <Grid Style="{StaticResource ListBoxItemGrid}">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto" />
@@ -97,7 +98,7 @@
                     <RowDefinition />
                 </Grid.RowDefinitions>
                 <Image Grid.Column="0" Grid.RowSpan="2" Style="{StaticResource ListBoxIcon}"
-                       Source="../../assets/images/environment_icon.png" />
+                       Source="../../assets/images/environment_icon_new.png" />
                 <TextBlock Grid.Column="1" Grid.Row="0" Style="{StaticResource ListBoxItemName}" Text="{Binding Name}" />
                 <StackPanel Grid.Column="1" Grid.Row="1" Orientation="Horizontal">
                     <StackPanel>

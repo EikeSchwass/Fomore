@@ -42,7 +42,7 @@
                         <RowDefinition Height="Auto" />
                         <RowDefinition Height="*" />
                     </Grid.RowDefinitions>
-                    <ToggleButton Grid.Row="0" Height="80" IsChecked="{Binding NewMovementPattern, Mode=TwoWay}"
+                    <ToggleButton Grid.Row="0" Height="82" IsChecked="{Binding NewMovementPattern, Mode=TwoWay}"
                                   IsEnabled="{Binding SelectedCreature, Converter={StaticResource NullBooleanConverter}, ConverterParameter=false}"
                                   Content="New" />
                     <!-- <controls:CustomizableButton Grid.Row="0" Command="{Binding NewMovementPatternCommand}" Content="New Movement Pattern" /> -->
@@ -82,7 +82,7 @@
 
                 <StackPanel Grid.Column="0" Orientation="Horizontal" HorizontalAlignment="Center">
                     <TextBlock Text="Target Speed:" />
-                    <TextBox Margin="20 0 0 0" Width="50" Height="20" VerticalContentAlignment="Center" Text="{Binding TargetSpeed}" />
+                    <TextBox Style="{StaticResource DefaultTextBox}" Margin="20 0 0 0" Width="50" VerticalAlignment="Center" VerticalContentAlignment="Center" Text="{Binding TargetSpeed}" />
                 </StackPanel>
 
                 <CheckBox Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" IsChecked="{Binding ShowTraining}"

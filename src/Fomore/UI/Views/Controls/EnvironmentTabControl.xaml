@@ -44,7 +44,7 @@
         <!-- Details pane -->
         <Grid Grid.Column="1"
               Visibility="{Binding SelectedEnvironment, Converter={StaticResource NotNullToVisibilityConverter}}">
-            <Grid>
+            <Grid Style="{StaticResource DetailsGrid}">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="180" />
                     <RowDefinition Height="*" />
@@ -75,7 +75,7 @@
 
                             <TextBlock Grid.ColumnSpan="2" Grid.Row="0" Text="Name:" />
                             <TextBox Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="1"
-                                     Style="{StaticResource DetailsTextBox}"
+                                     Style="{StaticResource DefaultTextBox}"
                                      Text="{Binding SelectedEnvironment.Name, Mode=TwoWay}" />
 
                             <TextBlock Grid.Column="0" Grid.Row="2" Text="Creation time:" />
@@ -83,11 +83,11 @@
                                        Text="{Binding SelectedEnvironment.CreationDate, StringFormat=g}" />
                             <TextBlock Grid.Column="0" Grid.Row="3" Text="Gravity:" />
                             <TextBox Grid.Column="1" Grid.Row="3"
-                                     Style="{StaticResource DetailsTextBox}"
+                                     Style="{StaticResource DefaultTextBox}"
                                      Text="{Binding SelectedEnvironment.Gravity}" />
                             <TextBlock Grid.Column="0" Grid.Row="4" Text="Friction:" />
                             <TextBox Grid.Column="1" Grid.Row="4"
-                                     Style="{StaticResource DetailsTextBox}"
+                                     Style="{StaticResource DefaultTextBox}"
                                      Text="{Binding SelectedEnvironment.Friction}" />
                         </Grid>
 
@@ -98,7 +98,7 @@
                             </Grid.RowDefinitions>
 
                             <TextBlock Grid.Row="0" Text="Description:" />
-                            <TextBox Grid.Row="1" Style="{StaticResource DetailsTextBox}"
+                            <TextBox Grid.Row="1" Style="{StaticResource DefaultTextBox}"
                                      Text="{Binding SelectedEnvironment.Description, Mode=TwoWay}" />
                         </Grid>
                     </Grid>
