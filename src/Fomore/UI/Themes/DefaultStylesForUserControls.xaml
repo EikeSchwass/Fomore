@@ -65,12 +65,15 @@
 
     <Style x:Key="DefaultButton" BasedOn="{StaticResource {x:Type controls:CustomizableButton}}"
            TargetType="controls:CustomizableButton">
-        <Setter Property="Width" Value="200" />
+        <Setter Property="Width" Value="150" />
         <Setter Property="Height" Value="40" />
+        <Setter Property="Margin" Value="4 0 0 0" />
         <Setter Property="Foreground" Value="White" />
         <Setter Property="Background" Value="{StaticResource ButtonColor}" />
         <Setter Property="IsMouseOverBackground" Value="{StaticResource ButtonHoverColor}" />
         <Setter Property="IsPressedBackground" Value="{StaticResource ButtonPressedColor}" />
+        <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+        <Setter Property="VerticalContentAlignment" Value="Stretch" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="controls:CustomizableButton">
@@ -81,8 +84,9 @@
                             CornerRadius="8">
                         <Grid HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
                               VerticalAlignment="{TemplateBinding VerticalContentAlignment}">
-                            <ContentPresenter Content="{TemplateBinding Content}" Margin="{TemplateBinding Padding}" />
-                            <Rectangle Fill="{TemplateBinding IsDisabledBackground}" x:Name="GrayRectangle">
+                            <ContentPresenter Content="{TemplateBinding Content}" Margin="{TemplateBinding Padding}"
+                                              HorizontalAlignment="Center" VerticalAlignment="Center" />
+                            <Rectangle RadiusX="8" RadiusY="8" Fill="{TemplateBinding IsDisabledBackground}" x:Name="GrayRectangle">
                                 <Rectangle.Style>
                                     <Style TargetType="{x:Type Rectangle}">
                                         <Setter Property="Opacity" Value="0" />
@@ -118,7 +122,8 @@
         </Setter>
     </Style>
 
-    <Style x:Key="NewListEntryButton" BasedOn="{StaticResource {x:Type controls:CustomizableButton}}" TargetType="{x:Type controls:CustomizableButton}">
+    <Style x:Key="NewListEntryButton" BasedOn="{StaticResource {x:Type controls:CustomizableButton}}"
+           TargetType="{x:Type controls:CustomizableButton}">
         <Setter Property="Height" Value="80" />
         <Setter Property="Background" Value="{StaticResource NewColor}" />
         <Setter Property="IsMouseOverBackground" Value="{StaticResource NewHoverColor}" />

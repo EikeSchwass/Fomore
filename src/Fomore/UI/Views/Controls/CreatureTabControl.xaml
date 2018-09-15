@@ -34,7 +34,7 @@
         <!-- No Selection screen -->
         <Grid Grid.Column="1"
               Visibility="{Binding SelectedCreature, Converter={StaticResource NullToVisibilityConverter}}">
-            <TextBlock Text="No selection made..." />
+            <TextBlock Style="{StaticResource NoSelectionText}" Text="No creature selected" />
         </Grid>
 
         <!-- Details pane -->

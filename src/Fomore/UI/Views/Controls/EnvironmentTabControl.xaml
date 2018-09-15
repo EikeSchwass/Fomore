@@ -33,7 +33,7 @@
 
         <!-- No Selection screen -->
         <Grid Grid.Column="1" Visibility="{Binding SelectedEnvironment, Converter={StaticResource NullToVisibilityConverter}}">
-            <TextBlock Text="No environment selected" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="18" Foreground="White" FontStyle="Italic" />
+            <TextBlock Style="{StaticResource NoSelectionText}" Text="No environment selected" />
         </Grid>
 
         <!-- Details pane -->
