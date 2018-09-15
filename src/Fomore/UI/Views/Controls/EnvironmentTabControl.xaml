@@ -46,7 +46,7 @@
               Visibility="{Binding SelectedEnvironment, Converter={StaticResource NotNullToVisibilityConverter}}">
             <Grid Style="{StaticResource DetailsGrid}">
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="180" />
+                    <RowDefinition Height="190" />
                     <RowDefinition Height="*" />
                     <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
@@ -296,9 +296,9 @@
                             <TextBlock Grid.Column="0" Style="{StaticResource NoSelectionText}"
                                        Text="No terrain generators"
                                        Visibility="{Binding SelectedEnvironment.TerrainGenerators.Count, Converter={StaticResource NumberVisibilityConverter}}" />
-                            <StackPanel Grid.Column="1" Margin="8" VerticalAlignment="Center">
-                                <TextBlock Text="Step Size" />
-                                <Grid ToolTip="Higher Values mean lower resolution but higher performance">
+                            <StackPanel Grid.Column="1" Margin="8" VerticalAlignment="Top">
+                                <TextBlock TextAlignment="Center" Text="Step Size" />
+                                <Grid Margin="10" ToolTip="Higher Values mean lower resolution but higher performance">
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition />
                                         <ColumnDefinition Width="Auto" />

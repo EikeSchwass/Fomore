@@ -167,7 +167,15 @@ namespace Fomore.UI.ViewModel.Navigation
             Pen backgroundPen = new Pen(Color.FromArgb(40, 40, 40));
 
             if (joints == null || joints.Count == 0 || bones == null)
-                return new Bitmap(100, 100);
+            {
+                var emptyBitmap = new Bitmap(PreviewDimension, PreviewDimension);
+                using (Graphics g = Graphics.FromImage(emptyBitmap))
+                {
+                    g.FillRectangle(backgroundPen.Brush, -1, -1, PreviewDimension + 2, PreviewDimension + 2);
+                }
+
+                return emptyBitmap;
+            }
 
             // Weird special case..
             if (joints.Count == 1)
@@ -176,6 +184,7 @@ namespace Fomore.UI.ViewModel.Navigation
                 using (Graphics g = Graphics.FromImage(specialOneDotBitmap))
                 {
                     g.SmoothingMode = SmoothingMode.HighQuality;
+                    g.FillRectangle(backgroundPen.Brush, -1, -1, PreviewDimension + 2, PreviewDimension + 2);
                     g.FillEllipse(jointPen.Brush, PreviewDimension / 2 - 5, PreviewDimension / 2 - 5, 10, 10);
                 }
 

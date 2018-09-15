@@ -51,7 +51,7 @@
                 </Grid.ColumnDefinitions>
                 <!-- Grid rows contain the group boxes -->
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="180" />
+                    <RowDefinition Height="190" />
                     <RowDefinition Height="*" />
                     <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
