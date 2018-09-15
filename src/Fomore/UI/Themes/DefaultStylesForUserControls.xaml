@@ -8,12 +8,14 @@
         <Setter Property="IsDisabledBackground" Value="LightGray" />
         <Setter Property="IsDisabledGrayOpacity" Value="0.5" />
         <Setter Property="Background" Value="{StaticResource Level3Brush}" />
-        <Setter Property="Margin" Value="5,0,5,5" />
-        <Setter Property="Padding" Value="10,5" />
+        <!-- <Setter Property="Margin" Value="5,0,5,5" /> -->
+        <!-- <Setter Property="Padding" Value="10,5" /> -->
         <Setter Property="BorderBrush" Value="Black" />
         <Setter Property="BorderThickness" Value="1" />
-        <Setter Property="HorizontalAlignment" Value="Stretch" />
-        <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+        <!-- <Setter Property="HorizontalAlignment" Value="Stretch" /> -->
+        <Setter Property="HorizontalContentAlignment" Value="Center" />
+        <Setter Property="VerticalContentAlignment" Value="Center" />
+
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="controls:CustomizableButton">

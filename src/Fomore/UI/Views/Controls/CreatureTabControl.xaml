@@ -17,14 +17,13 @@
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
 
-        <!-- List -->
+        <!-- List on the left side -->
         <Grid Grid.Column="0">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="*" />
             </Grid.RowDefinitions>
-            <controls:CustomizableButton Grid.Row="0" Content="Create New Creature" Margin="0" Height="80"
-                                         Command="{Binding NewCreature}" />
+            <controls:CustomizableButton Grid.Row="0" Style="{StaticResource NewListEntryButton}" Command="{Binding NewCreature}" Content="Create New Creature" />
 
             <ListBox Grid.Row="1" Width="350" Style="{StaticResource EntityList}"
                      ItemTemplate="{StaticResource CreatureListItem}"
