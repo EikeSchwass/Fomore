@@ -44,6 +44,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Bone.cs" />
+    <Compile Include="ConnectorInformation.cs" />
     <Compile Include="Creature.cs" />
     <Compile Include="CreatureStructure.cs" />
     <Compile Include="EntitiyStorage.cs" />

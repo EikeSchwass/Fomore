@@ -1,7 +1,8 @@
-﻿using System;
+﻿using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Windows.Input;
 using System.Windows.Media;
+using Fomore.UI.ViewModel.Helper;
 using FontAwesome.WPF;
 
 namespace Fomore.UI.ViewModel.CreatureEditor.Behaviours
@@ -24,6 +25,7 @@ namespace Fomore.UI.ViewModel.CreatureEditor.Behaviours
         protected override bool CanExecute(CreatureEditorPanelVM parameter) => true;// (parameter?.CreatureStructureEditorCanvasVM?.SelectedJoints?.Count ?? 0) > 0;
 
         /// <inheritdoc />
+        [SuppressMessage("ReSharper", "ImplicitlyCapturedClosure")]
         public override void OnInvoked(CreatureEditorPanelVM parameter, ModifierKeys modifierKeys)
         {
             base.OnInvoked(parameter, modifierKeys);
@@ -34,15 +36,35 @@ namespace Fomore.UI.ViewModel.CreatureEditor.Behaviours
                                     .ToList();
             foreach (var jointVM in jointsToRemove)
             {
-                creatureVM.CreatureStructureVM.JointCollectionVM.Remove(jointVM);
                 bonesToRemove = bonesToRemove.Concat(creatureVM.CreatureStructureVM.BoneCollectionVM.Where(b => b.FirstJoint.Model.Tracker == jointVM.Model.Tracker ||
-                                                                                         b.SecondJoint.Model.Tracker == jointVM.Model.Tracker)).ToList();
+                                                                                                                b.SecondJoint.Model.Tracker == jointVM.Model.Tracker)).ToList();
             }
-            foreach (var boneVM in bonesToRemove.Distinct())
-            {
-                creatureVM.CreatureStructureVM.BoneCollectionVM.Remove(boneVM);
-            }
-            throw new NotImplementedException();
+
+            var changeOperation = new ChangeOperation(c =>
+                                                      {
+                                                          foreach (var jointVM in jointsToRemove)
+                                                          {
+                                                              c.Creature.CreatureStructureVM.JointCollectionVM.Remove(jointVM);
+                                                          }
+                                                          foreach (var boneVM in bonesToRemove.Distinct())
+                                                          {
+                                                              creatureVM.CreatureStructureVM.BoneCollectionVM.Remove(boneVM);
+                                                          }
+                                                      },
+                                                      c =>
+                                                      {
+
+                                                          foreach (var jointVM in jointsToRemove)
+                                                          {
+                                                              c.Creature.CreatureStructureVM.JointCollectionVM.Add(jointVM);
+                                                          }
+                                                          foreach (var boneVM in bonesToRemove)
+                                                          {
+                                                              c.Creature.CreatureStructureVM.BoneCollectionVM.Add(boneVM);
+                                                          }
+                                                      });
+
+            canvasVM.HistoryStack.AddOperation(changeOperation);
         }
     }
 }

@@ -10,6 +10,8 @@ namespace Core
         public Joint FirstJoint { get; set; }
         public Joint SecondJoint { get; set; }
         public float Width { get; set; } = 0.05f;
+        public string Name { get; set; } = "Unnamed Bone";
+        public ConnectorInformation ConnectorInformation { get; private set; }
 
         public Bone(Joint firstJoint, Joint secondJoint) : this(new object())
         {
@@ -17,14 +19,21 @@ namespace Core
             SecondJoint = secondJoint;
         }
 
-        private Bone(object tracker)
+        private Bone(object tracker) : this()
         {
             Tracker = tracker;
         }
 
+        public Bone()
+        {
+            ConnectorInformation = new ConnectorInformation { Bone = this };
+        }
+
         public Bone Clone()
         {
-            return new Bone(Tracker) { Density = Density, FirstJoint = FirstJoint, SecondJoint = SecondJoint };
+            var bone = new Bone(Tracker) { Density = Density, FirstJoint = FirstJoint, SecondJoint = SecondJoint };
+            bone.ConnectorInformation = ConnectorInformation.Clone(bone);
+            return bone;
         }
     }
 }

@@ -12,7 +12,7 @@ using System.Windows.Media.Imaging;
 
 namespace Fomore.UI.ViewModel.Helper
 {
-    public static class ImageSourceExtensions
+    public static class ViewModelExtensions
     {
         private static Dictionary<BitmapSource, Cursor> Cached { get; } = new Dictionary<BitmapSource, Cursor>();
 
@@ -37,6 +37,29 @@ namespace Fomore.UI.ViewModel.Helper
                 data = ms.ToArray();
             }
             return data;
+        }
+
+        public static T SaveSingleOrDefault<T>(this IEnumerable<T> source) => SaveSingleOrDefault(source, t => true);
+
+        public static T SaveSingleOrDefault<T>(this IEnumerable<T> source, Func<T, bool> filter)
+        {
+            bool set = false;
+            T result = default(T);
+            foreach (var entry in source)
+            {
+                if (!set)
+                {
+                    result = entry;
+                    set = true;
+                }
+                else
+                {
+                    result = default(T);
+                    break;
+                }
+            }
+
+            return result;
         }
 
         //If you get 'dllimport unknown'-, then add 'using System.Runtime.InteropServices;'

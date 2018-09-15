@@ -66,65 +66,42 @@ namespace Fomore.UI.ViewModel.Data
 
         public CreatureStructureVM(CreatureStructure creatureStructure) : base(creatureStructure)
         {
-            BoneCollectionVM = new EncapsulatingObservableCollection<BoneVM, Bone>(creatureStructure.Bones,
-                                                                                   creatureStructure.Bones.Select(b =>
-                                                                                                                  {
-                                                                                                                      var boneVM =
-                                                                                                                          new BoneVM(b)
-                                                                                                                          {
-                                                                                                                              FirstJoint =
-                                                                                                                                  new
-                                                                                                                                      JointVM(creatureStructure
-                                                                                                                                             .Joints
-                                                                                                                                             .First(j =>
-                                                                                                                                                        j.Tracker ==
-                                                                                                                                                        b.FirstJoint
-                                                                                                                                                         .Tracker)),
-                                                                                                                              SecondJoint =
-                                                                                                                                  new
-                                                                                                                                      JointVM(creatureStructure
-                                                                                                                                             .Joints
-                                                                                                                                             .First(j =>
-                                                                                                                                                        j.Tracker ==
-                                                                                                                                                        b.SecondJoint
-                                                                                                                                                         .Tracker))
-                                                                                                                          };
-                                                                                                                      if (
-                                                                                                                          boneVM
-                                                                                                                             .FirstJoint !=
-                                                                                                                          null)
+            JointCollectionVM = new EncapsulatingObservableCollection<JointVM, Joint>(creatureStructure.Joints,
+                                                                                      creatureStructure.Joints.Select(j =>
                                                                                                                       {
-                                                                                                                          boneVM
-                                                                                                                                 .FirstJoint
+                                                                                                                          var jointVM =
+                                                                                                                              new
+                                                                                                                                  JointVM(j);
+                                                                                                                          jointVM
                                                                                                                                  .PropertyChanged
                                                                                                                               +=
                                                                                                                               BoneChanged;
-                                                                                                                      }
+                                                                                                                          return jointVM;
+                                                                                                                      })
+                                                                                                       .ToList());
+            var boneVMs = creatureStructure.Bones.Select(b =>
+                                                         {
+                                                             var boneVM = new BoneVM(b)
+                                                             {
+                                                                 FirstJoint =
+                                                                     JointCollectionVM.First(j => ReferenceEquals(b.FirstJoint, j.Model)),
+                                                                 SecondJoint =
+                                                                     JointCollectionVM.First(j => ReferenceEquals(b.SecondJoint, j.Model))
+                                                             };
+                                                             if (boneVM.FirstJoint != null)
+                                                             {
+                                                                 boneVM.FirstJoint.PropertyChanged += BoneChanged;
+                                                             }
 
-                                                                                                                      if (
-                                                                                                                          boneVM
-                                                                                                                             .SecondJoint !=
-                                                                                                                          null)
-                                                                                                                      {
-                                                                                                                          boneVM
-                                                                                                                                 .SecondJoint
-                                                                                                                                 .PropertyChanged
-                                                                                                                              +=
-                                                                                                                              BoneChanged;
-                                                                                                                      }
+                                                             if (boneVM.SecondJoint != null)
+                                                             {
+                                                                 boneVM.SecondJoint.PropertyChanged += BoneChanged;
+                                                             }
 
-                                                                                                                      return boneVM;
-                                                                                                                  })
-                                                                                                    .ToList());
-            JointCollectionVM =
-                new EncapsulatingObservableCollection<JointVM, Joint>(creatureStructure.Joints,
-                                                                      creatureStructure.Joints.Select(j =>
-                                                                                                      {
-                                                                                                          var jointVM = new JointVM(j);
-                                                                                                          jointVM.PropertyChanged +=
-                                                                                                              BoneChanged;
-                                                                                                          return jointVM;
-                                                                                                      }).ToList());
+                                                             return boneVM;
+                                                         });
+            BoneCollectionVM = new EncapsulatingObservableCollection<BoneVM, Bone>(creatureStructure.Bones, boneVMs.ToList());
+
             BoneCollectionVM.CollectionChanged += BoneCollectionChanged;
             JointCollectionVM.CollectionChanged += JointCollectionChanged;
             RecalculateWeightCommand = new DelegateCommand(o => RecalculateWeight(), o => true);
@@ -177,16 +154,10 @@ namespace Fomore.UI.ViewModel.Data
         private void JointCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
             var removedJoins = e.OldItems?.Cast<JointVM>() ?? Enumerable.Empty<JointVM>();
-            foreach (var removedJoin in removedJoins)
-            {
-                removedJoin.PropertyChanged -= BoneChanged;
-            }
+            foreach (var removedJoin in removedJoins) removedJoin.PropertyChanged -= BoneChanged;
 
             var addedJoins = e.NewItems?.Cast<JointVM>() ?? Enumerable.Empty<JointVM>();
-            foreach (var addedJoin in addedJoins)
-            {
-                addedJoin.PropertyChanged += BoneChanged;
-            }
+            foreach (var addedJoin in addedJoins) addedJoin.PropertyChanged += BoneChanged;
 
             RecalculateDimensions();
         }
@@ -200,8 +171,8 @@ namespace Fomore.UI.ViewModel.Data
         {
             if (JointCollectionVM.Any())
             {
-                TotalWidth = (JointCollectionVM.Max(j => j.Position.X) - JointCollectionVM.Min(j => j.Position.X))*Scale;
-                TotalHeight = (JointCollectionVM.Max(j => j.Position.Y) - JointCollectionVM.Min(j => j.Position.Y))*Scale;
+                TotalWidth = (JointCollectionVM.Max(j => j.Position.X) - JointCollectionVM.Min(j => j.Position.X)) * Scale;
+                TotalHeight = (JointCollectionVM.Max(j => j.Position.Y) - JointCollectionVM.Min(j => j.Position.Y)) * Scale;
             }
             else
             {

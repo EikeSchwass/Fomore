@@ -26,21 +26,20 @@ namespace Fomore.UI.ViewModel.CreatureEditor.Behaviours
         public override void OnInvoked(CreatureEditorPanelVM parameter, ModifierKeys modifierKeys)
         {
             base.OnInvoked(parameter, modifierKeys);
-            if (!parameter.Creature.CreatureStructureVM.JointCollectionVM.Any())
-                return;
-            var creatureVM = parameter.Creature;
-
-            var jointCollectionVM = creatureVM.CreatureStructureVM.JointCollectionVM;
-            double maxX = jointCollectionVM.Max(j => j.Position.X);
-            double minX = jointCollectionVM.Min(j => j.Position.X);
-            double maxY = jointCollectionVM.Max(j => j.Position.Y);
-            double minY = jointCollectionVM.Min(j => j.Position.Y);
-            var center = new Vector2(minX + (maxX - minX) / 2, minY + (maxY - minY) / 2);
 
             var changeOperation = new ChangeOperation(c =>
                                                       {
-                                                          var jointCollection = c.Creature.CreatureStructureVM.JointCollectionVM;
-                                                          foreach (var jointVM in jointCollection)
+                                                          if (!c.Creature.CreatureStructureVM.JointCollectionVM.Any())
+                                                              return;
+                                                          var creatureVM = c.Creature;
+
+                                                          var jointCollectionVM = creatureVM.CreatureStructureVM.JointCollectionVM;
+                                                          double maxX = jointCollectionVM.Max(j => j.Position.X);
+                                                          double minX = jointCollectionVM.Min(j => j.Position.X);
+                                                          double maxY = jointCollectionVM.Max(j => j.Position.Y);
+                                                          double minY = jointCollectionVM.Min(j => j.Position.Y);
+                                                          var center = new Vector2(minX + (maxX - minX) / 2, minY + (maxY - minY) / 2);
+                                                          foreach (var jointVM in jointCollectionVM)
                                                           {
                                                               double x = jointVM.Position.X;
                                                               x = -(x - center.X) + center.X;
@@ -49,8 +48,17 @@ namespace Fomore.UI.ViewModel.CreatureEditor.Behaviours
                                                       },
                                                       c =>
                                                       {
-                                                          var jointCollection = c.Creature.CreatureStructureVM.JointCollectionVM;
-                                                          foreach (var jointVM in jointCollection)
+                                                          if (!c.Creature.CreatureStructureVM.JointCollectionVM.Any())
+                                                              return;
+                                                          var creatureVM = c.Creature;
+
+                                                          var jointCollectionVM = creatureVM.CreatureStructureVM.JointCollectionVM;
+                                                          double maxX = jointCollectionVM.Max(j => j.Position.X);
+                                                          double minX = jointCollectionVM.Min(j => j.Position.X);
+                                                          double maxY = jointCollectionVM.Max(j => j.Position.Y);
+                                                          double minY = jointCollectionVM.Min(j => j.Position.Y);
+                                                          var center = new Vector2(minX + (maxX - minX) / 2, minY + (maxY - minY) / 2);
+                                                          foreach (var jointVM in jointCollectionVM)
                                                           {
                                                               double x = jointVM.Position.X;
                                                               x = -(x - center.X) + center.X;

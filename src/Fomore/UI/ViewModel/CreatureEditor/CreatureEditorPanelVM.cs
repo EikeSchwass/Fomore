@@ -1,10 +1,12 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.Linq;
 using Fomore.UI.ViewModel.CreatureEditor.Behaviours;
 using Fomore.UI.ViewModel.CreatureEditor.Tools;
 using Fomore.UI.ViewModel.Data;
+using Fomore.UI.ViewModel.Helper;
 
 namespace Fomore.UI.ViewModel.CreatureEditor
 {
@@ -18,11 +20,18 @@ namespace Fomore.UI.ViewModel.CreatureEditor
 
         public CreatureStructureEditorCanvasVM CreatureStructureEditorCanvasVM { get; }
 
+        public HistoryStackVM<CreatureStructureEditorCanvasVM> HistoryStack => CreatureStructureEditorCanvasVM.HistoryStack;
+
+        public CreatureSettings Settings { get; }
+
+        public event Action<object, CreatureVM> SaveRequested;
+
         public CreatureEditorPanelVM(CreatureVM creature)
         {
             Creature = creature;
             ToolCollectionVM = new ToolCollectionVM();
             CreatureStructureEditorCanvasVM = new CreatureStructureEditorCanvasVM(Creature, ToolCollectionVM);
+            Settings = new CreatureSettings(this);
             ToolCollectionVM.InfoMessageCollection = CreatureStructureEditorCanvasVM.InfoMessageCollection;
             ToolCollectionVM.Tools.Add(new SelectAllTool());
             ToolCollectionVM.Tools.Add(new MoveTool());
@@ -47,6 +56,12 @@ namespace Fomore.UI.ViewModel.CreatureEditor
             ToolCollectionVM.Tools.CollectionChanged += CollectionChanged;
         }
 
+
         private void CollectionChanged(object sender, NotifyCollectionChangedEventArgs e) => OnPropertyChanged(nameof(InputBindings));
+
+        public void OnSaveRequested()
+        {
+            SaveRequested?.Invoke(this, Creature);
+        }
     }
 }

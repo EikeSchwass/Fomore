@@ -34,6 +34,7 @@
                 </Trigger>
             </Style.Triggers>
         </Style>
+
         <Style x:Key="SelectedLineStyle" TargetType="Line">
             <Setter Property="StrokeDashArray" Value="2,1.141592653" />
             <Setter Property="StrokeThickness" Value="3" />
@@ -51,6 +52,16 @@
                     </Trigger.EnterActions>
                 </Trigger>
             </Style.Triggers>
+        </Style>
+        <Style x:Key="LimitLineStyle" TargetType="Line">
+            <Setter Property="StrokeThickness" Value="3" />
+            <Setter Property="Opacity" Value="0.33" />
+        </Style>
+        <Style x:Key="LowerLimitLineStyle" TargetType="Line" BasedOn="{StaticResource LimitLineStyle}">
+            <Setter Property="Stroke" Value="Green" />
+        </Style>
+        <Style x:Key="UpperLimitLineStyle" TargetType="Line" BasedOn="{StaticResource LimitLineStyle}">
+            <Setter Property="Stroke" Value="DarkViolet" />
         </Style>
     </UserControl.Resources>
     <Canvas Width="{Binding CanvasWidth}" Height="{Binding CanvasHeight}"
@@ -91,8 +102,34 @@
                    Stretch="None" />
         </Grid>
 
+        <!-- Selected Bones Limits -->
+        <ItemsControl ItemsSource="{Binding SelectedBones}">
+            <ItemsControl.ItemTemplate>
+                <DataTemplate DataType="{x:Type data:BoneVM}">
+                    <Grid
+                        Visibility="{Binding ConnectorInformation.HasLimits, Converter={StaticResource BooleanVisibilityConverter}, ConverterParameter=True}">
+                        <Line Style="{StaticResource LowerLimitLineStyle}"
+                              X1="{Binding ConnectorInformation.PivotJoint.Position.X}"
+                              Y1="{Binding ConnectorInformation.PivotJoint.Position.Y}"
+                              X2="{Binding ConnectorInformation.LowerLimitEndPoint.X}"
+                              Y2="{Binding ConnectorInformation.LowerLimitEndPoint.Y}" />
+                        <Line Style="{StaticResource UpperLimitLineStyle}"
+                              X1="{Binding ConnectorInformation.PivotJoint.Position.X}"
+                              Y1="{Binding ConnectorInformation.PivotJoint.Position.Y}"
+                              X2="{Binding ConnectorInformation.UpperLimitEndPoint.X}"
+                              Y2="{Binding ConnectorInformation.UpperLimitEndPoint.Y}" />
+                    </Grid>
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <Canvas IsItemsHost="True" />
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+        </ItemsControl>
+
         <!-- Bones -->
-        <ItemsControl ItemsSource="{Binding HistoryStack.Entity.Creature.CreatureStructureVM.BoneCollectionVM}">
+        <ItemsControl ItemsSource="{Binding Creature.CreatureStructureVM.BoneCollectionVM}">
             <ItemsControl.ItemTemplate>
                 <DataTemplate DataType="{x:Type data:BoneVM}">
                     <Grid>
@@ -100,7 +137,29 @@
                               X1="{Binding FirstJoint.Position.X}"
                               Y1="{Binding FirstJoint.Position.Y}"
                               X2="{Binding SecondJoint.Position.X}"
-                              Y2="{Binding SecondJoint.Position.Y}" />
+                              Y2="{Binding SecondJoint.Position.Y}">
+                            <Line.ToolTip>
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition />
+                                        <RowDefinition />
+                                    </Grid.RowDefinitions>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition />
+                                        <ColumnDefinition />
+                                    </Grid.ColumnDefinitions>
+                                    <Grid.Resources>
+                                        <Style TargetType="TextBlock">
+                                            <Setter Property="Margin" Value="1" />
+                                        </Style>
+                                    </Grid.Resources>
+                                    <TextBlock Grid.Row="0" Grid.Column="0" Text="Name: " />
+                                    <TextBlock Grid.Row="1" Grid.Column="0" Text="Density: " />
+                                    <TextBlock Grid.Row="0" Grid.Column="1" Text="{Binding Name}" />
+                                    <TextBlock Grid.Row="1" Grid.Column="1" Text="{Binding Density}" />
+                                </Grid>
+                            </Line.ToolTip>
+                        </Line>
                         <controls:NoSizeDecorator>
                             <Line Style="{StaticResource SelectedLineStyle}"
                                   X1="{Binding FirstJoint.Position.X}"
@@ -134,6 +193,7 @@
                 </ItemsPanelTemplate>
             </ItemsControl.ItemsPanel>
         </ItemsControl>
+
 
         <!-- Bone Preview -->
         <Line Stroke="Blue" StrokeThickness="2"

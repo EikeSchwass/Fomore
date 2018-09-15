@@ -1,5 +1,4 @@
-﻿using System;
-using System.Windows.Input;
+﻿using System.Windows.Input;
 using System.Windows.Media;
 using FontAwesome.WPF;
 
@@ -22,7 +21,7 @@ namespace Fomore.UI.ViewModel.CreatureEditor.Behaviours
         /// <inheritdoc />
         public override void OnInvoked(CreatureEditorPanelVM parameter, ModifierKeys modifierKeys)
         {
-            throw new NotImplementedException();
+            parameter.OnSaveRequested();
         }
     }
 }

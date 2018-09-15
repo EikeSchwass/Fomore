@@ -35,14 +35,19 @@
         <Setter Property="BorderThickness" Value="1" />
     </Style>
     <Style TargetType="{x:Type TextBox}">
-        <Setter Property="Background" Value="{StaticResource Level1Brush}" />
-        <Setter Property="Foreground" Value="{StaticResource Level5Brush}" />
+        <Setter Property="Background" Value="White" />
+        <Setter Property="Foreground" Value="Black" />
         <Setter Property="Padding" Value="5" />
         <Setter Property="FontWeight" Value="Medium" />
         <Setter Property="BorderBrush" Value="Black" />
         <Setter Property="BorderThickness" Value="1" />
         <Setter Property="VerticalAlignment" Value="Center" />
         <Setter Property="FontSize" Value="18" />
+    </Style>
+    <Style TargetType="{x:Type RadioButton}">
+        <Setter Property="Margin" Value="4" />
+        <Setter Property="VerticalAlignment" Value="Center" />
+        <Setter Property="VerticalContentAlignment" Value="Center" />
     </Style>
     <Style TargetType="{x:Type StackPanel}" x:Key="ToolbarStyle">
         <Setter Property="Background" Value="{StaticResource Level2Brush}" />

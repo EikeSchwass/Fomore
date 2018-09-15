@@ -15,10 +15,12 @@ namespace Fomore.UI.Converter
         /// <inheritdoc />
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            bool.TryParse(parameter?.ToString(), out bool param);
+            bool.TryParse(parameter?.ToString() ?? "false", out bool param);
 
             if (value is bool source)
                 return source == param ? VisibleOption : HiddenOption;
+            if (value == null)
+                return !param ? VisibleOption : HiddenOption;
             throw new InvalidOperationException($"{nameof(value)} is not a boolean value");
         }
 

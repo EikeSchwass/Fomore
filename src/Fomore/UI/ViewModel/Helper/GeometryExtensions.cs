@@ -1,6 +1,5 @@
 ﻿// Eike Stein: Fomore/UI/GeometryExtensions.cs (2018/06/25)
 
-using System.Diagnostics;
 using System.Windows;
 using Core;
 using static System.Math;
@@ -33,9 +32,6 @@ namespace Fomore.UI.ViewModel.Helper
 
             double distanceToFirstJoint = (bone.FirstJoint.Position - p).Length;
             double distanceToSecondJoint = (bone.SecondJoint.Position - p).Length;
-
-            Debug.Assert(distanceToFirstJoint > shortestDistance);
-            Debug.Assert(distanceToSecondJoint > shortestDistance);
 
             return Min(distanceToFirstJoint, distanceToSecondJoint);
         }

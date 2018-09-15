@@ -107,8 +107,18 @@ namespace Fomore.UI.ViewModel.CreatureEditor
 
         public void Reset()
         {
-            SelectedJoints.Clear();
-            SelectedBones.Clear();
+            foreach (var selectedBone in SelectedBones.ToList())
+            {
+                if (!Creature.CreatureStructureVM.BoneCollectionVM.Contains(selectedBone))
+                    SelectedBones.Remove(selectedBone);
+            }
+            foreach (var selectedJoint in SelectedJoints.ToList())
+            {
+                if (!Creature.CreatureStructureVM.JointCollectionVM.Contains(selectedJoint))
+                    SelectedJoints.Remove(selectedJoint);
+            }
+
+
             PreviewBone.HighlightedJoints.Clear();
             PreviewBone.Visibility = Visibility.Hidden;
             ToolCollectionVM.Tools.OfType<PlaceBoneTool>().First().Reset();

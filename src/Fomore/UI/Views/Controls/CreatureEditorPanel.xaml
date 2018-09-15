@@ -168,6 +168,8 @@
                                                 MouseEnterCommand="{Binding CanvasMouseEnterCommand}"
                                                 MouseLeaveCommand="{Binding CanvasMouseLeaveCommand}"
                                                 SizeChangedCommand="{Binding CanvasSizeChangedCommand}" />
+        
+        <!-- Learning Helper -->
         <Border Grid.Column="1" Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Top" Background="#70ffff50" BorderBrush="Black" BorderThickness="1" Margin="20" MaxWidth="425">
             <Grid>
                 <Grid.RowDefinitions>
@@ -192,7 +194,7 @@
                         </controls:CustomizableButton.Content>
                     </controls:CustomizableButton>
                 </Grid>
-                <ItemsControl Grid.Row="1" ItemsSource="{Binding CreatureStructureEditorCanvasVM.InfoMessageCollection.InfoMessages}" Margin="8" Visibility="{Binding CreatureStructureEditorCanvasVM.InfoMessageCollection.InfoMessages.Count, Converter={StaticResource InvertedNumberVisibilityConverter}}" AlternationCount="{Binding RelativeSource={RelativeSource Self}, Path=Items.Count}">
+                <ItemsControl Grid.Row="1" IsHitTestVisible="False" ItemsSource="{Binding CreatureStructureEditorCanvasVM.InfoMessageCollection.InfoMessages}" Margin="8" Visibility="{Binding CreatureStructureEditorCanvasVM.InfoMessageCollection.InfoMessages.Count, Converter={StaticResource InvertedNumberVisibilityConverter}}" AlternationCount="{Binding RelativeSource={RelativeSource Self}, Path=Items.Count}">
                     <ItemsControl.ItemTemplate>
                         <DataTemplate DataType="{x:Type tools:InfoMessage}">
                             <StackPanel>

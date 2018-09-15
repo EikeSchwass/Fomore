@@ -26,21 +26,23 @@ namespace Fomore.UI.ViewModel.Helper
             if (!(obj is FrameworkElement uiElement))
                 throw new Exception($"Object of type '{obj.GetType()}' does not support InputBindings");
 
-            var creatureEditorVM = (CreatureEditorVM)uiElement.DataContext;
-
-            uiElement.InputBindings.Clear();
-            if (e.NewValue == null)
-                return;
-
-            var bindings = (IEnumerable)e.NewValue;
-            var inputBindings = from hasInputBindings in bindings.OfType<IHasInputBinding>()
-                                let binding = hasInputBindings.GetInputBinding()
-                                where binding?.Gesture != null
-                                select binding;
-            foreach (var binding in inputBindings)
+            if (uiElement.DataContext is CreatureEditorVM creatureEditorVM)
             {
-                binding.CommandParameter = creatureEditorVM.CreatureEditorPanelVM;
-                uiElement.InputBindings.Add(binding);
+
+                uiElement.InputBindings.Clear();
+                if (e.NewValue == null)
+                    return;
+
+                var bindings = (IEnumerable)e.NewValue;
+                var inputBindings = from hasInputBindings in bindings.OfType<IHasInputBinding>()
+                                    let binding = hasInputBindings.GetInputBinding()
+                                    where binding?.Gesture != null
+                                    select binding;
+                foreach (var binding in inputBindings)
+                {
+                    binding.CommandParameter = creatureEditorVM.CreatureEditorPanelVM;
+                    uiElement.InputBindings.Add(binding);
+                }
             }
         }
     }

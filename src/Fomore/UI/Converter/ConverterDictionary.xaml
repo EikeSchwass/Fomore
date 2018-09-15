@@ -2,9 +2,14 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:local="clr-namespace:Fomore.UI.Converter">
     <local:NumberVisibilityConverter x:Key="NumberVisibilityConverter" />
+    <local:NumberToBooleanConverter x:Key="NumberToBooleanConverter" />
+    <local:InvertedNumberToBooleanConverter x:Key="InvertedNumberToBooleanConverter" />
     <local:InvertedNumberVisibilityConverter x:Key="InvertedNumberVisibilityConverter" />
     <local:NotNullToVisibilityConverter x:Key="NotNullToVisibilityConverter" />
     <local:NullToVisibilityConverter x:Key="NullToVisibilityConverter" />
     <local:BooleanVisibilityConverter x:Key="BooleanVisibilityConverter" />
+    <local:InvertBooleanConverter x:Key="InvertBooleanConverter" />
     <local:DescriptionWidthConverter x:Key="DescriptionWidthConverter" />
+    <local:RadiansToDegreesConverter x:Key="RadiansToDegreesConverter" />
+    <local:DegreesToRadiansConverter x:Key="DegreesToRadiansConverter" />
 </ResourceDictionary>
