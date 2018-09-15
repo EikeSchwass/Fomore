@@ -1,10 +1,24 @@
-﻿using System.Windows.Input;
+﻿using System;
+using System.Collections.Specialized;
+using System.Drawing;
+using System.Drawing.Drawing2D;
+using System.Linq;
+using System.Windows;
+using System.Windows.Input;
+using System.Windows.Interop;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
 using Core;
 using Fomore.UI.ViewModel.Application;
 using Fomore.UI.ViewModel.Commands;
 using Fomore.UI.ViewModel.CreatureEditor;
 using Fomore.UI.ViewModel.Data;
 using Fomore.UI.Views.Windows;
+using Brush = System.Drawing.Brush;
+using Brushes = System.Drawing.Brushes;
+using Color = System.Drawing.Color;
+using Pen = System.Drawing.Pen;
+using Point = System.Drawing.Point;
 
 namespace Fomore.UI.ViewModel.Navigation
 {
@@ -20,6 +34,8 @@ namespace Fomore.UI.ViewModel.Navigation
         // Properties and private members
         // ------------------------------------------------------------
 
+        private const int PreviewImageBorder = 10;
+
         private CreatureVM selectedCreature;
         private MovementPatternVM selectedMovementPattern;
 
@@ -29,10 +45,24 @@ namespace Fomore.UI.ViewModel.Navigation
             set
             {
                 if (Equals(value, selectedCreature)) return;
+                if (selectedCreature != null)
+                {
+                    selectedCreature.CreatureStructureVM.BoneCollectionVM.CollectionChanged -= CreatureStructureChanged;
+                    selectedCreature.CreatureStructureVM.JointCollectionVM.CollectionChanged -= CreatureStructureChanged;
+                }
+
                 selectedCreature = value;
                 OnPropertyChanged();
                 OnPropertyChanged(nameof(SelectedCreatureMovementPattern));
+                OnPropertyChanged(nameof(CreaturePreview));
+                selectedCreature.CreatureStructureVM.BoneCollectionVM.CollectionChanged += CreatureStructureChanged;
+                selectedCreature.CreatureStructureVM.JointCollectionVM.CollectionChanged += CreatureStructureChanged;
             }
+        }
+
+        private void CreatureStructureChanged(object sender, NotifyCollectionChangedEventArgs e)
+        {
+            OnPropertyChanged(nameof(CreaturePreview));
         }
 
         public MovementPatternVM SelectedMovementPattern
@@ -47,7 +77,8 @@ namespace Fomore.UI.ViewModel.Navigation
             }
         }
 
-        public CreatureMovementPattern SelectedCreatureMovementPattern => new CreatureMovementPattern(SelectedCreature, SelectedMovementPattern);
+        public CreatureMovementPattern SelectedCreatureMovementPattern =>
+            new CreatureMovementPattern(SelectedCreature, SelectedMovementPattern);
 
         public struct CreatureMovementPattern
         {
@@ -58,6 +89,19 @@ namespace Fomore.UI.ViewModel.Navigation
             {
                 Creature = creature;
                 MovementPattern = movementPattern;
+            }
+        }
+
+        public ImageSource CreaturePreview
+        {
+            get
+            {
+                var bitmap = GenerateCreaturePreview();
+
+                return Imaging.CreateBitmapSourceFromHBitmap(bitmap.GetHbitmap(),
+                                                             IntPtr.Zero,
+                                                             Int32Rect.Empty,
+                                                             BitmapSizeOptions.FromEmptyOptions());
             }
         }
 
@@ -109,15 +153,92 @@ namespace Fomore.UI.ViewModel.Navigation
             }
         }
 
+        private Bitmap GenerateCreaturePreview()
+        {
+            var bones = SelectedCreature?.CreatureStructureVM.BoneCollectionVM;
+            var joints = SelectedCreature?.CreatureStructureVM.JointCollectionVM;
+
+            if (joints == null || joints.Count == 0 || bones == null)
+                return new Bitmap(100, 100);
+
+            Vector2 min = new Vector2(joints.Min(j => j.Position.X), joints.Min(j => j.Position.Y));
+            Vector2 max = new Vector2(joints.Max(j => j.Position.X), joints.Max(j => j.Position.Y));
+            Vector2 size = max - min;
+
+            var bitmap = new Bitmap((int) size.X + PreviewImageBorder * 2, (int) size.Y + PreviewImageBorder * 2);
+
+            Pen bonePen = new Pen(Brushes.Blue) {Width = 5};
+            Pen jointPen = new Pen(Brushes.Red);
+
+            using (Graphics g = Graphics.FromImage(bitmap))
+            {
+                g.SmoothingMode = SmoothingMode.HighQuality;
+
+                foreach (var bone in bones)
+                {
+                    // g.DrawLine(bonePen,
+                    //            (float)bone.FirstJoint.Position.X,
+                    //            (float)bone.FirstJoint.Position.Y,
+                    //            (float)bone.SecondJoint.Position.X,
+                    //            (float)bone.SecondJoint.Position.Y);
+                    g.DrawLine(bonePen,
+                               NormalizePoint(bone.FirstJoint.Position, min),
+                               NormalizePoint(bone.SecondJoint.Position, min));
+                }
+
+                foreach (var joint in joints)
+                {
+                    // g.FillEllipse(Brushes.Red, (float)joint.Position.X - 5.0f, (float)joint.Position.Y - 5.0f, 10.0f, 10.0f);
+                    Point n = NormalizePoint(joint.Position, min);
+                    g.FillEllipse(jointPen.Brush, n.X - 5, n.Y - 5, 10, 10);
+                }
+            }
+
+            return bitmap;
+        }
+
+        // private Point NormalizePoint(Vector2 v, Vector2 min, Vector2 max, int width, int height)
+        // {
+        //     double xDiff = max.X - min.X;
+        //     double yDiff = max.Y - min.Y;
+        //     double size;
+        //     double xRelativeOffset, yRelativeOffset;
+        //
+        //     if (xDiff > yDiff)
+        //     {
+        //         size = xDiff;
+        //         xRelativeOffset = 0;
+        //         yRelativeOffset = (xDiff - yDiff) / size;
+        //     }
+        //     else
+        //     {
+        //         size = yDiff;
+        //         xRelativeOffset = (yDiff - xDiff) / size;
+        //         yRelativeOffset = 0;
+        //     }
+        //
+        //     v -= min;
+        //     double relativeX = v.X / size;
+        //     double relativeY = v.Y / size;
+        //
+        //     int x = (int)(width * (relativeX + xRelativeOffset));
+        //     int y = (int)(height * (relativeY + yRelativeOffset));
+        //
+        //     return new Point(x, y);
+        // }
+
+         private Point NormalizePoint(Vector2 v, Vector2 min)
+         {
+             return new Point((int) (v.X - min.X) + PreviewImageBorder, (int) (v.Y - min.Y) + PreviewImageBorder);
+         }
+
         // ------------------------------------------------------------
         // Entry point & other methods
         // ------------------------------------------------------------
-
         public CreatureTabVM(TabNavigationVM tabNavigationVM, EntityStorageVM entitiesStorage)
         {
             TabNavigationVM = tabNavigationVM;
             EntitiesStorage = entitiesStorage;
-
             NewCreature = new DelegateCommand(NewCreatureAction, o => true);
             TrainCommand = new DelegateCommand(TrainAction, o => true);
             SimulateCommand = new DelegateCommand(SimulateAction, o => true);
