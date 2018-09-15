@@ -67,6 +67,7 @@
     <Compile Include="Converter\DescriptionWidthConverter.cs" />
     <Compile Include="Converter\ItemInCollectionVisibilityConverter.cs" />
     <Compile Include="Converter\NumberVisibilityConverter.cs" />
+    <Compile Include="Converter\TabSizeConverter.cs" />
     <Compile Include="ViewModel\Application\AppStateVM.cs" />
     <Compile Include="ViewModel\Application\EntityStorageVM.cs" />
     <Compile Include="ViewModel\Commands\CommandParameters.cs" />

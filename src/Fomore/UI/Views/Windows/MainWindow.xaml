@@ -11,6 +11,12 @@
     <Window.DataContext>
         <application:AppStateVM  />
     </Window.DataContext>
+    <Window.Resources>
+        <Style TargetType="{x:Type TabItem}">
+            <Setter Property="Width" Value="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=Window}, Path=Width, Converter={StaticResource TabSizeConverter}}" />
+            <Setter Property="Height" Value="30" />
+        </Style>
+    </Window.Resources>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
