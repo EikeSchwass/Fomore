@@ -274,8 +274,8 @@
                     </Grid>
                 </GroupBox>
 
-                <GroupBox Grid.Row="2" Grid.Column="0" Margin="8" Background="{StaticResource Level4Brush}">
-                    <controls:CustomizableButton HorizontalAlignment="Center" VerticalAlignment="Center" Content="Delete" Margin="8,8,8,2" Padding="60,4" Foreground="White" FontSize="16" Command="{Binding EntitiesStorage.RemoveEnvironmentCommand}" CommandParameter="{Binding SelectedEnvironment}" />
+                <GroupBox Grid.Row="2" Grid.Column="0" Header="Actions">
+                    <controls:CustomizableButton Style="{StaticResource DeleteButton}" Command="{Binding EntitiesStorage.RemoveEnvironmentCommand}" CommandParameter="{Binding SelectedEnvironment}" Content="Delete" />
                 </GroupBox>
             </Grid>
         </Grid>

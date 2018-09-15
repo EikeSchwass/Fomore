@@ -81,9 +81,9 @@
                           Content="Show Training Progress" />
 
                 <StackPanel Grid.Column="2" Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Right">
-                    <controls:CustomizableButton Command="{Binding ResetSelectionCommand}"
+                    <controls:CustomizableButton Style="{StaticResource DefaultButton}" Command="{Binding ResetSelectionCommand}"
                                                  Content="Reset Selection" />
-                    <controls:CustomizableButton IsDefault="True"
+                    <controls:CustomizableButton Style="{StaticResource DefaultButton}" IsDefault="True"
                                                  Command="{Binding StartTrainingCommand}" Content="Start Training" />
                 </StackPanel>
             </Grid>

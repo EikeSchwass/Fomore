@@ -115,11 +115,6 @@
     </DataTemplate>
 
 
-    <Style x:Key="NewListEntryButton" BasedOn="{StaticResource {x:Type controls:CustomizableButton}}" TargetType="{x:Type controls:CustomizableButton}">
-        <Setter Property="Height" Value="80" />
-    </Style>
-
-
     <!-- TRY OUT STUFF -->
 
     <!-- List item selection highlight -->

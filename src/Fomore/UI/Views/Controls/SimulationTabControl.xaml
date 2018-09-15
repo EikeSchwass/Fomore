@@ -56,10 +56,10 @@
 
             <GroupBox Grid.Row="1" Header=" Actions " Height="80">
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-                    <controls:CustomizableButton
+                    <controls:CustomizableButton Style="{StaticResource DefaultButton}" 
                         Command="{Binding ResetSelectionCommand}"
                         Content="Reset Selection" />
-                    <controls:CustomizableButton IsDefault="True"
+                    <controls:CustomizableButton Style="{StaticResource DefaultButton}"  IsDefault="True"
                                                  Command="{Binding StartSimulationCommand}"
                                                  Content="Start Simulation" />
                 </StackPanel>

@@ -15,6 +15,7 @@
         <Style TargetType="{x:Type TabItem}">
             <Setter Property="Width" Value="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=Window}, Path=Width, Converter={StaticResource TabSizeConverter}}" />
             <Setter Property="Height" Value="30" />
+            <Setter Property="Background" Value="{StaticResource TabColor}" />
         </Style>
     </Window.Resources>
     <Grid>
