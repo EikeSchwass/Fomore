@@ -23,12 +23,16 @@
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="*" />
             </Grid.RowDefinitions>
-            <controls:CustomizableButton Grid.Row="0" Style="{StaticResource NewListEntryButton}" Command="{Binding NewCreature}" Content="Create New Creature" />
+            <controls:CustomizableButton Grid.Row="0" Style="{StaticResource NewListEntryButton}"
+                                         Command="{Binding NewCreature}" Content="Create New Creature" />
 
             <ListBox Grid.Row="1" Width="350" Style="{StaticResource EntityList}"
                      ItemTemplate="{StaticResource CreatureListItem}"
                      ItemsSource="{Binding EntitiesStorage.Creatures}"
                      SelectedItem="{Binding SelectedCreature, Mode=TwoWay}" />
+            <TextBlock Grid.Row="1" Style="{StaticResource NoSelectionText}"
+                       Text="No creatures"
+                       Visibility="{Binding EntitiesStorage.Creatures.Count, Converter={StaticResource NumberVisibilityConverter}}" />
         </Grid>
 
         <!-- No Selection screen -->
@@ -38,7 +42,7 @@
         </Grid>
 
         <!-- Details pane -->
-        <Grid Grid.Column="1" Style="{StaticResource DetailsContentPanel}"
+        <Grid Grid.Column="1"
               Visibility="{Binding SelectedCreature, Converter={StaticResource NotNullToVisibilityConverter}}">
             <Grid>
                 <Grid.ColumnDefinitions>
@@ -47,7 +51,7 @@
                 </Grid.ColumnDefinitions>
                 <!-- Grid rows contain the group boxes -->
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="180" />
                     <RowDefinition Height="*" />
                     <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
@@ -60,60 +64,60 @@
                             <ColumnDefinition />
                         </Grid.ColumnDefinitions>
 
-                        <!-- The detail information -->
-                        <Grid Grid.Column="0">
+                        <Grid Style="{StaticResource GroupBoxGrid}">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition />
+                                <ColumnDefinition />
+                            </Grid.ColumnDefinitions>
                             <Grid.RowDefinitions>
-                                <RowDefinition />
-                                <RowDefinition />
-                                <RowDefinition />
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="*" />
                             </Grid.RowDefinitions>
 
-                            <TextBlock Grid.Row="0" Text="Name:" />
-                            <TextBox Grid.Row="1" Style="{StaticResource DetailsName}"
-                                     Text="{Binding SelectedCreature.Name}" />
+                            <TextBlock Grid.ColumnSpan="2" Grid.Row="0" Text="Name:" />
+                            <TextBox Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="1" Style="{StaticResource DetailsTextBox}"
+                                    Text="{Binding SelectedCreature.Name, Mode=TwoWay}" />
 
-                            <Grid Grid.Row="2" Style="{StaticResource DetailsItemGrid}">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition />
-                                    <ColumnDefinition />
-                                </Grid.ColumnDefinitions>
-                                <Grid.RowDefinitions>
-                                    <RowDefinition />
-                                    <RowDefinition />
-                                    <RowDefinition />
-                                </Grid.RowDefinitions>
-
-                                <TextBlock Grid.Column="0" Grid.Row="0" Text="Creation time:" />
-                                <TextBlock Grid.Column="1" Grid.Row="0"
-                                           Text="{Binding SelectedCreature.CreationDate, StringFormat=g}" />
-                                <TextBlock Grid.Column="0" Grid.Row="1" Text="Number of Joints:" />
-                                <TextBlock Grid.Column="1" Grid.Row="1"
-                                           Text="{Binding SelectedCreature.CreatureStructureVM.JointCollectionVM.Count}" />
-                                <TextBlock Grid.Column="0" Grid.Row="2" Text="Number of Bones:" />
-                                <TextBlock Grid.Column="1" Grid.Row="2"
-                                           Text="{Binding SelectedCreature.CreatureStructureVM.BoneCollectionVM.Count}" />
-                            </Grid>
+                            <TextBlock Grid.Column="0" Grid.Row="2" Text="Creation time:" />
+                            <TextBlock Grid.Column="1" Grid.Row="2"
+                                       Text="{Binding SelectedCreature.CreationDate, StringFormat=g}" />
+                            <TextBlock Grid.Column="0" Grid.Row="3" Text="Number of Joints:" />
+                            <TextBlock Grid.Column="1" Grid.Row="3"
+                                       Text="{Binding SelectedCreature.CreatureStructureVM.JointCollectionVM.Count}" />
+                            <TextBlock Grid.Column="0" Grid.Row="4" Text="Number of Bones:" />
+                            <TextBlock Grid.Column="1" Grid.Row="4"
+                                       Text="{Binding SelectedCreature.CreatureStructureVM.BoneCollectionVM.Count}" />
                         </Grid>
-                        <Grid Grid.Column="1">
+
+                        <Grid Grid.Column="1" Style="{StaticResource GroupBoxGrid}">
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="Auto" />
                                 <RowDefinition Height="*" />
                             </Grid.RowDefinitions>
 
                             <TextBlock Grid.Row="0" Text="Description:" />
-                            <TextBox Grid.Row="1" Style="{StaticResource DetailsDescription}"
-                                     Text="{Binding SelectedCreature.Description}" />
+                            <TextBox Grid.Row="1" Style="{StaticResource DetailsTextBox}"
+                                     Text="{Binding SelectedCreature.Description, Mode=TwoWay}" />
                         </Grid>
-
                     </Grid>
                 </GroupBox>
 
                 <!-- The Movement patterns group box -->
                 <GroupBox Grid.Column="0" Grid.Row="1" Header="Movement Patterns">
-                    <ListBox Style="{StaticResource EntityList}"
-                             ItemsSource="{Binding SelectedCreature.MovementPatternCollectionVM}"
-                             ItemTemplate="{StaticResource MovementPatternListItem}"
-                             SelectedItem="{Binding SelectedMovementPattern}" />
+                    <Grid>
+                        <ListBox Style="{StaticResource EntityList}"
+                                 ItemsSource="{Binding SelectedCreature.MovementPatternCollectionVM}"
+                                 ItemTemplate="{StaticResource MovementPatternListItem}"
+                                 SelectedItem="{Binding SelectedMovementPattern}" />
+                        <TextBlock Style="{StaticResource NoSelectionText}"
+                                   Text="No movement patterns"
+                                   Visibility="{Binding SelectedCreature.MovementPatternCollectionVM.Count, Converter={StaticResource NumberVisibilityConverter}}" />
+                    </Grid>
+                   
                 </GroupBox>
 
                 <GroupBox Grid.Column="1" Grid.Row="1" Header="Preview">
@@ -122,21 +126,26 @@
                 </GroupBox>
 
                 <!-- Action buttons group box -->
-                <GroupBox Grid.ColumnSpan="2" Grid.Column="0" Grid.Row="2" Header="Actions">
+                <GroupBox Grid.ColumnSpan="2" Grid.Column="0" Grid.Row="2" Style="{StaticResource ActionGroupBox}" Header="Actions">
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-                        <controls:CustomizableButton Style="{StaticResource DefaultButton}" Command="{Binding CloneCommand}"
+                        <controls:CustomizableButton Style="{StaticResource DefaultButton}"
+                                                     Command="{Binding CloneCommand}"
                                                      CommandParameter="{Binding SelectedCreature}"
                                                      Content="Clone this creature" />
-                        <controls:CustomizableButton Style="{StaticResource DefaultButton}" Command="{Binding EditCreature}"
+                        <controls:CustomizableButton Style="{StaticResource DefaultButton}"
+                                                     Command="{Binding EditCreature}"
                                                      CommandParameter="{Binding SelectedCreature}"
                                                      Content="Edit creature structure" />
-                        <controls:CustomizableButton Style="{StaticResource DefaultButton}" Command="{Binding TrainCommand}"
+                        <controls:CustomizableButton Style="{StaticResource DefaultButton}"
+                                                     Command="{Binding TrainCommand}"
                                                      CommandParameter="{Binding SelectedCreatureMovementPattern}"
                                                      Content="Train this creature" />
-                        <controls:CustomizableButton Style="{StaticResource DefaultButton}" Command="{Binding SimulateCommand}"
+                        <controls:CustomizableButton Style="{StaticResource DefaultButton}"
+                                                     Command="{Binding SimulateCommand}"
                                                      CommandParameter="{Binding SelectedCreatureMovementPattern}"
                                                      Content="Simulate this creature" />
-                        <controls:CustomizableButton Style="{StaticResource DeleteButton}" Command="{Binding EntitiesStorage.RemoveCreatureCommand}"
+                        <controls:CustomizableButton Style="{StaticResource DeleteButton}"
+                                                     Command="{Binding EntitiesStorage.RemoveCreatureCommand}"
                                                      CommandParameter="{Binding SelectedCreature}" Content="Delete" />
                     </StackPanel>
                 </GroupBox>

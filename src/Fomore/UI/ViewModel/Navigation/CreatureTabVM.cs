@@ -162,8 +162,8 @@ namespace Fomore.UI.ViewModel.Navigation
             var bones = SelectedCreature?.CreatureStructureVM.BoneCollectionVM;
             var joints = SelectedCreature?.CreatureStructureVM.JointCollectionVM;
 
-            Pen bonePen = new Pen(Brushes.Blue) {Width = 5};
-            Pen jointPen = new Pen(Brushes.Red);
+            Pen bonePen = new Pen(Color.FromArgb(85, 85, 85)) {Width = 5};
+            Pen jointPen = new Pen(Color.FromArgb(51, 51, 51));
 
             if (joints == null || joints.Count == 0 || bones == null)
                 return new Bitmap(100, 100);

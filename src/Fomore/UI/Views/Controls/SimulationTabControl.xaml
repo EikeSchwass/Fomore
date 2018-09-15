@@ -43,6 +43,14 @@
                              ItemTemplate="{StaticResource MovementPatternListItem}"
                              ItemsSource="{Binding SelectedCreature.MovementPatternCollectionVM}"
                              SelectedItem="{Binding SelectedMovementPattern, Mode=TwoWay}" />
+                    <TextBlock Grid.Column="1" Grid.Row="1" Style="{StaticResource NoSelectionText}"
+                               Text="Please select a creature"
+                               Visibility="{Binding SelectedCreature, Converter={StaticResource NullToVisibilityConverter}}" />
+                    <Grid Grid.Column="1" Grid.Row="1" Visibility="{Binding SelectedCreature, Converter={StaticResource NotNullToVisibilityConverter}}">
+                        <TextBlock Style="{StaticResource NoSelectionText}"
+                                   Text="No movement patterns"
+                                   Visibility="{Binding SelectedCreature.MovementPatternCollectionVM.Count, Converter={StaticResource NumberVisibilityConverter}}" />
+                    </Grid>
 
                     <TextBlock Grid.Column="2" Grid.Row="0" HorizontalAlignment="Center" FontWeight="Bold"
                                Text="Step 3: Chose Environment"
@@ -54,7 +62,7 @@
                 </Grid>
             </GroupBox>
 
-            <GroupBox Grid.Row="1" Header=" Actions " Height="80">
+            <GroupBox Grid.Row="1" Style="{StaticResource ActionGroupBox}" Header="Actions">
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
                     <controls:CustomizableButton Style="{StaticResource DefaultButton}" 
                         Command="{Binding ResetSelectionCommand}"
@@ -72,21 +80,26 @@
                 <RowDefinition Height="*" />
                 <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
-            <MediaElement Grid.Row="0" Name="DummySimulation" Volume="0">
-                <MediaElement.Triggers>
-                    <EventTrigger RoutedEvent="MediaElement.Loaded">
-                        <EventTrigger.Actions>
-                            <BeginStoryboard>
-                                <Storyboard>
-                                    <MediaTimeline Source="../../assets/video/training.mp4"
-                                                   Storyboard.TargetName="DummySimulation" RepeatBehavior="Forever" />
-                                </Storyboard>
-                            </BeginStoryboard>
-                        </EventTrigger.Actions>
-                    </EventTrigger>
-                </MediaElement.Triggers>
-            </MediaElement>
-            <Button Grid.Row="1" Command="{Binding StopSimulationCommand}" Content="Cancel" />
+
+            <GroupBox Grid.Row="0" Header="Simulation">
+                <MediaElement Name="DummySimulation" Volume="0">
+                    <MediaElement.Triggers>
+                        <EventTrigger RoutedEvent="MediaElement.Loaded">
+                            <EventTrigger.Actions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <MediaTimeline Source="../../assets/video/training.mp4"
+                                                       Storyboard.TargetName="DummySimulation" RepeatBehavior="Forever" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </EventTrigger.Actions>
+                        </EventTrigger>
+                    </MediaElement.Triggers>
+                </MediaElement>
+            </GroupBox>
+            <GroupBox Grid.Row="1" Style="{StaticResource ActionGroupBox}" Header="Actions">
+                <controls:CustomizableButton Style="{StaticResource DefaultButton}" Command="{Binding StopSimulationCommand}" Content="Cancel" />
+            </GroupBox>
         </Grid>
     </Grid>
 

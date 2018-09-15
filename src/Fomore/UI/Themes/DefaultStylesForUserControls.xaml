@@ -86,7 +86,8 @@
                               VerticalAlignment="{TemplateBinding VerticalContentAlignment}">
                             <ContentPresenter Content="{TemplateBinding Content}" Margin="{TemplateBinding Padding}"
                                               HorizontalAlignment="Center" VerticalAlignment="Center" />
-                            <Rectangle RadiusX="8" RadiusY="8" Fill="{TemplateBinding IsDisabledBackground}" x:Name="GrayRectangle">
+                            <Rectangle RadiusX="8" RadiusY="8" Fill="{TemplateBinding IsDisabledBackground}"
+                                       x:Name="GrayRectangle">
                                 <Rectangle.Style>
                                     <Style TargetType="{x:Type Rectangle}">
                                         <Setter Property="Opacity" Value="0" />
@@ -125,6 +126,11 @@
     <Style x:Key="NewListEntryButton" BasedOn="{StaticResource {x:Type controls:CustomizableButton}}"
            TargetType="{x:Type controls:CustomizableButton}">
         <Setter Property="Height" Value="80" />
+        <Setter Property="Background" Value="{StaticResource NewColor}" />
+        <Setter Property="IsMouseOverBackground" Value="{StaticResource NewHoverColor}" />
+        <Setter Property="IsPressedBackground" Value="{StaticResource NewPressedColor}" />
+    </Style>
+    <Style x:Key="NewButton" BasedOn="{StaticResource DefaultButton}" TargetType="{x:Type controls:CustomizableButton}">
         <Setter Property="Background" Value="{StaticResource NewColor}" />
         <Setter Property="IsMouseOverBackground" Value="{StaticResource NewHoverColor}" />
         <Setter Property="IsPressedBackground" Value="{StaticResource NewPressedColor}" />
