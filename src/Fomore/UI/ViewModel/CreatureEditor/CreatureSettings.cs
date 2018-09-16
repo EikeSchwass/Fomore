@@ -109,19 +109,20 @@ namespace Fomore.UI.ViewModel.CreatureEditor
                     return;
                 bool current = ConnectorInformation.HasLimits;
                 var changeOperation = new ChangeOperation(c =>
-                {
-                    currentConnectorInformation.HasLimits = value ?? false;
-                    OnPropertyChanged();
-                },
+                                                          {
+                                                              currentConnectorInformation.HasLimits = value ?? false;
+                                                              OnPropertyChanged();
+                                                              OnPropertyChanged(nameof(IsFirstJointBasisForMovementLimitation));
+                                                              OnPropertyChanged(nameof(IsSecondJointBasisForMovementLimitation));
+                                                          },
                                                           c =>
                                                           {
                                                               currentConnectorInformation.HasLimits = current;
                                                               OnPropertyChanged();
+                                                              OnPropertyChanged(nameof(IsFirstJointBasisForMovementLimitation));
+                                                              OnPropertyChanged(nameof(IsSecondJointBasisForMovementLimitation));
                                                           });
                 HistoryStack.AddOperation(changeOperation);
-                OnPropertyChanged();
-                OnPropertyChanged(nameof(IsFirstJointBasisForMovementLimitation));
-                OnPropertyChanged(nameof(IsSecondJointBasisForMovementLimitation));
             }
         }
 
@@ -190,26 +191,29 @@ namespace Fomore.UI.ViewModel.CreatureEditor
                                                               {
                                                                   currentConnectorInformation.HasLimits = true;
                                                                   currentConnectorInformation.IsFlipped = false;
+                                                                  OnPropertyChanged();
+                                                                  OnPropertyChanged(nameof(IsFirstJointBasisForMovementLimitation));
+                                                                  OnPropertyChanged(nameof(IsSecondJointBasisForMovementLimitation));
                                                               },
                                                               c =>
                                                               {
                                                                   currentConnectorInformation.HasLimits = currentHasLimits;
                                                                   currentConnectorInformation.IsFlipped = currentIsFlipped;
+                                                                  OnPropertyChanged();
+                                                                  OnPropertyChanged(nameof(IsFirstJointBasisForMovementLimitation));
+                                                                  OnPropertyChanged(nameof(IsSecondJointBasisForMovementLimitation));
                                                               });
                     HistoryStack.AddOperation(changeOperation);
-                    OnPropertyChanged();
-                    OnPropertyChanged(nameof(IsFirstJointBasisForMovementLimitation));
-                    OnPropertyChanged(nameof(IsSecondJointBasisForMovementLimitation));
                 }
             }
         }
 
-        public bool IsSecondJointBasisForMovementLimitation
+        public bool? IsSecondJointBasisForMovementLimitation
         {
             get => (IsMovementLimitationEnabled ?? false) && (ConnectorInformation?.IsFlipped ?? false);
             set
             {
-                if (value)
+                if (value == true)
                 {
                     var currentConnectorInformation = ConnectorInformation;
                     if (currentConnectorInformation == null)
@@ -220,17 +224,43 @@ namespace Fomore.UI.ViewModel.CreatureEditor
                                                               {
                                                                   currentConnectorInformation.HasLimits = true;
                                                                   currentConnectorInformation.IsFlipped = true;
+                                                                  OnPropertyChanged();
+                                                                  OnPropertyChanged(nameof(IsFirstJointBasisForMovementLimitation));
+                                                                  OnPropertyChanged(nameof(IsSecondJointBasisForMovementLimitation));
                                                               },
                                                               c =>
                                                               {
                                                                   currentConnectorInformation.HasLimits = currentHasLimits;
                                                                   currentConnectorInformation.IsFlipped = currentIsFlipped;
+                                                                  OnPropertyChanged();
+                                                                  OnPropertyChanged(nameof(IsFirstJointBasisForMovementLimitation));
+                                                                  OnPropertyChanged(nameof(IsSecondJointBasisForMovementLimitation));
                                                               });
                     HistoryStack.AddOperation(changeOperation);
-                    OnPropertyChanged();
-                    OnPropertyChanged(nameof(IsFirstJointBasisForMovementLimitation));
-                    OnPropertyChanged(nameof(IsSecondJointBasisForMovementLimitation));
                 }
+            }
+        }
+
+        public bool? CanControl
+        {
+            get => ConnectorInformation?.CanControl;
+            set
+            {
+                if (value == ConnectorInformation?.CanControl || ConnectorInformation == null)
+                    return;
+                var connectorInformationVM = ConnectorInformation;
+                bool canControl = ConnectorInformation.CanControl;
+                var changeOperation = new ChangeOperation(c =>
+                                                          {
+                                                              connectorInformationVM.CanControl = value == true;
+                                                              OnPropertyChanged();
+                                                          },
+                                                          c =>
+                                                          {
+                                                              connectorInformationVM.CanControl = canControl;
+                                                              OnPropertyChanged();
+                                                          });
+                HistoryStack.AddOperation(changeOperation);
             }
         }
 

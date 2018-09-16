@@ -20,7 +20,7 @@ namespace Testing.Data
                     new Bone(firstJoint,secondJoint) {SecondJoint = secondJoint, FirstJoint = firstJoint, Density = density},
                     new Bone(firstJoint,secondJoint) {SecondJoint = secondJoint, FirstJoint = firstJoint, Density = density}
                 },
-                Joints = { new Joint() { Position = new Vector2(5, 10) }, new Joint() { Position = new Vector2(5, 10) } }
+                Joints = { firstJoint, secondJoint }
             };
             var creatureStructureVM = new CreatureStructureVM(creatureStructure);
 
@@ -42,7 +42,7 @@ namespace Testing.Data
                     new Bone(firstJoint,secondJoint) {SecondJoint = secondJoint, FirstJoint = firstJoint, Density = density},
                     new Bone(firstJoint,secondJoint) {SecondJoint = secondJoint, FirstJoint = firstJoint, Density = density}
                 },
-                Joints = { new Joint() { Position = new Vector2(5, 10) }, new Joint() { Position = new Vector2(5, 10) } }
+                Joints = { firstJoint, secondJoint }
             };
             int actual = creatureStructure.Bones.Count;
             var creatureStructureVM = new CreatureStructureVM(creatureStructure);
@@ -65,7 +65,7 @@ namespace Testing.Data
                     new Bone(firstJoint,secondJoint) {SecondJoint = secondJoint, FirstJoint = firstJoint, Density = density},
                     new Bone(firstJoint,secondJoint) {SecondJoint = secondJoint, FirstJoint = firstJoint, Density = density}
                 },
-                Joints = { new Joint() { Position = new Vector2(5, 10) }, new Joint() { Position = new Vector2(5, 10) } }
+                Joints = { firstJoint, secondJoint }
             };
             var creatureStructureVM = new CreatureStructureVM(creatureStructure);
 
@@ -87,7 +87,7 @@ namespace Testing.Data
                     new Bone(firstJoint,secondJoint) {SecondJoint = secondJoint, FirstJoint = firstJoint, Density = density},
                     new Bone(firstJoint,secondJoint) {SecondJoint = secondJoint, FirstJoint = firstJoint, Density = density}
                 },
-                Joints = { new Joint() { Position = new Vector2(5, 10) }, new Joint() { Position = new Vector2(5, 10) } }
+                Joints = { firstJoint, secondJoint }
             };
             int actual = creatureStructure.Joints.Count;
             var creatureStructureVM = new CreatureStructureVM(creatureStructure);

@@ -15,7 +15,7 @@ namespace Core
         
         public MovementPattern Clone()
         {
-            return new MovementPattern(Parent.Clone()) {Name = Name};
+            return new MovementPattern(Parent?.Clone()) {Name = Name};
             // TODO actually implement this once the class has functionality
         }
 

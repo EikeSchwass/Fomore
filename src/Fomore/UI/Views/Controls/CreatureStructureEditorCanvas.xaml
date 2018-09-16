@@ -7,6 +7,7 @@
              xmlns:data="clr-namespace:Fomore.UI.ViewModel.Data"
              xmlns:converter="clr-namespace:Fomore.UI.Converter"
              xmlns:controls="clr-namespace:Fomore.UI.Views.Controls"
+             xmlns:fa="http://schemas.fontawesome.io/icons/"
              mc:Ignorable="d"
              d:DesignHeight="400" d:DesignWidth="400"
              d:DataContext="{d:DesignInstance creatureEditor:CreatureStructureEditorCanvasVM}"
@@ -87,26 +88,25 @@
                 <TranslateTransform X="{Binding CameraVM.OffsetX}" Y="{Binding CameraVM.OffsetY}" />
             </TransformGroup>
         </Canvas.RenderTransform>
-        <Canvas.ContextMenu>
-            <ContextMenu>
-                <MenuItem Header="Background Image">
-                    <MenuItem Header="Set Background Image" Command="{Binding BackgroundImage.BrowseImageCommand}" />
-                    <MenuItem Header="Remove Background Image" Command="{Binding BackgroundImage.ResetImageCommand}" />
-                </MenuItem>
-            </ContextMenu>
-        </Canvas.ContextMenu>
         <Rectangle Width="{Binding CanvasWidth}" Height="{Binding CanvasHeight}" Fill="Transparent" Stroke="Black"
                    StrokeThickness="2" />
         <Grid Width="{Binding CanvasWidth}" Height="{Binding CanvasHeight}">
             <Image Source="{Binding  BackgroundImage.ImageSource}" HorizontalAlignment="Center" VerticalAlignment="Center"
-                   Stretch="None" />
+                   Stretch="None" RenderTransformOrigin="0.5,0.5" ClipToBounds="True">
+                <Image.RenderTransform>
+                    <TransformGroup>
+                        <RotateTransform Angle="{Binding BackgroundImage.RotationAngle}" />
+                        <TranslateTransform X="{Binding BackgroundImage.OffsetX}" Y="{Binding BackgroundImage.OffsetY}" />
+                    </TransformGroup>
+                </Image.RenderTransform>
+            </Image>
         </Grid>
 
-        <!-- Selected Bones Limits -->
+        <!-- Selected Bones -->
         <ItemsControl ItemsSource="{Binding SelectedBones}">
             <ItemsControl.ItemTemplate>
                 <DataTemplate DataType="{x:Type data:BoneVM}">
-                    <Grid
+                    <Canvas
                         Visibility="{Binding ConnectorInformation.HasLimits, Converter={StaticResource BooleanVisibilityConverter}, ConverterParameter=True}">
                         <Line Style="{StaticResource LowerLimitLineStyle}"
                               X1="{Binding ConnectorInformation.PivotJoint.Position.X}"
@@ -118,7 +118,55 @@
                               Y1="{Binding ConnectorInformation.PivotJoint.Position.Y}"
                               X2="{Binding ConnectorInformation.UpperLimitEndPoint.X}"
                               Y2="{Binding ConnectorInformation.UpperLimitEndPoint.Y}" />
-                    </Grid>
+                        <fa:ImageAwesome Visibility="Collapsed" Icon="Gear" Foreground="Black" Spin="True" SpinDuration="4" Width="18" Height="18">
+                            <Canvas.Top>
+                                <MultiBinding>
+                                    <MultiBinding.Bindings>
+                                        <Binding Path="ConnectorInformation.PivotJoint.Position.Y" />
+                                        <Binding RelativeSource="{RelativeSource Self}" Path="ActualHeight" />
+                                    </MultiBinding.Bindings>
+                                    <MultiBinding.Converter>
+                                        <converter:CenterElementConverter />
+                                    </MultiBinding.Converter>
+                                </MultiBinding>
+                            </Canvas.Top>
+                            <Canvas.Left>
+                                <MultiBinding>
+                                    <MultiBinding.Bindings>
+                                        <Binding Path="ConnectorInformation.PivotJoint.Position.X" />
+                                        <Binding RelativeSource="{RelativeSource Self}" Path="ActualWidth" />
+                                    </MultiBinding.Bindings>
+                                    <MultiBinding.Converter>
+                                        <converter:CenterElementConverter />
+                                    </MultiBinding.Converter>
+                                </MultiBinding>
+                            </Canvas.Left>
+                        </fa:ImageAwesome>
+                        <fa:ImageAwesome Icon="Gear" Foreground="Orange" Spin="True" SpinDuration="4" Width="16" Height="16">
+                            <Canvas.Top>
+                                <MultiBinding>
+                                    <MultiBinding.Bindings>
+                                        <Binding Path="ConnectorInformation.PivotJoint.Position.Y" />
+                                        <Binding RelativeSource="{RelativeSource Self}" Path="ActualHeight" />
+                                    </MultiBinding.Bindings>
+                                    <MultiBinding.Converter>
+                                        <converter:CenterElementConverter />
+                                    </MultiBinding.Converter>
+                                </MultiBinding>
+                            </Canvas.Top>
+                            <Canvas.Left>
+                                <MultiBinding>
+                                    <MultiBinding.Bindings>
+                                        <Binding Path="ConnectorInformation.PivotJoint.Position.X" />
+                                        <Binding RelativeSource="{RelativeSource Self}" Path="ActualWidth" />
+                                    </MultiBinding.Bindings>
+                                    <MultiBinding.Converter>
+                                        <converter:CenterElementConverter />
+                                    </MultiBinding.Converter>
+                                </MultiBinding>
+                            </Canvas.Left>
+                        </fa:ImageAwesome>
+                    </Canvas>
                 </DataTemplate>
             </ItemsControl.ItemTemplate>
             <ItemsControl.ItemsPanel>
