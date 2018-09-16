@@ -55,9 +55,9 @@
                     <RowDefinition Height="*" />
                 </Grid.RowDefinitions>
                 <!-- <Image Grid.Column="0" Grid.RowSpan="2" Style="{StaticResource ListBoxIcon}" -->
-                <!--        Source="../assets/images/creature_icon_new.png" />  -->
+                <!-- Source="../assets/images/creature_icon_new.png" /> -->
                 <Image Grid.Column="0" Grid.RowSpan="2" Style="{StaticResource ListBoxIcon}"
-                       Source="{Binding P}" />
+                       Source="{Binding CreaturePreview}" />
                 <TextBlock Grid.Column="1" Grid.Row="0" Style="{StaticResource ListBoxItemName}" Text="{Binding Name}" />
                 <TextBlock Grid.Column="1" Grid.Row="1" Style="{StaticResource ListBoxItemInfo}"
                            Text="{Binding Description, Converter={StaticResource StringShortenerConverter}, ConverterParameter=50}" />
@@ -71,6 +71,7 @@
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto" />
                     <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
                 </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
                     <RowDefinition />
@@ -83,6 +84,8 @@
                     <TextBlock Style="{StaticResource ListBoxItemInfo}" FontWeight="Bold" Text="Iterations:" />
                     <TextBlock Style="{StaticResource ListBoxItemInfo}" Text="{Binding Iterations}" />
                 </StackPanel>
+
+                <Button Grid.Column="2" Grid.Row="1" Command="{Binding Path=DataContext.SelectedCreature.DeleteMovementPatternCommand, RelativeSource={RelativeSource AncestorType={x:Type ListBox}}}" Content="Delete" />
             </Grid>
         </Border>
     </DataTemplate>

@@ -128,7 +128,7 @@
 
                 <GroupBox Grid.Column="1" Grid.Row="1" Header="Preview">
                     <!-- The creature structure image -->
-                    <Image Source="{Binding CreaturePreview}" />
+                    <Image Source="{Binding SelectedCreature.CreaturePreview}" />
                 </GroupBox>
 
                 <!-- Action buttons group box -->

@@ -29,7 +29,7 @@
                 <TextBlock Grid.Column="0" Grid.Row="0" HorizontalAlignment="Center" FontWeight="Bold"
                            Text="Step 1: Chose creature"
                            VerticalAlignment="Center" Margin="10" />
-                <ListBox Grid.Column="0" Grid.Row="1" Style="{StaticResource EntityList}"
+                <ListBox Grid.Column="0" Grid.Row="1" Style="{StaticResource DefaultListBox}"
                          ItemTemplate="{StaticResource CreatureListItem}"
                          ItemsSource="{Binding EntitiesStorage.Creatures}"
                          SelectedItem="{Binding SelectedCreature, Mode=TwoWay}" />
