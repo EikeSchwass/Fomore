@@ -10,8 +10,11 @@ namespace Fomore.UI.ViewModel.CreatureEditor
     public class BackgroundImageVM : ViewModelBase
     {
         private FileInfo fileInfo;
-        private ImageSource imageSource;
         private double imageSize = 500;
+        private ImageSource imageSource;
+        private double offsetX;
+        private double offsetY;
+        private double rotationAngle;
 
         public FileInfo FileInfo
         {
@@ -34,21 +37,70 @@ namespace Fomore.UI.ViewModel.CreatureEditor
                 if (Equals(value, imageSource)) return;
                 imageSource = value;
                 OnPropertyChanged();
+                UpdateCommandsCanExecute();
             }
         }
 
         public DelegateCommand BrowseImageCommand { get; }
         public DelegateCommand ResetImageCommand { get; }
+        public DelegateCommand OffsetRightCommand { get; }
+        public DelegateCommand OffsetLeftCommand { get; }
+        public DelegateCommand OffsetUpCommand { get; }
+        public DelegateCommand OffsetDownCommand { get; }
+        public DelegateCommand ScaleUpCommand { get; }
+        public DelegateCommand ScaleDownCommand { get; }
+        public DelegateCommand RotateClockwiseCommand { get; }
+        public DelegateCommand RotateCounterClockwiseCommand { get; }
+
+        public double OffsetX
+        {
+            get => offsetX;
+            private set
+            {
+                if (value.Equals(offsetX)) return;
+                offsetX = value;
+                OnPropertyChanged();
+                UpdateCommandsCanExecute();
+            }
+        }
+
+        public double OffsetY
+        {
+            get => offsetY;
+            private set
+            {
+                if (value.Equals(offsetY)) return;
+                offsetY = value;
+                OnPropertyChanged();
+                UpdateCommandsCanExecute();
+            }
+        }
 
         public double ImageSize
         {
             get => imageSize;
             set
             {
+                if (value > MaxImageSize)
+                    value = MaxImageSize;
+                else if (value < MinImageSize)
+                    value = MinImageSize;
                 if (value.Equals(imageSize)) return;
                 imageSize = value;
+                UpdateCommandsCanExecute();
                 OnPropertyChanged();
                 CreateImageSource();
+            }
+        }
+
+        public double RotationAngle
+        {
+            get => rotationAngle;
+            private set
+            {
+                if (value.Equals(rotationAngle)) return;
+                rotationAngle = value;
+                OnPropertyChanged();
             }
         }
 
@@ -60,6 +112,24 @@ namespace Fomore.UI.ViewModel.CreatureEditor
         {
             BrowseImageCommand = new DelegateCommand(o => BrowseImage(), o => true);
             ResetImageCommand = new DelegateCommand(o => ResetImage(), o => ImageSource != null);
+            OffsetRightCommand = new DelegateCommand(o => OffsetX += 5, o => OffsetX + ImageSize / 2 < MaxImageSize);
+            OffsetLeftCommand = new DelegateCommand(o => OffsetX -= 5, o => OffsetX + ImageSize / 2 > 0);
+            OffsetDownCommand = new DelegateCommand(o => OffsetY += 5, o => OffsetY + ImageSize / 2 < MaxImageSize);
+            OffsetUpCommand = new DelegateCommand(o => OffsetY -= 5, o => OffsetY + ImageSize / 2 > 0);
+            ScaleUpCommand = new DelegateCommand(o => ImageSize += 10, o => ImageSize < MaxImageSize);
+            ScaleDownCommand = new DelegateCommand(o => ImageSize -= 10, o => ImageSize > MinImageSize);
+            RotateClockwiseCommand = new DelegateCommand(o => RotationAngle += 2.5, o => true);
+            RotateCounterClockwiseCommand = new DelegateCommand(o => RotationAngle -= 2.5, o => true);
+        }
+
+        private void UpdateCommandsCanExecute()
+        {
+            BrowseImageCommand.OnCanExecuteChanged();
+            ResetImageCommand.OnCanExecuteChanged();
+            OffsetRightCommand.OnCanExecuteChanged();
+            OffsetLeftCommand.OnCanExecuteChanged();
+            ScaleDownCommand.OnCanExecuteChanged();
+            ScaleUpCommand.OnCanExecuteChanged();
         }
 
         private void ResetImage()
@@ -89,7 +159,7 @@ namespace Fomore.UI.ViewModel.CreatureEditor
 
         private void CreateImageSource()
         {
-            if(FileInfo==null)
+            if (FileInfo == null)
                 return;
             string path = FilePath;
             double size = ImageSize;
@@ -103,8 +173,6 @@ namespace Fomore.UI.ViewModel.CreatureEditor
                 if (dummyImage.Width < dummyImage.Height)
                     setHeight = true;
             }
-
-
 
             var bitmapImage = new BitmapImage();
             bitmapImage.BeginInit();

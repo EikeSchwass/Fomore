@@ -8,7 +8,7 @@
         xmlns:helper="clr-namespace:Fomore.UI.ViewModel.Helper"
         xmlns:fa="http://schemas.fontawesome.io/icons/"
         mc:Ignorable="d"
-        Title="CreatureStructureEditor" Height="618" Width="1000" WindowState="Maximized"
+        Title="CreatureStructureEditor" Height="618" Width="1500" WindowState="Maximized"
         d:DataContext="{d:DesignInstance creatureEditor:CreatureEditorVM}" Background="{StaticResource Level0Brush}"
         helper:AttachedProperties.InputBindingsSource="{Binding CreatureEditorPanelVM.InputBindings}"
         KeyDown="CreatureStructureEditor_OnKeyDown">
@@ -38,7 +38,6 @@
                 </Style>
             </Grid.Resources>
             <Grid.RowDefinitions>
-                <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
@@ -112,38 +111,89 @@
                             <RowDefinition Height="Auto" />
                             <RowDefinition Height="Auto" />
                         </Grid.RowDefinitions>
-                        <TextBlock Text="Background Image" FontWeight="Bold" />
-                        <Grid Grid.Row="1" DataContext="{Binding CreatureEditorPanelVM.CreatureStructureEditorCanvasVM.BackgroundImage}">
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="Auto" />
-                            </Grid.RowDefinitions>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition />
-                                <ColumnDefinition Width="Auto" />
-                            </Grid.ColumnDefinitions>
-                            <TextBlock Grid.Row="0" Grid.Column="0" Text="{Binding FileInfo.Name, TargetNullValue=No image selected, FallbackValue=No image selected}" TextTrimming="CharacterEllipsis" />
-                            <controls:CustomizableButton Grid.Row="0" Grid.Column="1" Content="Select Background Image" Padding="8,4" Command="{Binding BrowseImageCommand}" />
-                            <Grid Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" IsEnabled="{Binding FileInfo, Converter={StaticResource NullBooleanConverter}}">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="Auto" />
-                                    <ColumnDefinition Width="*" />
-                                </Grid.ColumnDefinitions>
-                                <Grid.RowDefinitions>
-                                    <RowDefinition Height="Auto" />
-                                    <RowDefinition Height="Auto" />
-                                </Grid.RowDefinitions>
-                                <controls:CustomizableButton Grid.ColumnSpan="2" Content="Remove background image" HorizontalAlignment="Center" Padding="8,4" Command="{Binding ResetImageCommand}" />
-                                <TextBlock Grid.Row="1" Grid.Column="0" Text="Scale" />
-                                <Slider Grid.Row="1" Grid.Column="1" IsDirectionReversed="False" Minimum="{Binding MinImageSize}" Maximum="{Binding MaxImageSize}" Value="{Binding ImageSize}" />
-                            </Grid>
-                        </Grid>
+                        <GroupBox Header="Background Image">
+                            <StackPanel
+                                DataContext="{Binding CreatureEditorPanelVM.CreatureStructureEditorCanvasVM.BackgroundImage}">
+                                <StackPanel.Resources>
+                                    <Style TargetType="{x:Type controls:CustomizableButton}"
+                                           BasedOn="{StaticResource {x:Type controls:CustomizableButton}}">
+                                        <Setter Property="Margin" Value="4,2" />
+                                        <Setter Property="Padding" Value="16,4" />
+                                    </Style>
+                                </StackPanel.Resources>
+                                <Grid Margin="4">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="Auto" />
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock Text="{Binding FileInfo.Name}" ToolTip="{Binding FileInfo.FullName}" />
+                                    <controls:CustomizableButton Grid.Column="1" Content="Select background image..."
+                                                                 Command="{Binding BrowseImageCommand}" />
+                                </Grid>
+                                <Grid
+                                    Visibility="{Binding ImageSource, Converter={StaticResource NullToVisibilityConverter}}">
+                                    <TextBlock Text="No images selected" HorizontalAlignment="Center" Margin="8"
+                                               FontSize="16" FontStyle="Italic" />
+                                </Grid>
+                                <Grid
+                                    Visibility="{Binding ImageSource, Converter={StaticResource NotNullToVisibilityConverter}}"
+                                    Background="{StaticResource BackgroundColor}" HorizontalAlignment="Center">
+                                    <UniformGrid Rows="3" Columns="3" HorizontalAlignment="Center"
+                                                 VerticalAlignment="Center" Margin="4">
+                                        <UniformGrid.Resources>
+                                            <Style TargetType="{x:Type controls:CustomizableButton}"
+                                                   BasedOn="{StaticResource {x:Type controls:CustomizableButton}}">
+                                                <Setter Property="Padding" Value="6" />
+                                                <Setter Property="Margin" Value="1" />
+                                            </Style>
+                                            <Style TargetType="{x:Type fa:ImageAwesome}"
+                                                   BasedOn="{StaticResource {x:Type fa:ImageAwesome}}">
+                                                <Setter Property="Height" Value="24" />
+                                                <Setter Property="Width" Value="24" />
+                                                <Setter Property="VerticalAlignment" Value="Center" />
+                                                <Setter Property="HorizontalAlignment" Value="Center" />
+                                            </Style>
+                                        </UniformGrid.Resources>
+                                        <controls:CustomizableButton Command="{Binding RotateCounterClockwiseCommand}">
+                                            <fa:ImageAwesome Icon="RotateLeft" />
+                                        </controls:CustomizableButton>
+
+                                        <!-- You can take this Button to allow holding down the mouse button. Not styles yet though -->
+                                        <RepeatButton Command="{Binding OffsetUpCommand}">
+                                            <fa:ImageAwesome Icon="CaretUp" />
+                                        </RepeatButton>
+                                        <controls:CustomizableButton Command="{Binding RotateClockwiseCommand}">
+                                            <fa:ImageAwesome Icon="RotateRight" />
+                                        </controls:CustomizableButton>
+                                        <controls:CustomizableButton Command="{Binding OffsetLeftCommand}">
+                                            <fa:ImageAwesome Icon="CaretLeft" />
+                                        </controls:CustomizableButton>
+                                        <controls:CustomizableButton Command="{Binding ResetImageCommand}">
+                                            <fa:ImageAwesome Icon="Remove" />
+                                        </controls:CustomizableButton>
+                                        <controls:CustomizableButton Command="{Binding OffsetRightCommand}">
+                                            <fa:ImageAwesome Icon="CaretRight" />
+                                        </controls:CustomizableButton>
+                                        <controls:CustomizableButton Command="{Binding ScaleUpCommand}">
+                                            <fa:ImageAwesome Icon="SearchPlus" />
+                                        </controls:CustomizableButton>
+                                        <controls:CustomizableButton Command="{Binding OffsetDownCommand}">
+                                            <fa:ImageAwesome Icon="CaretDown" />
+                                        </controls:CustomizableButton>
+                                        <controls:CustomizableButton Command="{Binding ScaleDownCommand}">
+                                            <fa:ImageAwesome Icon="SearchMinus" />
+                                        </controls:CustomizableButton>
+                                    </UniformGrid>
+                                </Grid>
+                            </StackPanel>
+                        </GroupBox>
                     </Grid>
                 </Grid>
             </GroupBox>
 
             <GroupBox Grid.Row="2" Background="{StaticResource Level1Brush}" Header="Bone Settings" Margin="8"
-                      Foreground="White" FontSize="16" IsEnabled="{Binding CreatureEditorPanelVM.CreatureStructureEditorCanvasVM.SelectedBones.Count, Converter={StaticResource InvertedNumberToBooleanConverter}, ConverterParameter=0}" >
+                      Foreground="White" FontSize="16"
+                      IsEnabled="{Binding CreatureEditorPanelVM.CreatureStructureEditorCanvasVM.SelectedBones.Count, Converter={StaticResource InvertedNumberToBooleanConverter}, ConverterParameter=0}">
                 <ContentControl Content="{Binding CreatureEditorPanelVM.Settings}" Margin="4">
                     <ContentControl.Style>
                         <Style TargetType="ContentControl">
@@ -184,137 +234,75 @@
                                             </TextBox>
 
                                             <!-- TODO Refactor this -->
+
+                                            <TextBlock Text="Select 1 bone to adjust movement control" Grid.Row="3"
+                                                       Grid.Column="0" Grid.ColumnSpan="2" FontSize="16"
+                                                       FontStyle="Italic" HorizontalAlignment="Center" Margin="4"
+                                                       Visibility="{Binding CreatureEditorPanel.CreatureStructureEditorCanvasVM.SelectedBones.Count, Converter={StaticResource InvertedNumberVisibilityConverter}, ConverterParameter=1}" />
+
                                             <GroupBox Grid.Column="0" Grid.Row="3" Grid.ColumnSpan="2" Margin="8"
                                                       Header="Movement Control" Foreground="White" FontSize="16"
-                                                      IsEnabled="{Binding CreatureEditorPanel.CreatureStructureEditorCanvasVM.SelectedBones.Count, Converter={StaticResource NumberToBooleanConverter}, ConverterParameter=1}">
+                                                      Visibility="{Binding CreatureEditorPanel.CreatureStructureEditorCanvasVM.SelectedBones.Count, Converter={StaticResource NumberVisibilityConverter}, ConverterParameter=1}">
                                                 <Grid Margin="4">
                                                     <Grid.RowDefinitions>
                                                         <RowDefinition Height="Auto" />
                                                         <RowDefinition Height="Auto" />
                                                         <RowDefinition Height="Auto" />
                                                     </Grid.RowDefinitions>
-                                                    <GroupBox Header="Range of Motion" FontSize="16" Margin="4">
-                                                        <Grid>
-                                                            <Grid.RowDefinitions>
-                                                                <RowDefinition Height="Auto" />
-                                                                <RowDefinition Height="Auto" />
-                                                                <RowDefinition Height="Auto" />
-                                                            </Grid.RowDefinitions>
-                                                            <Grid Grid.Row="0">
-                                                                <Grid.ColumnDefinitions>
-                                                                    <ColumnDefinition />
-                                                                    <ColumnDefinition />
-                                                                    <ColumnDefinition />
-                                                                </Grid.ColumnDefinitions>
-                                                                <RadioButton Grid.Column="0" Content="Disabled"
-                                                                             HorizontalAlignment="Center"
-                                                                             IsChecked="{Binding IsMovementLimitationEnabled, Converter={StaticResource InvertBooleanConverter}}" />
-                                                                <RadioButton Grid.Column="1" Content="Joint #1"
-                                                                             HorizontalAlignment="Center"
-                                                                             IsChecked="{Binding IsFirstJointBasisForMovementLimitation}" />
-                                                                <RadioButton Grid.Column="2" Content="Joint #2"
-                                                                             HorizontalAlignment="Center"
-                                                                             IsChecked="{Binding IsSecondJointBasisForMovementLimitation}" />
-                                                            </Grid>
-                                                            <Grid Grid.Row="1"
-                                                                  Visibility="{Binding IsMovementLimitationEnabled, Converter={StaticResource BooleanVisibilityConverter}, ConverterParameter=true}">
-                                                                <Grid.RowDefinitions>
-                                                                    <RowDefinition Height="Auto" />
-                                                                    <RowDefinition Height="Auto" />
-                                                                </Grid.RowDefinitions>
-                                                                <Grid.ColumnDefinitions>
-                                                                    <ColumnDefinition Width="Auto" />
-                                                                    <ColumnDefinition />
-                                                                </Grid.ColumnDefinitions>
-                                                                <TextBlock Grid.Column="0" Grid.Row="0"
-                                                                           Text="Counter Clockwise Limit:" />
-                                                                <TextBlock Grid.Column="0" Grid.Row="1"
-                                                                           Text="Clockwise Limit:" />
-                                                                <Slider Grid.Column="1" Grid.Row="0" Minimum="0"
-                                                                        Maximum="180"
-                                                                        Value="{Binding LowerMovementLimit, Converter={StaticResource RadiansToDegreesConverter}}" />
-                                                                <Slider Grid.Column="1" Grid.Row="1" Minimum="0"
-                                                                        Maximum="180"
-                                                                        Value="{Binding UpperMovementLimit, Converter={StaticResource RadiansToDegreesConverter}}" />
-                                                            </Grid>
-                                                        </Grid>
-                                                    </GroupBox>
-                                                    <Grid Grid.Row="1" TextBlock.Foreground="White">
+                                                    <TextBlock Text="Range of Motion" FontSize="16" Margin="4" />
+                                                    <Grid Grid.Row="1">
                                                         <Grid.RowDefinitions>
                                                             <RowDefinition Height="Auto" />
                                                             <RowDefinition Height="Auto" />
                                                             <RowDefinition Height="Auto" />
                                                         </Grid.RowDefinitions>
+                                                        <Grid Grid.Row="0" Margin="4">
+                                                            <Grid.Resources>
+                                                                <Style TargetType="{x:Type RadioButton}" BasedOn="{StaticResource {x:Type RadioButton}}">
+                                                                    <Setter Property="Margin" Value="4" />
+                                                                </Style>
+                                                            </Grid.Resources>
+                                                            <Grid.ColumnDefinitions>
+                                                                <ColumnDefinition />
+                                                                <ColumnDefinition />
+                                                                <ColumnDefinition />
+                                                            </Grid.ColumnDefinitions>
+                                                            <RadioButton Grid.Column="0" Content="Disabled" Margin="4"
+                                                                         IsChecked="{Binding IsMovementLimitationEnabled, Converter={StaticResource InvertBooleanConverter}}" />
+                                                            <RadioButton Grid.Column="1" Content="Joint #1" Margin="4"
+                                                                         IsChecked="{Binding IsFirstJointBasisForMovementLimitation}" />
+                                                            <RadioButton Grid.Column="2" Content="Joint #2" Margin="4"
+                                                                         IsChecked="{Binding IsSecondJointBasisForMovementLimitation}" />
+                                                        </Grid>
+                                                        <Grid Grid.Row="1"
+                                                            Visibility="{Binding IsMovementLimitationEnabled, Converter={StaticResource BooleanVisibilityConverter}, ConverterParameter=true}">
+                                                            <Grid.RowDefinitions>
+                                                                <RowDefinition Height="Auto" />
+                                                                <RowDefinition Height="Auto" />
+                                                                <RowDefinition Height="Auto" />
+                                                            </Grid.RowDefinitions>
+                                                            <Grid.ColumnDefinitions>
+                                                                <ColumnDefinition Width="Auto" />
+                                                                <ColumnDefinition />
+                                                            </Grid.ColumnDefinitions>
+                                                            <TextBlock Grid.Column="0" Grid.Row="0" Margin="4"
+                                                                       Text="Counter Clockwise Limit:" />
+                                                            <TextBlock Grid.Column="0" Grid.Row="1" Margin="4"
+                                                                       Text="Clockwise Limit:" />
+                                                            <Slider Grid.Column="1" Grid.Row="0" Minimum="0" Margin="4"
+                                                                    Maximum="180"
+                                                                    Value="{Binding LowerMovementLimit, Converter={StaticResource RadiansToDegreesConverter}}" />
+                                                            <Slider Grid.Column="1" Grid.Row="1" Minimum="0" Margin="4"
+                                                                    Maximum="180"
+                                                                    Value="{Binding UpperMovementLimit, Converter={StaticResource RadiansToDegreesConverter}}" />
+                                                            <CheckBox Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2"
+                                                                      IsChecked="{Binding CanControl}"
+                                                                      Content="Creature has control over this bone" Margin="4" VerticalAlignment="Center" VerticalContentAlignment="Center" 
+                                                                      ToolTip="Indicates weather the creature is able to control this bone from the selected joint.&#x0a;For the creature to learn to move, at least some bones have to be controllable."/>
+                                                        </Grid>
                                                     </Grid>
                                                 </Grid>
                                             </GroupBox>
-                                        </Grid>
-                                    </DataTemplate>
-                                </Setter.Value>
-                            </Setter>
-                            <Style.Triggers>
-                                <DataTrigger
-                                    Binding="{Binding CreatureEditorPanelVM.CreatureStructureEditorCanvasVM.SelectedBones.Count}"
-                                    Value="-1">
-                                    <DataTrigger.Setters>
-                                        <Setter Property="ContentTemplate">
-                                            <Setter.Value>
-                                                <DataTemplate>
-                                                    <Grid>
-                                                        <TextBlock
-                                                            Text="Select at least one bone to change the bone settings" />
-                                                    </Grid>
-                                                </DataTemplate>
-                                            </Setter.Value>
-                                        </Setter>
-                                    </DataTrigger.Setters>
-                                </DataTrigger>
-                            </Style.Triggers>
-                        </Style>
-                    </ContentControl.Style>
-                </ContentControl>
-            </GroupBox>
-
-            <GroupBox Grid.Row="3" Background="{StaticResource Level1Brush}" Header="Joint Settings" Margin="8"
-                      Foreground="White" FontSize="16">
-                <ContentControl Content="{Binding CreatureEditorPanelVM.Settings}" Margin="4">
-                    <ContentControl.Style>
-                        <Style TargetType="ContentControl">
-                            <Setter Property="ContentTemplate">
-                                <Setter.Value>
-                                    <DataTemplate DataType="{x:Type creatureEditor:CreatureSettings}">
-                                        <Grid
-                                            IsEnabled="{Binding CreatureEditorPanel.CreatureStructureEditorCanvasVM.SelectedJoints.Count, Converter={StaticResource InvertedNumberToBooleanConverter}, ConverterParameter=0}">
-                                            <Grid.ColumnDefinitions>
-                                                <ColumnDefinition Width="Auto" />
-                                                <ColumnDefinition />
-                                            </Grid.ColumnDefinitions>
-                                            <Grid.RowDefinitions>
-                                                <RowDefinition Height="Auto" />
-                                                <RowDefinition Height="Auto" />
-                                                <RowDefinition Height="Auto" />
-                                            </Grid.RowDefinitions>
-                                            <TextBlock Grid.Column="0" Grid.Row="0" Text="Number of joints selected:" />
-                                            <TextBlock Grid.Column="1" Grid.Row="0"
-                                                       Text="{Binding CreatureEditorPanel.CreatureStructureEditorCanvasVM.SelectedJoints.Count}"
-                                                       Margin="8,2" />
-                                            <TextBlock Grid.Column="0" Grid.Row="1" Text="Name:" />
-                                            <TextBlock Grid.Column="0" Grid.Row="2" Text="Density (kg/m²):"
-                                                       ToolTip="Because the engine is 2 dimensional you have to convert the density from kg/m³ to kg/m²" />
-                                            <TextBox Grid.Column="1" Grid.Row="1"
-                                                     Text="{Binding CreatureEditorPanel.Settings.BoneName, Mode=TwoWay, TargetNullValue=Cannot change the name of multiple bones}"
-                                                     IsEnabled="{Binding CreatureEditorPanel.CreatureStructureEditorCanvasVM.SelectedBones.Count, Converter={StaticResource NumberToBooleanConverter}, ConverterParameter=1}" />
-                                            <TextBox Grid.Column="1" Grid.Row="2">
-                                                <TextBox.Text>
-                                                    <Binding Path="CreatureEditorPanel.Settings.BoneDensity"
-                                                             Mode="TwoWay" UpdateSourceTrigger="PropertyChanged"
-                                                             TargetNullValue="Different values">
-                                                        <Binding.ValidationRules>
-                                                            <ExceptionValidationRule ValidationStep="UpdatedValue" />
-                                                        </Binding.ValidationRules>
-                                                    </Binding>
-                                                </TextBox.Text>
-                                            </TextBox>
                                         </Grid>
                                     </DataTemplate>
                                 </Setter.Value>

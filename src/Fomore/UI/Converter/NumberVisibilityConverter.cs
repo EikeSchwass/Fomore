@@ -13,8 +13,13 @@ namespace Fomore.UI.Converter
     public class NumberVisibilityConverter : IValueConverter
     {
         /// <inheritdoc />
-        public object Convert(object value, Type targetType, object parameter, CultureInfo culture) =>
-            Equals(value, parameter ?? 0) ? Visibility.Visible : Visibility.Collapsed;
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            double s = double.Parse(value?.ToString() ?? "0");
+            if (double.TryParse(parameter?.ToString(), out double t))
+                return Equals(s, t) ? Visibility.Visible : Visibility.Collapsed;
+            return Equals(s, 0.0) ? Visibility.Collapsed : Visibility.Visible;
+        }
 
         /// <inheritdoc />
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture) =>

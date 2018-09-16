@@ -54,7 +54,7 @@ namespace Fomore.UI.ViewModel.Helper
         /// <inheritdoc />
         public void Add(TViewModel item)
         {
-            if (ViewModels.Contains(item) || EncapsulatedList.Contains(item?.Model))
+            if (ViewModels.Contains(item) || EncapsulatedList.Any(i => ReferenceEquals(i, item?.Model)))
                 throw new NotSupportedException("The item was already added to the collection");
             ViewModels.Add(item);
             EncapsulatedList.Add(item?.Model);
