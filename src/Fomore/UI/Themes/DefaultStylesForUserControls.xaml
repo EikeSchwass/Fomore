@@ -128,6 +128,58 @@
         <Setter Property="Height" Value="68" />
         <Setter Property="FontSize" Value="20" />
         <Setter Property="FontWeight" Value="Bold" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="controls:CustomizableButton">
+                    <Border Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}" Cursor="{TemplateBinding Cursor}"
+                            HorizontalAlignment="{TemplateBinding HorizontalAlignment}"
+                            VerticalAlignment="{TemplateBinding VerticalAlignment}" Margin="{TemplateBinding Margin}">
+                        <Grid HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                              VerticalAlignment="{TemplateBinding VerticalContentAlignment}">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <Image Grid.Column="0" HorizontalAlignment="Left" Source="../assets/images/new_icon.png" Margin="0 17 25 17"/>
+                            <ContentPresenter Grid.Column="1" Content="{TemplateBinding Content}" Margin="{TemplateBinding Padding}"
+                                              HorizontalAlignment="Center" VerticalAlignment="Center" />
+
+                            <Rectangle Grid.Column="0" Grid.ColumnSpan="2" Fill="{TemplateBinding IsDisabledBackground}"
+                                       x:Name="GrayRectangle">
+                                <Rectangle.Style>
+                                    <Style TargetType="{x:Type Rectangle}">
+                                        <Setter Property="Opacity" Value="0" />
+                                    </Style>
+                                </Rectangle.Style>
+                            </Rectangle>
+                        </Grid>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <DataTrigger Binding="{Binding IsSelected, RelativeSource={RelativeSource Self}}" Value="true">
+                            <Setter Property="Background"
+                                    Value="{Binding IsSelectedBackground, RelativeSource={RelativeSource Self} }" />
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding IsEnabled, RelativeSource={RelativeSource Self}}" Value="false">
+                            <Setter Property="Opacity" TargetName="GrayRectangle"
+                                    Value="{Binding IsDisabledGrayOpacity, RelativeSource={RelativeSource AncestorType={x:Type controls:CustomizableButton}} }" />
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding IsEnabled, RelativeSource={RelativeSource Self}}" Value="true">
+                            <Setter Property="Opacity" TargetName="GrayRectangle"
+                                    Value="0" />
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding IsMouseOver, RelativeSource={RelativeSource Self}}" Value="true">
+                            <Setter Property="Background"
+                                    Value="{Binding IsMouseOverBackground, RelativeSource={RelativeSource Self} }" />
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding IsPressed, RelativeSource={RelativeSource Self}}" Value="true">
+                            <Setter Property="Background"
+                                    Value="{Binding IsPressedBackground, RelativeSource={RelativeSource Self} }" />
+                        </DataTrigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
         <Setter Property="Background" Value="{StaticResource NewColor}" />
         <Setter Property="IsMouseOverBackground" Value="{StaticResource NewHoverColor}" />
         <Setter Property="IsPressedBackground" Value="{StaticResource NewPressedColor}" />

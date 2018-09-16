@@ -318,6 +318,7 @@
     <Resource Include="assets\images\movementpattern_icon_new.png" />
   </ItemGroup>
   <ItemGroup>
+    <Resource Include="assets\images\new_icon.png" />
     <Content Include="assets\video\training.mp4" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

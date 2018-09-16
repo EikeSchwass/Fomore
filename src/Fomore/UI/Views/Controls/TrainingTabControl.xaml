@@ -42,7 +42,7 @@
                         <RowDefinition Height="Auto" />
                         <RowDefinition Height="*" />
                     </Grid.RowDefinitions>
-                    <ToggleButton Grid.Row="0" Height="82" IsChecked="{Binding NewMovementPattern, Mode=TwoWay}"
+                    <ToggleButton Grid.Row="0" Style="{StaticResource NewToggleButton}" Height="82" IsChecked="{Binding NewMovementPattern, Mode=TwoWay}"
                                   IsEnabled="{Binding SelectedCreature, Converter={StaticResource NullBooleanConverter}, ConverterParameter=false}"
                                   Content="New" />
                     <!-- <controls:CustomizableButton Grid.Row="0" Command="{Binding NewMovementPatternCommand}" Content="New Movement Pattern" /> -->

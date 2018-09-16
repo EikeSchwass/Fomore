@@ -54,8 +54,10 @@
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="*" />
                 </Grid.RowDefinitions>
+                <!-- <Image Grid.Column="0" Grid.RowSpan="2" Style="{StaticResource ListBoxIcon}" -->
+                <!--        Source="../assets/images/creature_icon_new.png" />  -->
                 <Image Grid.Column="0" Grid.RowSpan="2" Style="{StaticResource ListBoxIcon}"
-                       Source="../assets/images/creature_icon_new.png" />
+                       Source="{Binding P}" />
                 <TextBlock Grid.Column="1" Grid.Row="0" Style="{StaticResource ListBoxItemName}" Text="{Binding Name}" />
                 <TextBlock Grid.Column="1" Grid.Row="1" Style="{StaticResource ListBoxItemInfo}"
                            Text="{Binding Description, Converter={StaticResource StringShortenerConverter}, ConverterParameter=50}" />
