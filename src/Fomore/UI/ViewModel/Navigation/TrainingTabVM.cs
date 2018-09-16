@@ -23,7 +23,6 @@ namespace Fomore.UI.ViewModel.Navigation
         private bool showTraining;
         private double targetSpeed;
         private bool newMovementPattern;
-        private MovementPatternVM previouslySelectedMovementPattern;
         private int iterations;
 
         public CreatureVM SelectedCreature
