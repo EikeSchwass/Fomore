@@ -24,6 +24,7 @@ namespace Fomore.UI.ViewModel.Navigation
         private double targetSpeed;
         private bool newMovementPattern;
         private MovementPatternVM previouslySelectedMovementPattern;
+        private int iterations;
 
         public CreatureVM SelectedCreature
         {
@@ -46,6 +47,10 @@ namespace Fomore.UI.ViewModel.Navigation
                 if (Equals(value, selectedMovementPattern)) return;
                 selectedMovementPattern = value;
                 OnPropertyChanged();
+                if (value != null)
+                {
+                    NewMovementPattern = false;
+                }
                 ResetSelectionCommand.OnCanExecuteChanged();
                 StartTrainingCommand.OnCanExecuteChanged();
             }
@@ -73,23 +78,15 @@ namespace Fomore.UI.ViewModel.Navigation
                 newMovementPattern = value;
                 if (value)
                 {
-                    previouslySelectedMovementPattern = SelectedMovementPattern;
                     SelectedMovementPattern = null;
+                    OnPropertyChanged(nameof(SelectedMovementPattern));
                 }
-                else
-                {
-                    SelectedMovementPattern = previouslySelectedMovementPattern;
-                    previouslySelectedMovementPattern = null;
-                }
-
+                
                 OnPropertyChanged();
-                OnPropertyChanged(nameof(MovementPatternSelectionEnabled));
                 ResetSelectionCommand.OnCanExecuteChanged();
                 StartTrainingCommand.OnCanExecuteChanged();
             }
         }
-
-        public bool MovementPatternSelectionEnabled => !NewMovementPattern;
 
         public double TargetSpeed
         {
@@ -98,6 +95,17 @@ namespace Fomore.UI.ViewModel.Navigation
             {
                 if (value.Equals(targetSpeed)) return;
                 targetSpeed = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public int Iterations
+        {
+            get => iterations;
+            set
+            {
+                if (value == iterations) return;
+                iterations = value;
                 OnPropertyChanged();
             }
         }
@@ -132,17 +140,30 @@ namespace Fomore.UI.ViewModel.Navigation
 
         private void StartTrainingAction(object obj)
         {
+            MovementPattern parent = null;
+            string name = null;
             if (NewMovementPattern)
             {
-                MovementPatternVM movementPattern =
-                    new MovementPatternVM(new MovementPattern() {Name = "" + SelectedCreature.Name + " on " + SelectedEnvironment.Name});
-                SelectedCreature.MovementPatternCollectionVM.Add((movementPattern));
-                NewMovementPattern = false;
-                SelectedMovementPattern = movementPattern;
+                name = "" + SelectedCreature.Name + " on " + SelectedEnvironment.Name;
+            } else if (SelectedMovementPattern != null)
+            {
+                parent = SelectedMovementPattern.Model;
+                name = SelectedMovementPattern.Name;
             }
 
-            SelectedMovementPattern.Iterations++;
-            // MessageBox.Show("The training process has started...\n\nParameters:\nCreature:\t\t\t" + SelectedCreature.Name + "\nMovement Pattern:\t" + SelectedMovementPattern.Name + "\nEnvironment:\t\t" + SelectedEnvironment.Name + "\nShow Progress:\t\t" + (ShowTraining ? "Yes" : "No"), "Training", MessageBoxButton.OK, MessageBoxImage.Information);
+            MovementPatternVM newPattern = null;
+            for (int i = 0; i < Iterations; i++)
+            {
+                // TODO Training here
+                newPattern = new MovementPatternVM(new MovementPattern(parent)) {Name = name};
+                parent = newPattern.Model;
+            }
+
+            if (newPattern != null)
+            {
+                SelectedCreature.MovementPatternCollectionVM.Add(newPattern);
+            }
+            SelectedMovementPattern = newPattern;
         }
 
         // ------------------------------------------------------------

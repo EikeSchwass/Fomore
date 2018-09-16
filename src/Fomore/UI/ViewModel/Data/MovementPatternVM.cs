@@ -16,16 +16,7 @@ namespace Fomore.UI.ViewModel.Data
             }
         }
 
-        public int Iterations
-        {
-            get => Model.Iterations;
-            set
-            {
-                Model.Iterations = value;
-                OnPropertyChanged();
-                OnPropertyChanged(nameof(LastAccess));
-            }
-        }
+        public int Iterations => Model.Iterations;
 
         public DateTime LastAccess => Model.CreationDate;
 

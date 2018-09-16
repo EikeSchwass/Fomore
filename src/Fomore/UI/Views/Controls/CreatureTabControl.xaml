@@ -24,7 +24,7 @@
                 <RowDefinition Height="*" />
             </Grid.RowDefinitions>
             <controls:CustomizableButton Grid.Row="0" Style="{StaticResource NewListEntryButton}"
-                                         Command="{Binding NewCreature}" Content="Create New Creature" />
+                                         Command="{Binding NewCreatureCommand}" Content="Create New Creature" />
 
             <ListBox Grid.Row="1" Width="350" Style="{StaticResource EntityList}"
                      ItemTemplate="{StaticResource CreatureListItem}"
@@ -109,13 +109,19 @@
                 <!-- The Movement patterns group box -->
                 <GroupBox Grid.Column="0" Grid.Row="1" Header="Movement Patterns">
                     <Grid>
-                        <ListBox Style="{StaticResource EntityList}"
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+                        <ListBox Grid.Row="0" Style="{StaticResource EntityList}"
                                  ItemsSource="{Binding SelectedCreature.MovementPatternCollectionVM}"
                                  ItemTemplate="{StaticResource MovementPatternListItem}"
-                                 SelectedItem="{Binding SelectedMovementPattern}" />
-                        <TextBlock Style="{StaticResource NoSelectionText}"
+                                 SelectedItem="{Binding SelectedMovementPattern}" 
+                                 Margin="0 0 0 5"/>
+                        <TextBlock Grid.Row="0" Style="{StaticResource NoSelectionText}"
                                    Text="No movement patterns"
                                    Visibility="{Binding SelectedCreature.MovementPatternCollectionVM.Count, Converter={StaticResource NumberVisibilityConverter}}" />
+                        <controls:CustomizableButton Grid.Row="1" Style="{StaticResource DeleteButton}" Command="{Binding ClearMovementPatternsCommand}" Content="Delete All" />
                     </Grid>
                    
                 </GroupBox>
@@ -133,7 +139,7 @@
                                                      CommandParameter="{Binding SelectedCreature}"
                                                      Content="Clone this creature" />
                         <controls:CustomizableButton Style="{StaticResource DefaultButton}"
-                                                     Command="{Binding EditCreature}"
+                                                     Command="{Binding EditCreatureCommand}"
                                                      CommandParameter="{Binding SelectedCreature}"
                                                      Content="Edit creature structure" />
                         <controls:CustomizableButton Style="{StaticResource DefaultButton}"

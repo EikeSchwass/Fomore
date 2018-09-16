@@ -48,6 +48,7 @@ namespace Fomore.UI.ViewModel.Navigation
                 {
                     selectedCreature.CreatureStructureVM.BoneCollectionVM.CollectionChanged -= CreatureStructureChanged;
                     selectedCreature.CreatureStructureVM.JointCollectionVM.CollectionChanged -= CreatureStructureChanged;
+                    selectedCreature.MovementPatternCollectionVM.CollectionChanged -= MovementPatternCollectionChanged;
                 }
 
                 selectedCreature = value;
@@ -58,13 +59,20 @@ namespace Fomore.UI.ViewModel.Navigation
                 {
                     selectedCreature.CreatureStructureVM.BoneCollectionVM.CollectionChanged += CreatureStructureChanged;
                     selectedCreature.CreatureStructureVM.JointCollectionVM.CollectionChanged += CreatureStructureChanged;
+                    selectedCreature.MovementPatternCollectionVM.CollectionChanged += MovementPatternCollectionChanged;
                 }
+                ClearMovementPatternsCommand.OnCanExecuteChanged();
             }
         }
 
         private void CreatureStructureChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
             OnPropertyChanged(nameof(CreaturePreview));
+        }
+
+        private void MovementPatternCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+        {
+            ClearMovementPatternsCommand.OnCanExecuteChanged();
         }
 
         public MovementPatternVM SelectedMovementPattern
@@ -111,11 +119,12 @@ namespace Fomore.UI.ViewModel.Navigation
         // Commands and Actions
         // ------------------------------------------------------------
 
-        public ICommand NewCreature { get; }
-        public ICommand TrainCommand { get; }
-        public ICommand SimulateCommand { get; }
-        public ICommand EditCreature { get; }
-        public ICommand CloneCommand { get; }
+        public DelegateCommand NewCreatureCommand { get; }
+        public DelegateCommand TrainCommand { get; }
+        public DelegateCommand SimulateCommand { get; }
+        public DelegateCommand EditCreatureCommand { get; }
+        public DelegateCommand CloneCommand { get; }
+        public DelegateCommand ClearMovementPatternsCommand { get; }
 
         private void NewCreatureAction(object obj)
         {
@@ -153,6 +162,11 @@ namespace Fomore.UI.ViewModel.Navigation
                 EntitiesStorage.AddCreatureCommand.Execute(clone);
                 SelectedCreature = clone;
             }
+        }
+
+        private void ClearMovementPatternsAction(object obj)
+        {
+            SelectedCreature?.MovementPatternCollectionVM.Clear();
         }
 
         private Bitmap GenerateCreaturePreview()
@@ -250,11 +264,12 @@ namespace Fomore.UI.ViewModel.Navigation
         {
             TabNavigationVM = tabNavigationVM;
             EntitiesStorage = entitiesStorage;
-            NewCreature = new DelegateCommand(NewCreatureAction, o => true);
+            NewCreatureCommand = new DelegateCommand(NewCreatureAction, o => true);
             TrainCommand = new DelegateCommand(TrainAction, o => true);
             SimulateCommand = new DelegateCommand(SimulateAction, o => true);
-            EditCreature = new DelegateCommand(EditAction, o => true);
+            EditCreatureCommand = new DelegateCommand(EditAction, o => true);
             CloneCommand = new DelegateCommand(CloneAction, o => true);
+            ClearMovementPatternsCommand = new DelegateCommand(ClearMovementPatternsAction, o => SelectedCreature?.MovementPatternCollectionVM.Count > 0);
         }
     }
 }
