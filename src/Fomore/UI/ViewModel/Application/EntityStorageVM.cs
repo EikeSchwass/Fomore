@@ -94,6 +94,12 @@ namespace Fomore.UI.ViewModel.Application
             Model.LoadEntities();
             CreatureCollectionAccess.AddRange(Model.Creatures.Select(c => new CreatureVM(c)));
             EnvironmentCollectionAccess.AddRange(Model.Environments.Select(e => new EnvironmentVM(e)));
+            AddCreatureCommand.OnCanExecuteChanged();
+            RemoveCreatureCommand.OnCanExecuteChanged();
+            ClearCreaturesCommand.OnCanExecuteChanged();
+            AddEnvironmentCommand.OnCanExecuteChanged();
+            RemoveEnvironmentCommand.OnCanExecuteChanged();
+            ClearEnvironmentsCommand.OnCanExecuteChanged();
         }
 
         public void Save()
