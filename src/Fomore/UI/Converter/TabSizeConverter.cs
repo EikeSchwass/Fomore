@@ -10,7 +10,7 @@ namespace Fomore.UI.Converter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            double width = double.Parse(value.ToString());
+            double width = double.Parse(value?.ToString() ?? "0");
             //Subtract 1, otherwise we could overflow to two rows.
             return .25 * width - 5;
         }

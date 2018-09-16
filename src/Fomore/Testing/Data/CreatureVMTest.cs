@@ -77,35 +77,6 @@ namespace Testing.Data
         }
 
         [Test]
-        public void LastAccess_SetSameTime_ReturnsSameTimeTrue()
-        {
-            var creature = new Creature { Name = "Dog", Description = "Can run" };
-            var creatureVM = new CreatureVM(creature);
-            System.Threading.Thread.Sleep(100);
-            creatureVM.Description = "Can Bark";
-            var expected = creatureVM.LastAccess;
-            creatureVM.Description = "Can run";
-
-            var actual = creatureVM.LastAccess;
-
-            Assert.AreEqual(expected.Second, actual.Second);
-        }
-
-        [Test]
-        public void LastAccess_SetDifferentTime_ReturnsSameTimeFalse()
-        {
-            var creature = new Creature { Name = "Dog", Description = "Can run" };
-            var creatureVM = new CreatureVM(creature);
-            var expected = creatureVM.LastAccess;
-            System.Threading.Thread.Sleep(1000);
-            creatureVM.Description = "Can Bark";
-
-            var actual = creatureVM.LastAccess;
-
-            Assert.AreNotEqual(expected.Second, actual.Second);
-        }
-
-        [Test]
         public void CreatureStructureVM_WithoutValueTest_ReturnsZeroCountTrue()
         {
             var creature = new Creature { MovementPatterns = { new MovementPattern() } };

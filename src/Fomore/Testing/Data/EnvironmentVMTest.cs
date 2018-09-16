@@ -10,8 +10,8 @@ namespace Testing.Data
         [Test]
         public void Name_SetSameValueTest_ReturnsSameValueTrue()
         {
-            var environment = new Environment() { Description = "Earth ...", Name = "Earth" };
-            var environmentVM = new EnvironmentVM(environment) { Name = "Earth" };
+            var environment = new Environment() {Description = "Earth ...", Name = "Earth"};
+            var environmentVM = new EnvironmentVM(environment) {Name = "Earth"};
 
             string actual = environmentVM.Name;
 
@@ -21,8 +21,8 @@ namespace Testing.Data
         [Test]
         public void Name_SetDifferentValueTest_ReturnsSecondValueTrue()
         {
-            var environment = new Environment() { Description = "Earth ...", Name = "Earth" };
-            var environmentVM = new EnvironmentVM(environment) { Name = "Moon" };
+            var environment = new Environment() {Description = "Earth ...", Name = "Earth"};
+            var environmentVM = new EnvironmentVM(environment) {Name = "Moon"};
 
             string actual = environmentVM.Name;
 
@@ -32,8 +32,8 @@ namespace Testing.Data
         [Test]
         public void Name_SetDifferentValueTest_ReturnsFirstValueFalse()
         {
-            var environment = new Environment() { Description = "Earth ...", Name = "Earth" };
-            var environmentVM = new EnvironmentVM(environment) { Name = "Moon" };
+            var environment = new Environment() {Description = "Earth ...", Name = "Earth"};
+            var environmentVM = new EnvironmentVM(environment) {Name = "Moon"};
 
             string actual = environmentVM.Name;
 
@@ -43,8 +43,8 @@ namespace Testing.Data
         [Test]
         public void Description_SetSameValue_ReturnsSameValueTrue()
         {
-            var environment = new Environment() { Description = "Earth ..." };
-            var environmentVM = new EnvironmentVM(environment) { Description = "Earth ..." };
+            var environment = new Environment() {Description = "Earth ..."};
+            var environmentVM = new EnvironmentVM(environment) {Description = "Earth ..."};
 
             string actual = environmentVM.Description;
 
@@ -54,8 +54,8 @@ namespace Testing.Data
         [Test]
         public void Description_SetDifferentValue_ReturnsSecondValueTrue()
         {
-            var environment = new Environment() { Description = "Earth ..." };
-            var environmentVM = new EnvironmentVM(environment) { Description = "Moon ..." };
+            var environment = new Environment() {Description = "Earth ..."};
+            var environmentVM = new EnvironmentVM(environment) {Description = "Moon ..."};
 
             string actual = environmentVM.Description;
 
@@ -65,8 +65,8 @@ namespace Testing.Data
         [Test]
         public void Description_SetDifferentValue_ReturnsFirstValueFalse()
         {
-            var environment = new Environment() { Description = "Earth ..." };
-            var environmentVM = new EnvironmentVM(environment) { Description = "Moon ..." };
+            var environment = new Environment() {Description = "Earth ..."};
+            var environmentVM = new EnvironmentVM(environment) {Description = "Moon ..."};
 
             string actual = environmentVM.Description;
 
@@ -77,7 +77,7 @@ namespace Testing.Data
         public void Gravity_SetSameValue_ReturnsSameValueTrue()
         {
             var environment = new Environment();
-            var environmentVM = new EnvironmentVM(environment) { Gravity = 9.5 };
+            var environmentVM = new EnvironmentVM(environment) {Gravity = 9.5};
             environmentVM.Gravity = 9.5;
 
             double actual = environmentVM.Gravity;
@@ -89,7 +89,7 @@ namespace Testing.Data
         public void Gravity_SetDifferentValue_ReturnsSecondValueTrue()
         {
             var environment = new Environment();
-            var environmentVM = new EnvironmentVM(environment) { Gravity = 9.5 };
+            var environmentVM = new EnvironmentVM(environment) {Gravity = 9.5};
             environmentVM.Gravity = 9.8;
 
             double actual = environmentVM.Gravity;
@@ -101,7 +101,7 @@ namespace Testing.Data
         public void Gravity_SetDifferentValue_ReturnsFirstValueFalse()
         {
             var environment = new Environment();
-            var environmentVM = new EnvironmentVM(environment) { Gravity = 9.5 };
+            var environmentVM = new EnvironmentVM(environment) {Gravity = 9.5};
             environmentVM.Gravity = 9.8;
 
             double actual = environmentVM.Gravity;
@@ -113,7 +113,7 @@ namespace Testing.Data
         public void Friction_SetSameValue_ReturnsSameValueTrue()
         {
             var environment = new Environment();
-            var environmentVM = new EnvironmentVM(environment) { Friction = 9.5 };
+            var environmentVM = new EnvironmentVM(environment) {Friction = 9.5};
             environmentVM.Friction = 9.5;
 
             double actual = environmentVM.Friction;
@@ -125,7 +125,7 @@ namespace Testing.Data
         public void Friction_SetDifferentValue_ReturnsSecondValueTrue()
         {
             var environment = new Environment();
-            var environmentVM = new EnvironmentVM(environment) { Friction = 9.5 };
+            var environmentVM = new EnvironmentVM(environment) {Friction = 9.5};
             environmentVM.Friction = 9.8;
 
             double actual = environmentVM.Friction;
@@ -137,40 +137,12 @@ namespace Testing.Data
         public void Friction_SetDifferentValue_ReturnsFirstValueFalse()
         {
             var environment = new Environment();
-            var environmentVM = new EnvironmentVM(environment) { Friction = 9.5 };
+            var environmentVM = new EnvironmentVM(environment) {Friction = 9.5};
             environmentVM.Friction = 9.8;
 
             double actual = environmentVM.Friction;
 
             Assert.AreNotEqual(9.5, actual);
-        }
-
-        [Test]
-        public void LastAccess_SetSameTime_ReturnsSameTimeTrue()
-        {
-            var environment = new Environment();
-            var environmentVM = new EnvironmentVM(environment) { Friction = 9.5 };
-            var expected = environmentVM.LastAccess;
-            System.Threading.Thread.Sleep(100);
-            environmentVM.Friction = 9.8;
-
-            var actual = environmentVM.LastAccess;
-
-            Assert.AreEqual(expected.Second, actual.Second);
-        }
-
-        [Test]
-        public void LastAccess_SetDifferentTime_ReturnsSameTimeFalse()
-        {
-            var environment = new Environment();
-            var environmentVM = new EnvironmentVM(environment) { Friction = 9.5 };
-            var expected = environmentVM.LastAccess;
-            System.Threading.Thread.Sleep(1000);
-            environmentVM.Friction = 9.8;
-
-            var actual = environmentVM.LastAccess;
-
-            Assert.AreNotEqual(expected.Second, actual.Second);
         }
     }
 }

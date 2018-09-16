@@ -14,8 +14,6 @@ using Fomore.UI.ViewModel.Commands;
 using Fomore.UI.ViewModel.CreatureEditor;
 using Fomore.UI.ViewModel.Data;
 using Fomore.UI.Views.Windows;
-using Brush = System.Drawing.Brush;
-using Brushes = System.Drawing.Brushes;
 using Color = System.Drawing.Color;
 using Pen = System.Drawing.Pen;
 using Point = System.Drawing.Point;
@@ -150,7 +148,7 @@ namespace Fomore.UI.ViewModel.Navigation
         {
             if (obj is CreatureVM creature)
             {
-                CreatureVM clone = creature.Clone();
+                var clone = creature.Clone();
                 clone.Name = "Clone of " + clone.Name;
                 EntitiesStorage.AddCreatureCommand.Execute(clone);
                 SelectedCreature = clone;
@@ -162,14 +160,14 @@ namespace Fomore.UI.ViewModel.Navigation
             var bones = SelectedCreature?.CreatureStructureVM.BoneCollectionVM;
             var joints = SelectedCreature?.CreatureStructureVM.JointCollectionVM;
 
-            Pen bonePen = new Pen(Color.FromArgb(119, 119, 119)) {Width = 5};
-            Pen jointPen = new Pen(Color.FromArgb(85, 85, 85));
-            Pen backgroundPen = new Pen(Color.FromArgb(40, 40, 40));
+            var bonePen = new Pen(Color.FromArgb(119, 119, 119)) {Width = 5};
+            var jointPen = new Pen(Color.FromArgb(85, 85, 85));
+            var backgroundPen = new Pen(Color.FromArgb(40, 40, 40));
 
             if (joints == null || joints.Count == 0 || bones == null)
             {
                 var emptyBitmap = new Bitmap(PreviewDimension, PreviewDimension);
-                using (Graphics g = Graphics.FromImage(emptyBitmap))
+                using (var g = Graphics.FromImage(emptyBitmap))
                 {
                     g.FillRectangle(backgroundPen.Brush, -1, -1, PreviewDimension + 2, PreviewDimension + 2);
                 }
@@ -181,7 +179,7 @@ namespace Fomore.UI.ViewModel.Navigation
             if (joints.Count == 1)
             {
                 var specialOneDotBitmap = new Bitmap(PreviewDimension, PreviewDimension);
-                using (Graphics g = Graphics.FromImage(specialOneDotBitmap))
+                using (var g = Graphics.FromImage(specialOneDotBitmap))
                 {
                     g.SmoothingMode = SmoothingMode.HighQuality;
                     g.FillRectangle(backgroundPen.Brush, -1, -1, PreviewDimension + 2, PreviewDimension + 2);
@@ -191,12 +189,12 @@ namespace Fomore.UI.ViewModel.Navigation
                 return specialOneDotBitmap;
             }
 
-            Vector2 min = new Vector2(joints.Min(j => j.Position.X), joints.Min(j => j.Position.Y));
-            Vector2 max = new Vector2(joints.Max(j => j.Position.X), joints.Max(j => j.Position.Y));
+            var min = new Vector2(joints.Min(j => j.Position.X), joints.Min(j => j.Position.Y));
+            var max = new Vector2(joints.Max(j => j.Position.X), joints.Max(j => j.Position.Y));
 
             var bitmap = new Bitmap(PreviewDimension, PreviewDimension);
 
-            using (Graphics g = Graphics.FromImage(bitmap))
+            using (var g = Graphics.FromImage(bitmap))
             {
                 g.SmoothingMode = SmoothingMode.HighQuality;
 
@@ -211,7 +209,7 @@ namespace Fomore.UI.ViewModel.Navigation
 
                 foreach (var joint in joints)
                 {
-                    Point n = NormalizePoint(joint.Position, min, max);
+                    var n = NormalizePoint(joint.Position, min, max);
                     g.FillEllipse(jointPen.Brush, n.X - 5, n.Y - 5, 10, 10);
                 }
             }
