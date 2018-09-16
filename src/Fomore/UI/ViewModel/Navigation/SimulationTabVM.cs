@@ -1,4 +1,6 @@
-﻿using System.Windows;
+﻿using System;
+using System.Windows;
+using System.Windows.Controls;
 using Fomore.UI.ViewModel.Application;
 using Fomore.UI.ViewModel.Commands;
 using Fomore.UI.ViewModel.Data;
@@ -20,6 +22,7 @@ namespace Fomore.UI.ViewModel.Navigation
         private EnvironmentVM selectedEnvironment;
         private MovementPatternVM selectedMovementPattern;
         private CreatureVM selectedCreature;
+        private bool simulationRunning;
 
         public CreatureVM SelectedCreature
         {
@@ -60,11 +63,23 @@ namespace Fomore.UI.ViewModel.Navigation
             }
         }
 
+        public bool SimulationRunning
+        {
+            get => simulationRunning;
+            set
+            {
+                if (value == simulationRunning) return;
+                simulationRunning = value;
+                OnPropertyChanged();
+            }
+        }
+
         // ------------------------------------------------------------
         // Commands and Actions
         // ------------------------------------------------------------
         public DelegateCommand ResetSelectionCommand { get; }
         public DelegateCommand StartSimulationCommand { get; }
+        public DelegateCommand StopSimulationCommand { get; }
 
         private void ResetSelectionAction(object obj)
         {
@@ -75,7 +90,13 @@ namespace Fomore.UI.ViewModel.Navigation
 
         private void StartSimulationAction(object obj)
         {
-            MessageBox.Show("The simulation has started...\n\nParameters:\nCreature:\t\t\t" + SelectedCreature.Name + "\nMovement Pattern:\t" + SelectedMovementPattern.Name + "\nEnvironment:\t\t" + SelectedEnvironment.Name, "Simulation", MessageBoxButton.OK, MessageBoxImage.Information);
+            // MessageBox.Show("The simulation has started...\n\nParameters:\nCreature:\t\t\t" + SelectedCreature.Name + "\nMovement Pattern:\t" + SelectedMovementPattern.Name + "\nEnvironment:\t\t" + SelectedEnvironment.Name, "Simulation", MessageBoxButton.OK, MessageBoxImage.Information);
+            SimulationRunning = true;
+        }
+
+        private void StopSimulationAction(object obj)
+        {
+            SimulationRunning = false;
         }
 
         // ------------------------------------------------------------
@@ -96,12 +117,22 @@ namespace Fomore.UI.ViewModel.Navigation
                                                          o => SelectedCreature != null &&
                                                               SelectedMovementPattern != null &&
                                                               SelectedEnvironment != null);
+            StopSimulationCommand = new DelegateCommand(StopSimulationAction, o => true);
+
         }
 
         public override void OnSelect(object obj)
         {
-            if (obj is CreatureVM vm)
-                SelectedCreature = vm;
+            // if (obj is CreatureVM vm)
+            // SelectedCreature = vm;
+
+            if (obj is CreatureTabVM.CreatureMovementPattern cmp)
+            {
+                if (cmp.Creature != null)
+                    SelectedCreature = cmp.Creature;
+                if (cmp.MovementPattern != null)
+                    SelectedMovementPattern = cmp.MovementPattern;
+            }
         }
     }
 }

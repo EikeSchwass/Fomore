@@ -1,15 +1,18 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:data="clr-namespace:Fomore.UI.ViewModel.Data">
+                    xmlns:data="clr-namespace:Fomore.UI.ViewModel.Data"
+                    xmlns:controls="clr-namespace:Fomore.UI.Views.Controls">
 
     <Style x:Key="EntityList" TargetType="ListBox">
-        <Setter Property="MinWidth" Value="250" />
-        <Setter Property="MaxWidth" Value="500" />
+        <!-- <Setter Property="MinWidth" Value="250" /> -->
+        <!-- <Setter Property="MaxWidth" Value="500" /> -->
         <Setter Property="HorizontalContentAlignment" Value="Stretch" />
-        <Setter Property="Background" Value="{StaticResource Level4Brush}" />
-        <Setter Property="Margin" Value="8" />
+        <Setter Property="Background" Value="{StaticResource ListColor}" />
+        <Setter Property="Foreground" Value="White" />
+        <Setter Property="BorderThickness" Value="0" />
+        <!-- <Setter Property="Margin" Value="5 0 5 5" /> -->
     </Style>
-    
+
     <!-- Generic List Item style -->
     <Style x:Key="ListBoxItemGrid" TargetType="Grid">
         <Setter Property="Margin" Value="10" />
@@ -17,11 +20,11 @@
 
     <!-- Border -->
     <Style x:Key="ListBoxItemBorder" TargetType="Border">
-        <Setter Property="BorderThickness" Value="2" />
+        <Setter Property="BorderThickness" Value="4" />
         <Setter Property="CornerRadius" Value="3" />
-        <Setter Property="Margin" Value="2" />
+        <Setter Property="Margin" Value="1" />
     </Style>
-    
+
     <!-- Inner List Box styles -->
     <Style x:Key="ListBoxIcon" TargetType="Image">
         <Setter Property="Width" Value="48" />
@@ -30,7 +33,7 @@
     </Style>
     <Style x:Key="ListBoxItemName" TargetType="TextBlock">
         <Setter Property="FontSize" Value="16" />
-        <Setter Property="FontWeight" Value="ExtraBold" />
+        <Setter Property="FontWeight" Value="Bold" />
     </Style>
     <Style x:Key="ListBoxItemInfo" TargetType="TextBlock">
         <Setter Property="FontSize" Value="10" />
@@ -42,7 +45,7 @@
     </Style>
 
     <DataTemplate x:Key="CreatureListItem" DataType="{x:Type data:CreatureVM}">
-        <Border Style="{StaticResource ListBoxItemBorder}" BorderBrush="Red">
+        <Border Style="{StaticResource ListBoxItemBorder}" BorderBrush="{StaticResource CreatureColor}">
             <Grid Style="{StaticResource ListBoxItemGrid}">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto" />
@@ -52,14 +55,17 @@
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="*" />
                 </Grid.RowDefinitions>
-                <Image Grid.Column="0" Grid.RowSpan="2" Style="{StaticResource ListBoxIcon}" Source="../assets/images/creature_icon.png" />
+                <Image Grid.Column="0" Grid.RowSpan="2" Style="{StaticResource ListBoxIcon}"
+                       Source="../assets/images/creature_icon_new.png" />
                 <TextBlock Grid.Column="1" Grid.Row="0" Style="{StaticResource ListBoxItemName}" Text="{Binding Name}" />
+                <TextBlock Grid.Column="1" Grid.Row="1" Style="{StaticResource ListBoxItemInfo}"
+                           Text="{Binding Description, Converter={StaticResource StringShortenerConverter}, ConverterParameter=50}" />
             </Grid>
         </Border>
     </DataTemplate>
 
     <DataTemplate x:Key="MovementPatternListItem" DataType="{x:Type data:MovementPatternVM}">
-        <Border Style="{StaticResource ListBoxItemBorder}" BorderBrush="Blue">
+        <Border Style="{StaticResource ListBoxItemBorder}" BorderBrush="{StaticResource MovementPatternColor}">
             <Grid Style="{StaticResource ListBoxItemGrid}">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto" />
@@ -69,7 +75,8 @@
                     <RowDefinition />
                     <RowDefinition />
                 </Grid.RowDefinitions>
-                <Image Grid.Column="0" Grid.RowSpan="2" Style="{StaticResource ListBoxIcon}" Source="../../assets/images/movementpattern_icon.png" />
+                <Image Grid.Column="0" Grid.RowSpan="2" Style="{StaticResource ListBoxIcon}"
+                       Source="../../assets/images/movementpattern_icon_new.png" />
                 <TextBlock Grid.Column="1" Grid.Row="0" Style="{StaticResource ListBoxItemName}" Text="{Binding Name}" />
                 <StackPanel Grid.Column="1" Grid.Row="1">
                     <TextBlock Style="{StaticResource ListBoxItemInfo}" FontWeight="Bold" Text="Iterations:" />
@@ -80,7 +87,7 @@
     </DataTemplate>
 
     <DataTemplate x:Key="EnvironmentListItem" DataType="{x:Type data:EnvironmentVM}">
-        <Border Style="{StaticResource ListBoxItemBorder}" BorderBrush="Green">
+        <Border Style="{StaticResource ListBoxItemBorder}" BorderBrush="{StaticResource EnvironmentColor}">
             <Grid Style="{StaticResource ListBoxItemGrid}">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto" />
@@ -90,16 +97,19 @@
                     <RowDefinition />
                     <RowDefinition />
                 </Grid.RowDefinitions>
-                <Image Grid.Column="0" Grid.RowSpan="2" Style="{StaticResource ListBoxIcon}" Source="../../assets/images/environment_icon.png" />
+                <Image Grid.Column="0" Grid.RowSpan="2" Style="{StaticResource ListBoxIcon}"
+                       Source="../../assets/images/environment_icon_new.png" />
                 <TextBlock Grid.Column="1" Grid.Row="0" Style="{StaticResource ListBoxItemName}" Text="{Binding Name}" />
                 <StackPanel Grid.Column="1" Grid.Row="1" Orientation="Horizontal">
                     <StackPanel>
                         <TextBlock Style="{StaticResource ListBoxItemInfo}" FontWeight="Bold" Text="Gravity:" />
-                        <TextBlock Style="{StaticResource ListBoxItemInfo}" Text="{Binding Gravity, StringFormat={}{0} m/s²}" />
+                        <TextBlock Style="{StaticResource ListBoxItemInfo}"
+                                   Text="{Binding Gravity, StringFormat={}{0} m/s²}" />
                     </StackPanel>
                     <StackPanel Margin="30 0">
                         <TextBlock Style="{StaticResource ListBoxItemInfo}" FontWeight="Bold" Text="Friction:" />
-                        <TextBlock Style="{StaticResource ListBoxItemInfo}" Text="{Binding Friction, StringFormat={}{0} J}" />
+                        <TextBlock Style="{StaticResource ListBoxItemInfo}"
+                                   Text="{Binding Friction, StringFormat={}{0} J}" />
                     </StackPanel>
                 </StackPanel>
             </Grid>

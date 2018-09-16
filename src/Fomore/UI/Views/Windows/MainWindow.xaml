@@ -11,21 +11,18 @@
     <Window.DataContext>
         <application:AppStateVM  />
     </Window.DataContext>
+    <Window.Resources>
+        <Style TargetType="{x:Type TabItem}">
+            <Setter Property="Width" Value="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=Window}, Path=Width, Converter={StaticResource TabSizeConverter}}" />
+            <Setter Property="Height" Value="30" />
+            <Setter Property="Background" Value="{StaticResource TabColor}" />
+        </Style>
+    </Window.Resources>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
-        <Menu Grid.Row="0">
-            <MenuItem Header="File">
-                <MenuItem Header="New">
-                    <MenuItem Header="Creature..." />
-                    <MenuItem Header="Environment..."  />
-                    <MenuItem Header="Scenario..."  />
-                    <MenuItem Header="Some stuff..." Command="{Binding CreateSomeStuff}" />
-                </MenuItem>
-            </MenuItem>
-        </Menu>
         <TabControl Grid.Row="1" DataContext="{Binding Path=NavigationVM}" SelectedItem="{Binding SelectedTab, Mode=TwoWay}" ItemsSource="{Binding TabCollection}">
             <TabControl.Resources>
                 <DataTemplate DataType="{x:Type navigation:CreatureTabVM}">

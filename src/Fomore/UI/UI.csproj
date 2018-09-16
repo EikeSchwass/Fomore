@@ -64,6 +64,7 @@
     <Compile Include="Converter\InvertedNumberToBooleanConverter.cs" />
     <Compile Include="Converter\InvertedNumberVisibilityConverter.cs" />
     <Compile Include="Converter\NotNullVisibilityConverter.cs" />
+    <Compile Include="Converter\NullBooleanConverter.cs" />
     <Compile Include="Converter\NullVisibilityConverter.cs" />
     <Compile Include="Converter\BooleanVisibilityConverter.cs" />
     <Compile Include="Converter\CenterElementConverter.cs" />
@@ -71,6 +72,8 @@
     <Compile Include="Converter\ItemInCollectionVisibilityConverter.cs" />
     <Compile Include="Converter\NumberToBooleanConverter.cs" />
     <Compile Include="Converter\NumberVisibilityConverter.cs" />
+    <Compile Include="Converter\StringShortenerConverter.cs" />
+    <Compile Include="Converter\TabSizeConverter.cs" />
     <Compile Include="Converter\RadiansToDegreesConverter.cs" />
     <Compile Include="ViewModel\Application\AppStateVM.cs" />
     <Compile Include="ViewModel\Application\EntityStorageVM.cs" />
@@ -303,6 +306,15 @@
       <Project>{ec8bbbe5-eac0-4f73-b106-e2f7cfbafa9f}</Project>
       <Name>Core</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="assets\images\creature_icon_new.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="assets\images\environment_icon_new.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="assets\images\movementpattern_icon_new.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

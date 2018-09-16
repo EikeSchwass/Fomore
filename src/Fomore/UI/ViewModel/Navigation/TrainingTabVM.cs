@@ -1,8 +1,8 @@
 ﻿using System.Windows;
+using Core;
 using Fomore.UI.ViewModel.Application;
 using Fomore.UI.ViewModel.Commands;
 using Fomore.UI.ViewModel.Data;
-
 
 namespace Fomore.UI.ViewModel.Navigation
 {
@@ -23,6 +23,8 @@ namespace Fomore.UI.ViewModel.Navigation
         private CreatureVM selectedCreature;
         private bool showTraining;
         private double targetSpeed;
+        private bool newMovementPattern;
+        private MovementPatternVM previouslySelectedMovementPattern;
 
         public CreatureVM SelectedCreature
         {
@@ -63,6 +65,33 @@ namespace Fomore.UI.ViewModel.Navigation
             }
         }
 
+        public bool NewMovementPattern
+        {
+            get => newMovementPattern;
+            set
+            {
+                if (value == newMovementPattern) return;
+                newMovementPattern = value;
+                if (value)
+                {
+                    previouslySelectedMovementPattern = SelectedMovementPattern;
+                    SelectedMovementPattern = null;
+                }
+                else
+                {
+                    SelectedMovementPattern = previouslySelectedMovementPattern;
+                    previouslySelectedMovementPattern = null;
+                }
+
+                OnPropertyChanged();
+                OnPropertyChanged(nameof(MovementPatternSelectionEnabled));
+                ResetSelectionCommand.OnCanExecuteChanged();
+                StartTrainingCommand.OnCanExecuteChanged();
+            }
+        }
+
+        public bool MovementPatternSelectionEnabled => !NewMovementPattern;
+
         public double TargetSpeed
         {
             get => targetSpeed;
@@ -88,11 +117,13 @@ namespace Fomore.UI.ViewModel.Navigation
         // ------------------------------------------------------------
         // Commands and Actions
         // ------------------------------------------------------------
+
         public DelegateCommand ResetSelectionCommand { get; }
         public DelegateCommand StartTrainingCommand { get; }
 
         private void ResetSelectionAction(object obj)
         {
+            NewMovementPattern = false;
             SelectedCreature = null;
             SelectedMovementPattern = null;
             SelectedEnvironment = null;
@@ -102,8 +133,17 @@ namespace Fomore.UI.ViewModel.Navigation
 
         private void StartTrainingAction(object obj)
         {
+            if (NewMovementPattern)
+            {
+                MovementPatternVM movementPattern =
+                    new MovementPatternVM(new MovementPattern() {Name = "" + SelectedCreature.Name + " on " + SelectedEnvironment.Name});
+                SelectedCreature.MovementPatternCollectionVM.Add((movementPattern));
+                NewMovementPattern = false;
+                SelectedMovementPattern = movementPattern;
+            }
+
             SelectedMovementPattern.Iterations++;
-            MessageBox.Show("The training process has started...\n\nParameters:\nCreature:\t\t\t" + SelectedCreature.Name + "\nMovement Pattern:\t" + SelectedMovementPattern.Name + "\nEnvironment:\t\t" + SelectedEnvironment.Name + "\nShow Progress:\t\t" + (ShowTraining ? "Yes" : "No"), "Training", MessageBoxButton.OK, MessageBoxImage.Information);
+            // MessageBox.Show("The training process has started...\n\nParameters:\nCreature:\t\t\t" + SelectedCreature.Name + "\nMovement Pattern:\t" + SelectedMovementPattern.Name + "\nEnvironment:\t\t" + SelectedEnvironment.Name + "\nShow Progress:\t\t" + (ShowTraining ? "Yes" : "No"), "Training", MessageBoxButton.OK, MessageBoxImage.Information);
         }
 
         // ------------------------------------------------------------
@@ -121,15 +161,23 @@ namespace Fomore.UI.ViewModel.Navigation
                                                              SelectedMovementPattern != null ||
                                                              SelectedEnvironment != null);
             StartTrainingCommand = new DelegateCommand(StartTrainingAction,
-                                                         o => SelectedCreature != null &&
-                                                              SelectedMovementPattern != null &&
-                                                              SelectedEnvironment != null);
+                                                       o => SelectedCreature != null &&
+                                                            (SelectedMovementPattern != null || NewMovementPattern) &&
+                                                            SelectedEnvironment != null);
         }
 
         public override void OnSelect(object obj)
         {
-            if (obj is CreatureVM vm)
-                SelectedCreature = vm;
+            // if (obj is CreatureVM vm)
+            // SelectedCreature = vm;
+
+            if (obj is CreatureTabVM.CreatureMovementPattern cmp)
+            {
+                if (cmp.Creature != null)
+                    SelectedCreature = cmp.Creature;
+                if (cmp.MovementPattern != null)
+                    SelectedMovementPattern = cmp.MovementPattern;
+            }
         }
     }
 }

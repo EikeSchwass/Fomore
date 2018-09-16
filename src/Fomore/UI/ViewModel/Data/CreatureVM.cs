@@ -18,7 +18,6 @@ namespace Fomore.UI.ViewModel.Data
                 if (value == Model.Name) return;
                 Model.Name = value;
                 OnPropertyChanged();
-                OnPropertyChanged(nameof(LastAccess));
             }
         }
         public string Description
@@ -29,11 +28,10 @@ namespace Fomore.UI.ViewModel.Data
                 if (value == Model.Description) return;
                 Model.Description = value;
                 OnPropertyChanged();
-                OnPropertyChanged(nameof(LastAccess));
             }
         }
 
-        public DateTime LastAccess => Model.LastAccess;
+        public DateTime CreationDate => Model.CreationDate;
 
         public EncapsulatingObservableCollection<MovementPatternVM, MovementPattern> MovementPatternCollectionVM { get; }
 
