@@ -90,15 +90,15 @@
         <Canvas.ContextMenu>
             <ContextMenu>
                 <MenuItem Header="Background Image">
-                    <MenuItem Header="Set Background Image" Command="{Binding SetBackgroundImageCommand}" />
-                    <MenuItem Header="Remove Background Image" Command="{Binding RemoveBackgroundImageCommand}" />
+                    <MenuItem Header="Set Background Image" Command="{Binding BackgroundImage.BrowseImageCommand}" />
+                    <MenuItem Header="Remove Background Image" Command="{Binding BackgroundImage.ResetImageCommand}" />
                 </MenuItem>
             </ContextMenu>
         </Canvas.ContextMenu>
         <Rectangle Width="{Binding CanvasWidth}" Height="{Binding CanvasHeight}" Fill="Transparent" Stroke="Black"
                    StrokeThickness="2" />
         <Grid Width="{Binding CanvasWidth}" Height="{Binding CanvasHeight}">
-            <Image Source="{Binding BackgroundImageSource}" HorizontalAlignment="Center" VerticalAlignment="Center"
+            <Image Source="{Binding  BackgroundImage.ImageSource}" HorizontalAlignment="Center" VerticalAlignment="Center"
                    Stretch="None" />
         </Grid>
 

@@ -1,21 +1,16 @@
-﻿using System;
-using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
 using Fomore.UI.ViewModel.Commands;
 using Fomore.UI.ViewModel.CreatureEditor.Tools;
 using Fomore.UI.ViewModel.Data;
 using Fomore.UI.ViewModel.Helper;
-using Microsoft.Win32;
 
 namespace Fomore.UI.ViewModel.CreatureEditor
 {
     public class CreatureStructureEditorCanvasVM : ViewModelBase
     {
-        private ImageSource backgroundImageSource;
 
         public static double CanvasWidth => 1000;
         public static double CanvasHeight => 1000;
@@ -31,22 +26,8 @@ namespace Fomore.UI.ViewModel.CreatureEditor
 
         public ObservableCollection<JointVM> SelectedJoints { get; } = new ObservableCollection<JointVM>();
         public ObservableCollection<BoneVM> SelectedBones { get; } = new ObservableCollection<BoneVM>();
-
-        public ImageSource BackgroundImageSource
-        {
-            get => backgroundImageSource;
-            set
-            {
-                if (Equals(value, backgroundImageSource)) return;
-                backgroundImageSource = value;
-                OnPropertyChanged();
-                SetBackgroundImageCommand?.OnCanExecuteChanged();
-                RemoveBackgroundImageCommand?.OnCanExecuteChanged();
-            }
-        }
-
-        public DelegateCommand SetBackgroundImageCommand { get; }
-        public DelegateCommand RemoveBackgroundImageCommand { get; }
+        
+        public BackgroundImageVM BackgroundImage { get; } = new BackgroundImageVM();
 
         public DelegateHandleCommand<MouseInfo> CanvasMouseDownCommand { get; }
         public DelegateHandleCommand<MouseInfo> CanvasMouseUpCommand { get; }
@@ -66,8 +47,6 @@ namespace Fomore.UI.ViewModel.CreatureEditor
             Creature = creature;
             CameraVM = new CameraVM { OffsetX = -CanvasWidth / 2, OffsetY = -CanvasHeight / 2 };
             ToolCollectionVM = toolCollectionVM;
-            SetBackgroundImageCommand = new DelegateCommand(o => SetBackgroundImage(), o => true);
-            RemoveBackgroundImageCommand = new DelegateCommand(o => RemoveBackgroundImage(), o => BackgroundImageSource != null);
 
             CanvasSizeChangedCommand = new DelegateHandleCommand<SizeChange>(CanvasSizeChanged, o => true);
             CanvasMouseDownCommand =
@@ -128,36 +107,6 @@ namespace Fomore.UI.ViewModel.CreatureEditor
         {
             CameraVM.UpdateBoundaries();
             return true;
-        }
-
-        private void SetBackgroundImage()
-        {
-            var openFileDialog = new OpenFileDialog
-            {
-                Title = "Select Background Image",
-                CheckFileExists = true,
-                Filter = "Image files (*.jpg, *.jpeg, *.png, *.bmp)|*.jpg;*.jpeg;*.png;*.bmp",
-                Multiselect = false
-            };
-            if (openFileDialog.ShowDialog() != true) return;
-            string fileName = openFileDialog.FileName;
-            try
-            {
-                var bitmapImage = new BitmapImage(new Uri(fileName, UriKind.Absolute));
-                BackgroundImageSource = bitmapImage;
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"An error occured when trying to open the selected image. If you think this is this programs fault give your Administrator the following information:\n{ex}",
-                                "Error loading the image",
-                                MessageBoxButton.OK,
-                                MessageBoxImage.Error);
-            }
-        }
-
-        private void RemoveBackgroundImage()
-        {
-            BackgroundImageSource = null;
         }
     }
 }

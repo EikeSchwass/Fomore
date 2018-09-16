@@ -95,6 +95,10 @@
             <GroupBox Grid.Row="1" Background="{StaticResource Level1Brush}" Header="Settings" Margin="8"
                       Foreground="White" FontSize="16">
                 <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="Auto" />
                         <ColumnDefinition />
@@ -103,11 +107,43 @@
                                ToolTip="Change the scale and observe the width and height at the top until the creature has the desired size" />
                     <Slider Grid.Column="1" Grid.Row="0" Minimum="0.001" Maximum="0.05" SmallChange="0.0001"
                             LargeChange="0.0005" Value="{Binding CreatureEditorPanelVM.Settings.Scale}" />
+                    <Grid Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Margin="4">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+                        <TextBlock Text="Background Image" FontWeight="Bold" />
+                        <Grid Grid.Row="1" DataContext="{Binding CreatureEditorPanelVM.CreatureStructureEditorCanvasVM.BackgroundImage}">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition />
+                                <ColumnDefinition Width="Auto" />
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Grid.Row="0" Grid.Column="0" Text="{Binding FileInfo.Name, TargetNullValue=No image selected, FallbackValue=No image selected}" TextTrimming="CharacterEllipsis" />
+                            <controls:CustomizableButton Grid.Row="0" Grid.Column="1" Content="Select Background Image" Padding="8,4" Command="{Binding BrowseImageCommand}" />
+                            <Grid Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" IsEnabled="{Binding FileInfo, Converter={StaticResource NullBooleanConverter}}">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                </Grid.RowDefinitions>
+                                <controls:CustomizableButton Grid.ColumnSpan="2" Content="Remove background image" HorizontalAlignment="Center" Padding="8,4" Command="{Binding ResetImageCommand}" />
+                                <TextBlock Grid.Row="1" Grid.Column="0" Text="Scale" />
+                                <Slider Grid.Row="1" Grid.Column="1" IsDirectionReversed="False" Minimum="{Binding MinImageSize}" Maximum="{Binding MaxImageSize}" Value="{Binding ImageSize}" />
+                            </Grid>
+                        </Grid>
+                    </Grid>
                 </Grid>
             </GroupBox>
 
             <GroupBox Grid.Row="2" Background="{StaticResource Level1Brush}" Header="Bone Settings" Margin="8"
-                      Foreground="White" FontSize="16" >
+                      Foreground="White" FontSize="16" IsEnabled="{Binding CreatureEditorPanelVM.CreatureStructureEditorCanvasVM.SelectedBones.Count, Converter={StaticResource InvertedNumberToBooleanConverter}, ConverterParameter=0}" >
                 <ContentControl Content="{Binding CreatureEditorPanelVM.Settings}" Margin="4">
                     <ContentControl.Style>
                         <Style TargetType="ContentControl">
@@ -146,7 +182,7 @@
                                                     </Binding>
                                                 </TextBox.Text>
                                             </TextBox>
-                                            
+
                                             <!-- TODO Refactor this -->
                                             <GroupBox Grid.Column="0" Grid.Row="3" Grid.ColumnSpan="2" Margin="8"
                                                       Header="Movement Control" Foreground="White" FontSize="16"

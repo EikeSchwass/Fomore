@@ -108,10 +108,14 @@ namespace Fomore.UI.ViewModel.CreatureEditor
                 if (currentConnectorInformation == null)
                     return;
                 bool current = ConnectorInformation.HasLimits;
-                var changeOperation = new ChangeOperation(c => { currentConnectorInformation.HasLimits = value ?? false;
-                                                              OnPropertyChanged();
-                                                          },
-                                                          c => { currentConnectorInformation.HasLimits = current;
+                var changeOperation = new ChangeOperation(c =>
+                {
+                    currentConnectorInformation.HasLimits = value ?? false;
+                    OnPropertyChanged();
+                },
+                                                          c =>
+                                                          {
+                                                              currentConnectorInformation.HasLimits = current;
                                                               OnPropertyChanged();
                                                           });
                 HistoryStack.AddOperation(changeOperation);

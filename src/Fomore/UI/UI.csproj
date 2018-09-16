@@ -79,6 +79,7 @@
     <Compile Include="ViewModel\Application\EntityStorageVM.cs" />
     <Compile Include="ViewModel\Commands\CommandParameters.cs" />
     <Compile Include="ViewModel\Commands\DelegateHandleCommand.cs" />
+    <Compile Include="ViewModel\CreatureEditor\BackgroundImageVM.cs" />
     <Compile Include="ViewModel\CreatureEditor\Behaviours\BaseBehaviour.cs" />
     <Compile Include="ViewModel\CreatureEditor\Behaviours\ClearBehaviour.cs" />
     <Compile Include="ViewModel\CreatureEditor\Behaviours\DeleteBehaviour.cs" />
@@ -315,6 +316,9 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="assets\images\movementpattern_icon_new.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="assets\video\training.mp4" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
