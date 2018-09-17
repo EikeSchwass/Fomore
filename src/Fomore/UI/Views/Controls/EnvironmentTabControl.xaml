@@ -278,11 +278,16 @@
                                                           Background="Black"
                                                           ItemsSource="{Binding TerrainGenerators}"
                                                           SelectedItem="{Binding TerrainGeneratorType}" Margin="4" />
-                                                
-                                                <controls:CustomizableButton Grid.Column="2" Grid.RowSpan="2" Style="{StaticResource ListButton}"
+
+                                                <controls:CustomizableButton Grid.Column="2" Grid.RowSpan="2"
+                                                                             Style="{StaticResource ListButton}"
                                                                              Command="{Binding Path=DataContext.SelectedEnvironment.DeleteTerrainGeneratorCommand, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"
-                                                                             CommandParameter="{Binding}" VerticalAlignment="Bottom" HorizontalAlignment="Right">
-                                                    <fa:ImageAwesome Icon="Trash" Width="30" Height="30" HorizontalAlignment="Center" Margin="5" Foreground="{StaticResource ListButtonBorderColor}" />
+                                                                             CommandParameter="{Binding}"
+                                                                             VerticalAlignment="Bottom"
+                                                                             HorizontalAlignment="Right">
+                                                    <fa:ImageAwesome Icon="Trash" Width="30" Height="30"
+                                                                     HorizontalAlignment="Center" Margin="5"
+                                                                     Foreground="{StaticResource ListButtonBorderColor}" />
                                                 </controls:CustomizableButton>
                                                 <ContentControl Grid.Row="1" Grid.Column="0"
                                                                 Content="{Binding TerrainGenerator}" Margin="4" />
@@ -317,9 +322,11 @@
                 </GroupBox>
 
                 <GroupBox Grid.Row="2" Grid.Column="0" Style="{StaticResource ActionGroupBox}" Header="Actions">
-                    <controls:CustomizableButton Style="{StaticResource DeleteButton}"
-                                                 Command="{Binding EntitiesStorage.RemoveEnvironmentCommand}"
-                                                 CommandParameter="{Binding SelectedEnvironment}" Content="Delete" />
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                        <controls:CustomizableButton Style="{StaticResource DeleteButton}"
+                                                     Command="{Binding EntitiesStorage.RemoveEnvironmentCommand}"
+                                                     CommandParameter="{Binding SelectedEnvironment}" Content="Delete" />
+                    </StackPanel>
                 </GroupBox>
             </Grid>
         </Grid>
