@@ -194,7 +194,7 @@
                         </controls:CustomizableButton.Content>
                     </controls:CustomizableButton>
                 </Grid>
-                <ItemsControl Grid.Row="1" IsHitTestVisible="False" ItemsSource="{Binding CreatureStructureEditorCanvasVM.InfoMessageCollection.InfoMessages}" Margin="8" Visibility="{Binding CreatureStructureEditorCanvasVM.InfoMessageCollection.InfoMessages.Count, Converter={StaticResource InvertedNumberVisibilityConverter}}" AlternationCount="{Binding RelativeSource={RelativeSource Self}, Path=Items.Count}">
+                <ItemsControl Grid.Row="1" IsHitTestVisible="False" ItemsSource="{Binding CreatureStructureEditorCanvasVM.InfoMessageCollection.InfoMessages}" Margin="8" Visibility="{Binding CreatureStructureEditorCanvasVM.InfoMessageCollection.InfoMessages.Count, Converter={StaticResource InvertedNumberVisibilityConverter}, ConverterParameter=0}" AlternationCount="{Binding RelativeSource={RelativeSource Self}, Path=Items.Count}">
                     <ItemsControl.ItemTemplate>
                         <DataTemplate DataType="{x:Type tools:InfoMessage}">
                             <StackPanel>
