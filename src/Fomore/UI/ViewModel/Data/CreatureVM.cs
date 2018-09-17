@@ -28,9 +28,9 @@ namespace Fomore.UI.ViewModel.Data
         private const double PreviewSmallThickness = 0.05;
         private const double PreviewImageBorder = 0.1;
         private Color PreviewJointColor = Color.FromArgb(85, 85, 85);
-        private Color PreviewSmallJointColor = Color.FromArgb(255, 255, 255);
+        private Color PreviewSmallJointColor = Color.Transparent;
         private Color PreviewBoneColor = Color.FromArgb(119, 119, 119);
-        private Color PreviewSmallBoneColor = Color.FromArgb(180, 180, 180);
+        private Color PreviewSmallBoneColor = Color.FromArgb(255, 255, 255);
 
 
         public string Name
@@ -95,6 +95,7 @@ namespace Fomore.UI.ViewModel.Data
         private void CreatureStructureChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
             OnPropertyChanged(nameof(CreaturePreview));
+            OnPropertyChanged(nameof(CreatureSmallPreview));
         }
 
         private Bitmap GenerateCreaturePreview(int size, double thickness, Color jointColor, Color boneColor)
