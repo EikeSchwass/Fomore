@@ -54,7 +54,7 @@
         <!-- General Tools -->
         <Border BorderThickness="0,0,0,1" Grid.Row="0" Grid.Column="1" HorizontalAlignment="Left"
                 Style="{StaticResource DefaultBorder}">
-            <Grid Background="{StaticResource Level3Brush}">
+            <Grid Background="{StaticResource BoxColor}">
                 <Grid.Resources>
                     <CollectionViewSource x:Key="CanvasBehaviourSource" Source="{Binding Path=Behaviours}">
                         <CollectionViewSource.GroupDescriptions>
@@ -110,7 +110,7 @@
         <!-- Canvas Tools -->
         <Border Grid.Row="1" Grid.Column="0" BorderThickness="0,0,1,0" Style="{StaticResource DefaultBorder}"
                 VerticalAlignment="Top">
-            <Grid Background="{StaticResource Level2Brush}">
+            <Grid Background="{StaticResource BoxColor}">
                 <Grid.Resources>
                     <CollectionViewSource x:Key="CanvasToolSource" Source="{Binding Path=ToolCollectionVM.Tools}">
                         <CollectionViewSource.GroupDescriptions>
@@ -170,7 +170,7 @@
                                                 SizeChangedCommand="{Binding CanvasSizeChangedCommand}" />
         
         <!-- Learning Helper -->
-        <Border Grid.Column="1" Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Top" Background="#70ffff50" BorderBrush="Black" BorderThickness="1" Margin="20" MaxWidth="425">
+        <Border Grid.Column="1" Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Top" Background="{StaticResource BackgroundColor}" BorderBrush="Black" BorderThickness="1" Margin="20" MaxWidth="425">
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto" />
@@ -183,14 +183,14 @@
                         <ColumnDefinition Width="*" />
                     </Grid.ColumnDefinitions>
                     <TextBlock Text="Learning Helper" Grid.Column="2" Margin="4,2,8,2" FontSize="24" />
-                    <controls:CustomizableButton Grid.Column="1" Margin="1,2,2,2" Command="{Binding CreatureStructureEditorCanvasVM.InfoMessageCollection.ResetShownMessagesCommand}" ToolTip="Reset already shown information">
+                    <controls:CustomizableButton Grid.Column="1" Style="{StaticResource ListButton}" Margin="1,2,2,2" Command="{Binding CreatureStructureEditorCanvasVM.InfoMessageCollection.ResetShownMessagesCommand}" ToolTip="Reset already shown information">
                         <controls:CustomizableButton.Content>
-                            <fa:ImageAwesome Icon="Refresh" />
+                            <fa:ImageAwesome Icon="Refresh" Margin="3" Foreground="{StaticResource ListButtonBorderColor}" />
                         </controls:CustomizableButton.Content>
                     </controls:CustomizableButton>
-                    <controls:CustomizableButton Grid.Column="0" Margin="2,2,1,2" Command="{Binding CreatureStructureEditorCanvasVM.InfoMessageCollection.MarkEverythingReadCommand}" ToolTip="Mark everything as read (only warning will be shown)">
+                    <controls:CustomizableButton Grid.Column="0" Style="{StaticResource ListButton}" Margin="2,2,1,2" Command="{Binding CreatureStructureEditorCanvasVM.InfoMessageCollection.MarkEverythingReadCommand}" ToolTip="Mark everything as read (only warning will be shown)">
                         <controls:CustomizableButton.Content>
-                            <fa:ImageAwesome Icon="Eye" />
+                            <fa:ImageAwesome Icon="Eye" Margin="3" Foreground="{StaticResource ListButtonBorderColor}" />
                         </controls:CustomizableButton.Content>
                     </controls:CustomizableButton>
                 </Grid>
