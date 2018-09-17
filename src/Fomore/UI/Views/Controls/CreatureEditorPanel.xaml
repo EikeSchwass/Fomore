@@ -14,30 +14,30 @@
     <Grid>
         <Grid.Resources>
             <DataTemplate DataType="{x:Type tools:Tool}">
-                <controls:CustomizableButton Padding="2" Margin="1" IsSelected="{Binding IsSelected}"
+                <controls:CustomizableButton Style="{StaticResource ToolButton}" IsSelected="{Binding IsSelected}"
                                              Command="{Binding PressedCommand}"
                                              CommandParameter="{Binding Path=DataContext, RelativeSource={RelativeSource AncestorType={x:Type controls:CreatureEditorPanel}}}"
                                              ToolTip="{Binding ToolTip}">
-                    <Image Source="{Binding Path=Image}" Width="32" Height="32" />
+                    <Image Source="{Binding Path=Image}" Style="{StaticResource EditorToolImage}"/>
                 </controls:CustomizableButton>
             </DataTemplate>
             <DataTemplate DataType="{x:Type behaviours:BaseBehaviour}">
-                <controls:CustomizableButton Padding="2" Margin="1" Command="{Binding Command}"
+                <controls:CustomizableButton Style="{StaticResource ToolButton}" Command="{Binding Command}"
                                              CommandParameter="{Binding Path=DataContext, RelativeSource={RelativeSource AncestorType={x:Type controls:CreatureEditorPanel}}}"
                                              ToolTip="{Binding ToolTip}">
-                    <Image Source="{Binding Path=Image}" Width="32" Height="32" />
+                    <Image Source="{Binding Path=Image}" Style="{StaticResource EditorToolImage}" />
                 </controls:CustomizableButton>
             </DataTemplate>
             <DataTemplate DataType="{x:Type behaviours:UndoBehaviour}">
-                <controls:CustomizableButton Padding="2" Margin="1"
+                <controls:CustomizableButton Style="{StaticResource ToolButton}"
                                              Command="{Binding DataContext.CreatureStructureEditorCanvasVM.HistoryStack.UndoCommand, RelativeSource={RelativeSource AncestorType={x:Type controls:CreatureEditorPanel}}}">
-                    <Image Source="{Binding Path=Image}" Width="32" Height="32" />
+                    <Image Source="{Binding Path=Image}" Style="{StaticResource EditorToolImage}"/>
                 </controls:CustomizableButton>
             </DataTemplate>
             <DataTemplate DataType="{x:Type behaviours:RedoBehaviour}">
-                <controls:CustomizableButton Padding="2" Margin="1"
+                <controls:CustomizableButton Style="{StaticResource ToolButton}"
                                              Command="{Binding DataContext.CreatureStructureEditorCanvasVM.HistoryStack.RedoCommand, RelativeSource={RelativeSource AncestorType={x:Type controls:CreatureEditorPanel}}}">
-                    <Image Source="{Binding Path=Image}" Width="32" Height="32" />
+                    <Image Source="{Binding Path=Image}" Style="{StaticResource EditorToolImage}"/>
                 </controls:CustomizableButton>
             </DataTemplate>
         </Grid.Resources>
@@ -199,7 +199,7 @@
                         <DataTemplate DataType="{x:Type tools:InfoMessage}">
                             <StackPanel>
                                 <Separator x:Name="Separator" />
-                                <TextBlock Text="{Binding Message}" FontSize="16" TextWrapping="Wrap" Foreground="{Binding Brush}" />
+                                <TextBlock Text="{Binding Message}" FontSize="16" TextWrapping="Wrap" Foreground="White" />
                             </StackPanel>
                             <DataTemplate.Triggers>
                                 <Trigger Property="ItemsControl.AlternationIndex" Value="0">

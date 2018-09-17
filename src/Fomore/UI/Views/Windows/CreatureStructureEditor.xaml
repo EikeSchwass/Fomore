@@ -19,7 +19,7 @@
         </Grid.ColumnDefinitions>
         <!-- Editor Panel -->
         <Grid Grid.Column="0" DataContext="{Binding CreatureEditorPanelVM}" Margin="6"
-              Background="{StaticResource Level1Brush}">
+              Background="{StaticResource BackgroundColor}">
             <controls:CreatureEditorPanel />
         </Grid>
         <!-- Info Panel -->
