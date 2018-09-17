@@ -127,7 +127,7 @@
            TargetType="controls:CustomizableButton">
         <!-- <Setter Property="Width" Value="150" /> -->
         <!-- <Setter Property="Height" Value="40" /> -->
-        <Setter Property="Margin" Value="5" />
+        <Setter Property="Margin" Value="5 0 0 0" />
         <Setter Property="Foreground" Value="White" />
         <Setter Property="Background" Value="{StaticResource ListHoverColor}" />
         <Setter Property="IsMouseOverBackground" Value="{StaticResource ListPressedColor}" />
@@ -137,7 +137,7 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="controls:CustomizableButton">
-                    <Border Background="{TemplateBinding Background}" BorderBrush="{StaticResource ListBorderColor}"
+                    <Border Background="{TemplateBinding Background}" BorderBrush="{StaticResource ListButtonBorderColor}"
                             BorderThickness="{TemplateBinding BorderThickness}" Cursor="{TemplateBinding Cursor}"
                             HorizontalAlignment="{TemplateBinding HorizontalAlignment}"
                             VerticalAlignment="{TemplateBinding VerticalAlignment}" Margin="{TemplateBinding Margin}">

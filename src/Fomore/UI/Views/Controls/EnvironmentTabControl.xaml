@@ -282,7 +282,7 @@
                                                 <controls:CustomizableButton Grid.Column="2" Grid.RowSpan="2" Style="{StaticResource ListButton}"
                                                                              Command="{Binding Path=DataContext.SelectedEnvironment.DeleteTerrainGeneratorCommand, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"
                                                                              CommandParameter="{Binding}" VerticalAlignment="Bottom" HorizontalAlignment="Right">
-                                                    <fa:ImageAwesome Icon="Trash" Width="30" Height="30" HorizontalAlignment="Center" Margin="5" Foreground="{StaticResource ListBorderColor}" />
+                                                    <fa:ImageAwesome Icon="Trash" Width="30" Height="30" HorizontalAlignment="Center" Margin="5" Foreground="{StaticResource ListButtonBorderColor}" />
                                                 </controls:CustomizableButton>
                                                 <ContentControl Grid.Row="1" Grid.Column="0"
                                                                 Content="{Binding TerrainGenerator}" Margin="4" />
@@ -293,7 +293,7 @@
                             </ListView>
                             <TextBlock Grid.Column="0" Style="{StaticResource NoSelectionText}"
                                        Text="No terrain generators"
-                                       Visibility="{Binding SelectedEnvironment.TerrainGenerators.Count, Converter={StaticResource NumberVisibilityConverter}}" />
+                                       Visibility="{Binding SelectedEnvironment.TerrainGenerators.Count, Converter={StaticResource InvertedNumberVisibilityConverter}}" />
                             <StackPanel Grid.Column="1" Margin="8" VerticalAlignment="Top">
                                 <TextBlock TextAlignment="Center" Text="Step Size" />
                                 <Grid Margin="10" ToolTip="Higher Values mean lower resolution but higher performance">

@@ -20,8 +20,9 @@ namespace Fomore.UI.Views.Windows
     /// </summary>
     public partial class DummyProgressWindow : Window
     {
-        public DummyProgressWindow()
+        public DummyProgressWindow(Window owner)
         {
+            Owner = owner;
             InitializeComponent();
         }
 
@@ -41,9 +42,6 @@ namespace Fomore.UI.Views.Windows
             Close();
         }
 
-        private void continued()
-        {
-
-        }
+        // private void continued() { }
     }
 }

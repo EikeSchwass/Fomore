@@ -113,7 +113,7 @@
                 <controls:CustomizableButton Grid.Column="2" Grid.RowSpan="2" Style="{StaticResource ListButton}"
                                              Command="{Binding Path=DataContext.SelectedCreature.DeleteMovementPatternCommand, RelativeSource={RelativeSource AncestorType={x:Type ListBox}}}"
                                              CommandParameter="{Binding}" VerticalAlignment="Bottom" HorizontalAlignment="Right">
-                    <fa:ImageAwesome Icon="Trash" Width="30" Height="30" HorizontalAlignment="Center" Margin="5" Foreground="{StaticResource ListBorderColor}" />
+                    <fa:ImageAwesome Icon="Trash" Width="30" Height="30" HorizontalAlignment="Center" Margin="5" Foreground="{StaticResource ListButtonBorderColor}" />
                 </controls:CustomizableButton>
             </Grid>
         </Border>

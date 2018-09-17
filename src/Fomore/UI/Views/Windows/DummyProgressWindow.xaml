@@ -5,8 +5,13 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Fomore.UI.Views.Windows"
         mc:Ignorable="d"
-        Title="DummyProgressWindow" Height="450" Width="800" Loaded="DummyProgressWindow_OnLoaded">
+        Title="Training" Height="120" Width="400" WindowStartupLocation="CenterScreen" Loaded="DummyProgressWindow_OnLoaded">
     <Grid>
-        <ProgressBar IsIndeterminate="True" VerticalAlignment="Center" MinHeight="12" Margin="8" />
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <TextBlock Grid.Row="0" Text="The training is in progress. Please wait ..." Foreground="Black" VerticalAlignment="Top" Margin="10"/>
+        <ProgressBar Grid.Row="1" IsIndeterminate="True" VerticalAlignment="Center" MinHeight="12" Margin="8" />
     </Grid>
 </Window>

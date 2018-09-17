@@ -1,5 +1,6 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
+using System.Windows;
 using Core;
 using Fomore.UI.ViewModel.Application;
 using Fomore.UI.ViewModel.Commands;
@@ -184,6 +185,8 @@ namespace Fomore.UI.ViewModel.Navigation
                                                             (SelectedMovementPattern != null || NewMovementPattern) &&
                                                             SelectedEnvironment != null);
             StopTrainingCommand = new DelegateCommand(StopTrainingAction, o => true);
+
+            Iterations = 1;
         }
 
         private void ResetSelectionAction(object obj)
@@ -204,7 +207,7 @@ namespace Fomore.UI.ViewModel.Navigation
             }
             else
             {
-                var window = new DummyProgressWindow();
+                var window = new DummyProgressWindow(Window.GetWindow(this));
                 window.ShowDialog();
             }
 
