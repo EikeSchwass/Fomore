@@ -9,7 +9,7 @@
         xmlns:fa="http://schemas.fontawesome.io/icons/"
         mc:Ignorable="d"
         Title="CreatureStructureEditor" Height="618" Width="1500" WindowState="Maximized"
-        d:DataContext="{d:DesignInstance creatureEditor:CreatureEditorVM}" Background="{StaticResource Level0Brush}"
+        d:DataContext="{d:DesignInstance creatureEditor:CreatureEditorVM}" Background="{StaticResource BackgroundColor}"
         helper:AttachedProperties.InputBindingsSource="{Binding CreatureEditorPanelVM.InputBindings}"
         KeyDown="CreatureStructureEditor_OnKeyDown">
     <Grid>
@@ -42,8 +42,7 @@
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
-            <GroupBox Grid.Row="0" Background="{StaticResource Level1Brush}" Header="General" Margin="8"
-                      Foreground="White" FontSize="16">
+            <GroupBox Grid.Row="0" Header="General">
                 <Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition />
@@ -55,146 +54,125 @@
                         <RowDefinition Height="Auto" />
                         <RowDefinition Height="Auto" />
                         <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
                     </Grid.RowDefinitions>
-                    <TextBlock Grid.Row="0" Grid.Column="0" Text="Total Width:" />
-                    <TextBlock Grid.Row="1" Grid.Column="0" Text="Total Height:" />
-                    <TextBlock Grid.Row="2" Grid.Column="0" Text="Number of Bones:" />
-                    <TextBlock Grid.Row="3" Grid.Column="0" Text="Number of Joints:" />
-                    <TextBlock Grid.Row="4" Grid.Column="0" Text="Total weight of bones:" />
-                    <StackPanel Grid.Row="0" Grid.Column="1" Orientation="Horizontal">
+                    <TextBlock Grid.Column="0" Grid.Row="0" Text="Scale:"
+                               ToolTip="Change the scale and observe the width and height at the top until the creature has the desired size" />
+                    <Slider Grid.Column="1" Grid.Row="0" Minimum="0.001" Maximum="0.05" SmallChange="0.0001"
+                            LargeChange="0.0005" Value="{Binding CreatureEditorPanelVM.Settings.Scale}" />
+                    <TextBlock Grid.Row="1" Grid.Column="0" Text="Total Width:" />
+                    <TextBlock Grid.Row="2" Grid.Column="0" Text="Total Height:" />
+                    <TextBlock Grid.Row="3" Grid.Column="0" Text="Number of Bones:" />
+                    <TextBlock Grid.Row="4" Grid.Column="0" Text="Number of Joints:" />
+                    <TextBlock Grid.Row="5" Grid.Column="0" Text="Total weight of bones:" />
+                    <StackPanel Grid.Row="1" Grid.Column="1" Orientation="Horizontal">
                         <TextBlock
                             Text="{Binding CreatureEditorPanelVM.CreatureStructureEditorCanvasVM.HistoryStack.Entity.Creature.CreatureStructureVM.TotalWidth, StringFormat={}{0:#####0.00}}" />
                         <TextBlock Text="m" Margin="1,4" />
                     </StackPanel>
-                    <StackPanel Grid.Row="1" Grid.Column="1" Orientation="Horizontal">
+                    <StackPanel Grid.Row="2" Grid.Column="1" Orientation="Horizontal">
                         <TextBlock
                             Text="{Binding CreatureEditorPanelVM.CreatureStructureEditorCanvasVM.HistoryStack.Entity.Creature.CreatureStructureVM.TotalHeight, StringFormat={}{0:#####0.00}}" />
                         <TextBlock Text="m" Margin="1,4" />
                     </StackPanel>
-                    <TextBlock Grid.Row="2" Grid.Column="1"
-                               Text="{Binding CreatureEditorPanelVM.CreatureStructureEditorCanvasVM.HistoryStack.Entity.Creature.CreatureStructureVM.BoneCollectionVM.Count}" />
                     <TextBlock Grid.Row="3" Grid.Column="1"
+                               Text="{Binding CreatureEditorPanelVM.CreatureStructureEditorCanvasVM.HistoryStack.Entity.Creature.CreatureStructureVM.BoneCollectionVM.Count}" />
+                    <TextBlock Grid.Row="4" Grid.Column="1"
                                Text="{Binding CreatureEditorPanelVM.CreatureStructureEditorCanvasVM.HistoryStack.Entity.Creature.CreatureStructureVM.JointCollectionVM.Count}" />
-                    <Grid Grid.Row="4" Grid.Column="1">
+                    <Grid Grid.Row="5" Grid.Column="1">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition />
                             <ColumnDefinition Width="Auto" />
                         </Grid.ColumnDefinitions>
                         <TextBlock Grid.Column="0"
                                    Text="{Binding CreatureEditorPanelVM.Creature.CreatureStructureVM.TotalWeight, StringFormat={}{0:#####0.00}, TargetNullValue=Recalculation required}" />
-                        <controls:CustomizableButton Grid.Column="1" Margin="4,0" Padding="4"
+                        <controls:CustomizableButton Grid.Column="1" Style="{StaticResource ListButton}"
                                                      VerticalAlignment="Center"
                                                      Command="{Binding CreatureEditorPanelVM.Creature.CreatureStructureVM.RecalculateWeightCommand}">
-                            <fa:ImageAwesome Icon="Refresh" />
+                            <fa:ImageAwesome Icon="Refresh" Width="20" Height="20" Margin="5" Foreground="{StaticResource ListButtonBorderColor}" />
                         </controls:CustomizableButton>
                     </Grid>
                 </Grid>
             </GroupBox>
 
-            <GroupBox Grid.Row="1" Background="{StaticResource Level1Brush}" Header="Settings" Margin="8"
-                      Foreground="White" FontSize="16">
-                <Grid>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="Auto" />
-                    </Grid.RowDefinitions>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="Auto" />
-                        <ColumnDefinition />
-                    </Grid.ColumnDefinitions>
-                    <TextBlock Grid.Column="0" Grid.Row="0" Text="Scale:"
-                               ToolTip="Change the scale and observe the width and height at the top until the creature has the desired size" />
-                    <Slider Grid.Column="1" Grid.Row="0" Minimum="0.001" Maximum="0.05" SmallChange="0.0001"
-                            LargeChange="0.0005" Value="{Binding CreatureEditorPanelVM.Settings.Scale}" />
-                    <Grid Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Margin="4">
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="Auto" />
-                            <RowDefinition Height="Auto" />
-                        </Grid.RowDefinitions>
-                        <GroupBox Header="Background Image">
-                            <StackPanel
+            <GroupBox Grid.Row="1" Header="Background Settings">
+                <StackPanel
                                 DataContext="{Binding CreatureEditorPanelVM.CreatureStructureEditorCanvasVM.BackgroundImage}">
-                                <StackPanel.Resources>
-                                    <Style TargetType="{x:Type controls:CustomizableButton}"
+                    <StackPanel.Resources>
+                        <Style TargetType="{x:Type controls:CustomizableButton}"
                                            BasedOn="{StaticResource {x:Type controls:CustomizableButton}}">
-                                        <Setter Property="Margin" Value="4,2" />
-                                        <Setter Property="Padding" Value="16,4" />
-                                    </Style>
-                                </StackPanel.Resources>
-                                <Grid Margin="4">
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="*" />
-                                        <ColumnDefinition Width="Auto" />
-                                    </Grid.ColumnDefinitions>
-                                    <TextBlock Text="{Binding FileInfo.Name}" ToolTip="{Binding FileInfo.FullName}" />
-                                    <controls:CustomizableButton Grid.Column="1" Content="Select background image..."
+                            <Setter Property="Margin" Value="4,2" />
+                            <Setter Property="Padding" Value="16,4" />
+                        </Style>
+                    </StackPanel.Resources>
+                    <Grid Margin="4">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Text="{Binding FileInfo.Name}" ToolTip="{Binding FileInfo.FullName}" />
+                        <controls:CustomizableButton Grid.Column="1" Content="Select background image..." Style="{StaticResource DefaultButton}" Width="180"
                                                                  Command="{Binding BrowseImageCommand}" />
-                                </Grid>
-                                <Grid
-                                    Visibility="{Binding ImageSource, Converter={StaticResource NullToVisibilityConverter}}">
-                                    <TextBlock Text="No images selected" HorizontalAlignment="Center" Margin="8"
-                                               FontSize="16" FontStyle="Italic" />
-                                </Grid>
-                                <Grid
-                                    Visibility="{Binding ImageSource, Converter={StaticResource NotNullToVisibilityConverter}}"
-                                    Background="{StaticResource BackgroundColor}" HorizontalAlignment="Center">
-                                    <UniformGrid Rows="3" Columns="3" HorizontalAlignment="Center"
-                                                 VerticalAlignment="Center" Margin="4">
-                                        <UniformGrid.Resources>
-                                            <Style TargetType="{x:Type controls:CustomizableButton}"
-                                                   BasedOn="{StaticResource {x:Type controls:CustomizableButton}}">
-                                                <Setter Property="Padding" Value="6" />
-                                                <Setter Property="Margin" Value="1" />
-                                            </Style>
-                                            <Style TargetType="{x:Type fa:ImageAwesome}"
-                                                   BasedOn="{StaticResource {x:Type fa:ImageAwesome}}">
-                                                <Setter Property="Height" Value="24" />
-                                                <Setter Property="Width" Value="24" />
-                                                <Setter Property="VerticalAlignment" Value="Center" />
-                                                <Setter Property="HorizontalAlignment" Value="Center" />
-                                            </Style>
-                                        </UniformGrid.Resources>
-                                        <controls:CustomizableButton Command="{Binding RotateCounterClockwiseCommand}">
-                                            <fa:ImageAwesome Icon="RotateLeft" />
-                                        </controls:CustomizableButton>
-
-                                        <!-- You can take this Button to allow holding down the mouse button. Not styles yet though -->
-                                        <RepeatButton Command="{Binding OffsetUpCommand}">
-                                            <fa:ImageAwesome Icon="CaretUp" />
-                                        </RepeatButton>
-                                        <controls:CustomizableButton Command="{Binding RotateClockwiseCommand}">
-                                            <fa:ImageAwesome Icon="RotateRight" />
-                                        </controls:CustomizableButton>
-                                        <controls:CustomizableButton Command="{Binding OffsetLeftCommand}">
-                                            <fa:ImageAwesome Icon="CaretLeft" />
-                                        </controls:CustomizableButton>
-                                        <controls:CustomizableButton Command="{Binding ResetImageCommand}">
-                                            <fa:ImageAwesome Icon="Remove" />
-                                        </controls:CustomizableButton>
-                                        <controls:CustomizableButton Command="{Binding OffsetRightCommand}">
-                                            <fa:ImageAwesome Icon="CaretRight" />
-                                        </controls:CustomizableButton>
-                                        <controls:CustomizableButton Command="{Binding ScaleUpCommand}">
-                                            <fa:ImageAwesome Icon="SearchPlus" />
-                                        </controls:CustomizableButton>
-                                        <controls:CustomizableButton Command="{Binding OffsetDownCommand}">
-                                            <fa:ImageAwesome Icon="CaretDown" />
-                                        </controls:CustomizableButton>
-                                        <controls:CustomizableButton Command="{Binding ScaleDownCommand}">
-                                            <fa:ImageAwesome Icon="SearchMinus" />
-                                        </controls:CustomizableButton>
-                                    </UniformGrid>
-                                </Grid>
-                            </StackPanel>
-                        </GroupBox>
                     </Grid>
-                </Grid>
+                    <Grid
+                                    Visibility="{Binding ImageSource, Converter={StaticResource NullToVisibilityConverter}}">
+                        <TextBlock Text="No image selected" Style="{StaticResource NoSelectionText}" />
+                    </Grid>
+                    <Grid
+                                    Visibility="{Binding ImageSource, Converter={StaticResource NotNullToVisibilityConverter}}"
+                                    Background="{StaticResource BackgroundColor}" HorizontalAlignment="Center" Margin="10">
+                        <UniformGrid Rows="3" Columns="3" HorizontalAlignment="Center"
+                                                 VerticalAlignment="Center" Margin="3">
+                            <UniformGrid.Resources>
+                                <Style TargetType="{x:Type controls:CustomizableButton}"
+                                                   BasedOn="{StaticResource {x:Type controls:CustomizableButton}}">
+                                    <Setter Property="Padding" Value="6" />
+                                    <Setter Property="Margin" Value="1" />
+                                </Style>
+                                <Style TargetType="{x:Type fa:ImageAwesome}"
+                                                   BasedOn="{StaticResource {x:Type fa:ImageAwesome}}">
+                                    <Setter Property="Height" Value="24" />
+                                    <Setter Property="Width" Value="24" />
+                                    <Setter Property="VerticalAlignment" Value="Center" />
+                                    <Setter Property="HorizontalAlignment" Value="Center" />
+                                </Style>
+                            </UniformGrid.Resources>
+
+                            <!-- You can take this Button to allow holding down the mouse button. Not styles yet though -->
+                            <RepeatButton Style="{StaticResource EditorBackgroundManipulationButton}" Command="{Binding RotateCounterClockwiseCommand}">
+                                <fa:ImageAwesome Style="{StaticResource EditorBackgroundManipulationButtonIcon}" Icon="RotateLeft"/>
+                            </RepeatButton>
+                            <RepeatButton Style="{StaticResource EditorBackgroundManipulationButton}" Command="{Binding OffsetUpCommand}">
+                                <fa:ImageAwesome Style="{StaticResource EditorBackgroundManipulationButtonIcon}" Icon="CaretUp" />
+                            </RepeatButton>
+                            <RepeatButton Style="{StaticResource EditorBackgroundManipulationButton}" Command="{Binding RotateClockwiseCommand}">
+                                <fa:ImageAwesome Style="{StaticResource EditorBackgroundManipulationButtonIcon}" Icon="RotateRight" />
+                            </RepeatButton>
+                            <RepeatButton Style="{StaticResource EditorBackgroundManipulationButton}" Command="{Binding OffsetLeftCommand}">
+                                <fa:ImageAwesome Style="{StaticResource EditorBackgroundManipulationButtonIcon}" Icon="CaretLeft" />
+                            </RepeatButton>
+                            <RepeatButton Style="{StaticResource EditorBackgroundManipulationButton}" Command="{Binding ResetImageCommand}">
+                                <fa:ImageAwesome Style="{StaticResource EditorBackgroundManipulationButtonIcon}" Icon="Remove" />
+                            </RepeatButton>
+                            <RepeatButton Style="{StaticResource EditorBackgroundManipulationButton}" Command="{Binding OffsetRightCommand}">
+                                <fa:ImageAwesome Style="{StaticResource EditorBackgroundManipulationButtonIcon}" Icon="CaretRight" />
+                            </RepeatButton>
+                            <RepeatButton Style="{StaticResource EditorBackgroundManipulationButton}" Command="{Binding ScaleUpCommand}">
+                                <fa:ImageAwesome Style="{StaticResource EditorBackgroundManipulationButtonIcon}" Icon="SearchPlus" />
+                            </RepeatButton>
+                            <RepeatButton Style="{StaticResource EditorBackgroundManipulationButton}" Command="{Binding OffsetDownCommand}">
+                                <fa:ImageAwesome Style="{StaticResource EditorBackgroundManipulationButtonIcon}" Icon="CaretDown" />
+                            </RepeatButton>
+                            <RepeatButton Style="{StaticResource EditorBackgroundManipulationButton}" Command="{Binding ScaleDownCommand}">
+                                <fa:ImageAwesome Style="{StaticResource EditorBackgroundManipulationButtonIcon}" Icon="SearchMinus" />
+                            </RepeatButton>
+                        </UniformGrid>
+                    </Grid>
+                </StackPanel>
             </GroupBox>
 
-            <GroupBox Grid.Row="2" Background="{StaticResource Level1Brush}" Header="Bone Settings" Margin="8"
-                      Foreground="White" FontSize="16"
-                      IsEnabled="{Binding CreatureEditorPanelVM.CreatureStructureEditorCanvasVM.SelectedBones.Count, Converter={StaticResource InvertedNumberToBooleanConverter}, ConverterParameter=0}">
-                <ContentControl Content="{Binding CreatureEditorPanelVM.Settings}" Margin="4">
+            <GroupBox Grid.Row="2" Header="Bone Settings" IsEnabled="{Binding CreatureEditorPanelVM.CreatureStructureEditorCanvasVM.SelectedBones.Count, Converter={StaticResource InvertedNumberToBooleanConverter}, ConverterParameter=0}">
+                <ContentControl Content="{Binding CreatureEditorPanelVM.Settings}">
                     <ContentControl.Style>
                         <Style TargetType="ContentControl">
                             <Setter Property="ContentTemplate">
@@ -218,10 +196,10 @@
                                             <TextBlock Grid.Column="0" Grid.Row="1" Text="Name:" />
                                             <TextBlock Grid.Column="0" Grid.Row="2" Text="Density (kg/m²):"
                                                        ToolTip="Because the engine is 2 dimensional you have to convert the density from kg/m³ to kg/m²" />
-                                            <TextBox Grid.Column="1" Grid.Row="1"
+                                            <TextBox Grid.Column="1" Grid.Row="1" Style="{StaticResource DefaultTextBox}"
                                                      Text="{Binding CreatureEditorPanel.Settings.BoneName, Mode=TwoWay, TargetNullValue=Cannot change the name of multiple bones}"
                                                      IsEnabled="{Binding CreatureEditorPanel.CreatureStructureEditorCanvasVM.SelectedBones.Count, Converter={StaticResource NumberToBooleanConverter}, ConverterParameter=1}" />
-                                            <TextBox Grid.Column="1" Grid.Row="2">
+                                            <TextBox Grid.Column="1" Grid.Row="2" Style="{StaticResource DefaultTextBox}">
                                                 <TextBox.Text>
                                                     <Binding Path="CreatureEditorPanel.Settings.BoneDensity"
                                                              Mode="TwoWay" UpdateSourceTrigger="PropertyChanged"

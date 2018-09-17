@@ -106,6 +106,7 @@
         <Setter Property="FontStyle" Value="Italic" />
         <Setter Property="HorizontalAlignment" Value="Center" />
         <Setter Property="VerticalAlignment" Value="Center" />
+        <Setter Property="Margin" Value="10" />
     </Style>
 
     <Style TargetType="{x:Type RadioButton}">
@@ -138,6 +139,14 @@
     </Style>
 
 
+    <Style x:Key="EditorBackgroundManipulationButton" TargetType="RepeatButton">
+        <Setter Property="Margin" Value="1" />
+    </Style>
+    <Style x:Key="EditorBackgroundManipulationButtonIcon" TargetType="fa:ImageAwesome">
+        <Setter Property="Width" Value="40" />
+        <Setter Property="Height" Value="40" />
+        <Setter Property="Margin" Value="5" />
+    </Style>
 
     <Style x:Key="NewToggleButton" TargetType="{x:Type ToggleButton}" xmlns:s="clr-namespace:System;assembly=mscorlib">
         <Style.BasedOn>
