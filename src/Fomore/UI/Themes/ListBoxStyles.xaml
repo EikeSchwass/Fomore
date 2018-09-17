@@ -57,15 +57,37 @@
                 <!-- <Image Grid.Column="0" Grid.RowSpan="2" Style="{StaticResource ListBoxIcon}" -->
                 <!-- Source="../assets/images/creature_icon_new.png" /> -->
                 <Image Grid.Column="0" Grid.RowSpan="2" Style="{StaticResource ListBoxIcon}"
-                       Source="{Binding CreaturePreview}" />
+                       Source="{Binding CreatureSmallPreview}" />
                 <TextBlock Grid.Column="1" Grid.Row="0" Style="{StaticResource ListBoxItemName}" Text="{Binding Name}" />
-                <TextBlock Grid.Column="1" Grid.Row="1" Style="{StaticResource ListBoxItemInfo}"
-                           Text="{Binding Description, Converter={StaticResource StringShortenerConverter}, ConverterParameter=50}" />
+                <TextBlock Grid.Column="1" Grid.Row="1" Style="{StaticResource ListBoxItemInfo}" TextTrimming="CharacterEllipsis" HorizontalAlignment="Left" MaxWidth="250"
+                           Text="{Binding Description}" />
             </Grid>
         </Border>
     </DataTemplate>
 
     <DataTemplate x:Key="MovementPatternListItem" DataType="{x:Type data:MovementPatternVM}">
+        <Border Style="{StaticResource ListBoxItemBorder}" BorderBrush="{StaticResource MovementPatternColor}">
+            <Grid Style="{StaticResource ListBoxItemGrid}">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition />
+                    <RowDefinition />
+                </Grid.RowDefinitions>
+                <Image Grid.Column="0" Grid.RowSpan="2" Style="{StaticResource ListBoxIcon}"
+                       Source="../assets/images/movementpattern_icon_new.png" />
+                <TextBlock Grid.Column="1" Grid.Row="0" Style="{StaticResource ListBoxItemName}" Text="{Binding Name}" />
+                <StackPanel Grid.Column="1" Grid.Row="1">
+                    <TextBlock Style="{StaticResource ListBoxItemInfo}" FontWeight="Bold" Text="Iterations:" />
+                    <TextBlock Style="{StaticResource ListBoxItemInfo}" Text="{Binding Iterations}" />
+                </StackPanel>
+            </Grid>
+        </Border>
+    </DataTemplate>
+
+    <DataTemplate x:Key="MovementPatternListItemWithDelete" DataType="{x:Type data:MovementPatternVM}">
         <Border Style="{StaticResource ListBoxItemBorder}" BorderBrush="{StaticResource MovementPatternColor}">
             <Grid Style="{StaticResource ListBoxItemGrid}">
                 <Grid.ColumnDefinitions>

@@ -26,13 +26,13 @@
             <controls:CustomizableButton Grid.Row="0" Style="{StaticResource NewListEntryButton}"
                                          Command="{Binding NewEnvironment}" Content="Create New Environment" />
 
-            <ListBox Grid.Row="1" Width="350" Style="{StaticResource EntityList}"
+            <ListBox Grid.Row="1" Width="350" Style="{StaticResource DefaultListBox}"
                      ItemTemplate="{StaticResource EnvironmentListItem}"
                      ItemsSource="{Binding EntitiesStorage.Environments}"
                      SelectedItem="{Binding SelectedEnvironment, Mode=TwoWay}" />
             <TextBlock Grid.Row="1" Style="{StaticResource NoSelectionText}"
                        Text="No environments"
-                       Visibility="{Binding EntitiesStorage.Environments.Count, Converter={StaticResource NumberVisibilityConverter}}" />
+                       Visibility="{Binding EntitiesStorage.Environments.Count, Converter={StaticResource InvertedNumberVisibilityConverter}}" />
         </Grid>
 
         <!-- No Selection screen -->

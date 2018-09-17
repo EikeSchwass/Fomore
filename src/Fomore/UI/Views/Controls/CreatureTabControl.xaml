@@ -26,13 +26,13 @@
             <controls:CustomizableButton Grid.Row="0" Style="{StaticResource NewListEntryButton}"
                                          Command="{Binding NewCreatureCommand}" Content="Create New Creature" />
 
-            <ListBox Grid.Row="1" Width="350" Style="{StaticResource EntityList}"
+            <ListBox Grid.Row="1" Width="350" Style="{StaticResource DefaultListBox}"
                      ItemTemplate="{StaticResource CreatureListItem}"
                      ItemsSource="{Binding EntitiesStorage.Creatures}"
                      SelectedItem="{Binding SelectedCreature, Mode=TwoWay}" />
             <TextBlock Grid.Row="1" Style="{StaticResource NoSelectionText}"
                        Text="No creatures"
-                       Visibility="{Binding EntitiesStorage.Creatures.Count, Converter={StaticResource NumberVisibilityConverter}}" />
+                       Visibility="{Binding EntitiesStorage.Creatures.Count, Converter={StaticResource InvertedNumberVisibilityConverter}}" />
         </Grid>
 
         <!-- No Selection screen -->
@@ -70,17 +70,18 @@
                                 <ColumnDefinition />
                             </Grid.ColumnDefinitions>
                             <Grid.RowDefinitions>
-                                <RowDefinition Height="Auto"/>
-                                <RowDefinition Height="Auto"/>
-                                <RowDefinition Height="Auto"/>
-                                <RowDefinition Height="Auto"/>
-                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
                                 <RowDefinition Height="*" />
                             </Grid.RowDefinitions>
 
                             <TextBlock Grid.ColumnSpan="2" Grid.Row="0" Text="Name:" />
-                            <TextBox Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="1" Style="{StaticResource DefaultTextBox}"
-                                    Text="{Binding SelectedCreature.Name, Mode=TwoWay}" />
+                            <TextBox Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="1"
+                                     Style="{StaticResource DefaultTextBox}"
+                                     Text="{Binding SelectedCreature.Name, Mode=TwoWay}" />
 
                             <TextBlock Grid.Column="0" Grid.Row="2" Text="Creation time:" />
                             <TextBlock Grid.Column="1" Grid.Row="2"
@@ -113,22 +114,26 @@
                             <RowDefinition Height="*" />
                             <RowDefinition Height="Auto" />
                         </Grid.RowDefinitions>
-                        <ListBox Grid.Row="0" Style="{StaticResource EntityList}"
+                        <ListBox Grid.Row="0" Style="{StaticResource DefaultListBox}"
                                  ItemsSource="{Binding SelectedCreature.MovementPatternCollectionVM}"
-                                 ItemTemplate="{StaticResource MovementPatternListItem}"
-                                 SelectedItem="{Binding SelectedMovementPattern}" 
-                                 Margin="0 0 0 5"/>
+                                 ItemTemplate="{StaticResource MovementPatternListItemWithDelete}"
+                                 SelectedItem="{Binding SelectedMovementPattern}"
+                                 Margin="0 0 0 5" />
                         <TextBlock Grid.Row="0" Style="{StaticResource NoSelectionText}"
                                    Text="No movement patterns"
-                                   Visibility="{Binding SelectedCreature.MovementPatternCollectionVM.Count, Converter={StaticResource NumberVisibilityConverter}}" />
-                        <controls:CustomizableButton Grid.Row="1" Style="{StaticResource DeleteButton}" Command="{Binding ClearMovementPatternsCommand}" Content="Delete All" />
+                                   Visibility="{Binding SelectedCreature.MovementPatternCollectionVM.Count, Converter={StaticResource InvertedNumberVisibilityConverter}}" />
+                        <controls:CustomizableButton Grid.Row="1" Style="{StaticResource DeleteButton}"
+                                                     Command="{Binding ClearMovementPatternsCommand}"
+                                                     Content="Delete All" />
                     </Grid>
-                   
+
                 </GroupBox>
 
                 <GroupBox Grid.Column="1" Grid.Row="1" Header="Preview">
                     <!-- The creature structure image -->
-                    <Image Source="{Binding SelectedCreature.CreaturePreview}" />
+                    <Border Background="{StaticResource BoxInnerColor}">
+                        <Image Source="{Binding SelectedCreature.CreaturePreview}" />
+                    </Border>
                 </GroupBox>
 
                 <!-- Action buttons group box -->

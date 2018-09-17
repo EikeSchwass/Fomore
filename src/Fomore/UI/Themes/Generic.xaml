@@ -161,13 +161,10 @@
                     </Setter.Value>
                 </Setter>
                 <Setter Property="Panel.Background" Value="{StaticResource ListColor}" />
-                <Setter Property="TextElement.Foreground">
-                    <Setter.Value>
-                        <DynamicResource ResourceKey="{x:Static SystemColors.ControlTextBrushKey}" />
-                    </Setter.Value>
-                </Setter>
+                <Setter Property="Foreground" Value="White" />
                 <Setter Property="Border.BorderThickness" Value="1" />
-                <Setter Property="HorizontalContentAlignment" Value="Center" />
+                <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                <Setter Property="VerticalContentAlignment" Value="Stretch" />
                 <Setter Property="VerticalAlignment" Value="Center" />
                 <Setter Property="Template">
                     <Setter.Value>
@@ -256,13 +253,8 @@
                 <Binding Path="VerticalContentAlignment" RelativeSource="{RelativeSource Mode=FindAncestor, AncestorType=ItemsControl, AncestorLevel=1}" />
             </Setter.Value>
         </Setter>
-        <Setter Property="Panel.Background" Value="Red" />
-        <Setter Property="Border.BorderBrush">
-            <Setter.Value>
-                <SolidColorBrush>
-                    #00FFFFFF</SolidColorBrush>
-            </Setter.Value>
-        </Setter>
+        <Setter Property="Panel.Background" Value="{StaticResource ListColor}" />
+        <Setter Property="Border.BorderBrush" Value="{StaticResource ListBorderColor}" />
         <Setter Property="Border.BorderThickness">
             <Setter.Value>
                 <Thickness>
@@ -301,18 +293,8 @@
                                     </Condition.Value>
                                 </Condition>
                             </MultiTrigger.Conditions>
-                            <Setter Property="Panel.Background" TargetName="Bd">
-                                <Setter.Value>
-                                    <SolidColorBrush>
-                                        #1F26A0DA</SolidColorBrush>
-                                </Setter.Value>
-                            </Setter>
-                            <Setter Property="Border.BorderBrush" TargetName="Bd">
-                                <Setter.Value>
-                                    <SolidColorBrush>
-                                        #A826A0DA</SolidColorBrush>
-                                </Setter.Value>
-                            </Setter>
+                            <Setter Property="Panel.Background" TargetName="Bd" Value="{StaticResource ListHoverColor}" />
+                            <Setter Property="Border.BorderBrush" TargetName="Bd" Value="{StaticResource ListBorderColor}" />
                         </MultiTrigger>
                         <MultiTrigger>
                             <MultiTrigger.Conditions>
@@ -329,18 +311,8 @@
                                     </Condition.Value>
                                 </Condition>
                             </MultiTrigger.Conditions>
-                            <Setter Property="Panel.Background" TargetName="Bd">
-                                <Setter.Value>
-                                    <SolidColorBrush>
-                                        #3DDADADA</SolidColorBrush>
-                                </Setter.Value>
-                            </Setter>
-                            <Setter Property="Border.BorderBrush" TargetName="Bd">
-                                <Setter.Value>
-                                    <SolidColorBrush>
-                                        #FFDADADA</SolidColorBrush>
-                                </Setter.Value>
-                            </Setter>
+                            <Setter Property="Panel.Background" TargetName="Bd" Value="{StaticResource ListSelectedColor}" />
+                            <Setter Property="Border.BorderBrush" TargetName="Bd" Value="{StaticResource ListBorderColor}" />
                         </MultiTrigger>
                         <MultiTrigger>
                             <MultiTrigger.Conditions>
@@ -357,18 +329,8 @@
                                     </Condition.Value>
                                 </Condition>
                             </MultiTrigger.Conditions>
-                            <Setter Property="Panel.Background" TargetName="Bd">
-                                <Setter.Value>
-                                    <SolidColorBrush>
-                                        #3D26A0DA</SolidColorBrush>
-                                </Setter.Value>
-                            </Setter>
-                            <Setter Property="Border.BorderBrush" TargetName="Bd">
-                                <Setter.Value>
-                                    <SolidColorBrush>
-                                        #FF26A0DA</SolidColorBrush>
-                                </Setter.Value>
-                            </Setter>
+                            <Setter Property="Panel.Background" TargetName="Bd" Value="{StaticResource ListSelectedColor}" />
+                            <Setter Property="Border.BorderBrush" TargetName="Bd" Value="{StaticResource ListBorderColor}" />
                         </MultiTrigger>
                         <Trigger Property="UIElement.IsEnabled">
                             <Setter Property="TextElement.Foreground" TargetName="Bd">
@@ -396,21 +358,14 @@
         <Setter Property="Border.BorderBrush" Value="{StaticResource ListBorderColor}" />
         <Setter Property="Border.BorderThickness" Value="0" />
         <Setter Property="ItemContainerStyle" Value="{StaticResource DefaultListBoxItem}" />
-        <Setter Property="TextElement.Foreground">
-            <Setter.Value>
-                <DynamicResource ResourceKey="{x:Static SystemColors.ControlTextBrushKey}" />
-            </Setter.Value>
-        </Setter>
+        <Setter Property="Foreground" Value="White" />
         <Setter Property="ScrollViewer.HorizontalScrollBarVisibility">
             <Setter.Value>
                 <x:Static Member="ScrollBarVisibility.Auto" />
             </Setter.Value>
         </Setter>
-        <Setter Property="ScrollViewer.VerticalScrollBarVisibility">
-            <Setter.Value>
-                <x:Static Member="ScrollBarVisibility.Auto" />
-            </Setter.Value>
-        </Setter>
+        <!-- <Setter Property="ScrollViewer.Background" Value="{StaticResource BoxColor}" /> -->
+        <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Auto" />
         <Setter Property="ScrollViewer.CanContentScroll">
             <Setter.Value>
                 <s:Boolean>

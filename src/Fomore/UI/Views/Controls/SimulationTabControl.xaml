@@ -9,8 +9,7 @@
              d:DesignHeight="450" d:DesignWidth="800" d:DataContext="{d:DesignInstance navigation:SimulationTabVM}">
 
     <Grid>
-        <Grid
-            Visibility="{Binding SimulationRunning, Converter={StaticResource BooleanVisibilityConverter}, ConverterParameter=false}">
+        <Grid Visibility="{Binding SimulationRunning, Converter={StaticResource BooleanVisibilityConverter}, ConverterParameter=false}">
             <Grid.RowDefinitions>
                 <RowDefinition Height="*" />
                 <RowDefinition Height="Auto" />
@@ -31,7 +30,7 @@
                     <TextBlock Grid.Column="0" Grid.Row="0" HorizontalAlignment="Center" FontWeight="Bold"
                                Text="Step 1: Chose creature"
                                VerticalAlignment="Center" Margin="10" />
-                    <ListBox Grid.Column="0" Grid.Row="1" Style="{StaticResource EntityList}"
+                    <ListBox Grid.Column="0" Grid.Row="1" Style="{StaticResource DefaultListBox}"
                              ItemTemplate="{StaticResource CreatureListItem}"
                              ItemsSource="{Binding EntitiesStorage.Creatures}"
                              SelectedItem="{Binding SelectedCreature, Mode=TwoWay}" />
@@ -39,7 +38,7 @@
                     <TextBlock Grid.Column="1" Grid.Row="0" HorizontalAlignment="Center" FontWeight="Bold"
                                Text="Step 2: Chose movement pattern"
                                VerticalAlignment="Center" Margin="10" />
-                    <ListBox Grid.Column="1" Grid.Row="1" Style="{StaticResource EntityList}"
+                    <ListBox Grid.Column="1" Grid.Row="1" Style="{StaticResource DefaultListBox}"
                              ItemTemplate="{StaticResource MovementPatternListItem}"
                              ItemsSource="{Binding SelectedCreature.MovementPatternCollectionVM}"
                              SelectedItem="{Binding SelectedMovementPattern, Mode=TwoWay}" />
@@ -49,13 +48,13 @@
                     <Grid Grid.Column="1" Grid.Row="1" Visibility="{Binding SelectedCreature, Converter={StaticResource NotNullToVisibilityConverter}}">
                         <TextBlock Style="{StaticResource NoSelectionText}"
                                    Text="No movement patterns"
-                                   Visibility="{Binding SelectedCreature.MovementPatternCollectionVM.Count, Converter={StaticResource NumberVisibilityConverter}}" />
+                                   Visibility="{Binding SelectedCreature.MovementPatternCollectionVM.Count, Converter={StaticResource InvertedNumberVisibilityConverter}}" />
                     </Grid>
 
                     <TextBlock Grid.Column="2" Grid.Row="0" HorizontalAlignment="Center" FontWeight="Bold"
                                Text="Step 3: Chose environment"
                                VerticalAlignment="Center" Margin="10" />
-                    <ListBox Grid.Column="2" Grid.Row="1" Style="{StaticResource EntityList}"
+                    <ListBox Grid.Column="2" Grid.Row="1" Style="{StaticResource DefaultListBox}"
                              ItemTemplate="{StaticResource EnvironmentListItem}"
                              ItemsSource="{Binding EntitiesStorage.Environments}"
                              SelectedItem="{Binding SelectedEnvironment, Mode=TwoWay}" />
@@ -103,4 +102,4 @@
         </Grid>
     </Grid>
 
-</UserControl>
+</UserControl> 

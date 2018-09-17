@@ -4,6 +4,7 @@ using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Linq;
 using System.Windows;
+using System.Windows.Input;
 using System.Windows.Interop;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
@@ -22,7 +23,15 @@ namespace Fomore.UI.ViewModel.Data
     public class CreatureVM : ViewModelBase<Creature>, ICloneable<CreatureVM>
     {
         private const int PreviewDimension = 500;
-        private const int PreviewImageBorder = 30;
+        private const int PreviewSmallDimension = 48;
+        private const double PreviewThickness = 0.01;
+        private const double PreviewSmallThickness = 0.05;
+        private const double PreviewImageBorder = 0.1;
+        private Color PreviewJointColor = Color.FromArgb(85, 85, 85);
+        private Color PreviewSmallJointColor = Color.FromArgb(255, 255, 255);
+        private Color PreviewBoneColor = Color.FromArgb(119, 119, 119);
+        private Color PreviewSmallBoneColor = Color.FromArgb(180, 180, 180);
+
 
         public string Name
         {
@@ -48,7 +57,12 @@ namespace Fomore.UI.ViewModel.Data
 
         public DateTime CreationDate => Model.CreationDate;
 
-        public DelegateCommand DeleteMovementPatternCommand { get; }
+        public DelegateCommand<MovementPatternVM> DeleteMovementPatternCommand { get; }
+
+        private void DeleteMovementPatternAction(MovementPatternVM obj)
+        {
+            MovementPatternCollectionVM.RemoveItemCommand.Execute(obj);
+        }
 
         // ------------------------------------------------------------
 
@@ -56,7 +70,20 @@ namespace Fomore.UI.ViewModel.Data
         {
             get
             {
-                var bitmap = GenerateCreaturePreview();
+                var bitmap = GenerateCreaturePreview(PreviewDimension, PreviewThickness, PreviewJointColor, PreviewBoneColor);
+
+                return Imaging.CreateBitmapSourceFromHBitmap(bitmap.GetHbitmap(),
+                                                             IntPtr.Zero,
+                                                             Int32Rect.Empty,
+                                                             BitmapSizeOptions.FromEmptyOptions());
+            }
+        }
+
+        public ImageSource CreatureSmallPreview
+        {
+            get
+            {
+                var bitmap = GenerateCreaturePreview(PreviewSmallDimension, PreviewSmallThickness, PreviewSmallJointColor, PreviewSmallBoneColor);
 
                 return Imaging.CreateBitmapSourceFromHBitmap(bitmap.GetHbitmap(),
                                                              IntPtr.Zero,
@@ -70,35 +97,29 @@ namespace Fomore.UI.ViewModel.Data
             OnPropertyChanged(nameof(CreaturePreview));
         }
 
-        private Bitmap GenerateCreaturePreview()
+        private Bitmap GenerateCreaturePreview(int size, double thickness, Color jointColor, Color boneColor)
         {
             var bones = CreatureStructureVM.BoneCollectionVM;
             var joints = CreatureStructureVM.JointCollectionVM;
 
-            var bonePen = new Pen(Color.FromArgb(119, 119, 119)) {Width = 5};
-            var jointPen = new Pen(Color.FromArgb(85, 85, 85));
-            var backgroundPen = new Pen(Color.FromArgb(40, 40, 40));
+            float brushThickness = (float)(size * thickness);
+
+            var bonePen = new Pen(boneColor) {Width = brushThickness };
+            var jointPen = new Pen(jointColor);
 
             if (joints == null || joints.Count == 0 || bones == null)
             {
-                var emptyBitmap = new Bitmap(PreviewDimension, PreviewDimension);
-                using (var g = Graphics.FromImage(emptyBitmap))
-                {
-                    g.FillRectangle(backgroundPen.Brush, -1, -1, PreviewDimension + 2, PreviewDimension + 2);
-                }
-
-                return emptyBitmap;
+                return new Bitmap(size, size);
             }
 
             // Weird special case..
             if (joints.Count == 1)
             {
-                var specialOneDotBitmap = new Bitmap(PreviewDimension, PreviewDimension);
+                var specialOneDotBitmap = new Bitmap(size, size);
                 using (var g = Graphics.FromImage(specialOneDotBitmap))
                 {
                     g.SmoothingMode = SmoothingMode.HighQuality;
-                    g.FillRectangle(backgroundPen.Brush, -1, -1, PreviewDimension + 2, PreviewDimension + 2);
-                    g.FillEllipse(jointPen.Brush, PreviewDimension / 2 - 5, PreviewDimension / 2 - 5, 10, 10);
+                    g.FillEllipse(jointPen.Brush, size / 2 - brushThickness, size / 2 - brushThickness, brushThickness * 2, brushThickness * 2);
                 }
 
                 return specialOneDotBitmap;
@@ -107,32 +128,30 @@ namespace Fomore.UI.ViewModel.Data
             var min = new Vector2(joints.Min(j => j.Position.X), joints.Min(j => j.Position.Y));
             var max = new Vector2(joints.Max(j => j.Position.X), joints.Max(j => j.Position.Y));
 
-            var bitmap = new Bitmap(PreviewDimension, PreviewDimension);
+            var bitmap = new Bitmap(size, size);
 
             using (var g = Graphics.FromImage(bitmap))
             {
                 g.SmoothingMode = SmoothingMode.HighQuality;
 
-                g.FillRectangle(backgroundPen.Brush, -1, -1, PreviewDimension + 2, PreviewDimension + 2);
-
                 foreach (var bone in bones)
                 {
                     g.DrawLine(bonePen,
-                               NormalizePoint(bone.FirstJoint.Position, min, max),
-                               NormalizePoint(bone.SecondJoint.Position, min, max));
+                               NormalizePoint(bone.FirstJoint.Position, min, max, size),
+                               NormalizePoint(bone.SecondJoint.Position, min, max, size));
                 }
 
                 foreach (var joint in joints)
                 {
-                    var n = NormalizePoint(joint.Position, min, max);
-                    g.FillEllipse(jointPen.Brush, n.X - 5, n.Y - 5, 10, 10);
+                    var n = NormalizePoint(joint.Position, min, max, size);
+                    g.FillEllipse(jointPen.Brush, n.X - brushThickness, n.Y - brushThickness, brushThickness * 2, brushThickness * 2);
                 }
             }
 
             return bitmap;
         }
 
-        private Point NormalizePoint(Vector2 v, Vector2 min, Vector2 max)
+        private Point NormalizePoint(Vector2 v, Vector2 min, Vector2 max, int size)
         {
             double xDiff = max.X - min.X;
             double yDiff = max.Y - min.Y;
@@ -141,19 +160,19 @@ namespace Fomore.UI.ViewModel.Data
 
             if (xDiff > yDiff)
             {
-                scale = (PreviewDimension - PreviewImageBorder * 2) / xDiff;
+                scale = (size - size * PreviewImageBorder * 2) / xDiff;
                 yOffset = (xDiff - yDiff) / 2;
             }
             else
             {
-                scale = (PreviewDimension - PreviewImageBorder * 2) / yDiff;
+                scale = (size - size * PreviewImageBorder * 2) / yDiff;
                 xOffset = (yDiff - xDiff) / 2;
             }
 
             v -= min;
 
-            int x = (int)((v.X + xOffset) * scale) + PreviewImageBorder;
-            int y = (int)((v.Y + yOffset) * scale) + PreviewImageBorder;
+            int x = (int)((v.X + xOffset) * scale + size * PreviewImageBorder);
+            int y = (int)((v.Y + yOffset) * scale + size * PreviewImageBorder);
 
             return new Point(x, y);
         }
@@ -175,7 +194,7 @@ namespace Fomore.UI.ViewModel.Data
             CreatureStructureVM = new CreatureStructureVM(Model.CreatureStructure);
             CreatureStructureVM.BoneCollectionVM.CollectionChanged += CreatureStructureChanged;
             CreatureStructureVM.JointCollectionVM.CollectionChanged += CreatureStructureChanged;
-            DeleteMovementPatternCommand = new DelegateCommand(o => Console.WriteLine("Hallo"), o => true);
+            DeleteMovementPatternCommand = new DelegateCommand<MovementPatternVM>(DeleteMovementPatternAction, o => true);
         }
 
         /// <inheritdoc />
