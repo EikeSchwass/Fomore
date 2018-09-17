@@ -140,12 +140,13 @@
                     <Border Background="{TemplateBinding Background}" BorderBrush="{StaticResource ListButtonBorderColor}"
                             BorderThickness="{TemplateBinding BorderThickness}" Cursor="{TemplateBinding Cursor}"
                             HorizontalAlignment="{TemplateBinding HorizontalAlignment}"
-                            VerticalAlignment="{TemplateBinding VerticalAlignment}" Margin="{TemplateBinding Margin}">
+                            VerticalAlignment="{TemplateBinding VerticalAlignment}" Margin="{TemplateBinding Margin}"
+                            CornerRadius="4">
                         <Grid HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
                               VerticalAlignment="{TemplateBinding VerticalContentAlignment}">
                             <ContentPresenter Content="{TemplateBinding Content}" Margin="{TemplateBinding Padding}"
                                               HorizontalAlignment="Center" VerticalAlignment="Center" />
-                            <Rectangle Fill="{TemplateBinding IsDisabledBackground}"
+                            <Rectangle Fill="{TemplateBinding IsDisabledBackground}" RadiusX="4" RadiusY="4"
                                        x:Name="GrayRectangle">
                                 <Rectangle.Style>
                                     <Style TargetType="{x:Type Rectangle}">
