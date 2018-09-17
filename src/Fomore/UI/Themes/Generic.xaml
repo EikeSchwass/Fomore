@@ -42,10 +42,10 @@
     <SolidColorBrush x:Key="DeleteColor" Color="#870000" />
     <SolidColorBrush x:Key="DeleteHoverColor" Color="#bf360c" />
     <SolidColorBrush x:Key="DeletePressedColor" Color="#f9683a" />
-    
-    <SolidColorBrush x:Key="CreatureColor" Color="#DDDDDD" />
-    <SolidColorBrush x:Key="EnvironmentColor" Color="#DDDDDD" />
-    <SolidColorBrush x:Key="MovementPatternColor" Color="#DDDDDD" />
+
+    <SolidColorBrush x:Key="CreatureColor" Color="#e53935" />
+    <SolidColorBrush x:Key="EnvironmentColor" Color="#43a047" />
+    <SolidColorBrush x:Key="MovementPatternColor" Color="#1e88e5" />
 
 
     <Style x:Key="StructureGrid" TargetType="Grid">
