@@ -1,5 +1,4 @@
-﻿using System.Windows.Input;
-using Core;
+﻿using Core;
 using Fomore.UI.ViewModel.Application;
 using Fomore.UI.ViewModel.Commands;
 using Fomore.UI.ViewModel.Data;

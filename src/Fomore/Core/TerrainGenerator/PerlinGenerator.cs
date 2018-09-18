@@ -17,6 +17,13 @@ namespace Core.TerrainGenerator
                 yield return new Vector2(x, Amplitude * PerlinNoise.Noise(x / Smoothness + 1, Phase + 1));
             }
         }
+
+        /// <inheritdoc />
+        public override TerrainGenerator Clone()
+        {
+            return new PerlinGenerator() { Phase = Phase, StepSize = StepSize, Smoothness = Smoothness, Amplitude = Amplitude };
+        }
+
     }
 
     // Transcribed from http://www.siafoo.net/snippet/144?nolinenos#perlin2003

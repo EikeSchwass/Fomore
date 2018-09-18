@@ -9,7 +9,7 @@ namespace Core.TerrainGenerator
         /// <summary>
         /// Describes the horizontal Offset.
         /// </summary>
-        public double Offset { get; set; } = 0;
+        public double Offset { get; set; }
 
         //
         /// <summary>
@@ -30,6 +30,12 @@ namespace Core.TerrainGenerator
                 double y = Amplitude * Math.Sin(x * Frequency+Offset);
                 yield return new Vector2(x, y);
             }
+        }
+
+        /// <inheritdoc />
+        public override TerrainGenerator Clone()
+        {
+            return new SineGenerator {Offset = Offset, Frequency = Frequency, Amplitude = Amplitude, StepSize = StepSize};
         }
     }
 }

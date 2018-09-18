@@ -8,7 +8,7 @@ namespace Core.TerrainGenerator
     {
         public double Gradualness { get; set; } = 0.01;
         public double Power { get; set; } = 1.5;
-        public double Offset { get; set; } = 0;
+        public double Offset { get; set; }
 
         /// <inheritdoc />
         public override IEnumerable<Vector2> Generate()
@@ -20,6 +20,12 @@ namespace Core.TerrainGenerator
                     y = 0;
                 yield return new Vector2(x, y);
             }
+        }
+
+        /// <inheritdoc />
+        public override TerrainGenerator Clone()
+        {
+            return new PowerGenerator() { Gradualness = Gradualness, Power = Power, Offset = Offset, StepSize = StepSize };
         }
     }
 }

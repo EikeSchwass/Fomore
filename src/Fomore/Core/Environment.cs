@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Core
 {
@@ -30,9 +31,10 @@ namespace Core
 
         public Environment Clone()
         {
-            var environment = new Environment() {Name = Name, Description = Description, Gravity = Gravity, Friction = Friction};
+            var environment = new Environment { Name = Name, Description = Description, Gravity = Gravity, Friction = Friction };
 
-            // TODO Clone terrain generators
+            environment.TerrainGenerators.AddRange(TerrainGenerators.Select(t => t.Clone()));
+
             return environment;
         }
     }
