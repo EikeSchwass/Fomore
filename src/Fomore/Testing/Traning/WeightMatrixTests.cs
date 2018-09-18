@@ -37,6 +37,19 @@ namespace Testing.Traning
             Assert.AreEqual(16, result[1]);
             Assert.AreEqual(16, result[2]);
         }
+
+        [Test]
+        public void WeightMatriGetClonedWeights()
+        {
+            var weights = new float[,] { { 1, 2, 3 }, { 4, 5, 6 } };
+            var weightMatrix = new WeightMatrix(weights);
+
+            var clonedWeights = weightMatrix.GetClonedWeights();
+
+            clonedWeights[0, 0] = 0;
+
+            Assert.AreNotEqual(0, weightMatrix[0, 0]);
+        }
     }
 
 }

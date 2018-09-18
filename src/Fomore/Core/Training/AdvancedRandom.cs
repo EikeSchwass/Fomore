@@ -1,4 +1,5 @@
 ﻿using System;
+using static System.Math;
 
 namespace Core.Training
 {
@@ -21,6 +22,16 @@ namespace Core.Training
 
                 return local;
             }
+        }
+
+        public static double NextNormal(double mean, double sd)
+        {
+            double u = Random.NextDouble();
+            double v = Random.NextDouble();
+            double x = u * Sqrt(-2 * Log(u)) * Cos(2 * PI * v);
+            x *= sd;
+            x += mean;
+            return x;
         }
     }
 }

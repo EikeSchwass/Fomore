@@ -27,6 +27,20 @@ namespace Core.Training.Neuro
             RowCount = weights.GetLength(1);
         }
 
+        public float[,] GetClonedWeights()
+        {
+            var weights = new float [Weights.GetLength(0), Weights.GetLength(1)];
+            for (int i = 0; i < weights.GetLength(0); i++)
+            {
+                for (int j = 0; j < weights.GetLength(1); j++)
+                {
+                    weights[i, j] = Weights[i, j];
+                }
+            }
+
+            return weights;
+        }
+
         public override bool Equals(object obj)
         {
             if (!(obj is WeightMatrix)) return false;
