@@ -67,6 +67,8 @@
     <Compile Include="Training\Evolution\EvolutionaryAlgorithm.cs" />
     <Compile Include="Training\Evolution\Individual.cs" />
     <Compile Include="Training\Evolution\SelectionMethod.cs" />
+    <Compile Include="Training\Neuro\NeuralNetwork.cs" />
+    <Compile Include="Training\Neuro\WeightMatrix.cs" />
     <Compile Include="Vector2.cs" />
   </ItemGroup>
   <ItemGroup>
