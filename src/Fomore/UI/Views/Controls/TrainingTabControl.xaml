@@ -16,7 +16,7 @@
                 <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
 
-            <GroupBox Grid.Row="0" Header=" Training Assistant ">
+            <GroupBox Grid.Row="0" Header="Training Assistant">
                 <Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition />
