@@ -2,6 +2,7 @@
 using System.Windows.Input;
 using System.Windows.Media;
 using Fomore.UI.ViewModel.Commands;
+using Fomore.UI.ViewModel.CreatureEditor.Behaviours;
 using FontAwesome.WPF;
 
 namespace Fomore.UI.ViewModel.CreatureEditor.Tools
@@ -9,7 +10,7 @@ namespace Fomore.UI.ViewModel.CreatureEditor.Tools
     public class PanTool : Tool
     {
         /// <inheritdoc />
-        public override ImageSource Image { get; } = ImageAwesome.CreateImageSource(FontAwesomeIcon.HandGrabOutline, Brushes.Black);
+        public override ImageSource Image { get; } = ImageAwesome.CreateImageSource(FontAwesomeIcon.HandGrabOutline, BaseBehaviour.BehaviourBrush);
 
         /// <inheritdoc />
         public override ToolType ToolType { get; } = ToolType.PanningTool;

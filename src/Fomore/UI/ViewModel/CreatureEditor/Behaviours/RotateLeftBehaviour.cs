@@ -9,7 +9,7 @@ namespace Fomore.UI.ViewModel.CreatureEditor.Behaviours
     public class RotateLeftBehaviour : RotateBehaviour
     {
         /// <inheritdoc />
-        public override ImageSource Image { get; } = ImageAwesome.CreateImageSource(FontAwesomeIcon.RotateLeft, Brushes.Black);
+        public override ImageSource Image { get; } = ImageAwesome.CreateImageSource(FontAwesomeIcon.RotateLeft, BehaviourBrush);
 
         /// <inheritdoc />
         public override BehaviourType BehaviourType { get; } = BehaviourType.Operations;
