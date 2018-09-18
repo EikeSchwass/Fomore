@@ -50,7 +50,7 @@
                                       Visibility="{Binding SelectedCreature, Converter={StaticResource NotNullToVisibilityConverter}}"
                                       >
                             <ToggleButton.Content>
-                                <Border Style="{StaticResource ListBoxItemBorder}" BorderBrush="{StaticResource MovementPatternColor}">
+                                <Border Style="{StaticResource ListBoxItemBorder}" BorderBrush="{StaticResource MovementPatternColor}" Margin="5 0">
                                     <Grid Style="{StaticResource ListBoxItemGrid}">
                                         <Grid.ColumnDefinitions>
                                             <ColumnDefinition Width="60" />
