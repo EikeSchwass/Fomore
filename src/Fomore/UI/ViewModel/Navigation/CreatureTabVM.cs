@@ -1,40 +1,27 @@
-﻿using System;
-using System.Collections.Specialized;
-using System.Drawing;
-using System.Drawing.Drawing2D;
-using System.Linq;
-using System.Windows;
-using System.Windows.Interop;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
+﻿using System.Collections.Specialized;
 using Core;
 using Fomore.UI.ViewModel.Application;
 using Fomore.UI.ViewModel.Commands;
 using Fomore.UI.ViewModel.CreatureEditor;
 using Fomore.UI.ViewModel.Data;
 using Fomore.UI.Views.Windows;
-using Color = System.Drawing.Color;
-using Pen = System.Drawing.Pen;
-using Point = System.Drawing.Point;
 
 namespace Fomore.UI.ViewModel.Navigation
 {
     public class CreatureTabVM : TabPageVM
     {
+        // ------------------------------------------------------------
+        // Properties and private members
+        // ------------------------------------------------------------
+
+        private CreatureVM selectedCreature;
+        private MovementPatternVM selectedMovementPattern;
+
         /// <inheritdoc />
         public override string Header => "Creature";
 
         public TabNavigationVM TabNavigationVM { get; }
         public EntityStorageVM EntitiesStorage { get; }
-
-        // ------------------------------------------------------------
-        // Properties and private members
-        // ------------------------------------------------------------
-
-        
-
-        private CreatureVM selectedCreature;
-        private MovementPatternVM selectedMovementPattern;
 
         public CreatureVM SelectedCreature
         {
@@ -43,24 +30,15 @@ namespace Fomore.UI.ViewModel.Navigation
             {
                 if (Equals(value, selectedCreature)) return;
                 if (selectedCreature != null)
-                {
                     selectedCreature.MovementPatternCollectionVM.CollectionChanged -= MovementPatternCollectionChanged;
-                }
 
                 selectedCreature = value;
                 OnPropertyChanged();
                 OnPropertyChanged(nameof(SelectedCreatureMovementPattern));
                 if (selectedCreature != null)
-                {
                     selectedCreature.MovementPatternCollectionVM.CollectionChanged += MovementPatternCollectionChanged;
-                }
                 ClearMovementPatternsCommand.OnCanExecuteChanged();
             }
-        }
-        
-        private void MovementPatternCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
-        {
-            ClearMovementPatternsCommand.OnCanExecuteChanged();
         }
 
         public MovementPatternVM SelectedMovementPattern
@@ -78,20 +56,6 @@ namespace Fomore.UI.ViewModel.Navigation
         public CreatureMovementPattern SelectedCreatureMovementPattern =>
             new CreatureMovementPattern(SelectedCreature, SelectedMovementPattern);
 
-        public struct CreatureMovementPattern
-        {
-            public CreatureVM Creature { get; }
-            public MovementPatternVM MovementPattern { get; }
-
-            public CreatureMovementPattern(CreatureVM creature, MovementPatternVM movementPattern)
-            {
-                Creature = creature;
-                MovementPattern = movementPattern;
-            }
-        }
-
-       
-
         // ------------------------------------------------------------
         // Commands and Actions
         // ------------------------------------------------------------
@@ -103,9 +67,30 @@ namespace Fomore.UI.ViewModel.Navigation
         public DelegateCommand CloneCommand { get; }
         public DelegateCommand ClearMovementPatternsCommand { get; }
 
+        // ------------------------------------------------------------
+        // Entry point & other methods
+        // ------------------------------------------------------------
+        public CreatureTabVM(TabNavigationVM tabNavigationVM, EntityStorageVM entitiesStorage)
+        {
+            TabNavigationVM = tabNavigationVM;
+            EntitiesStorage = entitiesStorage;
+            NewCreatureCommand = new DelegateCommand(NewCreatureAction, o => true);
+            TrainCommand = new DelegateCommand(TrainAction, o => true);
+            SimulateCommand = new DelegateCommand(SimulateAction, o => true);
+            EditCreatureCommand = new DelegateCommand(EditAction, o => true);
+            CloneCommand = new DelegateCommand(CloneAction, o => true);
+            ClearMovementPatternsCommand =
+                new DelegateCommand(ClearMovementPatternsAction, o => SelectedCreature?.MovementPatternCollectionVM.Count > 0);
+        }
+
+        private void MovementPatternCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+        {
+            ClearMovementPatternsCommand.OnCanExecuteChanged();
+        }
+
         private void NewCreatureAction(object obj)
         {
-            var creature = new Creature() {Name = "New Creature", Description = "No description available..."};
+            var creature = new Creature {Name = "New Creature", Description = "No description available..."};
             var creatureVM = new CreatureVM(creature);
             EntitiesStorage.AddCreatureCommand.Execute(creatureVM);
             SelectedCreature = creatureVM;
@@ -146,19 +131,16 @@ namespace Fomore.UI.ViewModel.Navigation
             SelectedCreature?.MovementPatternCollectionVM.Clear();
         }
 
-        // ------------------------------------------------------------
-        // Entry point & other methods
-        // ------------------------------------------------------------
-        public CreatureTabVM(TabNavigationVM tabNavigationVM, EntityStorageVM entitiesStorage)
+        public struct CreatureMovementPattern
         {
-            TabNavigationVM = tabNavigationVM;
-            EntitiesStorage = entitiesStorage;
-            NewCreatureCommand = new DelegateCommand(NewCreatureAction, o => true);
-            TrainCommand = new DelegateCommand(TrainAction, o => true);
-            SimulateCommand = new DelegateCommand(SimulateAction, o => true);
-            EditCreatureCommand = new DelegateCommand(EditAction, o => true);
-            CloneCommand = new DelegateCommand(CloneAction, o => true);
-            ClearMovementPatternsCommand = new DelegateCommand(ClearMovementPatternsAction, o => SelectedCreature?.MovementPatternCollectionVM.Count > 0);
+            public CreatureVM Creature { get; }
+            public MovementPatternVM MovementPattern { get; }
+
+            public CreatureMovementPattern(CreatureVM creature, MovementPatternVM movementPattern)
+            {
+                Creature = creature;
+                MovementPattern = movementPattern;
+            }
         }
     }
 }

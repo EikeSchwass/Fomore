@@ -60,7 +60,7 @@ namespace Fomore.UI.ViewModel.Helper
             EncapsulatedList.Add(item?.Model);
             CollectionChanged?.Invoke(ViewModels,
                                       new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Add, item));
-            OnPropertyChanged(null);
+            OnAllPropertiesChanged();
             ClearItemCsommand.OnCanExecuteChanged();
             RemoveItemCommand.OnCanExecuteChanged();
         }
@@ -70,6 +70,7 @@ namespace Fomore.UI.ViewModel.Helper
         {
             ViewModels.Clear();
             EncapsulatedList.Clear();
+            OnAllPropertiesChanged();
             CollectionChanged?.Invoke(this, new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Reset));
             ClearItemCsommand.OnCanExecuteChanged();
             RemoveItemCommand.OnCanExecuteChanged();
@@ -95,6 +96,7 @@ namespace Fomore.UI.ViewModel.Helper
             CollectionChanged?.Invoke(this, new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Remove, item, index));
             ClearItemCsommand.OnCanExecuteChanged();
             RemoveItemCommand.OnCanExecuteChanged();
+            OnAllPropertiesChanged();
 
             return returnValue;
         }
@@ -111,6 +113,7 @@ namespace Fomore.UI.ViewModel.Helper
             CollectionChanged?.Invoke(this, new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Add, item, index));
             ClearItemCsommand.OnCanExecuteChanged();
             RemoveItemCommand.OnCanExecuteChanged();
+            OnAllPropertiesChanged();
         }
 
         public void RemoveAt(int index) => Remove(ViewModels[index]);
