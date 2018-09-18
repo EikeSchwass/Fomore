@@ -1,21 +1,10 @@
-﻿using System;
-using System.Collections.Specialized;
-using System.Drawing;
-using System.Drawing.Drawing2D;
-using System.Linq;
-using System.Windows;
-using System.Windows.Interop;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
+﻿using System.Collections.Specialized;
 using Core;
 using Fomore.UI.ViewModel.Application;
 using Fomore.UI.ViewModel.Commands;
 using Fomore.UI.ViewModel.CreatureEditor;
 using Fomore.UI.ViewModel.Data;
 using Fomore.UI.Views.Windows;
-using Color = System.Drawing.Color;
-using Pen = System.Drawing.Pen;
-using Point = System.Drawing.Point;
 
 namespace Fomore.UI.ViewModel.Navigation
 {
