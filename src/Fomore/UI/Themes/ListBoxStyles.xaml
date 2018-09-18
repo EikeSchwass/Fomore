@@ -59,8 +59,12 @@
                 </Grid.RowDefinitions>
                 <!-- <Image Grid.Column="0" Grid.RowSpan="2" Style="{StaticResource ListBoxIcon}" -->
                 <!-- Source="../assets/images/creature_icon_new.png" /> -->
-                <Image Grid.Column="0" Grid.RowSpan="2" Style="{StaticResource ListBoxIcon}"
-                       Source="{Binding CreatureSmallPreview}" />
+                <Image Grid.Column="0" Grid.RowSpan="2" Grid.Row="0" Style="{StaticResource ListBoxIcon}"
+                       Source="{Binding CreatureSmallPreview}" 
+                       Visibility="{Binding CreatureStructureVM.BoneCollectionVM.Count, Converter={StaticResource InvertedNumberVisibilityConverter}, ConverterParameter=0}"/>
+                <Image Grid.Column="0" Grid.RowSpan="2" Grid.Row="0" Style="{StaticResource ListBoxIcon}"
+                       Source="../assets/images/creature_icon_new.png"
+                       Visibility="{Binding CreatureStructureVM.BoneCollectionVM.Count, Converter={StaticResource NumberVisibilityConverter}, ConverterParameter=0}"/>
                 <TextBlock Grid.Column="1" Grid.Row="0" Style="{StaticResource ListBoxItemName}" Text="{Binding Name}" />
                 <TextBlock Grid.Column="2" Grid.Row="0" Style="{StaticResource ListBoxItemCreationDate}" Text="{Binding CreationDate}" />
                 <TextBlock Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="1" Style="{StaticResource ListBoxItemInfo}"

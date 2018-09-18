@@ -123,47 +123,34 @@
                                     Background="{StaticResource BackgroundColor}" HorizontalAlignment="Center" Margin="10">
                         <UniformGrid Rows="3" Columns="3" HorizontalAlignment="Center"
                                                  VerticalAlignment="Center" Margin="3">
-                            <UniformGrid.Resources>
-                                <Style TargetType="{x:Type controls:CustomizableButton}"
-                                                   BasedOn="{StaticResource {x:Type controls:CustomizableButton}}">
-                                    <Setter Property="Padding" Value="6" />
-                                    <Setter Property="Margin" Value="1" />
-                                </Style>
-                                <Style TargetType="{x:Type fa:ImageAwesome}"
-                                                   BasedOn="{StaticResource {x:Type fa:ImageAwesome}}">
-                                    <Setter Property="Height" Value="24" />
-                                    <Setter Property="Width" Value="24" />
-                                    <Setter Property="VerticalAlignment" Value="Center" />
-                                    <Setter Property="HorizontalAlignment" Value="Center" />
-                                </Style>
-                            </UniformGrid.Resources>
+                            
 
                             <!-- You can take this Button to allow holding down the mouse button. Not styles yet though -->
-                            <RepeatButton Style="{StaticResource EditorBackgroundManipulationButton}" Command="{Binding RotateCounterClockwiseCommand}">
+                            <RepeatButton Style="{StaticResource ToolRepeatButton}" Command="{Binding RotateCounterClockwiseCommand}">
                                 <fa:ImageAwesome Style="{StaticResource EditorBackgroundManipulationButtonIcon}" Icon="RotateLeft"/>
                             </RepeatButton>
-                            <RepeatButton Style="{StaticResource EditorBackgroundManipulationButton}" Command="{Binding OffsetUpCommand}">
+                            <RepeatButton Style="{StaticResource ToolRepeatButton}" Command="{Binding OffsetUpCommand}">
                                 <fa:ImageAwesome Style="{StaticResource EditorBackgroundManipulationButtonIcon}" Icon="CaretUp" />
                             </RepeatButton>
-                            <RepeatButton Style="{StaticResource EditorBackgroundManipulationButton}" Command="{Binding RotateClockwiseCommand}">
+                            <RepeatButton Style="{StaticResource ToolRepeatButton}" Command="{Binding RotateClockwiseCommand}">
                                 <fa:ImageAwesome Style="{StaticResource EditorBackgroundManipulationButtonIcon}" Icon="RotateRight" />
                             </RepeatButton>
-                            <RepeatButton Style="{StaticResource EditorBackgroundManipulationButton}" Command="{Binding OffsetLeftCommand}">
+                            <RepeatButton Style="{StaticResource ToolRepeatButton}" Command="{Binding OffsetLeftCommand}">
                                 <fa:ImageAwesome Style="{StaticResource EditorBackgroundManipulationButtonIcon}" Icon="CaretLeft" />
                             </RepeatButton>
-                            <RepeatButton Style="{StaticResource EditorBackgroundManipulationButton}" Command="{Binding ResetImageCommand}">
+                            <RepeatButton Style="{StaticResource ToolRepeatButton}" Command="{Binding ResetImageCommand}">
                                 <fa:ImageAwesome Style="{StaticResource EditorBackgroundManipulationButtonIcon}" Icon="Remove" />
                             </RepeatButton>
-                            <RepeatButton Style="{StaticResource EditorBackgroundManipulationButton}" Command="{Binding OffsetRightCommand}">
+                            <RepeatButton Style="{StaticResource ToolRepeatButton}" Command="{Binding OffsetRightCommand}">
                                 <fa:ImageAwesome Style="{StaticResource EditorBackgroundManipulationButtonIcon}" Icon="CaretRight" />
                             </RepeatButton>
-                            <RepeatButton Style="{StaticResource EditorBackgroundManipulationButton}" Command="{Binding ScaleUpCommand}">
+                            <RepeatButton Style="{StaticResource ToolRepeatButton}" Command="{Binding ScaleUpCommand}">
                                 <fa:ImageAwesome Style="{StaticResource EditorBackgroundManipulationButtonIcon}" Icon="SearchPlus" />
                             </RepeatButton>
-                            <RepeatButton Style="{StaticResource EditorBackgroundManipulationButton}" Command="{Binding OffsetDownCommand}">
+                            <RepeatButton Style="{StaticResource ToolRepeatButton}" Command="{Binding OffsetDownCommand}">
                                 <fa:ImageAwesome Style="{StaticResource EditorBackgroundManipulationButtonIcon}" Icon="CaretDown" />
                             </RepeatButton>
-                            <RepeatButton Style="{StaticResource EditorBackgroundManipulationButton}" Command="{Binding ScaleDownCommand}">
+                            <RepeatButton Style="{StaticResource ToolRepeatButton}" Command="{Binding ScaleDownCommand}">
                                 <fa:ImageAwesome Style="{StaticResource EditorBackgroundManipulationButtonIcon}" Icon="SearchMinus" />
                             </RepeatButton>
                         </UniformGrid>

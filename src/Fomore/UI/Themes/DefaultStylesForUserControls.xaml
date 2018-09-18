@@ -132,6 +132,7 @@
         <Setter Property="Background" Value="{StaticResource ListHoverColor}" />
         <Setter Property="IsMouseOverBackground" Value="{StaticResource ListPressedColor}" />
         <Setter Property="IsPressedBackground" Value="{StaticResource ListPressedColor}" />
+        <Setter Property="IsDisabledBackground" Value="{StaticResource ListDisabledColor}" />
         <Setter Property="HorizontalContentAlignment" Value="Stretch" />
         <Setter Property="VerticalContentAlignment" Value="Stretch" />
         <Setter Property="Template">
@@ -193,6 +194,7 @@
         <Setter Property="IsMouseOverBackground" Value="{StaticResource ListPressedColor}" />
         <Setter Property="IsPressedBackground" Value="{StaticResource ListPressedColor}" />
         <Setter Property="IsSelectedBackground" Value="{StaticResource ListSelectedColor}" />
+        <Setter Property="IsDisabledBackground" Value="{StaticResource ListDisabledColor}" />
         <Setter Property="HorizontalAlignment" Value="Center" />
         <Setter Property="VerticalAlignment" Value="Center" />
         <Setter Property="HorizontalContentAlignment" Value="Stretch" />
