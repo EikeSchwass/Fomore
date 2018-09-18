@@ -110,23 +110,15 @@
                 <!-- The Movement patterns group box -->
                 <GroupBox Grid.Column="0" Grid.Row="1" Header="Movement Patterns">
                     <Grid>
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="*" />
-                            <RowDefinition Height="Auto" />
-                        </Grid.RowDefinitions>
-                        <ListBox Grid.Row="0" Style="{StaticResource DefaultListBox}"
+                        <ListBox Style="{StaticResource DefaultListBox}"
                                  ItemsSource="{Binding SelectedCreature.MovementPatternCollectionVM}"
                                  ItemTemplate="{StaticResource MovementPatternListItemWithDelete}"
                                  SelectedItem="{Binding SelectedMovementPattern}"
                                  Margin="0 0 0 5" />
-                        <TextBlock Grid.Row="0" Style="{StaticResource NoSelectionText}"
+                        <TextBlock Style="{StaticResource NoSelectionText}"
                                    Text="No movement patterns"
                                    Visibility="{Binding SelectedCreature.MovementPatternCollectionVM.Count, Converter={StaticResource InvertedNumberVisibilityConverter}}" />
-                        <controls:CustomizableButton Grid.Row="1" Style="{StaticResource DeleteButton}"
-                                                     Command="{Binding ClearMovementPatternsCommand}"
-                                                     Content="Delete All" />
                     </Grid>
-
                 </GroupBox>
 
                 <GroupBox Grid.Column="1" Grid.Row="1" Header="Preview">
@@ -137,7 +129,8 @@
                 </GroupBox>
 
                 <!-- Action buttons group box -->
-                <GroupBox Grid.ColumnSpan="2" Grid.Column="0" Grid.Row="2" Style="{StaticResource ActionGroupBox}" Header="Actions">
+                <GroupBox Grid.ColumnSpan="2" Grid.Column="0" Grid.Row="2" Style="{StaticResource ActionGroupBox}"
+                          Header="Actions">
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
                         <controls:CustomizableButton Style="{StaticResource DefaultButton}"
                                                      Command="{Binding CloneCommand}"
