@@ -9,10 +9,10 @@
         xmlns:fa="http://schemas.fontawesome.io/icons/"
         mc:Ignorable="d"
         Title="CreatureStructureEditor" Height="618" Width="1500" WindowState="Maximized"
-        d:DataContext="{d:DesignInstance creatureEditor:CreatureEditorVM}" Background="{StaticResource BackgroundColor}"
+        d:DataContext="{d:DesignInstance creatureEditor:CreatureEditorVM}"
         helper:AttachedProperties.InputBindingsSource="{Binding CreatureEditorPanelVM.InputBindings}"
         KeyDown="CreatureStructureEditor_OnKeyDown">
-    <Grid>
+    <Grid Style="{StaticResource StructureGrid}">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="3*" />
             <ColumnDefinition Width="*" MinWidth="180" />

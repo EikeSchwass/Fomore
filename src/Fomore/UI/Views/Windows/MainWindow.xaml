@@ -25,7 +25,7 @@
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
-        <TabControl Grid.Row="1" DataContext="{Binding Path=NavigationVM}"
+        <TabControl Grid.Row="1" DataContext="{Binding Path=NavigationVM}" Style="{StaticResource DefaultTabControl}"
                     SelectedItem="{Binding SelectedTab, Mode=TwoWay}" ItemsSource="{Binding TabCollection}">
             <TabControl.Resources>
                 <DataTemplate DataType="{x:Type navigation:CreatureTabVM}">

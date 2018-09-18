@@ -11,7 +11,7 @@
              mc:Ignorable="d"
              d:DesignHeight="900" d:DesignWidth="1440" d:DataContext="{d:DesignInstance navigation:EnvironmentTabVM}">
 
-    <Grid>
+    <Grid Style="{StaticResource StructureGrid}">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto" />
             <ColumnDefinition Width="*" />
