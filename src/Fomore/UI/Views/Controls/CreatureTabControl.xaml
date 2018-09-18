@@ -135,7 +135,7 @@
                         <controls:CustomizableButton Style="{StaticResource DefaultButton}"
                                                      Command="{Binding CloneCommand}"
                                                      CommandParameter="{Binding SelectedCreature}"
-                                                     Content="Clone this creature" />
+                                                     Content="Clone" />
                         <controls:CustomizableButton Style="{StaticResource DefaultButton}"
                                                      Command="{Binding EditCreatureCommand}"
                                                      CommandParameter="{Binding SelectedCreature}"
@@ -143,11 +143,11 @@
                         <controls:CustomizableButton Style="{StaticResource DefaultButton}"
                                                      Command="{Binding TrainCommand}"
                                                      CommandParameter="{Binding SelectedCreatureMovementPattern}"
-                                                     Content="Train this creature" />
+                                                     Content="Train" />
                         <controls:CustomizableButton Style="{StaticResource DefaultButton}"
                                                      Command="{Binding SimulateCommand}"
                                                      CommandParameter="{Binding SelectedCreatureMovementPattern}"
-                                                     Content="Simulate this creature" />
+                                                     Content="Simulate" />
                         <controls:CustomizableButton Style="{StaticResource DeleteButton}"
                                                      Command="{Binding EntitiesStorage.RemoveCreatureCommand}"
                                                      CommandParameter="{Binding SelectedCreature}" Content="Delete" />
