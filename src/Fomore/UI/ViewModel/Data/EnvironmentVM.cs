@@ -17,7 +17,7 @@ namespace Fomore.UI.ViewModel.Data
     /// <summary>
     ///     The View Model that encapsulates the Environment Class
     /// </summary>
-    public class EnvironmentVM : ViewModelBase<Environment>
+    public class EnvironmentVM : ViewModelBase<Environment>, ICloneable<EnvironmentVM>
     {
         private bool isRenderingImage;
         private double previewHeight;
@@ -81,7 +81,7 @@ namespace Fomore.UI.ViewModel.Data
 
         public DelegateCommand AddTerrainGeneratorCommand { get; }
         public DelegateCommand DeleteTerrainGeneratorCommand { get; }
-
+        
         public ObservableCollection<TerrainGeneratorVM> TerrainGenerators { get; } = new ObservableCollection<TerrainGeneratorVM>();
 
         public double PreviewHeight
@@ -122,6 +122,7 @@ namespace Fomore.UI.ViewModel.Data
         {
             AddTerrainGeneratorCommand = new DelegateCommand(o => AddTerrainGenerator(), o => true);
             DeleteTerrainGeneratorCommand = new DelegateCommand(o => TerrainGenerators.Remove((TerrainGeneratorVM)o), o => true);
+            
             foreach (var modelTerrainGenerator in model.TerrainGenerators)
             {
                 TerrainGenerators.Add(new TerrainGeneratorVM { Model = modelTerrainGenerator });
@@ -222,6 +223,11 @@ namespace Fomore.UI.ViewModel.Data
         private void AddTerrainGenerator()
         {
             TerrainGenerators.Add(new TerrainGeneratorVM());
+        }
+
+        public EnvironmentVM Clone()
+        {
+            return new EnvironmentVM(Model.Clone());
         }
     }
 }

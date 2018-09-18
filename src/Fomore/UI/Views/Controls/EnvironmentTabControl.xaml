@@ -314,6 +314,9 @@
 
                 <GroupBox Grid.Row="2" Grid.Column="0" Style="{StaticResource ActionGroupBox}" Header="Actions">
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                        <controls:CustomizableButton Style="{StaticResource DefaultButton}"
+                                                     Command="{Binding CloneCommand}"
+                                                     CommandParameter="{Binding SelectedEnvironment}" Content="Clone" />
                         <controls:CustomizableButton Style="{StaticResource DeleteButton}"
                                                      Command="{Binding EntitiesStorage.RemoveEnvironmentCommand}"
                                                      CommandParameter="{Binding SelectedEnvironment}" Content="Delete" />
