@@ -13,6 +13,8 @@ namespace Core
         public string Name { get; set; } = "Unnamed Bone";
         public ConnectorInformation ConnectorInformation { get; private set; }
 
+        public Vector2 Position => FirstJoint.Position + (SecondJoint.Position - FirstJoint.Position) * 0.5;
+
         public Bone(Joint firstJoint, Joint secondJoint) : this(new object())
         {
             FirstJoint = firstJoint;

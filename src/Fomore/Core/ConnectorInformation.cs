@@ -8,7 +8,7 @@ namespace Core
         public Bone Bone { get; set; }
         public float LowerLimit { get; set; }
         public float UpperLimit { get; set; }
-        public float Strength { get; set; }
+        public float Strength { get; set; } = 50;
         public bool CanControl { get; set; }
         public bool HasLimits { get; set; }
         public bool IsFlipped { get; set; }

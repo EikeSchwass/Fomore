@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Runtime.Serialization.Formatters.Binary;
 
 namespace Core
@@ -49,7 +50,9 @@ namespace Core
             using (var fileStream = new FileStream(creaturePath, FileMode.OpenOrCreate, FileAccess.ReadWrite))
             {
                 var bf = new BinaryFormatter();
-                return (IEnumerable<Creature>)bf.Deserialize(fileStream);
+                var creatures = ((IEnumerable<Creature>)bf.Deserialize(fileStream)).ToList();
+
+                return creatures;
             }
         }
 

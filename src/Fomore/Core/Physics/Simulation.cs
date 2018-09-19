@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 using System.Threading.Tasks;
 using FarseerPhysics.Dynamics;
 using FarseerPhysics.Factories;
@@ -12,13 +13,16 @@ namespace Core.Physics
         public SimulationSettings SimulationSettings { get; }
         private World World { get; }
         private float RemainingDeltaTime { get; set; }
+        private float TotalTime { get; set; }
 
         public List<SimulationEntity> SimulationEntities { get; } = new List<SimulationEntity>();
+
+        public Terrain Terrain { get; private set; }
 
         public Simulation(SimulationSettings simulationSettings)
         {
             SimulationSettings = simulationSettings;
-            World = new World(new Microsoft.Xna.Framework.Vector2(0, (float)SimulationSettings.Environment.Gravity));
+            World = new World(new Microsoft.Xna.Framework.Vector2(0, (float)SimulationSettings.Environment.Gravity / 10));
             ResetSimulation();
         }
 
@@ -28,9 +32,24 @@ namespace Core.Physics
             World.ClearForces();
             foreach (var creatureMovementPattern in SimulationSettings.CreatureMovementPatterns)
             {
+                var joints = creatureMovementPattern.Creature.CreatureStructure.Joints;
+                foreach (var joint in joints)
+                {
+                    joint.Position *= creatureMovementPattern.Creature.CreatureStructure.Scale;
+                }
+                double minX = joints.Min(j => j.Position.X);
+                double minY = joints.Min(j => j.Position.Y);
+                foreach (var joint in joints)
+                {
+                    joint.Position = new Vector2(joint.Position.X - minX, (joint.Position.Y - minY));
+                }
                 var simulationEntity = new SimulationEntity(World, creatureMovementPattern);
                 SimulationEntities.Add(simulationEntity);
             }
+
+            Terrain = new Terrain(World, SimulationSettings);
+            RemainingDeltaTime = 0;
+            TotalTime = 0;
             SimulationReset?.Invoke();
         }
 
@@ -43,6 +62,7 @@ namespace Core.Physics
             RemainingDeltaTime += elapsedTime;
             while (RemainingDeltaTime - SimulationSettings.TickStepSize >= 0)
             {
+                TotalTime += SimulationSettings.TickStepSize;
                 PerformTick(SimulationSettings.TickStepSize);
                 RemainingDeltaTime -= SimulationSettings.TickStepSize;
             }
@@ -50,11 +70,11 @@ namespace Core.Physics
 
         private void PerformTick(float deltaTime)
         {
+            World.Step(deltaTime);
             foreach (var simulationEntity in SimulationEntities)
             {
-                simulationEntity.PreWorldStep();
+                simulationEntity.PreWorldStep(deltaTime, TotalTime);
             }
-            World.Step(deltaTime);
             TimeStepCompleted?.Invoke();
         }
 

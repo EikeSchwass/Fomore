@@ -33,8 +33,12 @@
     <Reference Include="FarseerPhysics, Version=3.5.0.38023, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\FarseerPhysics.3.5.0\lib\NET40\FarseerPhysics.dll</HintPath>
     </Reference>
+    <Reference Include="OpenTK, Version=3.0.1.0, Culture=neutral, PublicKeyToken=bad199fe84eb3df4, processorArchitecture=MSIL">
+      <HintPath>..\packages\OpenTK.3.0.1\lib\net20\OpenTK.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -54,13 +58,17 @@
     <Compile Include="MathExtensions.cs" />
     <Compile Include="MovementPattern.cs" />
     <Compile Include="Physics\BoneBody.cs" />
+    <Compile Include="Physics\BoneTuple.cs" />
     <Compile Include="Physics\CreatureMovementPattern.cs" />
     <Compile Include="Physics\JointPhysicsJoint.cs" />
     <Compile Include="Physics\PhysicsEngine.cs" />
     <Compile Include="Physics\SimulationEntity.cs" />
     <Compile Include="Physics\SimulationSettings.cs" />
+    <Compile Include="Physics\Terrain.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Physics\Simulation.cs" />
+    <Compile Include="Renderer\Camera.cs" />
+    <Compile Include="Renderer\SimulationRenderer.cs" />
     <Compile Include="TerrainExtensions.cs" />
     <Compile Include="TerrainGenerator\LinearGen.cs" />
     <Compile Include="TerrainGenerator\PerlinGenerator.cs" />
@@ -77,6 +85,7 @@
     <Compile Include="Vector2.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="OpenTK.dll.config" />
     <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

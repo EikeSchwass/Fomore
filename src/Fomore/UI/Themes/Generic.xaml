@@ -264,7 +264,7 @@
                 <Style.Resources>
                     <ResourceDictionary />
                 </Style.Resources>
-                <Setter Property="FrameworkElement.FocusVisualStyle">
+                <Setter Property="FocusVisualStyle">
                     <Setter.Value>
                         <Style TargetType="{x:Type IFrameworkInputElement}">
                             <Style.Resources>
@@ -294,24 +294,24 @@
                         </Thickness>
                     </Setter.Value>
                 </Setter>
-                <Setter Property="Control.HorizontalContentAlignment">
+                <Setter Property="HorizontalContentAlignment">
                     <Setter.Value>
                         <x:Static Member="HorizontalAlignment.Center" />
                     </Setter.Value>
                 </Setter>
-                <Setter Property="Control.VerticalContentAlignment">
+                <Setter Property="VerticalContentAlignment">
                     <Setter.Value>
                         <x:Static Member="VerticalAlignment.Center" />
                     </Setter.Value>
                 </Setter>
-                <Setter Property="Control.Padding">
+                <Setter Property="Padding">
                     <Setter.Value>
                         <Thickness>
                             1,1,1,1
                         </Thickness>
                     </Setter.Value>
                 </Setter>
-                <Setter Property="Control.Template">
+                <Setter Property="Template">
                     <Setter.Value>
                         <ControlTemplate TargetType="{x:Type ButtonBase}">
                             <Border BorderThickness="{TemplateBinding Border.BorderThickness}"
@@ -642,27 +642,27 @@
         <Style.Resources>
             <ResourceDictionary />
         </Style.Resources>
-        <Setter Property="UIElement.SnapsToDevicePixels">
+        <Setter Property="SnapsToDevicePixels">
             <Setter.Value>
                 <system:Boolean>
                     True
                 </system:Boolean>
             </Setter.Value>
         </Setter>
-        <Setter Property="Control.Padding">
+        <Setter Property="Padding">
             <Setter.Value>
                 <Thickness>
                     4,1,4,1
                 </Thickness>
             </Setter.Value>
         </Setter>
-        <Setter Property="Control.HorizontalContentAlignment">
+        <Setter Property="HorizontalContentAlignment">
             <Setter.Value>
                 <Binding Path="HorizontalContentAlignment"
                          RelativeSource="{RelativeSource Mode=FindAncestor, AncestorType=ItemsControl, AncestorLevel=1}" />
             </Setter.Value>
         </Setter>
-        <Setter Property="Control.VerticalContentAlignment">
+        <Setter Property="VerticalContentAlignment">
             <Setter.Value>
                 <Binding Path="VerticalContentAlignment"
                          RelativeSource="{RelativeSource Mode=FindAncestor, AncestorType=ItemsControl, AncestorLevel=1}" />
@@ -677,7 +677,7 @@
                 </Thickness>
             </Setter.Value>
         </Setter>
-        <Setter Property="FrameworkElement.FocusVisualStyle">
+        <Setter Property="FocusVisualStyle">
             <Setter.Value>
                 <Style TargetType="{x:Type IFrameworkInputElement}">
                     <Style.Resources>
@@ -695,7 +695,7 @@
                 </Style>
             </Setter.Value>
         </Setter>
-        <Setter Property="Control.Template">
+        <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type ListBoxItem}">
                     <Border BorderThickness="{TemplateBinding Border.BorderThickness}"
@@ -886,27 +886,27 @@
         <Style.Resources>
             <ResourceDictionary />
         </Style.Resources>
-        <Setter Property="UIElement.SnapsToDevicePixels">
+        <Setter Property="SnapsToDevicePixels">
             <Setter.Value>
                 <s:Boolean>
                     True
                 </s:Boolean>
             </Setter.Value>
         </Setter>
-        <Setter Property="Control.Padding">
+        <Setter Property="Padding">
             <Setter.Value>
                 <Thickness>
                     4,1,4,1
                 </Thickness>
             </Setter.Value>
         </Setter>
-        <Setter Property="Control.HorizontalContentAlignment">
+        <Setter Property="HorizontalContentAlignment">
             <Setter.Value>
                 <Binding Path="HorizontalContentAlignment"
                          RelativeSource="{RelativeSource Mode=FindAncestor, AncestorType=ItemsControl, AncestorLevel=1}" />
             </Setter.Value>
         </Setter>
-        <Setter Property="Control.VerticalContentAlignment">
+        <Setter Property="VerticalContentAlignment">
             <Setter.Value>
                 <Binding Path="VerticalContentAlignment"
                          RelativeSource="{RelativeSource Mode=FindAncestor, AncestorType=ItemsControl, AncestorLevel=1}" />
@@ -921,7 +921,7 @@
                 </Thickness>
             </Setter.Value>
         </Setter>
-        <Setter Property="FrameworkElement.FocusVisualStyle">
+        <Setter Property="FocusVisualStyle">
             <Setter.Value>
                 <Style TargetType="{x:Type IFrameworkInputElement}">
                     <Style.Resources>
@@ -939,7 +939,7 @@
                 </Style>
             </Setter.Value>
         </Setter>
-        <Setter Property="Control.Template">
+        <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type ComboBoxItem}">
                     <Border BorderThickness="{TemplateBinding Border.BorderThickness}"
@@ -1209,7 +1209,7 @@
                         <ToggleButton
                             Name="ToggleButton"
                             Template="{StaticResource ComboBoxToggleButton}"
-                            Grid.Column="2"
+                            Grid.Column="0"
                             Focusable="false"
                             IsChecked="{Binding Path=IsDropDownOpen,Mode=TwoWay,RelativeSource={RelativeSource TemplatedParent}}"
                             ClickMode="Press" />
@@ -1279,8 +1279,6 @@
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
-        <Style.Triggers>
-        </Style.Triggers>
     </Style>
 
 

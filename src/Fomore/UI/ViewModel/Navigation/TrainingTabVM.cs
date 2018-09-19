@@ -4,6 +4,8 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using Core;
+using Core.Physics;
+using Core.Renderer;
 using Fomore.UI.ViewModel.Application;
 using Fomore.UI.ViewModel.Commands;
 using Fomore.UI.ViewModel.Data;
@@ -230,7 +232,7 @@ namespace Fomore.UI.ViewModel.Navigation
             else
             {
                 var window = new DummyProgressWindow(Window.GetWindow(this));
-                window.ShowDialog();
+                //window.ShowDialog();
             }
 
             MovementPattern parent = null;
@@ -247,8 +249,12 @@ namespace Fomore.UI.ViewModel.Navigation
             for (int i = 0; i < Iterations; i++)
             {
                 // TODO Training here
-                newPattern = new MovementPatternVM(new MovementPattern(parent, null)) {Name = name};
-                parent = newPattern.Model;
+                newPattern = new MovementPatternVM(MovementPattern.CreateFromCreature(SelectedCreature.Model)) { Name = name };
+                var creatureMovementPatterns = new CreatureMovementPattern[] { new CreatureMovementPattern(SelectedCreature.Model, newPattern.Model) };
+                var simulation = new Simulation(new SimulationSettings(creatureMovementPatterns, SelectedEnvironment.Model));
+                simulation.Tick(simulation.SimulationSettings.TickStepSize + 0.001f);
+                var simulationRenderer = new SimulationRenderer(simulation, 800, 600);
+                simulationRenderer.Run();
             }
 
             if (newPattern != null) SelectedCreature.MovementPatternCollectionVM.Add(newPattern);

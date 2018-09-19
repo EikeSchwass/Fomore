@@ -1,4 +1,6 @@
-﻿using static System.Math;
+﻿using System.Collections.Generic;
+using System.Linq;
+using static System.Math;
 
 namespace Core
 {
@@ -37,6 +39,54 @@ namespace Core
             return 1;
         }
 
+        public static Vector2 Average(this IEnumerable<Vector2> vectors)
+        {
+            var vs = vectors.ToList();
+            double x = 0;
+            double y = 0;
+            foreach (var v in vs)
+            {
+                x += v.X;
+                y += v.Y;
+            }
+
+            x /= vs.Count;
+            y /= vs.Count;
+            return new Vector2(x, y);
+        }
+
+        public static OpenTK.Vector2 Average(this IEnumerable<OpenTK.Vector2> vectors)
+        {
+            var vs = vectors.ToList();
+            float x = 0;
+            float y = 0;
+            foreach (var v in vs)
+            {
+                x += v.X;
+                y += v.Y;
+            }
+
+            x /= vs.Count;
+            y /= vs.Count;
+            return new OpenTK.Vector2(x, y);
+        }
+
+        public static Microsoft.Xna.Framework.Vector2 Average(this IEnumerable<Microsoft.Xna.Framework.Vector2> vectors)
+        {
+            var vs = vectors.ToList();
+            float x = 0;
+            float y = 0;
+            foreach (var v in vs)
+            {
+                x += v.X;
+                y += v.Y;
+            }
+
+            x /= vs.Count;
+            y /= vs.Count;
+            return new Microsoft.Xna.Framework.Vector2(x, y);
+        }
+
         public static double GetAngleTowards(this Vector2 from, Vector2 to)
         {
             var translated = to - from;
@@ -72,9 +122,29 @@ namespace Core
             return new Microsoft.Xna.Framework.Vector2((float)vector.X, (float)vector.Y);
         }
 
+        public static Microsoft.Xna.Framework.Vector2 ToXna(this OpenTK.Vector2 vector)
+        {
+            return new Microsoft.Xna.Framework.Vector2(vector.X, vector.Y);
+        }
+
         public static Vector2 ToWindows(this Microsoft.Xna.Framework.Vector2 vector)
         {
             return new Vector2(vector.X, vector.Y);
+        }
+
+        public static Vector2 ToWindows(this OpenTK.Vector2 vector)
+        {
+            return new Vector2(vector.X, vector.Y);
+        }
+
+        public static OpenTK.Vector2 ToOpenTK(this Vector2 vector)
+        {
+            return new OpenTK.Vector2((float)vector.X, (float)vector.Y);
+        }
+
+        public static OpenTK.Vector2 ToOpenTK(this Microsoft.Xna.Framework.Vector2 vector)
+        {
+            return new OpenTK.Vector2(vector.X, vector.Y);
         }
     }
 }

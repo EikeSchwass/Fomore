@@ -2,6 +2,7 @@
 using System.Linq;
 using FarseerPhysics.Dynamics;
 using FarseerPhysics.Dynamics.Contacts;
+using FarseerPhysics.Dynamics.Joints;
 using FarseerPhysics.Factories;
 using static System.Math;
 
@@ -12,8 +13,12 @@ namespace Core.Physics
         private World World { get; }
         private CreatureMovementPattern CreatureMovementPattern { get; }
 
-        public IReadOnlyCollection<BoneBody> BoneBodies { get; private set; }
+        private Dictionary<Bone, bool> BoneCollisions { get; set; }
+        private Dictionary<Body, Bone> BodyBones { get; set; }
         public IReadOnlyCollection<JointPhysicsJoint> JointPhysicsJoints { get; private set; }
+
+        public IReadOnlyCollection<Body> Bones { get; private set; }
+        public IReadOnlyCollection<Body> Joints { get; private set; }
 
 
         public SimulationEntity(World world, CreatureMovementPattern creatureMovementPattern)
@@ -25,72 +30,120 @@ namespace Core.Physics
 
         private void CreateBody()
         {
-            var boneBodies = new List<BoneBody>();
             var jointPhysicsJoints = new List<JointPhysicsJoint>();
             var creatureStructure = CreatureMovementPattern.Creature.CreatureStructure;
-            foreach (var bone in creatureStructure.Bones)
+
+            // Bones Added
+            var boneBodies = CreateBoneBodies(creatureStructure);
+
+            var jointBodies = CreateJointBodies(creatureStructure);
+
+            foreach (var joint in jointBodies)
             {
-                float length = (float)(bone.FirstJoint.Position - bone.SecondJoint.Position).Length;
-                var body = BodyFactory.CreateRectangle(World, length, bone.Width, bone.Density, bone.FirstJoint.Position.ToXna());
-                body.Rotation = (float)bone.FirstJoint.Position.GetAngleTowards(bone.SecondJoint.Position);
-                body.BodyType = BodyType.Dynamic;
-                body.Enabled = true;
-                body.FixtureList.First().OnCollision += FixtureCollision;
-                body.FixtureList.First().OnSeparation += FixtureSeperation;
-                body.UserData = this;
-                var boneBody = new BoneBody(body, bone);
-                boneBodies.Add(boneBody);
-            }
+                var jointBody = joint.Value;
 
-            foreach (var joint in creatureStructure.Joints)
-            {
-                var first = creatureStructure.Bones.First(b => ReferenceEquals(b.FirstJoint, joint));
-                var second = creatureStructure.Bones.First(b => ReferenceEquals(b.SecondJoint, joint));
-
-                var firstBoneBody = boneBodies.First(b => b.Bone == first);
-                var secondBoneBody = boneBodies.First(b => b.Bone == second);
-
-                var firstJointAnchor =
-                    new Microsoft.Xna.Framework.Vector2((float)((first.FirstJoint.Position - first.SecondJoint.Position).X / 2),
-                                                        first.Width / 2);
-                var secondJointAnchor =
-                    new Microsoft.Xna.Framework.Vector2((float)((first.SecondJoint.Position - first.FirstJoint.Position).X / 2),
-                                                        first.Width / 2);
-
-                var revoluteJoint = JointFactory.CreateRevoluteJoint(World, secondBoneBody.Body, secondJointAnchor, firstBoneBody.Body, firstJointAnchor);
-                revoluteJoint.UserData = this;
-                revoluteJoint.CollideConnected = false;
-                var jointPhysicsJoint = new JointPhysicsJoint(revoluteJoint, joint);
-                jointPhysicsJoints.Add(jointPhysicsJoint);
-            }
-
-            foreach (var connectorInformation in creatureStructure.Bones.Select(b => b.ConnectorInformation).Where(c => c.CanControl || c.HasLimits))
-            {
-                var controlledFrom = connectorInformation.ControlledFrom;
-                var jointPhysicsJoint = jointPhysicsJoints.First(j => ReferenceEquals(j.Joint, controlledFrom));
-                jointPhysicsJoint.ConnectorInformation = connectorInformation;
-                if (connectorInformation.HasLimits)
+                foreach (var bone in creatureStructure.Bones)
                 {
-                    jointPhysicsJoint.PhysicsJoint.LimitEnabled = true;
-                    jointPhysicsJoint.PhysicsJoint.LowerLimit = connectorInformation.LowerLimit;
-                    jointPhysicsJoint.PhysicsJoint.UpperLimit = connectorInformation.UpperLimit;
-                }
+                    var boneBody = boneBodies.Single(b => b.Bone == bone);
+                    RevoluteJoint revoluteJoint;
+                    float length = (float)(bone.FirstJoint.Position - bone.SecondJoint.Position).Length;
+                    if (ReferenceEquals(bone.FirstJoint.Tracker, joint.Key.Tracker))
+                    {
+                        var anchor = new Microsoft.Xna.Framework.Vector2(-length / 2 - 10 * creatureStructure.Scale, 0);
+                        revoluteJoint =
+                            JointFactory.CreateRevoluteJoint(World, jointBody, Microsoft.Xna.Framework.Vector2.Zero, boneBody.Body, anchor);
+                    }
+                    else if (ReferenceEquals(bone.SecondJoint.Tracker, joint.Key.Tracker))
+                    {
 
-                if (connectorInformation.CanControl)
-                {
-                    jointPhysicsJoint.PhysicsJoint.MotorEnabled = true;
-                    jointPhysicsJoint.PhysicsJoint.MaxMotorTorque = connectorInformation.Strength;
+                        var anchor = new Microsoft.Xna.Framework.Vector2(length / 2 + 10 * creatureStructure.Scale, 0);
+                        revoluteJoint =
+                            JointFactory.CreateRevoluteJoint(World, jointBody, Microsoft.Xna.Framework.Vector2.Zero, boneBody.Body, anchor);
+                    }
+                    else
+                    {
+                        continue;
+                    }
+                    revoluteJoint.CollideConnected = false;
+                    var connectorInformation = bone.ConnectorInformation;
+                    if (ReferenceEquals(connectorInformation.ControlledFrom.Tracker, joint.Key.Tracker))
+                    {
+                        if (connectorInformation.HasLimits || true)
+                        {
+                            revoluteJoint.LimitEnabled = true;
+                            revoluteJoint.LowerLimit = -connectorInformation.LowerLimit / 100;
+                            revoluteJoint.UpperLimit = connectorInformation.UpperLimit / 100;
+                        }
+
+                        if (connectorInformation.CanControl || true)
+                        {
+                            revoluteJoint.MotorEnabled = true;
+                            revoluteJoint.MaxMotorTorque = connectorInformation.Strength;
+                            jointPhysicsJoints.Add(new JointPhysicsJoint(revoluteJoint, joint.Key, connectorInformation));
+                        }
+                    }
                 }
             }
 
             JointPhysicsJoints = jointPhysicsJoints.AsReadOnly();
-            BoneBodies = boneBodies.AsReadOnly();
+            BoneCollisions = boneBodies.ToDictionary(b => b.Bone, b => false);
+            BodyBones = boneBodies.ToDictionary(b => b.Body, b => b.Bone);
+
+            Joints = jointBodies.Select(kvp => kvp.Value).ToList().AsReadOnly();
+            Bones = boneBodies.Select(b => b.Body).ToList().AsReadOnly();
+        }
+
+        private Dictionary<Joint, Body> CreateJointBodies(CreatureStructure creatureStructure)
+        {
+            var jointBodies = new Dictionary<Joint, Body>();
+            foreach (var joint in creatureStructure.Joints)
+            {
+                if (creatureStructure.Bones.Count(b => b.FirstJoint.Tracker == joint.Tracker || b.SecondJoint.Tracker == joint.Tracker) >
+                    1 ||
+                    creatureStructure.Bones.Any(b => b.ConnectorInformation.ControlledFrom.Tracker == joint.Tracker))
+                {
+                    if (jointBodies.Keys.All(j => j.Tracker != joint.Tracker))
+                    {
+                        var jointBody = BodyFactory.CreateRectangle(World, 0.01f, 0.01f, 10f, joint.Position.ToXna(), joint);
+                        jointBody.Enabled = true;
+                        jointBody.BodyType = BodyType.Dynamic;
+                        jointBody.OnCollision += FixtureCollision;
+                        jointBodies.Add(joint, jointBody);
+                    }
+                }
+            }
+
+            return jointBodies;
+        }
+
+        private List<BoneBody> CreateBoneBodies(CreatureStructure creatureStructure)
+        {
+            var boneBodies = new List<BoneBody>();
+            foreach (var connectorInformation in creatureStructure.Bones.Select(b => b.ConnectorInformation))
+            {
+                float orientation =
+                    (float)connectorInformation.Bone.FirstJoint.Position.GetAngleTowards(connectorInformation.Bone.SecondJoint.Position);
+                float width = (float)(connectorInformation.Bone.FirstJoint.Position - connectorInformation.Bone.SecondJoint.Position).Length;
+                float height = connectorInformation.Bone.Width;
+                float density = connectorInformation.Bone.Density;
+
+                var body = BodyFactory.CreateRectangle(World, width, height, density / 100, connectorInformation.Bone.Position.ToXna(), this);
+                body.Rotation = orientation;
+                body.Enabled = true;
+                body.BodyType = BodyType.Dynamic;
+                body.OnCollision += FixtureCollision;
+                body.OnSeparation += FixtureSeperation;
+                boneBodies.Add(new BoneBody(body, connectorInformation.Bone));
+            }
+
+            return boneBodies;
         }
 
         private void FixtureSeperation(Fixture fixtureA, Fixture fixtureB)
         {
             var fixtureABody = fixtureA.Body;
-            BoneBodies.First(b => b.Body == fixtureABody).IsColliding = false;
+            if (BodyBones.TryGetValue(fixtureABody, out var bodyBone))
+                BoneCollisions[bodyBone] = false;
         }
 
         private bool FixtureCollision(Fixture fixtureA, Fixture fixtureB, Contact contact)
@@ -98,36 +151,45 @@ namespace Core.Physics
             var fixtureABody = fixtureA.Body;
             var fixtureBBody = fixtureB.Body;
 
-            if (fixtureBBody.UserData is SimulationEntity se && se != this)
-                return false;
-            BoneBodies.First(b => b.Body == fixtureABody).IsColliding = true;
+            if (fixtureBBody.UserData is SimulationEntity se)
+            {
+                if (se != this)
+                    return false;
+            }
+            else
+            {
+                if (BodyBones.TryGetValue(fixtureABody, out var bodyBone))
+                    BoneCollisions[bodyBone] = true;
+            }
+
             return true;
 
         }
 
-        public void PreWorldStep()
+        public void PreWorldStep(float dt, float totalTime)
         {
-            var inputs = GetNeuralInputs().ToArray();
+            var inputs = GetNeuralInputs(totalTime).ToArray();
             var outputs = CreatureMovementPattern.MovementPattern.NeuralNetwork.CalculateNetworkOutput(inputs);
             int currentIndex = 0;
             foreach (var jointPhysicsJoint in JointPhysicsJoints.Where(j => j.PhysicsJoint.MotorEnabled))
             {
                 float currentValue = outputs[currentIndex] * 2 - 1;
-                float strength = jointPhysicsJoint.ConnectorInformation.Strength;
-                strength *= currentValue * currentValue;
-                float targetSpeed = (float)(PI * 2 * currentValue);
-                jointPhysicsJoint.PhysicsJoint.MaxMotorTorque = strength;
-                jointPhysicsJoint.PhysicsJoint.MotorSpeed = targetSpeed;
+                float targetSpeed = (float)(PI * 128 * currentValue);
+                jointPhysicsJoint.PhysicsJoint.MaxMotorTorque = 1000;
+                jointPhysicsJoint.PhysicsJoint.MotorSpeed = 5000;
+                jointPhysicsJoint.PhysicsJoint.MotorEnabled = true;
+                currentIndex++;
             }
         }
 
-        private IEnumerable<float> GetNeuralInputs()
+        private IEnumerable<float> GetNeuralInputs(float totalTime)
         {
-            foreach (var boneBody in BoneBodies)
+            foreach (var boneBody in Bones)
             {
-                float result = boneBody.IsColliding ? 1 : 0;
+                float result = BoneCollisions[BodyBones[boneBody]] ? 1 : 0;
                 yield return result;
             }
+            yield return (float)Sin(totalTime * 2);
         }
     }
 }
