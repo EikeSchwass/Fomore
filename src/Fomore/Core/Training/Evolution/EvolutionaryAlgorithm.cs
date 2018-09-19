@@ -111,7 +111,7 @@ namespace Core.Training.Evolution
         /// <inheritdoc cref="MergePopulationCallback" />
         private MergePopulationCallback MergePopulation { get; }
 
-        private bool IsInitialized => Population.Any();
+        private bool IsInitialized => Population?.Any() ?? false;
 
         private IReadOnlyCollection<Individual<T>> Population { get; set; }
 

@@ -14,5 +14,10 @@ namespace Core.Training.Evolution
             Phenotype = phenotype;
         }
 
+        /// <inheritdoc />
+        public override string ToString()
+        {
+            return Phenotype + "|" + Fitness;
+        }
     }
 }

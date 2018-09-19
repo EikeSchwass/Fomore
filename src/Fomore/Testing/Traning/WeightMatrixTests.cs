@@ -51,5 +51,4 @@ namespace Testing.Traning
             Assert.AreNotEqual(0, weightMatrix[0, 0]);
         }
     }
-
 }

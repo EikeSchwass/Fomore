@@ -2,11 +2,12 @@
 
 using System;
 using System.Linq;
+using static System.Math;
 
 namespace Core.Training.Neuro
 {
     [Serializable]
-    public class NeuralNetwork
+    public class NeuralNetwork : ICloneable<NeuralNetwork>
     {
         private WeightMatrix[] WeightLayers { get; }
 
@@ -32,7 +33,7 @@ namespace Core.Training.Neuro
             for (int weightMatrixLayer = 0; weightMatrixLayer < layers.Length - 1; weightMatrixLayer++)
             {
                 int fromCount = layers[weightMatrixLayer] + 1;
-                int toCount = layers[weightMatrixLayer];
+                int toCount = layers[weightMatrixLayer + 1];
                 var weightMatrix = new WeightMatrix(new float[fromCount, toCount]);
                 WeightLayers[weightMatrixLayer] = weightMatrix;
             }
@@ -58,7 +59,7 @@ namespace Core.Training.Neuro
 
         public NeuralNetwork MutateNetworkWeights() => MutateNetworkWeights(0.25f);
 
-        private NeuralNetwork MutateNetworkWeights(float standardDeviation)
+        public NeuralNetwork MutateNetworkWeights(float standardDeviation)
         {
             var weightLayers = WeightLayers.Select(w => w.GetClonedWeights()).ToArray();
             for (int i = 0; i < WeightLayers.Length; i++)
@@ -75,6 +76,41 @@ namespace Core.Training.Neuro
                 weightLayers[i] = currentLayer;
             }
             return new NeuralNetwork(weightLayers);
+        }
+
+        /// <summary>
+        /// Calculates the output of the neural network with Sigmoid-Activation and Bias Neurons.
+        /// </summary>
+        /// <param name="input">Pre normalized input</param>
+        /// <returns>The normalized output of the network</returns>
+        public float[] CalculateNetworkOutput(float[] input)
+        {
+            var currentValues = input;
+            for (int i = 0; i < WeightLayers.Length; i++)
+            {
+                Array.Resize(ref currentValues, currentValues.Length + 1);
+                currentValues[currentValues.Length - 1] = 1;
+                var summedValues = currentValues * WeightLayers[i];
+                for (int j = 0; j < summedValues.Length; j++)
+                {
+                    summedValues[j] = Sigmoid(summedValues[j]);
+                }
+
+                currentValues = summedValues;
+            }
+
+            return currentValues;
+        }
+
+        private float Sigmoid(float t)
+        {
+            double exp = Exp(t);
+            return (float)(exp / (exp + 1));
+        }
+
+        public NeuralNetwork Clone()
+        {
+            return new NeuralNetwork(WeightLayers.Select(w => w.GetClonedWeights()).ToArray());
         }
     }
 }
