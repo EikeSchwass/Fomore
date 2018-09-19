@@ -24,7 +24,7 @@ namespace Core.Physics
             var vertices = new List<Vector2>();
             foreach (var vertex in SimulationSettings.Environment.TerrainGenerators.GenerateAggregated())
             {
-                vertices.Add(new Vector2(vertex.X / 8, vertex.Y));
+                vertices.Add(new Vector2(vertex.X / 12, vertex.Y));
                 if (vertices.Count > 1000)
                     break;
             }
@@ -34,11 +34,11 @@ namespace Core.Physics
             double minY = SimulationSettings.CreatureMovementPatterns.Min(c => c.Creature.CreatureStructure.Joints.Min(j => j.Position.Y));
             double minX = SimulationSettings.CreatureMovementPatterns.Min(c => c.Creature.CreatureStructure.Joints.Min(j => j.Position.X));
 
-            double startMin = vertices.Where(k => k.X >= minX && k.X <= maxX).Min(k => k.Y);
+            double startMin = vertices.Where(k => k.X >= minX - (maxX - minX) && k.X <= maxX + (maxX - minX)).Min(k => k.Y);
             for (int i = 0; i < vertices.Count; i++)
             {
                 var v = vertices[i];
-                vertices[i] = new Vector2(v.X - vertices.Min(k => k.X) + minX - (maxX - minX)*2, v.Y - startMin + maxY);
+                vertices[i] = new Vector2(v.X - vertices.Min(k => k.X) + minX - (maxX - minX) * 2, v.Y - startMin + (maxY - minY) + 1);
             }
 
             Vertices = vertices.AsReadOnly();

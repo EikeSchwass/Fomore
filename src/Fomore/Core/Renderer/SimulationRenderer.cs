@@ -29,7 +29,7 @@ namespace Core.Renderer
         protected override void OnLoad(EventArgs e)
         {
             base.OnLoad(e);
-            GL.ClearColor(Color.Black);
+            GL.ClearColor(Color.CornflowerBlue);
         }
 
         protected override void OnMouseWheel(MouseWheelEventArgs e)
@@ -42,14 +42,14 @@ namespace Core.Renderer
         protected override void OnMouseUp(MouseButtonEventArgs e)
         {
             base.OnMouseUp(e);
-            Simulation.Tick(0.25f);
+            Simulation.Tick(0.025f);
         }
 
         protected override void OnUpdateFrame(FrameEventArgs e)
         {
             base.OnUpdateFrame(e);
             Simulation.Tick((float)e.Time);
-            Camera.Position = Simulation.SimulationEntities.First().Bones.Select(b => b.Position).Average().ToOpenTK();
+            Camera.Position = Simulation.SimulationEntities.First().Bodies.Select(b => b.Position).Average().ToOpenTK();
             Camera.Update(e.Time);
         }
 
@@ -60,7 +60,7 @@ namespace Core.Renderer
             GL.LoadIdentity();
             Camera.UpdateView();
 
-            foreach (var entity in Simulation.SimulationEntities) RenderEntity(entity, Color.Blue);
+            foreach (var entity in Simulation.SimulationEntities) RenderEntity(entity, Color.White);
             RenderTerrain(Color.SandyBrown);
 
             SwapBuffers();
@@ -84,35 +84,8 @@ namespace Core.Renderer
         {
             GL.Color3(entityColor);
 
-            foreach (var body in entity.Bones)
+            foreach (var body in entity.Bodies)
             {
-                var shape = (PolygonShape)body.FixtureList[0].Shape;
-                GL.PushMatrix();
-                GL.Translate(body.Position.X, body.Position.Y, 0);
-                GL.Rotate((float)(body.Rotation / (Math.PI * 2) * 360), Vector3.UnitZ);
-                GL.Translate(-body.Position.X, -body.Position.Y, 0);
-                GL.Begin(PrimitiveType.Polygon);
-                {
-                    for (int i = 0; i < shape.Vertices.Count; i++)
-                    {
-                        double x1 = body.Position.X;
-                        double y1 = body.Position.Y;
-
-                        x1 += shape.Vertices[i].X;
-                        y1 += shape.Vertices[i].Y;
-
-                        GL.Vertex2((float)x1, (float)y1);
-                    }
-                }
-                GL.End();
-                GL.PopMatrix();
-            }
-
-            GL.Color3(Color.Red);
-
-            foreach (var joint in entity.Joints)
-            {
-                var body = joint;
                 var shape = (PolygonShape)body.FixtureList[0].Shape;
                 GL.PushMatrix();
                 GL.Translate(body.Position.X, body.Position.Y, 0);

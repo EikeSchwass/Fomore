@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Linq;
 using Core.Physics;
 using Core.Training.Neuro;
 using FarseerPhysics.Dynamics;
@@ -32,7 +31,7 @@ namespace Core
             var simulationEntity = new SimulationEntity(new World(Microsoft.Xna.Framework.Vector2.Zero),
                                                         new CreatureMovementPattern(creature, new MovementPattern(null, new NeuralNetwork(0, 1, 1, 1))));
             var creatureStructure = creature.CreatureStructure;
-            int outputs = simulationEntity.JointPhysicsJoints.Count;
+            int outputs = simulationEntity.RevoluteJointsCount;
             int inputs = creatureStructure.Bones.Count + 1;
 
             int hiddenLayerCount = (int)Math.Ceiling(Math.Pow((inputs + outputs) / 2.0, 1 / 3.0));
