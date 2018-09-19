@@ -8,7 +8,7 @@ namespace Fomore.UI.ViewModel.CreatureEditor.Behaviours
     public class UndoBehaviour : BaseBehaviour
     {
         /// <inheritdoc />
-        public override ImageSource Image { get; } = ImageAwesome.CreateImageSource(FontAwesomeIcon.Reply, Brushes.Black);
+        public override ImageSource Image { get; } = ImageAwesome.CreateImageSource(FontAwesomeIcon.Reply, BehaviourBrush);
 
         /// <inheritdoc />
         public override BehaviourType BehaviourType { get; } = BehaviourType.History;

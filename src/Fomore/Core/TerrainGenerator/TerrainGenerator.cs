@@ -16,5 +16,7 @@ namespace Core.TerrainGenerator
         /// </summary>
         /// <returns>A never ending series of height values.</returns>
         public abstract IEnumerable<Vector2> Generate();
+
+        public abstract TerrainGenerator Clone();
     }
 }

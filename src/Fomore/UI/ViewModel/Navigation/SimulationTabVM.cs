@@ -1,4 +1,6 @@
-﻿using Fomore.UI.ViewModel.Application;
+﻿using System.Collections.Specialized;
+using System.Linq;
+using Fomore.UI.ViewModel.Application;
 using Fomore.UI.ViewModel.Commands;
 using Fomore.UI.ViewModel.Data;
 
@@ -116,6 +118,23 @@ namespace Fomore.UI.ViewModel.Navigation
                                                               SelectedEnvironment != null);
             StopSimulationCommand = new DelegateCommand(StopSimulationAction, o => true);
 
+            EntitiesStorage.Creatures.CollectionChanged += CreatureStorageChanged;
+            EntitiesStorage.Environments.CollectionChanged += EnvironmentStorageChanged;
+        }
+
+        private void CreatureStorageChanged(object sender, NotifyCollectionChangedEventArgs e)
+        {
+            if (EntitiesStorage.Creatures.Contains(SelectedCreature))
+                return;
+            SelectedCreature = null;
+            SelectedMovementPattern = null;
+        }
+
+        private void EnvironmentStorageChanged(object sender, NotifyCollectionChangedEventArgs e)
+        {
+            if (EntitiesStorage.Environments.Contains(SelectedEnvironment))
+                return;
+            SelectedEnvironment = null;
         }
 
         public override void OnSelect(object obj)

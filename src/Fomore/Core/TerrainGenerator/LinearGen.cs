@@ -16,5 +16,11 @@ namespace Core.TerrainGenerator
                 yield return new Vector2(x, y);
             }
         }
+
+        /// <inheritdoc />
+        public override TerrainGenerator Clone()
+        {
+            return new LinearGenerator { Inclination = Inclination, StepSize = StepSize };
+        }
     }
 }

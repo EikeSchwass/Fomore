@@ -11,7 +11,7 @@
              mc:Ignorable="d"
              d:DesignHeight="900" d:DesignWidth="1440" d:DataContext="{d:DesignInstance navigation:EnvironmentTabVM}">
 
-    <Grid>
+    <Grid Style="{StaticResource StructureGrid}">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto" />
             <ColumnDefinition Width="*" />
@@ -26,13 +26,13 @@
             <controls:CustomizableButton Grid.Row="0" Style="{StaticResource NewListEntryButton}"
                                          Command="{Binding NewEnvironment}" Content="Create New Environment" />
 
-            <ListBox Grid.Row="1" Width="350" Style="{StaticResource EntityList}"
+            <ListBox Grid.Row="1" Width="350" Style="{StaticResource DefaultListBox}"
                      ItemTemplate="{StaticResource EnvironmentListItem}"
                      ItemsSource="{Binding EntitiesStorage.Environments}"
                      SelectedItem="{Binding SelectedEnvironment, Mode=TwoWay}" />
             <TextBlock Grid.Row="1" Style="{StaticResource NoSelectionText}"
                        Text="No environments"
-                       Visibility="{Binding EntitiesStorage.Environments.Count, Converter={StaticResource NumberVisibilityConverter}}" />
+                       Visibility="{Binding EntitiesStorage.Environments.Count, Converter={StaticResource InvertedNumberVisibilityConverter}}" />
         </Grid>
 
         <!-- No Selection screen -->
@@ -145,36 +145,37 @@
                             </Grid.ColumnDefinitions>
 
                             <!-- Current list of generators -->
-                            <ListView Grid.Column="0" Style="{StaticResource GroupBoxListView}"
+                            <ListBox Grid.Column="0" Style="{StaticResource NoColorChangeListBox}"
                                       ItemsSource="{Binding SelectedEnvironment.TerrainGenerators}">
-                                <ListView.Resources>
-                                    <Style TargetType="{x:Type Slider}">
-                                        <Setter Property="Margin" Value="4,1" />
-                                    </Style>
-                                    <Style TargetType="{x:Type TextBlock}"
-                                           BasedOn="{StaticResource {x:Type TextBlock}}">
-                                        <Setter Property="Margin" Value="4,1" />
-                                    </Style>
+                                <ListBox.Resources>
                                     <DataTemplate DataType="{x:Type data:LinearGeneratorVM}">
-                                        <StackPanel Margin="20,4">
-                                            <TextBlock Text="Inclination" Margin="4" />
-                                            <Grid>
-                                                <Grid.ColumnDefinitions>
-                                                    <ColumnDefinition />
-                                                    <ColumnDefinition Width="Auto" />
-                                                </Grid.ColumnDefinitions>
-                                                <Slider Grid.Column="0" Minimum="-1" Maximum="1" SmallChange="0.05"
+                                        
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="*" />
+                                                <ColumnDefinition Width="Auto" />
+                                            </Grid.ColumnDefinitions>
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition Height="Auto"/>
+                                                <RowDefinition Height="Auto"/>
+                                            </Grid.RowDefinitions>
+                                            
+                                            <TextBlock Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2" Text="Inclination" />
+                                            <Slider Grid.Column="0" Grid.Row="1" Minimum="-1" Maximum="1" SmallChange="0.05"
                                                         Value="{Binding Inclination, Mode=TwoWay}" />
-                                                <TextBlock Grid.Column="1"
+                                            <TextBlock Grid.Column="1" Grid.Row="1"
                                                            Text="{Binding Inclination, StringFormat={}{0:#.000}}"
                                                            HorizontalAlignment="Right" />
-                                                <TextBlock Grid.Column="1" Text="-1.000" Visibility="Hidden"
-                                                           HorizontalAlignment="Right" />
-                                            </Grid>
-                                        </StackPanel>
+                                            <!-- <TextBlock Grid.Column="1" Text="-1.000" Visibility="Hidden" -->
+                                            <!--                HorizontalAlignment="Right" /> -->
+                                        </Grid>
                                     </DataTemplate>
                                     <DataTemplate DataType="{x:Type data:SineGeneratorVM}">
                                         <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="*" />
+                                                <ColumnDefinition Width="Auto" />
+                                            </Grid.ColumnDefinitions>
                                             <Grid.RowDefinitions>
                                                 <RowDefinition Height="Auto" />
                                                 <RowDefinition Height="Auto" />
@@ -183,10 +184,7 @@
                                                 <RowDefinition Height="Auto" />
                                                 <RowDefinition Height="Auto" />
                                             </Grid.RowDefinitions>
-                                            <Grid.ColumnDefinitions>
-                                                <ColumnDefinition Width="*" />
-                                                <ColumnDefinition Width="Auto" />
-                                            </Grid.ColumnDefinitions>
+                                            
                                             <TextBlock Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2"
                                                        Text="Offset (moving the hills to the side)" />
                                             <Slider Grid.Column="0" Grid.Row="1" Minimum="0" Maximum="6.2831"
@@ -255,17 +253,12 @@
                                                     SmallChange="0.1" Value="{Binding Power, Mode=TwoWay}" />
                                         </Grid>
                                     </DataTemplate>
-                                </ListView.Resources>
-                                <ListView.ItemContainerStyle>
-                                    <Style TargetType="ListViewItem">
-                                        <Setter Property="HorizontalContentAlignment" Value="Stretch" />
-                                    </Style>
-                                </ListView.ItemContainerStyle>
-                                <ListView.ItemTemplate>
+                                </ListBox.Resources>
+                                
+                                <ListBox.ItemTemplate>
                                     <DataTemplate DataType="{x:Type data:TerrainGeneratorVM}">
-                                        <Border Margin="4" BorderThickness="1" BorderBrush="White" CornerRadius="4"
-                                                VerticalAlignment="Top">
-                                            <Grid>
+                                        <Border Style="{StaticResource ListBoxItemBorder}" BorderBrush="{StaticResource ListButtonBorderColor}">
+                                            <Grid Style="{StaticResource ListBoxItemGrid}">
                                                 <Grid.ColumnDefinitions>
                                                     <ColumnDefinition Width="*" />
                                                     <ColumnDefinition Width="Auto" />
@@ -274,28 +267,29 @@
                                                     <RowDefinition Height="Auto" />
                                                     <RowDefinition Height="*" />
                                                 </Grid.RowDefinitions>
-                                                <ComboBox Grid.Row="0" Width="100" HorizontalAlignment="Left"
-                                                          Background="Black"
+                                                <ComboBox Grid.Row="0" Style="{StaticResource DefaultComboBox}"
                                                           ItemsSource="{Binding TerrainGenerators}"
                                                           SelectedItem="{Binding TerrainGeneratorType}" Margin="4" />
-                                                <controls:CustomizableButton Grid.Row="0" Grid.RowSpan="2"
-                                                                             Grid.Column="1" Height="64" Width="64"
-                                                                             Padding="4" VerticalAlignment="Top"
+                                                
+                                                <controls:CustomizableButton Grid.Column="1" Grid.Row="0" Grid.RowSpan="2" Style="{StaticResource ListButton}"
                                                                              Command="{Binding Path=DataContext.SelectedEnvironment.DeleteTerrainGeneratorCommand, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"
-                                                                             CommandParameter="{Binding}">
-                                                    <fa:ImageAwesome Icon="Trash" Height="48"
-                                                                     HorizontalAlignment="Center" Width="48" />
+                                                                             CommandParameter="{Binding}"
+                                                                             VerticalAlignment="Bottom"
+                                                                             HorizontalAlignment="Right">
+                                                    <fa:ImageAwesome Icon="Trash" Width="30" Height="30"
+                                                                     HorizontalAlignment="Center" Margin="5"
+                                                                     Foreground="{StaticResource ListButtonBorderColor}" />
                                                 </controls:CustomizableButton>
                                                 <ContentControl Grid.Row="1" Grid.Column="0"
                                                                 Content="{Binding TerrainGenerator}" Margin="4" />
                                             </Grid>
                                         </Border>
                                     </DataTemplate>
-                                </ListView.ItemTemplate>
-                            </ListView>
+                                </ListBox.ItemTemplate>
+                            </ListBox>
                             <TextBlock Grid.Column="0" Style="{StaticResource NoSelectionText}"
                                        Text="No terrain generators"
-                                       Visibility="{Binding SelectedEnvironment.TerrainGenerators.Count, Converter={StaticResource NumberVisibilityConverter}}" />
+                                       Visibility="{Binding SelectedEnvironment.TerrainGenerators.Count, Converter={StaticResource InvertedNumberVisibilityConverter}}" />
                             <StackPanel Grid.Column="1" Margin="8" VerticalAlignment="Top">
                                 <TextBlock TextAlignment="Center" Text="Step Size" />
                                 <Grid Margin="10" ToolTip="Higher Values mean lower resolution but higher performance">
@@ -319,9 +313,14 @@
                 </GroupBox>
 
                 <GroupBox Grid.Row="2" Grid.Column="0" Style="{StaticResource ActionGroupBox}" Header="Actions">
-                    <controls:CustomizableButton Style="{StaticResource DeleteButton}"
-                                                 Command="{Binding EntitiesStorage.RemoveEnvironmentCommand}"
-                                                 CommandParameter="{Binding SelectedEnvironment}" Content="Delete" />
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                        <controls:CustomizableButton Style="{StaticResource DefaultButton}"
+                                                     Command="{Binding CloneCommand}"
+                                                     CommandParameter="{Binding SelectedEnvironment}" Content="Clone" />
+                        <controls:CustomizableButton Style="{StaticResource DeleteButton}"
+                                                     Command="{Binding EntitiesStorage.RemoveEnvironmentCommand}"
+                                                     CommandParameter="{Binding SelectedEnvironment}" Content="Delete" />
+                    </StackPanel>
                 </GroupBox>
             </Grid>
         </Grid>

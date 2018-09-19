@@ -7,6 +7,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using Core;
 using Fomore.UI.ViewModel.Commands;
+using Fomore.UI.ViewModel.CreatureEditor.Behaviours;
 using Fomore.UI.ViewModel.Data;
 using Fomore.UI.ViewModel.Helper;
 using FontAwesome.WPF;
@@ -20,7 +21,7 @@ namespace Fomore.UI.ViewModel.CreatureEditor.Tools
         public CreatureStructureEditorCanvasVM CanvasVM { get; set; }
 
         /// <inheritdoc />
-        public override ImageSource Image { get; } = ImageAwesome.CreateImageSource(FontAwesomeIcon.Arrows, Brushes.Black);
+        public override ImageSource Image { get; } = ImageAwesome.CreateImageSource(FontAwesomeIcon.Arrows, BaseBehaviour.BehaviourBrush);
 
         /// <inheritdoc />
         public override ToolType ToolType { get; } = ToolType.SelectionTool;

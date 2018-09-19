@@ -10,7 +10,7 @@ namespace Fomore.UI.ViewModel.CreatureEditor.Behaviours
     public class DeleteBehaviour : BaseBehaviour
     {
         /// <inheritdoc />
-        public override ImageSource Image { get; } = ImageAwesome.CreateImageSource(FontAwesomeIcon.Trash, Brushes.Black);
+        public override ImageSource Image { get; } = ImageAwesome.CreateImageSource(FontAwesomeIcon.Trash, BehaviourBrush);
 
         /// <inheritdoc />
         public override BehaviourType BehaviourType { get; } = BehaviourType.Operations;

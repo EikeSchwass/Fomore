@@ -12,13 +12,12 @@ namespace Fomore.UI.ViewModel.Data
             {
                 Model.Name = value;
                 OnPropertyChanged();
-                OnPropertyChanged(nameof(LastAccess));
             }
         }
 
         public int Iterations => Model.Iterations;
 
-        public DateTime LastAccess => Model.CreationDate;
+        public DateTime CreationDate => Model.CreationDate;
 
         /// <inheritdoc />
         public MovementPatternVM(MovementPattern model) : base(model) { }

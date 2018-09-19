@@ -14,30 +14,30 @@
     <Grid>
         <Grid.Resources>
             <DataTemplate DataType="{x:Type tools:Tool}">
-                <controls:CustomizableButton Padding="2" Margin="1" IsSelected="{Binding IsSelected}"
+                <controls:CustomizableButton Style="{StaticResource ToolButton}" IsSelected="{Binding IsSelected}"
                                              Command="{Binding PressedCommand}"
                                              CommandParameter="{Binding Path=DataContext, RelativeSource={RelativeSource AncestorType={x:Type controls:CreatureEditorPanel}}}"
                                              ToolTip="{Binding ToolTip}">
-                    <Image Source="{Binding Path=Image}" Width="32" Height="32" />
+                    <Image Source="{Binding Path=Image}" Style="{StaticResource EditorToolImage}"/>
                 </controls:CustomizableButton>
             </DataTemplate>
             <DataTemplate DataType="{x:Type behaviours:BaseBehaviour}">
-                <controls:CustomizableButton Padding="2" Margin="1" Command="{Binding Command}"
+                <controls:CustomizableButton Style="{StaticResource ToolButton}" Command="{Binding Command}"
                                              CommandParameter="{Binding Path=DataContext, RelativeSource={RelativeSource AncestorType={x:Type controls:CreatureEditorPanel}}}"
                                              ToolTip="{Binding ToolTip}">
-                    <Image Source="{Binding Path=Image}" Width="32" Height="32" />
+                    <Image Source="{Binding Path=Image}" Style="{StaticResource EditorToolImage}" />
                 </controls:CustomizableButton>
             </DataTemplate>
             <DataTemplate DataType="{x:Type behaviours:UndoBehaviour}">
-                <controls:CustomizableButton Padding="2" Margin="1"
+                <controls:CustomizableButton Style="{StaticResource ToolButton}"
                                              Command="{Binding DataContext.CreatureStructureEditorCanvasVM.HistoryStack.UndoCommand, RelativeSource={RelativeSource AncestorType={x:Type controls:CreatureEditorPanel}}}">
-                    <Image Source="{Binding Path=Image}" Width="32" Height="32" />
+                    <Image Source="{Binding Path=Image}" Style="{StaticResource EditorToolImage}"/>
                 </controls:CustomizableButton>
             </DataTemplate>
             <DataTemplate DataType="{x:Type behaviours:RedoBehaviour}">
-                <controls:CustomizableButton Padding="2" Margin="1"
+                <controls:CustomizableButton Style="{StaticResource ToolButton}"
                                              Command="{Binding DataContext.CreatureStructureEditorCanvasVM.HistoryStack.RedoCommand, RelativeSource={RelativeSource AncestorType={x:Type controls:CreatureEditorPanel}}}">
-                    <Image Source="{Binding Path=Image}" Width="32" Height="32" />
+                    <Image Source="{Binding Path=Image}" Style="{StaticResource EditorToolImage}"/>
                 </controls:CustomizableButton>
             </DataTemplate>
         </Grid.Resources>
@@ -54,7 +54,7 @@
         <!-- General Tools -->
         <Border BorderThickness="0,0,0,1" Grid.Row="0" Grid.Column="1" HorizontalAlignment="Left"
                 Style="{StaticResource DefaultBorder}">
-            <Grid Background="{StaticResource Level3Brush}">
+            <Grid Background="{StaticResource BoxColor}">
                 <Grid.Resources>
                     <CollectionViewSource x:Key="CanvasBehaviourSource" Source="{Binding Path=Behaviours}">
                         <CollectionViewSource.GroupDescriptions>
@@ -110,7 +110,7 @@
         <!-- Canvas Tools -->
         <Border Grid.Row="1" Grid.Column="0" BorderThickness="0,0,1,0" Style="{StaticResource DefaultBorder}"
                 VerticalAlignment="Top">
-            <Grid Background="{StaticResource Level2Brush}">
+            <Grid Background="{StaticResource BoxColor}">
                 <Grid.Resources>
                     <CollectionViewSource x:Key="CanvasToolSource" Source="{Binding Path=ToolCollectionVM.Tools}">
                         <CollectionViewSource.GroupDescriptions>
@@ -170,7 +170,7 @@
                                                 SizeChangedCommand="{Binding CanvasSizeChangedCommand}" />
         
         <!-- Learning Helper -->
-        <Border Grid.Column="1" Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Top" Background="#70ffff50" BorderBrush="Black" BorderThickness="1" Margin="20" MaxWidth="425">
+        <Border Grid.Column="1" Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Top" Background="{StaticResource BackgroundColor}" BorderBrush="Black" BorderThickness="1" Margin="20" MaxWidth="425">
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto" />
@@ -183,23 +183,23 @@
                         <ColumnDefinition Width="*" />
                     </Grid.ColumnDefinitions>
                     <TextBlock Text="Learning Helper" Grid.Column="2" Margin="4,2,8,2" FontSize="24" />
-                    <controls:CustomizableButton Grid.Column="1" Margin="1,2,2,2" Command="{Binding CreatureStructureEditorCanvasVM.InfoMessageCollection.ResetShownMessagesCommand}" ToolTip="Reset already shown information">
+                    <controls:CustomizableButton Grid.Column="1" Style="{StaticResource ListButton}" Margin="1,2,2,2" Command="{Binding CreatureStructureEditorCanvasVM.InfoMessageCollection.ResetShownMessagesCommand}" ToolTip="Reset already shown information">
                         <controls:CustomizableButton.Content>
-                            <fa:ImageAwesome Icon="Refresh" />
+                            <fa:ImageAwesome Icon="Refresh" Margin="3" Foreground="{StaticResource ListButtonBorderColor}" />
                         </controls:CustomizableButton.Content>
                     </controls:CustomizableButton>
-                    <controls:CustomizableButton Grid.Column="0" Margin="2,2,1,2" Command="{Binding CreatureStructureEditorCanvasVM.InfoMessageCollection.MarkEverythingReadCommand}" ToolTip="Mark everything as read (only warning will be shown)">
+                    <controls:CustomizableButton Grid.Column="0" Style="{StaticResource ListButton}" Margin="2,2,1,2" Command="{Binding CreatureStructureEditorCanvasVM.InfoMessageCollection.MarkEverythingReadCommand}" ToolTip="Mark everything as read (only warning will be shown)">
                         <controls:CustomizableButton.Content>
-                            <fa:ImageAwesome Icon="Eye" />
+                            <fa:ImageAwesome Icon="Eye" Margin="3" Foreground="{StaticResource ListButtonBorderColor}" />
                         </controls:CustomizableButton.Content>
                     </controls:CustomizableButton>
                 </Grid>
-                <ItemsControl Grid.Row="1" IsHitTestVisible="False" ItemsSource="{Binding CreatureStructureEditorCanvasVM.InfoMessageCollection.InfoMessages}" Margin="8" Visibility="{Binding CreatureStructureEditorCanvasVM.InfoMessageCollection.InfoMessages.Count, Converter={StaticResource InvertedNumberVisibilityConverter}}" AlternationCount="{Binding RelativeSource={RelativeSource Self}, Path=Items.Count}">
+                <ItemsControl Grid.Row="1" IsHitTestVisible="False" ItemsSource="{Binding CreatureStructureEditorCanvasVM.InfoMessageCollection.InfoMessages}" Margin="8" Visibility="{Binding CreatureStructureEditorCanvasVM.InfoMessageCollection.InfoMessages.Count, Converter={StaticResource InvertedNumberVisibilityConverter}, ConverterParameter=0}" AlternationCount="{Binding RelativeSource={RelativeSource Self}, Path=Items.Count}">
                     <ItemsControl.ItemTemplate>
                         <DataTemplate DataType="{x:Type tools:InfoMessage}">
                             <StackPanel>
                                 <Separator x:Name="Separator" />
-                                <TextBlock Text="{Binding Message}" FontSize="16" TextWrapping="Wrap" Foreground="{Binding Brush}" />
+                                <TextBlock Text="{Binding Message}" FontSize="16" TextWrapping="Wrap" Foreground="White" />
                             </StackPanel>
                             <DataTemplate.Triggers>
                                 <Trigger Property="ItemsControl.AlternationIndex" Value="0">

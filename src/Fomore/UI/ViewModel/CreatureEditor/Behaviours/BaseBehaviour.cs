@@ -7,6 +7,8 @@ namespace Fomore.UI.ViewModel.CreatureEditor.Behaviours
 {
     public abstract class BaseBehaviour : ViewModelBase, IHasInputBinding
     {
+        public static Brush BehaviourBrush = new SolidColorBrush(Color.FromRgb(221, 221, 221));
+
         public abstract ImageSource Image { get; }
 
         public abstract BehaviourType BehaviourType { get; }
@@ -15,8 +17,7 @@ namespace Fomore.UI.ViewModel.CreatureEditor.Behaviours
 
         protected abstract InputGesture InputGesture { get; }
 
-        public string ToolTip =>
-            $"{ToString()} ({(InputGesture as KeyGesture)?.GetDisplayStringForCulture(CultureInfo.CurrentCulture)})";
+        public string ToolTip => $"{ToString()} ({(InputGesture as KeyGesture)?.GetDisplayStringForCulture(CultureInfo.CurrentCulture)})";
 
         protected BaseBehaviour()
         {

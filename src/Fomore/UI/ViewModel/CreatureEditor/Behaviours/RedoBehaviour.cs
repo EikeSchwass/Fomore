@@ -8,7 +8,7 @@ namespace Fomore.UI.ViewModel.CreatureEditor.Behaviours
     public class RedoBehaviour : BaseBehaviour
     {
         /// <inheritdoc />
-        public override ImageSource Image { get; } = ImageAwesome.CreateImageSource(FontAwesomeIcon.MailForward, Brushes.Black);
+        public override ImageSource Image { get; } = ImageAwesome.CreateImageSource(FontAwesomeIcon.MailForward, BehaviourBrush);
 
         /// <inheritdoc />
         public override BehaviourType BehaviourType { get; } = BehaviourType.History;

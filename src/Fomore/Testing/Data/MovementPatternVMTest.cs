@@ -42,19 +42,5 @@ namespace Testing.Data
 
             Assert.AreNotEqual("Pattern 1", actual);
         }
-
-
-        [Test]
-        public void LastAccess_SetSameTime_ReturnsSameTimeTrue()
-        {
-            var movementPattern = new MovementPattern(null, null);
-            var movementPatternVM = new MovementPatternVM(movementPattern);
-            var expected = movementPatternVM.LastAccess;
-            System.Threading.Thread.Sleep(100);
-
-            var actual = movementPatternVM.LastAccess;
-
-            Assert.AreEqual(expected.Second, actual.Second);
-        }
     }
 }

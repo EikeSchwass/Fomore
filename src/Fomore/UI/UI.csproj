@@ -172,6 +172,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\Windows\DummyProgressWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\Windows\MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -234,6 +238,9 @@
     </Compile>
     <Compile Include="Views\Windows\CreatureStructureEditor.xaml.cs">
       <DependentUpon>CreatureStructureEditor.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Windows\DummyProgressWindow.xaml.cs">
+      <DependentUpon>DummyProgressWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Windows\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
@@ -323,6 +330,7 @@
     <Resource Include="assets\images\movementpattern_icon_new.png" />
   </ItemGroup>
   <ItemGroup>
+    <Resource Include="assets\images\new_icon.png" />
     <Content Include="assets\video\training.mp4" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

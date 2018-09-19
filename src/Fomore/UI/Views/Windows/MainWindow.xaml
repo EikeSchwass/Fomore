@@ -7,13 +7,15 @@
         xmlns:controls="clr-namespace:Fomore.UI.Views.Controls"
         xmlns:application="clr-namespace:Fomore.UI.ViewModel.Application"
         mc:Ignorable="d"
-        Title="Fomore" MinHeight="600" MinWidth="960" Width="1440" Height="900" Icon="../../assets/images/icon.ico" Loaded="MainWindow_OnLoaded" Visibility="Visible" WindowStartupLocation="CenterScreen">
+        Title="Fomore" MinHeight="600" MinWidth="960" Width="1440" Height="900" Icon="../../assets/images/icon.ico"
+        Loaded="MainWindow_OnLoaded" Visibility="Visible" WindowStartupLocation="CenterScreen">
     <Window.DataContext>
-        <application:AppStateVM  />
+        <application:AppStateVM />
     </Window.DataContext>
     <Window.Resources>
         <Style TargetType="{x:Type TabItem}">
-            <Setter Property="Width" Value="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=Window}, Path=Width, Converter={StaticResource TabSizeConverter}}" />
+            <Setter Property="Width"
+                    Value="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=Window}, Path=Width, Converter={StaticResource TabSizeConverter}}" />
             <Setter Property="Height" Value="30" />
             <Setter Property="Background" Value="{StaticResource TabColor}" />
         </Style>
@@ -23,7 +25,8 @@
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
-        <TabControl Grid.Row="1" DataContext="{Binding Path=NavigationVM}" SelectedItem="{Binding SelectedTab, Mode=TwoWay}" ItemsSource="{Binding TabCollection}">
+        <TabControl Grid.Row="1" DataContext="{Binding Path=NavigationVM}" Style="{StaticResource DefaultTabControl}"
+                    SelectedItem="{Binding SelectedTab, Mode=TwoWay}" ItemsSource="{Binding TabCollection}">
             <TabControl.Resources>
                 <DataTemplate DataType="{x:Type navigation:CreatureTabVM}">
                     <controls:CreatureTabControl />
