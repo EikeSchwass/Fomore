@@ -1,4 +1,6 @@
-﻿using System.Threading;
+﻿using System.Collections.Specialized;
+using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using Core;
@@ -72,6 +74,8 @@ namespace Fomore.UI.ViewModel.Navigation
                 StartTrainingCommand.OnCanExecuteChanged();
             }
         }
+
+
 
         public bool NewMovementPattern
         {
@@ -186,7 +190,25 @@ namespace Fomore.UI.ViewModel.Navigation
                                                             SelectedEnvironment != null);
             StopTrainingCommand = new DelegateCommand(StopTrainingAction, o => true);
 
+            EntitiesStorage.Creatures.CollectionChanged += CreatureStorageChanged;
+            EntitiesStorage.Environments.CollectionChanged += EnvironmentStorageChanged;
+
             Iterations = 1;
+        }
+
+        private void CreatureStorageChanged(object sender, NotifyCollectionChangedEventArgs e)
+        {
+            if (EntitiesStorage.Creatures.Contains(SelectedCreature))
+                return;
+            SelectedCreature = null;
+            SelectedMovementPattern = null;
+        }
+
+        private void EnvironmentStorageChanged(object sender, NotifyCollectionChangedEventArgs e)
+        {
+            if (EntitiesStorage.Environments.Contains(SelectedEnvironment))
+                return;
+            SelectedEnvironment = null;
         }
 
         private void ResetSelectionAction(object obj)
