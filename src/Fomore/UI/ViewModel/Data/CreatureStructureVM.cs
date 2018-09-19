@@ -110,7 +110,7 @@ namespace Fomore.UI.ViewModel.Data
 
         private async Task RecalculateWeightAsync()
         {
-            var simulation = new Simulation();
+            var simulation = new Simulation(new SimulationSettings(Enumerable.Empty<CreatureMovementPattern>(), new Environment { Gravity = 9.81 }));
             double weight = 0;
             foreach (var boneVM in BoneCollectionVM) weight += await simulation.GetBoneWeightAsync(boneVM.Model, Scale);
 
@@ -119,7 +119,7 @@ namespace Fomore.UI.ViewModel.Data
 
         private void RecalculateWeight()
         {
-            var simulation = new Simulation();
+            var simulation = new Simulation(new SimulationSettings(Enumerable.Empty<CreatureMovementPattern>(), new Environment { Gravity = 9.81 }));
             double weight = 0;
             foreach (var boneVM in BoneCollectionVM) weight += simulation.GetBoneWeight(boneVM.Model, Scale);
 

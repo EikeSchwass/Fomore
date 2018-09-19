@@ -13,6 +13,8 @@ namespace Core
         public bool HasLimits { get; set; }
         public bool IsFlipped { get; set; }
 
+        public Joint ControlledFrom => !IsFlipped ? Bone.FirstJoint : Bone.SecondJoint;
+
         public ConnectorInformation Clone(Bone newBone)
         {
             var connectorInformation = new ConnectorInformation

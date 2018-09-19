@@ -171,7 +171,7 @@ namespace Fomore.UI.ViewModel.Navigation
             for (int i = 0; i < Iterations; i++)
             {
                 // TODO Training here
-                newPattern = new MovementPatternVM(new MovementPattern(parent)) {Name = name};
+                newPattern = new MovementPatternVM(new MovementPattern(parent, null)) {Name = name};
                 parent = newPattern.Model;
             }
 

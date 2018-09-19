@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using Core.Training;
-using Core.Training.Evolution;
-using Core.Training.Neuro;
+﻿using Core.Training.Neuro;
 using NUnit.Framework;
 
 namespace Testing.Traning

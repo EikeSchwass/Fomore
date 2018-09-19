@@ -79,7 +79,7 @@ namespace Testing.Data
         [Test]
         public void CreatureStructureVM_WithoutValueTest_ReturnsZeroCountTrue()
         {
-            var creature = new Creature { MovementPatterns = { new MovementPattern(null) } };
+            var creature = new Creature { MovementPatterns = { new MovementPattern(null, null) } };
             var creatureVM = new CreatureVM(creature);
 
             var creatureStructureVM = creatureVM.CreatureStructureVM;
@@ -90,7 +90,7 @@ namespace Testing.Data
         [Test]
         public void CreatureStructureVM_WithValueTest_ReturnsZeroCountFalse()
         {
-            var creature = new Creature { MovementPatterns = { new MovementPattern(null) } };
+            var creature = new Creature { MovementPatterns = { new MovementPattern(null, null) } };
             var creatureVM = new CreatureVM(creature);
 
             var creatureStructureVM = creatureVM.CreatureStructureVM;
@@ -106,7 +106,7 @@ namespace Testing.Data
         [Test]
         public void MovementPatternCollectionVM_GetValueTest_ReturnsSameCountTrue()
         {
-            var creature = new Creature { MovementPatterns = { new MovementPattern(null) } };
+            var creature = new Creature { MovementPatterns = { new MovementPattern(null, null) } };
             var creatureVM = new CreatureVM(creature);
 
             var movementPatternCollectionVM = creatureVM.MovementPatternCollectionVM;
@@ -117,7 +117,7 @@ namespace Testing.Data
         [Test]
         public void MovementPatternCollectionVM_GetValueTest_ReturnsSameCountFalse()
         {
-            var creature = new Creature { MovementPatterns = { new MovementPattern(null) } };
+            var creature = new Creature { MovementPatterns = { new MovementPattern(null, null) } };
             var creatureVM = new CreatureVM(creature);
 
             var movementPatternCollectionVM = creatureVM.MovementPatternCollectionVM;
@@ -127,7 +127,7 @@ namespace Testing.Data
         [Test]
         public void Clone_GetCloneTest_ReturnsTrue()
         {
-            var creature = new Creature { MovementPatterns = { new MovementPattern(null) } };
+            var creature = new Creature { MovementPatterns = { new MovementPattern(null, null) } };
             var creatureVM = new CreatureVM(creature);
 
             var clone = creatureVM.Clone();

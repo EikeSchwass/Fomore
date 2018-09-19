@@ -8,6 +8,7 @@ namespace Fomore.UI.ViewModel.Helper
 {
     public static class GeometryExtensions
     {
+
         public static double GetDistanceToBone(this Vector2 p, Bone bone)
         {
             //See https://en.wikipedia.org/wiki/Distance_from_a_point_to_a_line#Cartesian_coordinates

@@ -10,7 +10,7 @@ namespace Testing.Data
         [Test]
         public void Name_SetSameValue_SameValueTrue()
         {
-            var movementPattern = new MovementPattern(null);
+            var movementPattern = new MovementPattern(null, null);
             var movementPatternVM = new MovementPatternVM(movementPattern) { Name = "Pattern 1" };
             movementPatternVM.Name = "Pattern 1";
 
@@ -22,7 +22,7 @@ namespace Testing.Data
         [Test]
         public void Name_SetDifferentValue_SecondValueTrue()
         {
-            var movementPattern = new MovementPattern(null);
+            var movementPattern = new MovementPattern(null, null);
             var movementPatternVM = new MovementPatternVM(movementPattern) { Name = "Pattern 1" };
             movementPatternVM.Name = "Pattern 2";
 
@@ -34,7 +34,7 @@ namespace Testing.Data
         [Test]
         public void Name_SetDifferentValue_FirstValueFalse()
         {
-            var movementPattern = new MovementPattern(null);
+            var movementPattern = new MovementPattern(null, null);
             var movementPatternVM = new MovementPatternVM(movementPattern) { Name = "Pattern 1" };
             movementPatternVM.Name = "Pattern 2";
 
@@ -47,7 +47,7 @@ namespace Testing.Data
         [Test]
         public void LastAccess_SetSameTime_ReturnsSameTimeTrue()
         {
-            var movementPattern = new MovementPattern(null);
+            var movementPattern = new MovementPattern(null, null);
             var movementPatternVM = new MovementPatternVM(movementPattern);
             var expected = movementPatternVM.LastAccess;
             System.Threading.Thread.Sleep(100);

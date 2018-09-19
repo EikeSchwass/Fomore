@@ -42,7 +42,7 @@ namespace Testing.Navigation
         [Test]
         public void SelectedMovementPattern_SetSameValue_ReturnsSameValueTrue()
         {
-            var movementPatternVM = new MovementPatternVM(new MovementPattern(null)) { Name = "Fly" };
+            var movementPatternVM = new MovementPatternVM(new MovementPattern(null, null)) { Name = "Fly" };
             var trainingTabVM = new TrainingTabVM(null, new EntityStorageVM(null)) { SelectedMovementPattern = movementPatternVM };
             trainingTabVM.SelectedMovementPattern = movementPatternVM;
             Assert.AreEqual(trainingTabVM.SelectedMovementPattern.Name, "Fly");
@@ -51,8 +51,8 @@ namespace Testing.Navigation
         [Test]
         public void SelectedMovementPattern_SetDifferentValue_ReturnsSecondValueTrue()
         {
-            var movementPatternVM = new MovementPatternVM(new MovementPattern(null)) { Name = "Fly" };
-            var movementPatternVM2 = new MovementPatternVM(new MovementPattern(null)) { Name = "Run" };
+            var movementPatternVM = new MovementPatternVM(new MovementPattern(null, null)) { Name = "Fly" };
+            var movementPatternVM2 = new MovementPatternVM(new MovementPattern(null, null)) { Name = "Run" };
             var trainingTabVM = new TrainingTabVM(null, new EntityStorageVM(null)) { SelectedMovementPattern = movementPatternVM };
             trainingTabVM.SelectedMovementPattern = movementPatternVM2;
             Assert.AreEqual(trainingTabVM.SelectedMovementPattern.Name, "Run");
@@ -61,8 +61,8 @@ namespace Testing.Navigation
         [Test]
         public void SelectedMovementPattern_SetDifferentValue_ReturnsFirstValueFalse()
         {
-            var movementPatternVM = new MovementPatternVM(new MovementPattern(null)) { Name = "Fly" };
-            var movementPatternVM2 = new MovementPatternVM(new MovementPattern(null)) { Name = "Run" };
+            var movementPatternVM = new MovementPatternVM(new MovementPattern(null, null)) { Name = "Fly" };
+            var movementPatternVM2 = new MovementPatternVM(new MovementPattern(null, null)) { Name = "Run" };
             var trainingTabVM = new TrainingTabVM(null, new EntityStorageVM(null)) { SelectedMovementPattern = movementPatternVM };
             trainingTabVM.SelectedMovementPattern = movementPatternVM2;
             Assert.AreNotEqual(trainingTabVM.SelectedMovementPattern.Name, "Fly");

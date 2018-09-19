@@ -1,4 +1,5 @@
 ﻿using System;
+using Core.Training.Neuro;
 
 namespace Core
 {
@@ -10,23 +11,19 @@ namespace Core
         public string Name { get; set; }
 
         public int Iterations => Parent?.Iterations + 1 ?? 1;
-        
-        public DateTime CreationDate { get; private set; }
-        
+
+        public DateTime CreationDate { get; }
+        public NeuralNetwork NeuralNetwork { get; }
+
         public MovementPattern Clone()
         {
-            return new MovementPattern(Parent?.Clone()) {Name = Name};
-            // TODO actually implement this once the class has functionality
+            return new MovementPattern(Parent?.Clone(), Parent?.NeuralNetwork.Clone()) { Name = Name };
         }
 
-        public MovementPattern(MovementPattern parent)
+        public MovementPattern(MovementPattern parent, NeuralNetwork neuralNetwork)
         {
             Parent = parent;
-            OnCreate();
-        }
-
-        private void OnCreate()
-        {
+            NeuralNetwork = neuralNetwork;
             CreationDate = DateTime.Now;
         }
     }

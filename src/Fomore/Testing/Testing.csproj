@@ -60,6 +60,7 @@
     <Compile Include="Helper\CollectionAccessTest.cs" />
     <Compile Include="Helper\EncapsulatingObservableCollectionTest.cs" />
     <Compile Include="Helper\HistoryStackVMTests.cs" />
+    <Compile Include="Helper\MathTests.cs" />
     <Compile Include="Helper\ReadOnlyObservableCollectionTests.cs" />
     <Compile Include="Helper\VectorExtensionsTest.cs" />
     <Compile Include="Navigation\CreateCreatureDialogVMTest.cs" />
