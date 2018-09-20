@@ -17,22 +17,24 @@ namespace Fomore.UI.ViewModel.Data
             }
         }
 
-        public bool CanControl
-        {
-            get => Model.CanControl;
-            set
-            {
-                if (value == Model.CanControl) return;
-                Model.CanControl = value;
-                OnPropertyChanged();
-            }
-        }
-
         public JointVM PivotJoint => Model.IsFlipped ? Bone.SecondJoint : Bone.FirstJoint;
         public JointVM NonPivotJoint => Model.IsFlipped ? Bone.FirstJoint : Bone.SecondJoint;
 
         public Vector2 LowerLimitEndPoint => NonPivotJoint.Position.RotateAround(PivotJoint.Position, -LowerLimit);
         public Vector2 UpperLimitEndPoint => NonPivotJoint.Position.RotateAround(PivotJoint.Position, UpperLimit);
+
+
+        public bool IsSensor
+        {
+            get => Model.IsSensor;
+            set
+            {
+                if (Model.IsSensor == value)
+                    return;
+                Model.IsSensor = value;
+                OnPropertyChanged();
+            }
+        }
 
         public bool IsFlipped
         {

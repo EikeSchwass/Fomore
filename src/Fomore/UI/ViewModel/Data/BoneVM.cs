@@ -8,6 +8,7 @@ namespace Fomore.UI.ViewModel.Data
         private JointVM secondJoint;
         private ConnectorInformationVM connectorInformation;
 
+
         public float Density
         {
             get => Model.Density;

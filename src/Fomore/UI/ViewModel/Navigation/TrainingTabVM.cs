@@ -1,20 +1,20 @@
 ﻿using System.Collections.Specialized;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using System.Windows;
 using Core;
-using Core.Physics;
-using Core.Renderer;
+using Core.Training;
+using Core.Training.Evolution;
 using Fomore.UI.ViewModel.Application;
 using Fomore.UI.ViewModel.Commands;
 using Fomore.UI.ViewModel.Data;
-using Fomore.UI.Views.Windows;
 
 namespace Fomore.UI.ViewModel.Navigation
 {
     public class TrainingTabVM : TabPageVM
     {
+        private int iterationProgress;
         private int iterations;
         private bool newMovementPattern;
         private CreatureVM selectedCreature;
@@ -27,9 +27,8 @@ namespace Fomore.UI.ViewModel.Navigation
         private MovementPatternVM selectedMovementPattern;
         private bool showTraining;
         private double targetSpeed;
+        private double trainingProgress;
         private bool trainingRunning;
-        private int trainingProgress;
-        private int iterationProgress;
 
         /// <inheritdoc />
         public override string Header => "Training";
@@ -76,8 +75,6 @@ namespace Fomore.UI.ViewModel.Navigation
                 StartTrainingCommand.OnCanExecuteChanged();
             }
         }
-
-
 
         public bool NewMovementPattern
         {
@@ -142,7 +139,7 @@ namespace Fomore.UI.ViewModel.Navigation
             }
         }
 
-        public int TrainingProgress
+        public double TrainingProgress
         {
             get => trainingProgress;
             set
@@ -223,41 +220,48 @@ namespace Fomore.UI.ViewModel.Navigation
             ShowTraining = false;
         }
 
-        private void StartTrainingAction(object obj)
+        private async void StartTrainingAction(object obj)
         {
-            if (ShowTraining)
+            var movementPattern = SelectedMovementPattern;
+            if (movementPattern == null)
             {
-                RunVisualTraining();
-            }
-            else
-            {
-                var window = new DummyProgressWindow(Window.GetWindow(this));
-                //window.ShowDialog();
-            }
-
-            MovementPattern parent = null;
-            string name = null;
-            if (NewMovementPattern)
-                name = "" + SelectedCreature.Name + " on " + SelectedEnvironment.Name;
-            else if (SelectedMovementPattern != null)
-            {
-                parent = SelectedMovementPattern.Model;
-                name = SelectedMovementPattern.Name;
+                movementPattern = new MovementPatternVM(MovementPattern.CreateFromCreature(SelectedCreature.Model))
+                {
+                    Name = SelectedCreature.Name + " on " + SelectedEnvironment.Name
+                };
             }
 
-            MovementPatternVM newPattern = null;
-            for (int i = 0; i < Iterations; i++)
-            {
-                // TODO Training here
-                newPattern = new MovementPatternVM(MovementPattern.CreateFromCreature(SelectedCreature.Model)) { Name = name };
-                var creatureMovementPatterns = new CreatureMovementPattern[] { new CreatureMovementPattern(SelectedCreature.Model, newPattern.Model) };
-                var simulation = new Simulation(new SimulationSettings(creatureMovementPatterns, SelectedEnvironment.Model));
-                simulation.Tick(simulation.SimulationSettings.TickStepSize + 0.001f);
-                var simulationRenderer = new SimulationRenderer(simulation, 800, 600);
-                simulationRenderer.Run();
-            }
+            int index = 0;
+            Individual<MovementPattern> best = null;
+            var traningSession =
+                new TraningSession(new TrainingSettings(SelectedCreature.Model,
+                                                        movementPattern.Model,
+                                                        SelectedEnvironment.Model,
+                                                        Iterations));
+            IsEnabled = false;
+            TrainingRunning = true;
+            TrainingProgress = 0.25 / Iterations;
+            await traningSession.RunTrainingSessionAsync((t, r) =>
+                                                         {
+                                                             var individuals = r.OrderByDescending(k => k.Fitness).ToList();
+                                                             var max = individuals.First().Fitness;
+                                                             var min = individuals.Last().Fitness;
+                                                             var average = individuals.Average(k => k.Fitness);
+                                                             var mean = individuals[individuals.Count / 2].Fitness;
+                                                             index++;
+                                                             TrainingProgress = (index * 100.0 / Iterations);
+                                                             Debug
+                                                                .WriteLine($"Generation #{index}: MAX:{max:F3}, MIN:{min:F3}, AVG:{average:F3}, MEAN:{mean:F3}");
+                                                             if ((best?.Fitness ?? 0) <= max || best == null)
+                                                                 best = individuals.First();
+                                                             return false;
+                                                         });
+            IsEnabled = true;
+            TrainingProgress = 0;
+            TrainingRunning = false;
+            var newPattern = new MovementPatternVM(best.Phenotype);
 
-            if (newPattern != null) SelectedCreature.MovementPatternCollectionVM.Add(newPattern);
+            SelectedCreature.MovementPatternCollectionVM.Add(newPattern);
             SelectedMovementPattern = newPattern;
         }
 
@@ -278,7 +282,7 @@ namespace Fomore.UI.ViewModel.Navigation
                                    for (int i = 1; i <= 1000; i++)
                                    {
                                        IterationProgress = i;
-                                       TrainingProgress = (int)(((double)it * 1000 / Iterations) + ((double)i / Iterations));
+                                       TrainingProgress = (int)((double)it * 1000 / Iterations + (double)i / Iterations);
                                        Thread.Sleep(1);
                                    }
                                }

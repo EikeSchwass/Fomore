@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using Core.Training.Neuro;
 using FarseerPhysics.Dynamics;
 using FarseerPhysics.Dynamics.Contacts;
 using FarseerPhysics.Dynamics.Joints;
@@ -10,10 +11,10 @@ namespace Core.Physics
 {
     public class SimulationEntity
     {
-        private const float MovementLimit = (float)(5 * MathExtensions.DegreesToRadiansFactor);
-        private const float MotorTorque = 0.00875f;
+        private const float MovementLimit = (float)(4 * MathExtensions.DegreesToRadiansFactor);
+        private float MotorTorque { get; }
         private World World { get; }
-        private CreatureMovementPattern CreatureMovementPattern { get; }
+        public CreatureMovementPattern CreatureMovementPattern { get; }
 
         private Dictionary<Joint, List<RevoluteJoint>> JointRevoluteJoints { get; } = new Dictionary<Joint, List<RevoluteJoint>>();
         private Dictionary<Body, Bone> BodyBones { get; } = new Dictionary<Body, Bone>();
@@ -28,6 +29,8 @@ namespace Core.Physics
             World = world;
             CreatureMovementPattern = creatureMovementPattern;
             CreateBody();
+            float weight = Bodies.Sum(b => b.Mass);
+            MotorTorque = 0.175f;
         }
 
         private void CreateBody()
@@ -124,11 +127,20 @@ namespace Core.Physics
                 float density = bone.Density;
 
                 var body = BodyFactory.CreateRectangle(World, width, height, density, bone.Position.ToXna() * 1.05f, this);
+                foreach (var fixture in body.FixtureList)
+                {
+                    fixture.Friction = 0.8f;
+                }
                 body.Rotation = orientation;
                 body.Enabled = true;
                 body.BodyType = BodyType.Dynamic;
-                body.OnCollision += FixtureCollision;
-                body.OnSeparation += FixtureSeperation;
+                if (bone.ConnectorInformation.IsSensor)
+                {
+                    body.OnCollision += FixtureCollision;
+                    body.OnSeparation += FixtureSeperation;
+                    BoneCollisions.Add(bone, false);
+                }
+
                 BoneBodies.Add(bone, body);
                 BodyBones.Add(body, bone);
                 bodies.Add(body);
@@ -173,17 +185,20 @@ namespace Core.Physics
                 if (!JointRevoluteJoints.TryGetValue(joint, out var revoluteJoints))
                     continue;
                 float currentValue = outputs[currentIndex] * 2 - 1;
-                float targetSpeed = (float)(PI * 2 * currentValue);
+                float targetSpeed = (float)(PI * 4 * currentValue);
+
+                //float strength = currentValue * currentValue * MotorTorque;
 
                 foreach (var revoluteJoint in revoluteJoints)
                 {
                     revoluteJoint.MotorSpeed = targetSpeed;
+                    revoluteJoint.MaxMotorTorque = MotorTorque;
                 }
                 currentIndex++;
             }
         }
 
-        private IEnumerable<float> GetNeuralInputs(float totalTime)
+        public IEnumerable<float> GetNeuralInputs(float totalTime)
         {
             foreach (var kvp in BoneCollisions.OrderByDescending(kvp => kvp.Key.Position.X))
             {
@@ -191,7 +206,15 @@ namespace Core.Physics
                 yield return result;
             }
 
-            yield return (float)Sin(totalTime * 2);
+            float averageXVelocity = Bodies.Average(b => b.LinearVelocity.X);
+            float averageYVelocity = Bodies.Average(b => b.LinearVelocity.Y);
+
+            yield return NeuralNetwork.Sigmoid(averageXVelocity);
+            yield return NeuralNetwork.Sigmoid(averageYVelocity);
+
+            //yield return (float)Cos(rotation);
+
+            //yield return (float)Sin(totalTime * 2);
         }
     }
 }

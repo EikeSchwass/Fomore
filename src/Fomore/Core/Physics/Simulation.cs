@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using FarseerPhysics.Dynamics;
@@ -84,8 +83,9 @@ namespace Core.Physics
         /// <param name="time">Time in seconds</param>
         public void RunFor(float time)
         {
-            var stopwatch = Stopwatch.StartNew();
-            while (stopwatch.ElapsedMilliseconds * 1000 < time)
+            float tickSize = SimulationSettings.TickStepSize;
+            int iterations = (int)Math.Ceiling(time / tickSize);
+            for (int i = 0; i < iterations; i++)
             {
                 PerformTick(SimulationSettings.TickStepSize);
             }

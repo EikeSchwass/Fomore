@@ -1,5 +1,8 @@
 ﻿using System.Collections.Specialized;
 using System.Linq;
+using Core.Physics;
+using Core.Renderer;
+using Core.Training;
 using Fomore.UI.ViewModel.Application;
 using Fomore.UI.ViewModel.Commands;
 using Fomore.UI.ViewModel.Data;
@@ -89,8 +92,12 @@ namespace Fomore.UI.ViewModel.Navigation
 
         private void StartSimulationAction(object obj)
         {
-            // MessageBox.Show("The simulation has started...\n\nParameters:\nCreature:\t\t\t" + SelectedCreature.Name + "\nMovement Pattern:\t" + SelectedMovementPattern.Name + "\nEnvironment:\t\t" + SelectedEnvironment.Name, "Simulation", MessageBoxButton.OK, MessageBoxImage.Information);
-            SimulationRunning = true;
+            using (var isolation = new Isolated<RemoteRenderer>())
+            {
+                IsEnabled = false;
+                isolation.Value.Render(SelectedCreature.Model, SelectedMovementPattern.Model, SelectedEnvironment.Model);
+                IsEnabled = true;
+            }
         }
 
         private void StopSimulationAction(object obj)

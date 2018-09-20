@@ -6,7 +6,7 @@ namespace Core.Training.Evolution
     public class Individual<T>
     {
         public T Phenotype { get; }
-        public double? Fitness { get; }
+        public double? Fitness { get; internal set; }
 
         public Individual(T phenotype, double? fitness)
         {

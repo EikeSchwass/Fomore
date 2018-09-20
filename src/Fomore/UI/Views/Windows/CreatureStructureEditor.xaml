@@ -89,7 +89,8 @@
                         <controls:CustomizableButton Grid.Column="1" Style="{StaticResource ListButton}"
                                                      VerticalAlignment="Center"
                                                      Command="{Binding CreatureEditorPanelVM.Creature.CreatureStructureVM.RecalculateWeightCommand}">
-                            <fa:ImageAwesome Icon="Refresh" Width="20" Height="20" Margin="5" Foreground="{StaticResource ListButtonBorderColor}" />
+                            <fa:ImageAwesome Icon="Refresh" Width="20" Height="20" Margin="5"
+                                             Foreground="{StaticResource ListButtonBorderColor}" />
                         </controls:CustomizableButton>
                     </Grid>
                 </Grid>
@@ -97,10 +98,10 @@
 
             <GroupBox Grid.Row="1" Header="Background Settings">
                 <StackPanel
-                                DataContext="{Binding CreatureEditorPanelVM.CreatureStructureEditorCanvasVM.BackgroundImage}">
+                    DataContext="{Binding CreatureEditorPanelVM.CreatureStructureEditorCanvasVM.BackgroundImage}">
                     <StackPanel.Resources>
                         <Style TargetType="{x:Type controls:CustomizableButton}"
-                                           BasedOn="{StaticResource {x:Type controls:CustomizableButton}}">
+                               BasedOn="{StaticResource {x:Type controls:CustomizableButton}}">
                             <Setter Property="Margin" Value="4,2" />
                             <Setter Property="Padding" Value="16,4" />
                         </Style>
@@ -111,54 +112,72 @@
                             <ColumnDefinition Width="Auto" />
                         </Grid.ColumnDefinitions>
                         <TextBlock Text="{Binding FileInfo.Name}" ToolTip="{Binding FileInfo.FullName}" />
-                        <controls:CustomizableButton Grid.Column="1" Content="Select background image..." Style="{StaticResource DefaultButton}" Width="180"
-                                                                 Command="{Binding BrowseImageCommand}" />
+                        <controls:CustomizableButton Grid.Column="1" Content="Select background image..."
+                                                     Style="{StaticResource DefaultButton}" Width="180"
+                                                     Command="{Binding BrowseImageCommand}" />
                     </Grid>
                     <Grid
-                                    Visibility="{Binding ImageSource, Converter={StaticResource NullToVisibilityConverter}}">
+                        Visibility="{Binding ImageSource, Converter={StaticResource NullToVisibilityConverter}}">
                         <TextBlock Text="No image selected" Style="{StaticResource NoSelectionText}" />
                     </Grid>
                     <Grid
-                                    Visibility="{Binding ImageSource, Converter={StaticResource NotNullToVisibilityConverter}}"
-                                    Background="{StaticResource BackgroundColor}" HorizontalAlignment="Center" Margin="10">
+                        Visibility="{Binding ImageSource, Converter={StaticResource NotNullToVisibilityConverter}}"
+                        Background="{StaticResource BackgroundColor}" HorizontalAlignment="Center" Margin="10">
                         <UniformGrid Rows="3" Columns="3" HorizontalAlignment="Center"
-                                                 VerticalAlignment="Center" Margin="3">
-                            
+                                     VerticalAlignment="Center" Margin="3">
+
 
                             <!-- You can take this Button to allow holding down the mouse button. Not styles yet though -->
-                            <RepeatButton Style="{StaticResource ToolRepeatButton}" Command="{Binding RotateCounterClockwiseCommand}">
-                                <fa:ImageAwesome Style="{StaticResource EditorBackgroundManipulationButtonIcon}" Icon="RotateLeft"/>
+                            <RepeatButton Style="{StaticResource ToolRepeatButton}"
+                                          Command="{Binding RotateCounterClockwiseCommand}">
+                                <fa:ImageAwesome Style="{StaticResource EditorBackgroundManipulationButtonIcon}"
+                                                 Icon="RotateLeft" />
                             </RepeatButton>
                             <RepeatButton Style="{StaticResource ToolRepeatButton}" Command="{Binding OffsetUpCommand}">
-                                <fa:ImageAwesome Style="{StaticResource EditorBackgroundManipulationButtonIcon}" Icon="CaretUp" />
+                                <fa:ImageAwesome Style="{StaticResource EditorBackgroundManipulationButtonIcon}"
+                                                 Icon="CaretUp" />
                             </RepeatButton>
-                            <RepeatButton Style="{StaticResource ToolRepeatButton}" Command="{Binding RotateClockwiseCommand}">
-                                <fa:ImageAwesome Style="{StaticResource EditorBackgroundManipulationButtonIcon}" Icon="RotateRight" />
+                            <RepeatButton Style="{StaticResource ToolRepeatButton}"
+                                          Command="{Binding RotateClockwiseCommand}">
+                                <fa:ImageAwesome Style="{StaticResource EditorBackgroundManipulationButtonIcon}"
+                                                 Icon="RotateRight" />
                             </RepeatButton>
-                            <RepeatButton Style="{StaticResource ToolRepeatButton}" Command="{Binding OffsetLeftCommand}">
-                                <fa:ImageAwesome Style="{StaticResource EditorBackgroundManipulationButtonIcon}" Icon="CaretLeft" />
+                            <RepeatButton Style="{StaticResource ToolRepeatButton}"
+                                          Command="{Binding OffsetLeftCommand}">
+                                <fa:ImageAwesome Style="{StaticResource EditorBackgroundManipulationButtonIcon}"
+                                                 Icon="CaretLeft" />
                             </RepeatButton>
-                            <RepeatButton Style="{StaticResource ToolRepeatButton}" Command="{Binding ResetImageCommand}">
-                                <fa:ImageAwesome Style="{StaticResource EditorBackgroundManipulationButtonIcon}" Icon="Remove" />
+                            <RepeatButton Style="{StaticResource ToolRepeatButton}"
+                                          Command="{Binding ResetImageCommand}">
+                                <fa:ImageAwesome Style="{StaticResource EditorBackgroundManipulationButtonIcon}"
+                                                 Icon="Remove" />
                             </RepeatButton>
-                            <RepeatButton Style="{StaticResource ToolRepeatButton}" Command="{Binding OffsetRightCommand}">
-                                <fa:ImageAwesome Style="{StaticResource EditorBackgroundManipulationButtonIcon}" Icon="CaretRight" />
+                            <RepeatButton Style="{StaticResource ToolRepeatButton}"
+                                          Command="{Binding OffsetRightCommand}">
+                                <fa:ImageAwesome Style="{StaticResource EditorBackgroundManipulationButtonIcon}"
+                                                 Icon="CaretRight" />
                             </RepeatButton>
                             <RepeatButton Style="{StaticResource ToolRepeatButton}" Command="{Binding ScaleUpCommand}">
-                                <fa:ImageAwesome Style="{StaticResource EditorBackgroundManipulationButtonIcon}" Icon="SearchPlus" />
+                                <fa:ImageAwesome Style="{StaticResource EditorBackgroundManipulationButtonIcon}"
+                                                 Icon="SearchPlus" />
                             </RepeatButton>
-                            <RepeatButton Style="{StaticResource ToolRepeatButton}" Command="{Binding OffsetDownCommand}">
-                                <fa:ImageAwesome Style="{StaticResource EditorBackgroundManipulationButtonIcon}" Icon="CaretDown" />
+                            <RepeatButton Style="{StaticResource ToolRepeatButton}"
+                                          Command="{Binding OffsetDownCommand}">
+                                <fa:ImageAwesome Style="{StaticResource EditorBackgroundManipulationButtonIcon}"
+                                                 Icon="CaretDown" />
                             </RepeatButton>
-                            <RepeatButton Style="{StaticResource ToolRepeatButton}" Command="{Binding ScaleDownCommand}">
-                                <fa:ImageAwesome Style="{StaticResource EditorBackgroundManipulationButtonIcon}" Icon="SearchMinus" />
+                            <RepeatButton Style="{StaticResource ToolRepeatButton}"
+                                          Command="{Binding ScaleDownCommand}">
+                                <fa:ImageAwesome Style="{StaticResource EditorBackgroundManipulationButtonIcon}"
+                                                 Icon="SearchMinus" />
                             </RepeatButton>
                         </UniformGrid>
                     </Grid>
                 </StackPanel>
             </GroupBox>
 
-            <GroupBox Grid.Row="2" Header="Bone Settings" IsEnabled="{Binding CreatureEditorPanelVM.CreatureStructureEditorCanvasVM.SelectedBones.Count, Converter={StaticResource InvertedNumberToBooleanConverter}, ConverterParameter=0}">
+            <GroupBox Grid.Row="2" Header="Bone Settings"
+                      IsEnabled="{Binding CreatureEditorPanelVM.CreatureStructureEditorCanvasVM.SelectedBones.Count, Converter={StaticResource InvertedNumberToBooleanConverter}, ConverterParameter=0}">
                 <ContentControl Content="{Binding CreatureEditorPanelVM.Settings}">
                     <ContentControl.Style>
                         <Style TargetType="ContentControl">
@@ -183,10 +202,12 @@
                                             <TextBlock Grid.Column="0" Grid.Row="1" Text="Name:" />
                                             <TextBlock Grid.Column="0" Grid.Row="2" Text="Density (kg/m²):"
                                                        ToolTip="Because the engine is 2 dimensional you have to convert the density from kg/m³ to kg/m²" />
-                                            <TextBox Grid.Column="1" Grid.Row="1" Style="{StaticResource DefaultTextBox}"
+                                            <TextBox Grid.Column="1" Grid.Row="1"
+                                                     Style="{StaticResource DefaultTextBox}"
                                                      Text="{Binding CreatureEditorPanel.Settings.BoneName, Mode=TwoWay, TargetNullValue=Cannot change the name of multiple bones}"
                                                      IsEnabled="{Binding CreatureEditorPanel.CreatureStructureEditorCanvasVM.SelectedBones.Count, Converter={StaticResource NumberToBooleanConverter}, ConverterParameter=1}" />
-                                            <TextBox Grid.Column="1" Grid.Row="2" Style="{StaticResource DefaultTextBox}">
+                                            <TextBox Grid.Column="1" Grid.Row="2"
+                                                     Style="{StaticResource DefaultTextBox}">
                                                 <TextBox.Text>
                                                     <Binding Path="CreatureEditorPanel.Settings.BoneDensity"
                                                              Mode="TwoWay" UpdateSourceTrigger="PropertyChanged"
@@ -223,7 +244,8 @@
                                                         </Grid.RowDefinitions>
                                                         <Grid Grid.Row="0" Margin="4">
                                                             <Grid.Resources>
-                                                                <Style TargetType="{x:Type RadioButton}" BasedOn="{StaticResource {x:Type RadioButton}}">
+                                                                <Style TargetType="{x:Type RadioButton}"
+                                                                       BasedOn="{StaticResource {x:Type RadioButton}}">
                                                                     <Setter Property="Margin" Value="4" />
                                                                 </Style>
                                                             </Grid.Resources>
@@ -240,7 +262,7 @@
                                                                          IsChecked="{Binding IsSecondJointBasisForMovementLimitation}" />
                                                         </Grid>
                                                         <Grid Grid.Row="1"
-                                                            Visibility="{Binding IsMovementLimitationEnabled, Converter={StaticResource BooleanVisibilityConverter}, ConverterParameter=true}">
+                                                              Visibility="{Binding IsMovementLimitationEnabled, Converter={StaticResource BooleanVisibilityConverter}, ConverterParameter=true}">
                                                             <Grid.RowDefinitions>
                                                                 <RowDefinition Height="Auto" />
                                                                 <RowDefinition Height="Auto" />
@@ -261,9 +283,10 @@
                                                                     Maximum="180"
                                                                     Value="{Binding UpperMovementLimit, Converter={StaticResource RadiansToDegreesConverter}}" />
                                                             <CheckBox Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2"
-                                                                      IsChecked="{Binding CanControl}"
-                                                                      Content="Creature has control over this bone" Margin="4" VerticalAlignment="Center" VerticalContentAlignment="Center" 
-                                                                      ToolTip="Indicates weather the creature is able to control this bone from the selected joint.&#x0a;For the creature to learn to move, at least some bones have to be controllable."/>
+                                                                      IsChecked="{Binding IsSensor}"
+                                                                      Content="Creature notices when this bone touches the ground"
+                                                                      Margin="4" VerticalAlignment="Center"
+                                                                      VerticalContentAlignment="Center" />
                                                         </Grid>
                                                     </Grid>
                                                 </Grid>

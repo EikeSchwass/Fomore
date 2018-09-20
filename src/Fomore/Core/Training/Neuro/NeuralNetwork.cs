@@ -9,12 +9,16 @@ namespace Core.Training.Neuro
     [Serializable]
     public class NeuralNetwork : ICloneable<NeuralNetwork>
     {
+        public float MeanWeight { get; }
+        public float StandardDeviation { get; }
         private WeightMatrix[] WeightLayers { get; }
 
         public NeuralNetwork(float meanWeight, float standardDeviation, params int[] layers)
         {
             if (layers.Length <= 1)
                 throw new ArgumentException(nameof(layers));
+            MeanWeight = meanWeight;
+            StandardDeviation = standardDeviation;
             WeightLayers = new WeightMatrix[layers.Length - 1];
             CreateStructure(meanWeight, standardDeviation, layers);
         }
@@ -57,25 +61,50 @@ namespace Core.Training.Neuro
             }
         }
 
-        public NeuralNetwork MutateNetworkWeights() => MutateNetworkWeights(0.25f);
-
-        public NeuralNetwork MutateNetworkWeights(float standardDeviation)
+        public NeuralNetwork MutateNetworkWeights(float mutationChance, float standardDeviation)
         {
             var weightLayers = WeightLayers.Select(w => w.GetClonedWeights()).ToArray();
-            for (int i = 0; i < WeightLayers.Length; i++)
+            int weightLayerIndex = AdvancedRandom.Random.Next(0, weightLayers.Length);
+            int colIndex = AdvancedRandom.Random.Next(0, weightLayers[weightLayerIndex].GetLength(0));
+            int rowIndex = AdvancedRandom.Random.Next(0, weightLayers[weightLayerIndex].GetLength(1));
+
+            int mutationVariant = GetMutationVariant(AdvancedRandom.Random.NextDouble());
+
+            switch (mutationVariant)
             {
-                var currentLayer = weightLayers[i];
-                for (int c = 0; c < currentLayer.GetLength(0); c++)
-                {
-                    for (int r = 0; r < currentLayer.GetLength(1); r++)
+                case 0:
+                    {
+                        float nextNormal = (float)AdvancedRandom.NextNormal(1, standardDeviation);
+                        weightLayers[weightLayerIndex][colIndex, rowIndex] *= nextNormal;
+                        break;
+                    }
+                case 1:
                     {
                         float nextNormal = (float)AdvancedRandom.NextNormal(0, standardDeviation);
-                        currentLayer[c, r] += nextNormal;
+                        weightLayers[weightLayerIndex][colIndex, rowIndex] += nextNormal;
+                        break;
                     }
-                }
-                weightLayers[i] = currentLayer;
+                case 2:
+                    {
+                        weightLayers[weightLayerIndex][colIndex, rowIndex] = (float)AdvancedRandom.NextNormal(MeanWeight, StandardDeviation);
+                        break;
+                    }
+
+                default:
+                    throw new InvalidOperationException();
             }
+
+
             return new NeuralNetwork(weightLayers);
+        }
+
+        private int GetMutationVariant(double nextDouble)
+        {
+            if (nextDouble < 0.95)
+                return 0;
+            if (nextDouble < 1)
+                return 1;
+            return 2;
         }
 
         /// <summary>
@@ -102,7 +131,7 @@ namespace Core.Training.Neuro
             return currentValues;
         }
 
-        private float Sigmoid(float t)
+        public static float Sigmoid(float t)
         {
             double exp = Exp(t);
             return (float)(exp / (exp + 1));

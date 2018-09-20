@@ -71,11 +71,13 @@ namespace Core.Renderer
             GL.Color3(terrainColor);
 
             var vertices = Simulation.Terrain.Vertices.ToList();
-            GL.Begin(PrimitiveType.Lines);
+            GL.Begin(PrimitiveType.Quads);
             for (int i = 0; i < vertices.Count - 1; i++)
             {
                 GL.Vertex2(vertices[i].X, vertices[i].Y);
                 GL.Vertex2(vertices[i + 1].X, vertices[i + 1].Y);
+                GL.Vertex2(vertices[i + 1].X, vertices[i + 1].Y + 40);
+                GL.Vertex2(vertices[i].X, vertices[i].Y + 40);
             }
             GL.End();
         }
@@ -107,6 +109,25 @@ namespace Core.Renderer
                 GL.End();
                 GL.PopMatrix();
             }
+        }
+    }
+
+    public class RemoteRenderer : MarshalByRefObject
+    {
+        public void Render(Simulation simulation, int width = 800, int height = 600)
+        {
+            using (var renderer = new SimulationRenderer(simulation, width, height))
+            {
+                renderer.Run();
+            }
+        }
+
+        public void Render(Creature creature, MovementPattern movementPattern, Environment environment, int width = 800, int height = 600)
+        {
+            var creatureMovementPatterns = new[] { new CreatureMovementPattern(creature, movementPattern) };
+            var simulationSettings = new SimulationSettings(creatureMovementPatterns, environment);
+            var simulation = new Simulation(simulationSettings);
+            Render(simulation, width, height);
         }
     }
 }

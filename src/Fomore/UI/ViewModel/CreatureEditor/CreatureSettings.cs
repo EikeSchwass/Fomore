@@ -241,23 +241,23 @@ namespace Fomore.UI.ViewModel.CreatureEditor
             }
         }
 
-        public bool? CanControl
+        public bool? IsSensor
         {
-            get => ConnectorInformation?.CanControl;
+            get => ConnectorInformation?.IsSensor;
             set
             {
-                if (value == ConnectorInformation?.CanControl || ConnectorInformation == null)
+                if (value == ConnectorInformation?.IsSensor || ConnectorInformation == null)
                     return;
                 var connectorInformationVM = ConnectorInformation;
-                bool canControl = ConnectorInformation.CanControl;
+                bool isSensor = ConnectorInformation.IsSensor;
                 var changeOperation = new ChangeOperation(c =>
                                                           {
-                                                              connectorInformationVM.CanControl = value == true;
+                                                              connectorInformationVM.IsSensor = value == true;
                                                               OnPropertyChanged();
                                                           },
                                                           c =>
                                                           {
-                                                              connectorInformationVM.CanControl = canControl;
+                                                              connectorInformationVM.IsSensor = isSensor;
                                                               OnPropertyChanged();
                                                           });
                 HistoryStack.AddOperation(changeOperation);

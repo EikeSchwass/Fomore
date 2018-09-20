@@ -25,6 +25,4 @@ namespace Core.TerrainGenerator
         }
 
     }
-
-    // Transcribed from http://www.siafoo.net/snippet/144?nolinenos#perlin2003
 }

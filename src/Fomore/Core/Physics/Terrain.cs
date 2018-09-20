@@ -46,6 +46,7 @@ namespace Core.Physics
             for (int i = 0; i < vertices.Count - 1; i++)
             {
                 var edge = BodyFactory.CreateEdge(World, vertices[i].ToXna(), vertices[i + 1].ToXna(), this);
+                edge.FixtureList.Single().Friction = 0.8f;
                 edge.IsStatic = true;
                 edge.BodyType = BodyType.Static;
             }

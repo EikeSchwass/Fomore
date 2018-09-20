@@ -9,10 +9,10 @@
              d:DesignHeight="450" d:DesignWidth="800" d:DataContext="{d:DesignInstance navigation:TrainingTabVM}">
 
     <Grid Style="{StaticResource StructureGrid}">
-        <Grid
-            Visibility="{Binding TrainingRunning, Converter={StaticResource BooleanVisibilityConverter}, ConverterParameter=false}">
+        <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="*" />
+                <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
 
@@ -90,7 +90,19 @@
 
                 </Grid>
             </GroupBox>
-            <GroupBox Grid.Row="1" Style="{StaticResource ActionGroupBox}" Header="Additional Settings and Actions">
+            <Grid Grid.Row="1" Visibility="{Binding TrainingRunning, Converter={StaticResource BooleanVisibilityConverter}, ConverterParameter=True}">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <TextBlock Text="Training Progress" Margin="5" />
+                <ProgressBar Grid.Column="1" Grid.Row="0" Minimum="0" Maximum="100" Value="{Binding TrainingProgress}" />
+            </Grid>
+            <GroupBox Grid.Row="2" Style="{StaticResource ActionGroupBox}" Header="Additional Settings and Actions">
                 <Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition />
@@ -114,7 +126,7 @@
                     </StackPanel>
 
                     <CheckBox Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Center"
-                              IsChecked="{Binding ShowTraining}"
+                              IsChecked="{Binding ShowTraining}" IsEnabled="False"
                               Content="Show Training Progress" />
 
                     <StackPanel Grid.Column="3" Orientation="Horizontal" VerticalAlignment="Center"
@@ -129,7 +141,7 @@
             </GroupBox>
         </Grid>
 
-        <Grid
+        <!--<Grid
             Visibility="{Binding TrainingRunning, Converter={StaticResource BooleanVisibilityConverter}, ConverterParameter=true}">
             <Grid.RowDefinitions>
                 <RowDefinition Height="*" />
@@ -168,7 +180,7 @@
                 <controls:CustomizableButton Style="{StaticResource DefaultButton}"
                                              Command="{Binding StopTrainingCommand}" Content="Cancel" />
             </GroupBox>
-        </Grid>
+        </Grid>-->
 
     </Grid>
 </UserControl>

@@ -80,8 +80,12 @@
     <Compile Include="Training\Evolution\EvolutionaryAlgorithm.cs" />
     <Compile Include="Training\Evolution\Individual.cs" />
     <Compile Include="Training\Evolution\SelectionMethod.cs" />
+    <Compile Include="Training\Isolated.cs" />
+    <Compile Include="Training\IsolatedMovementPatternEvaluation.cs" />
     <Compile Include="Training\Neuro\NeuralNetwork.cs" />
     <Compile Include="Training\Neuro\WeightMatrix.cs" />
+    <Compile Include="Training\TrainingSettings.cs" />
+    <Compile Include="Training\TraningSession.cs" />
     <Compile Include="Vector2.cs" />
   </ItemGroup>
   <ItemGroup>

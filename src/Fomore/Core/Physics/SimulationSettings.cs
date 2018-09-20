@@ -9,7 +9,7 @@ namespace Core.Physics
         public Environment Environment { get; }
         public float TickStepSize { get; }
 
-        public SimulationSettings(IEnumerable<CreatureMovementPattern> creatureMovementPatterns, Environment environment, float tickStepSize = 0.033f)
+        public SimulationSettings(IEnumerable<CreatureMovementPattern> creatureMovementPatterns, Environment environment, float tickStepSize = 0.0416f)
         {
             CreatureMovementPatterns = creatureMovementPatterns.ToList().AsReadOnly();
             Environment = environment;

@@ -9,9 +9,9 @@ namespace Core
         public float LowerLimit { get; set; }
         public float UpperLimit { get; set; }
         public float Strength { get; set; } = 50;
-        public bool CanControl { get; set; }
         public bool HasLimits { get; set; }
         public bool IsFlipped { get; set; }
+        public bool IsSensor { get; set; }
 
         public Joint ControlledFrom => !IsFlipped ? Bone.FirstJoint : Bone.SecondJoint;
 
@@ -23,7 +23,7 @@ namespace Core
                 LowerLimit = LowerLimit,
                 UpperLimit = UpperLimit,
                 Strength = Strength,
-                CanControl = CanControl,
+                IsSensor = IsSensor,
                 HasLimits = HasLimits,
                 IsFlipped = IsFlipped
             };

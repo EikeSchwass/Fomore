@@ -7,8 +7,8 @@
 
         public CreatureMovementPattern(Creature creature, MovementPattern movementPattern)
         {
-            Creature = creature.Clone();
-            MovementPattern = movementPattern.Clone();
+            Creature = creature;
+            MovementPattern = movementPattern;
         }
     }
 }
