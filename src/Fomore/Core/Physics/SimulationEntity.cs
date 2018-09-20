@@ -29,7 +29,7 @@ namespace Core.Physics
             World = world;
             CreatureMovementPattern = creatureMovementPattern;
             CreateBody();
-            MotorTorque = 0.175f;
+            MotorTorque = 0.215f;
         }
 
         private void CreateBody()
@@ -128,7 +128,7 @@ namespace Core.Physics
                 var body = BodyFactory.CreateRectangle(World, width, height, density, bone.Position.ToXna() * 1.05f, this);
                 foreach (var fixture in body.FixtureList)
                 {
-                    fixture.Friction = 0.8f;
+                    fixture.Friction = 1f;
                 }
                 body.Rotation = orientation;
                 body.Enabled = true;
@@ -184,7 +184,7 @@ namespace Core.Physics
                 if (!JointRevoluteJoints.TryGetValue(joint, out var revoluteJoints))
                     continue;
                 float currentValue = outputs[currentIndex] * 2 - 1;
-                float targetSpeed = (float)(PI * 3 * currentValue);
+                float targetSpeed = (float)(PI * 4 * currentValue);
 
                 //float strength = currentValue * currentValue * MotorTorque;
 

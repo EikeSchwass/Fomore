@@ -1,6 +1,7 @@
 ﻿using System.Collections.Specialized;
 using System.Diagnostics;
 using System.Linq;
+using System.Media;
 using System.Threading;
 using System.Threading.Tasks;
 using Core;
@@ -275,6 +276,7 @@ namespace Fomore.UI.ViewModel.Navigation
             TrainingProgress = 0;
             TrainingRunning = false;
             TrainingProgressString = "";
+            SystemSounds.Beep.Play();
             var newPattern = new MovementPatternVM(best.Phenotype);
 
             SelectedCreature.MovementPatternCollectionVM.Add(newPattern);

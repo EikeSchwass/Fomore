@@ -1,6 +1,7 @@
 ﻿// Eike Stein: Fomore/Core/NeuralNetwork.cs (2018/09/18)
 
 using System;
+using System.Diagnostics;
 using System.Linq;
 using static System.Math;
 
@@ -71,18 +72,21 @@ namespace Core.Training.Neuro
                 case 0:
                     {
                         float nextNormal = (float)AdvancedRandom.NextNormal(1, standardDeviation);
-                        weightLayers[weightLayerIndex][colIndex, rowIndex] *= nextNormal;
+                        float current = weightLayers[weightLayerIndex][colIndex, rowIndex];
+                        weightLayers[weightLayerIndex][colIndex, rowIndex] =current* nextNormal;
                         break;
                     }
                 case 1:
                     {
-                        float nextNormal = (float)AdvancedRandom.NextNormal(0, standardDeviation);
-                        weightLayers[weightLayerIndex][colIndex, rowIndex] += nextNormal;
+                        float nextNormal = (float)AdvancedRandom.NextNormal(0, standardDeviation / 10);
+                        float current = weightLayers[weightLayerIndex][colIndex, rowIndex];
+                        weightLayers[weightLayerIndex][colIndex, rowIndex] =current+ nextNormal;
                         break;
                     }
                 case 2:
                     {
-                        weightLayers[weightLayerIndex][colIndex, rowIndex] = (float)AdvancedRandom.NextNormal(0, standardDeviation);
+                        float current = weightLayers[weightLayerIndex][colIndex, rowIndex];
+                        weightLayers[weightLayerIndex][colIndex, rowIndex] =current* -1;
                         break;
                     }
 
@@ -90,15 +94,29 @@ namespace Core.Training.Neuro
                     throw new InvalidOperationException();
             }
 
+            int unequalCount = 0;
+
+            for (int i = 0; i < WeightLayers.Length; i++)
+            {
+                for (int j = 0; j < WeightLayers[i].ColumnCount; j++)
+                {
+                    for (int k = 0; k < WeightLayers[i].RowCount; k++)
+                    {
+                        if (!WeightLayers[i][j, k].Equals(weightLayers[i][j, k]))
+                            unequalCount++;
+                    }
+                }
+            }
+            Debug.Assert(unequalCount == 1);
 
             return new NeuralNetwork(weightLayers);
         }
 
         private int GetMutationVariant(double nextDouble)
         {
-            if (nextDouble < 0.5)
-                return 0;
             if (nextDouble < 0.9)
+                return 0;
+            if (nextDouble < 0.98)
                 return 1;
             return 2;
         }

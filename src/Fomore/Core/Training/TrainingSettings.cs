@@ -11,7 +11,7 @@
         public int NumberOfIterations { get; }
         public Environment Environment { get; }
 
-        public TrainingSettings(Creature creature, MovementPattern movementPattern, Environment environment, int numberOfIterations, int populationSize = 32, float iterationDuration = 15, float mutationChance = 0.004f, float mutationIntensity = 0.125f)
+        public TrainingSettings(Creature creature, MovementPattern movementPattern, Environment environment, int numberOfIterations, int populationSize = 32, float iterationDuration = 15, float mutationChance = 0.004f, float mutationIntensity = 0.0005f)
         {
             PopulationSize = populationSize;
             IterationDuration = iterationDuration;

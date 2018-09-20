@@ -54,7 +54,7 @@ namespace Core
             Array.Copy(hiddenLayers, 0, layers, 1, hiddenLayers.Length - 1);
             layers[0] = inputs;
             layers[layers.Length - 1] = outputs;
-            var neuralNetwork = new NeuralNetwork(0, 8, layers);
+            var neuralNetwork = new NeuralNetwork(0, 8f, layers);
             return new MovementPattern(null, neuralNetwork);
         }
     }

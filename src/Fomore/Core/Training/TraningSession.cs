@@ -57,14 +57,15 @@ namespace Core.Training
             var currentPopulation = CurrentPopulation.OrderByDescending(i => i.Fitness).ToList();
 
             int takeBestCount = 1;
-            int takeBestAndMutateCount = 1 + TrainingSettings.PopulationSize * 80 / 100;
+            int takeBestAndMutateCount = TrainingSettings.PopulationSize*80/100;
 
-            newPopulation.AddRange(currentPopulation.Take(takeBestAndMutateCount).Select(i => new Individual<MovementPattern>(new MovementPattern(i.Phenotype, i.Phenotype.NeuralNetwork), i.Fitness)));
+            newPopulation.AddRange(Enumerable.Repeat(currentPopulation.First(), takeBestAndMutateCount).Select(i => new Individual<MovementPattern>(new MovementPattern(i.Phenotype, i.Phenotype.NeuralNetwork), i.Fitness)));
 
             while (newPopulation.Count < TrainingSettings.PopulationSize - takeBestCount) newPopulation.Add(SelectIndividual(currentPopulation));
 
             newPopulation = MutatePopulation(newPopulation);
-            newPopulation.AddRange(currentPopulation.Take(takeBestCount));
+            newPopulation.AddRange(Enumerable.Repeat(currentPopulation.First(), takeBestCount).Select(i => new Individual<MovementPattern>(new MovementPattern(i.Phenotype, i.Phenotype.NeuralNetwork), i.Fitness)));
+            Debug.Assert(newPopulation.Count == CurrentPopulation.Count);
             EvaluatePopulation(newPopulation);
             CurrentPopulation.Clear();
             CurrentPopulation.AddRange(newPopulation);
@@ -92,6 +93,16 @@ namespace Core.Training
         /// <returns>Returns an individual for the next generation.</returns>
         private Individual<MovementPattern> SelectIndividual(List<Individual<MovementPattern>> population)
         {
+            while (true)
+            {
+                foreach (var individual in population)
+                {
+                    if (AdvancedRandom.Random.NextDouble() <= 1.0 / population.Count * 2)
+                        return individual;
+                }
+            }
+
+
             double min = population.Min(i => i.Fitness ?? 0);
             double sum = population.Sum(p => p.Fitness - min + 0.01 ?? 0);
             double weightedIndex = AdvancedRandom.Random.NextDouble() * sum;
