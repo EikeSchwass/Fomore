@@ -28,6 +28,7 @@ namespace Fomore.UI.ViewModel.Navigation
         private bool showTraining;
         private double targetSpeed;
         private double trainingProgress;
+        private string trainingProgressString;
         private bool trainingRunning;
 
         /// <inheritdoc />
@@ -144,7 +145,7 @@ namespace Fomore.UI.ViewModel.Navigation
             get => trainingProgress;
             set
             {
-                if (value == trainingProgress) return;
+                if (Equals(value, trainingProgress)) return;
                 trainingProgress = value;
                 OnPropertyChanged();
             }
@@ -168,6 +169,17 @@ namespace Fomore.UI.ViewModel.Navigation
         public DelegateCommand ResetSelectionCommand { get; }
         public DelegateCommand StartTrainingCommand { get; }
         public DelegateCommand StopTrainingCommand { get; }
+
+        public string TrainingProgressString
+        {
+            get => trainingProgressString;
+            set
+            {
+                if (value == trainingProgressString) return;
+                trainingProgressString = value;
+                OnPropertyChanged();
+            }
+        }
 
         // ------------------------------------------------------------
         // Entry point & other methods
@@ -241,6 +253,7 @@ namespace Fomore.UI.ViewModel.Navigation
             IsEnabled = false;
             TrainingRunning = true;
             TrainingProgress = 0.25 / Iterations;
+            TrainingProgressString = "Training starting...";
             await traningSession.RunTrainingSessionAsync((t, r) =>
                                                          {
                                                              var individuals = r.OrderByDescending(k => k.Fitness).ToList();
@@ -249,9 +262,11 @@ namespace Fomore.UI.ViewModel.Navigation
                                                              var average = individuals.Average(k => k.Fitness);
                                                              var mean = individuals[individuals.Count / 2].Fitness;
                                                              index++;
-                                                             TrainingProgress = (index * 100.0 / Iterations);
-                                                             Debug
-                                                                .WriteLine($"Generation #{index}: MAX:{max:F3}, MIN:{min:F3}, AVG:{average:F3}, MEAN:{mean:F3}");
+                                                             TrainingProgress = index * 100.0 / Iterations;
+                                                             string s =
+                                                                 $"Generation #{index}: MAX:{max:F3}, MIN:{min:F3}, AVG:{average:F3}, MEAN:{mean:F3}";
+                                                             TrainingProgressString = s;
+                                                             Debug.WriteLine(s);
                                                              if ((best?.Fitness ?? 0) <= max || best == null)
                                                                  best = individuals.First();
                                                              return false;
@@ -259,6 +274,7 @@ namespace Fomore.UI.ViewModel.Navigation
             IsEnabled = true;
             TrainingProgress = 0;
             TrainingRunning = false;
+            TrainingProgressString = "";
             var newPattern = new MovementPatternVM(best.Phenotype);
 
             SelectedCreature.MovementPatternCollectionVM.Add(newPattern);

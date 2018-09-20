@@ -1,6 +1,5 @@
 ﻿using System.Collections.Specialized;
 using System.Linq;
-using Core.Physics;
 using Core.Renderer;
 using Core.Training;
 using Fomore.UI.ViewModel.Application;

@@ -34,7 +34,7 @@ namespace Core
             int outputs = simulationEntity.RevoluteJointsCount;
             int inputs = simulationEntity.GetNeuralInputs(0).ToList().Count; 
 
-            int hiddenLayerCount = (int)Math.Floor(Math.Pow((inputs + outputs) / 2.0, 1 / 2.0));
+            int hiddenLayerCount = (int)Math.Floor(Math.Pow((inputs + outputs) / 3.0, 1 / 2.0));
             hiddenLayerCount = Math.Max(1, hiddenLayerCount);
             var hiddenLayers = new int[hiddenLayerCount];
             if (hiddenLayerCount > 0)
@@ -54,7 +54,7 @@ namespace Core
             Array.Copy(hiddenLayers, 0, layers, 1, hiddenLayers.Length - 1);
             layers[0] = inputs;
             layers[layers.Length - 1] = outputs;
-            var neuralNetwork = new NeuralNetwork(0, 8f, layers);
+            var neuralNetwork = new NeuralNetwork(0, 8, layers);
             return new MovementPattern(null, neuralNetwork);
         }
     }

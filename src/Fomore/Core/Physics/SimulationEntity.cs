@@ -29,7 +29,6 @@ namespace Core.Physics
             World = world;
             CreatureMovementPattern = creatureMovementPattern;
             CreateBody();
-            float weight = Bodies.Sum(b => b.Mass);
             MotorTorque = 0.175f;
         }
 
@@ -185,7 +184,7 @@ namespace Core.Physics
                 if (!JointRevoluteJoints.TryGetValue(joint, out var revoluteJoints))
                     continue;
                 float currentValue = outputs[currentIndex] * 2 - 1;
-                float targetSpeed = (float)(PI * 4 * currentValue);
+                float targetSpeed = (float)(PI * 3 * currentValue);
 
                 //float strength = currentValue * currentValue * MotorTorque;
 

@@ -90,7 +90,7 @@
 
                 </Grid>
             </GroupBox>
-            <Grid Grid.Row="1" Visibility="{Binding TrainingRunning, Converter={StaticResource BooleanVisibilityConverter}, ConverterParameter=True}">
+            <Grid Grid.Row="1" Visibility="{Binding TrainingRunning, Converter={StaticResource BooleanVisibilityConverter}, ConverterParameter=True}" Margin="5">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="Auto" />
@@ -100,7 +100,8 @@
                     <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
                 <TextBlock Text="Training Progress" Margin="5" />
-                <ProgressBar Grid.Column="1" Grid.Row="0" Minimum="0" Maximum="100" Value="{Binding TrainingProgress}" />
+                <ProgressBar Grid.Column="1" Grid.Row="0" Minimum="0" Maximum="100" Value="{Binding TrainingProgress}" ToolTip="{Binding TrainingProgressString}" />
+                <TextBlock Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Text="{Binding TrainingProgressString}" Margin="5" FontSize="10" />
             </Grid>
             <GroupBox Grid.Row="2" Style="{StaticResource ActionGroupBox}" Header="Additional Settings and Actions">
                 <Grid>

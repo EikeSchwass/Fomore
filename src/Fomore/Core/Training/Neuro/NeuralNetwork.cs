@@ -9,16 +9,12 @@ namespace Core.Training.Neuro
     [Serializable]
     public class NeuralNetwork : ICloneable<NeuralNetwork>
     {
-        public float MeanWeight { get; }
-        public float StandardDeviation { get; }
         private WeightMatrix[] WeightLayers { get; }
 
         public NeuralNetwork(float meanWeight, float standardDeviation, params int[] layers)
         {
             if (layers.Length <= 1)
                 throw new ArgumentException(nameof(layers));
-            MeanWeight = meanWeight;
-            StandardDeviation = standardDeviation;
             WeightLayers = new WeightMatrix[layers.Length - 1];
             CreateStructure(meanWeight, standardDeviation, layers);
         }
@@ -86,7 +82,7 @@ namespace Core.Training.Neuro
                     }
                 case 2:
                     {
-                        weightLayers[weightLayerIndex][colIndex, rowIndex] = (float)AdvancedRandom.NextNormal(MeanWeight, StandardDeviation);
+                        weightLayers[weightLayerIndex][colIndex, rowIndex] = (float)AdvancedRandom.NextNormal(0, standardDeviation);
                         break;
                     }
 
@@ -100,9 +96,9 @@ namespace Core.Training.Neuro
 
         private int GetMutationVariant(double nextDouble)
         {
-            if (nextDouble < 0.95)
+            if (nextDouble < 0.5)
                 return 0;
-            if (nextDouble < 1)
+            if (nextDouble < 0.9)
                 return 1;
             return 2;
         }

@@ -1,6 +1,13 @@
-﻿using System.Globalization;
+﻿#if DEBUG
+using System.Globalization;
 using System.Threading;
 using System.Windows;
+#else
+
+using System.Windows;
+using System;
+using System.Threading.Tasks;
+#endif
 using Fomore.UI.ViewModel.Application;
 
 namespace Fomore.UI
@@ -21,9 +28,7 @@ namespace Fomore.UI
                                                              MessageBoxButton.YesNo,
                                                              MessageBoxImage.Error) ==
                                                     MessageBoxResult.Yes)
-                                                {
                                                     Cleanup();
-                                                }
 
                                                 e.Handled = true;
                                                 Shutdown(-1);
