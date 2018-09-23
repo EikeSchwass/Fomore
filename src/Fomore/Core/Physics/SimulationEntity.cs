@@ -30,7 +30,7 @@ namespace Core.Physics
             World = world;
             CreatureMovementPattern = creatureMovementPattern;
             CreateBody();
-            MotorTorque = 0.1f * 2.2f;
+            MotorTorque = 0.1f * 1.2f;
             if (useRandomness)
                 Bodies.OrderBy(b => b.Position.X).First().ApplyLinearImpulse(Microsoft.Xna.Framework.Vector2.UnitY * ((float)AdvancedRandom.Random.NextDouble() - 0.5f) * 0.01f);
         }
@@ -94,7 +94,10 @@ namespace Core.Physics
 
             revoluteJoint.CollideConnected = false;
             revoluteJoint.MotorEnabled = true;
-            revoluteJoint.LimitEnabled = true;
+            if (Abs(angleBetweenBones) > 10 * MathExtensions.DegreesToRadiansFactor)
+                revoluteJoint.LimitEnabled = true;
+            else
+                revoluteJoint.LimitEnabled = false;
             revoluteJoint.MaxMotorTorque = MotorTorque;
             revoluteJoint.LowerLimit = -MovementLimit;
             revoluteJoint.UpperLimit = MovementLimit;
@@ -125,7 +128,7 @@ namespace Core.Physics
             {
                 float orientation = (float)bone.FirstJoint.Position.GetAngleTowards(bone.SecondJoint.Position);
                 float width = (float)(bone.FirstJoint.Position - bone.SecondJoint.Position).Length;
-                float height = bone.Width * 2;
+                float height = bone.Width * 1.1f;
                 float density = bone.Density;
 
                 var body = BodyFactory.CreateRectangle(World, width, height, density, bone.Position.ToXna() * 1.05f, this);

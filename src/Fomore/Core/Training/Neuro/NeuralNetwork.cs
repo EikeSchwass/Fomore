@@ -59,9 +59,10 @@ namespace Core.Training.Neuro
 
         public NeuralNetwork MutateNetworkWeights(double mutationChance, double standardDeviation)
         {
+            standardDeviation = AdvancedRandom.NextNormal(1, 0.5);
             var weightLayers = WeightLayers.Select(w => w.GetClonedWeights()).ToArray();
-            int numberOfMutatedWeights = AdvancedRandom.Random.Next(0, 3);
-            if (AdvancedRandom.Random.NextDouble() < 0.95)
+            int numberOfMutatedWeights = AdvancedRandom.Random.Next(0, 12);
+            if (AdvancedRandom.Random.NextDouble() < 0.5)
                 numberOfMutatedWeights = AdvancedRandom.Random.NextDouble() < 0.8 ? 1 : 0;
 
             for (int i = 0; i < numberOfMutatedWeights; i++)
