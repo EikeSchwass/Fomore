@@ -80,6 +80,18 @@ namespace Core.Renderer
                 GL.Vertex2(vertices[i].X, vertices[i].Y + 40);
             }
             GL.End();
+
+            GL.Begin(PrimitiveType.Triangles);
+            for (int i = 0; i < vertices.Count; i++)
+            {
+                GL.Color3(Color.Green);
+                GL.Vertex2(vertices[i].X, vertices[i].Y - 0.05);
+                GL.Color3(Color.DarkGreen);
+                GL.Vertex2(vertices[i].X + 0.1, vertices[i].Y + 0.1);
+                GL.Color3(Color.ForestGreen);
+                GL.Vertex2(vertices[i].X - 0.1, vertices[i].Y + 0.1);
+            }
+            GL.End();
         }
 
         public void RenderEntity(SimulationEntity entity, Color entityColor)

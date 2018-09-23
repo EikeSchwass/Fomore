@@ -7,6 +7,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using Core.Physics;
 using Core.Training.Evolution;
+using Core.Training.Neuro;
+using static System.Math;
 
 namespace Core.Training
 {
@@ -48,6 +50,8 @@ namespace Core.Training
             }
         }
 
+        private double GenerationSinceLastImprovement { get; set; }
+
         private void RunTrainingIteration()
         {
             if (CurrentPopulation.Any(individual => individual.Fitness == null))
@@ -57,7 +61,7 @@ namespace Core.Training
             var currentPopulation = CurrentPopulation.OrderByDescending(i => i.Fitness).ToList();
 
             int takeBestCount = 1;
-            int takeBestAndMutateCount = TrainingSettings.PopulationSize*80/100;
+            int takeBestAndMutateCount = 1;//TrainingSettings.PopulationSize * 90 / 100;
 
             newPopulation.AddRange(Enumerable.Repeat(currentPopulation.First(), takeBestAndMutateCount).Select(i => new Individual<MovementPattern>(new MovementPattern(i.Phenotype, i.Phenotype.NeuralNetwork), i.Fitness)));
 
@@ -67,18 +71,33 @@ namespace Core.Training
             newPopulation.AddRange(Enumerable.Repeat(currentPopulation.First(), takeBestCount).Select(i => new Individual<MovementPattern>(new MovementPattern(i.Phenotype, i.Phenotype.NeuralNetwork), i.Fitness)));
             Debug.Assert(newPopulation.Count == CurrentPopulation.Count);
             EvaluatePopulation(newPopulation);
+            var currentPopulationMax = currentPopulation.First().Fitness ?? 0;
+            if (newPopulation.Max(i => i.Fitness) > currentPopulationMax)
+            {
+                double newPopulationMax = newPopulation.Max(i => i.Fitness ?? 0);
+                double generationSinceLastImprovement = 1 + newPopulationMax - currentPopulationMax;
+                GenerationSinceLastImprovement /= generationSinceLastImprovement;
+            }
+            else
+                GenerationSinceLastImprovement++;
             CurrentPopulation.Clear();
             CurrentPopulation.AddRange(newPopulation);
         }
 
         private List<Individual<MovementPattern>> MutatePopulation(List<Individual<MovementPattern>> population)
         {
+            double mutationIntensity = TrainingSettings.MutationIntensity;
+            if (GenerationSinceLastImprovement > 0 && AdvancedRandom.Random.NextDouble() < 0.85)
+                mutationIntensity *= Pow(1.0 / (GenerationSinceLastImprovement ), 4);
+
             var newPopulation = new List<Individual<MovementPattern>>();
             foreach (var individual in population)
             {
                 var mutatedNetwork = individual.Phenotype.NeuralNetwork.MutateNetworkWeights(TrainingSettings.MutationChance,
-                                                                                             TrainingSettings.MutationIntensity);
+                                                                                             mutationIntensity);
                 var newMovementPattern = new MovementPattern(individual.Phenotype, mutatedNetwork);
+                if (AdvancedRandom.Random.NextDouble() < 0.05)
+                    newMovementPattern = MovementPattern.CreateFromCreature(TrainingSettings.Creature);
                 var newIndividual = new Individual<MovementPattern>(newMovementPattern, null);
                 newPopulation.Add(newIndividual);
             }
@@ -93,25 +112,30 @@ namespace Core.Training
         /// <returns>Returns an individual for the next generation.</returns>
         private Individual<MovementPattern> SelectIndividual(List<Individual<MovementPattern>> population)
         {
-            while (true)
+            /*while (true)
             {
                 foreach (var individual in population)
                 {
-                    if (AdvancedRandom.Random.NextDouble() <= 1.0 / population.Count * 2)
+                    if (AdvancedRandom.Random.NextDouble() <= 1.0 / 8)
                         return individual;
                 }
+            }*/
+            double min = population.Min(i => i.Fitness ?? 0);
+
+            double GetFitness(Individual<MovementPattern> p)
+            {
+                double movedFitness = p.Fitness - min + 0.01 ?? 0;
+                return Pow(movedFitness, 1.25);
             }
 
-
-            double min = population.Min(i => i.Fitness ?? 0);
-            double sum = population.Sum(p => p.Fitness - min + 0.01 ?? 0);
+            double sum = population.Sum(p => GetFitness(p));
             double weightedIndex = AdvancedRandom.Random.NextDouble() * sum;
             double currentIndex = 0;
             foreach (var individual in population)
             {
-                if (currentIndex + (individual.Fitness - min + 0.01) >= weightedIndex)
+                if (currentIndex + GetFitness(individual) >= weightedIndex)
                     return individual;
-                currentIndex += (individual.Fitness - min + 0.01) ?? 0;
+                currentIndex += GetFitness(individual);
             }
 
             throw new InvalidOperationException();
@@ -138,7 +162,8 @@ namespace Core.Training
                                          rating = isolated.Value.Evaluate(cmp.MovementPattern,
                                                                           cmp.Creature,
                                                                           TrainingSettings.Environment,
-                                                                          TrainingSettings.IterationDuration);
+                                                                          TrainingSettings.IterationDuration,
+                                                                          TrainingSettings.UseRandomness ? 3 : 1);
                                      }
 
 
@@ -159,11 +184,21 @@ namespace Core.Training
 
         private IEnumerable<Individual<MovementPattern>> GeneratePopulation()
         {
-            yield return new Individual<MovementPattern>(TrainingSettings.MovementPattern.Clone(), null);
-            for (int i = 1; i < TrainingSettings.PopulationSize; i++)
+            if (TrainingSettings.MovementPattern != null)
+                yield return new Individual<MovementPattern>(TrainingSettings.MovementPattern.Clone(), null);
+            for (int i = (TrainingSettings.MovementPattern == null ? 0 : 1); i < TrainingSettings.PopulationSize; i++)
             {
-                var neuralNetwork = TrainingSettings.MovementPattern.NeuralNetwork;
-                neuralNetwork = neuralNetwork.MutateNetworkWeights(TrainingSettings.MutationChance, TrainingSettings.MutationIntensity);
+                NeuralNetwork neuralNetwork;
+                if (TrainingSettings.MovementPattern != null)
+                {
+                    neuralNetwork = TrainingSettings.MovementPattern.NeuralNetwork;
+                    neuralNetwork = neuralNetwork.MutateNetworkWeights(TrainingSettings.MutationChance, TrainingSettings.MutationIntensity);
+                }
+                else
+                {
+                    neuralNetwork = MovementPattern.CreateFromCreature(TrainingSettings.Creature).NeuralNetwork;
+                }
+
                 var individual =
                     new Individual<MovementPattern>(new MovementPattern(TrainingSettings.MovementPattern, neuralNetwork), null);
                 yield return individual;

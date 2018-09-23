@@ -236,24 +236,17 @@ namespace Fomore.UI.ViewModel.Navigation
         private async void StartTrainingAction(object obj)
         {
             var movementPattern = SelectedMovementPattern;
-            if (movementPattern == null)
-            {
-                movementPattern = new MovementPatternVM(MovementPattern.CreateFromCreature(SelectedCreature.Model))
-                {
-                    Name = SelectedCreature.Name + " on " + SelectedEnvironment.Name
-                };
-            }
 
             int index = 0;
             Individual<MovementPattern> best = null;
             var traningSession =
                 new TraningSession(new TrainingSettings(SelectedCreature.Model,
-                                                        movementPattern.Model,
+                                                        movementPattern?.Model,
                                                         SelectedEnvironment.Model,
                                                         Iterations));
             IsEnabled = false;
             TrainingRunning = true;
-            TrainingProgress = 0.25 / Iterations;
+            TrainingProgress = 25.0 / Iterations;
             TrainingProgressString = "Training starting...";
             await traningSession.RunTrainingSessionAsync((t, r) =>
                                                          {

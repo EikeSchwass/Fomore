@@ -30,12 +30,12 @@ namespace Core
         public static MovementPattern CreateFromCreature(Creature creature)
         {
             var simulationEntity = new SimulationEntity(new World(Microsoft.Xna.Framework.Vector2.Zero),
-                                                        new CreatureMovementPattern(creature, new MovementPattern(null, new NeuralNetwork(0, 1, 1, 1))));
+                                                        new CreatureMovementPattern(creature, new MovementPattern(null, new NeuralNetwork(0, 1, 1, 1))),
+                                                        false);
             int outputs = simulationEntity.RevoluteJointsCount;
-            int inputs = simulationEntity.GetNeuralInputs(0).ToList().Count; 
+            int inputs = simulationEntity.GetNeuralInputs(0).ToList().Count;
 
-            int hiddenLayerCount = (int)Math.Floor(Math.Pow((inputs + outputs) / 3.0, 1 / 2.0));
-            hiddenLayerCount = Math.Max(1, hiddenLayerCount);
+            int hiddenLayerCount = 2;// = (int)Math.Floor(Math.Pow((inputs + outputs) / 3.0, 1 / 2.0));
             var hiddenLayers = new int[hiddenLayerCount];
             if (hiddenLayerCount > 0)
             {
@@ -54,7 +54,7 @@ namespace Core
             Array.Copy(hiddenLayers, 0, layers, 1, hiddenLayers.Length - 1);
             layers[0] = inputs;
             layers[layers.Length - 1] = outputs;
-            var neuralNetwork = new NeuralNetwork(0, 8f, layers);
+            var neuralNetwork = new NeuralNetwork(0, 10, layers);
             return new MovementPattern(null, neuralNetwork);
         }
     }

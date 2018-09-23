@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using Core.Training;
 using Core.Training.Neuro;
 using FarseerPhysics.Dynamics;
 using FarseerPhysics.Dynamics.Contacts;
@@ -11,7 +12,7 @@ namespace Core.Physics
 {
     public class SimulationEntity
     {
-        private const float MovementLimit = (float)(4 * MathExtensions.DegreesToRadiansFactor);
+        private const float MovementLimit = (float)(15 * MathExtensions.DegreesToRadiansFactor);
         private float MotorTorque { get; }
         private World World { get; }
         public CreatureMovementPattern CreatureMovementPattern { get; }
@@ -24,12 +25,14 @@ namespace Core.Physics
 
         public int RevoluteJointsCount => JointRevoluteJoints.Keys.Count;
 
-        public SimulationEntity(World world, CreatureMovementPattern creatureMovementPattern)
+        public SimulationEntity(World world, CreatureMovementPattern creatureMovementPattern, bool useRandomness)
         {
             World = world;
             CreatureMovementPattern = creatureMovementPattern;
             CreateBody();
-            MotorTorque = 0.215f;
+            MotorTorque = 0.1f * 2.2f;
+            if (useRandomness)
+                Bodies.OrderBy(b => b.Position.X).First().ApplyLinearImpulse(Microsoft.Xna.Framework.Vector2.UnitY * ((float)AdvancedRandom.Random.NextDouble() - 0.5f) * 0.01f);
         }
 
         private void CreateBody()
@@ -63,10 +66,10 @@ namespace Core.Physics
 
         private void CreateJoint(BoneTuple bonePair, Joint joint)
         {
-            float anchorXBone1 = (float)((bonePair.Bone1.FirstJoint.Position - bonePair.Bone1.SecondJoint.Position).Length / 2 + 5 * CreatureMovementPattern.Creature.CreatureStructure.Scale);
+            float anchorXBone1 = (float)((bonePair.Bone1.FirstJoint.Position - bonePair.Bone1.SecondJoint.Position).Length / 2 + 7 * CreatureMovementPattern.Creature.CreatureStructure.Scale);
             if (ReferenceEquals(bonePair.Bone1.FirstJoint.Tracker, joint.Tracker))
                 anchorXBone1 *= -1;
-            float anchorXBone2 = (float)((bonePair.Bone2.FirstJoint.Position - bonePair.Bone2.SecondJoint.Position).Length / 2 + 5 * CreatureMovementPattern.Creature.CreatureStructure.Scale);
+            float anchorXBone2 = (float)((bonePair.Bone2.FirstJoint.Position - bonePair.Bone2.SecondJoint.Position).Length / 2 + 7 * CreatureMovementPattern.Creature.CreatureStructure.Scale);
             if (ReferenceEquals(bonePair.Bone2.FirstJoint.Tracker, joint.Tracker))
                 anchorXBone2 *= -1;
 
@@ -122,7 +125,7 @@ namespace Core.Physics
             {
                 float orientation = (float)bone.FirstJoint.Position.GetAngleTowards(bone.SecondJoint.Position);
                 float width = (float)(bone.FirstJoint.Position - bone.SecondJoint.Position).Length;
-                float height = bone.Width;
+                float height = bone.Width * 2;
                 float density = bone.Density;
 
                 var body = BodyFactory.CreateRectangle(World, width, height, density, bone.Position.ToXna() * 1.05f, this);
@@ -164,6 +167,7 @@ namespace Core.Physics
             {
                 if (se != this)
                     return false;
+                return false;
             }
             else
             {
@@ -183,37 +187,39 @@ namespace Core.Physics
             {
                 if (!JointRevoluteJoints.TryGetValue(joint, out var revoluteJoints))
                     continue;
-                float currentValue = outputs[currentIndex] * 2 - 1;
-                float targetSpeed = (float)(PI * 4 * currentValue);
+                double currentValue = outputs[currentIndex] * 2 - 1;
+                double targetSpeed = (PI * 2 * currentValue);
 
                 //float strength = currentValue * currentValue * MotorTorque;
 
                 foreach (var revoluteJoint in revoluteJoints)
                 {
-                    revoluteJoint.MotorSpeed = targetSpeed;
+                    revoluteJoint.MotorSpeed = (float)targetSpeed;
                     revoluteJoint.MaxMotorTorque = MotorTorque;
                 }
                 currentIndex++;
             }
         }
 
-        public IEnumerable<float> GetNeuralInputs(float totalTime)
+        public IEnumerable<double> GetNeuralInputs(float totalTime)
         {
             foreach (var kvp in BoneCollisions.OrderByDescending(kvp => kvp.Key.Position.X))
             {
-                float result = kvp.Value ? 1 : 0;
+                float result = kvp.Value ? 1 : -1;
                 yield return result;
             }
 
             float averageXVelocity = Bodies.Average(b => b.LinearVelocity.X);
             float averageYVelocity = Bodies.Average(b => b.LinearVelocity.Y);
 
-            yield return NeuralNetwork.Sigmoid(averageXVelocity);
-            yield return NeuralNetwork.Sigmoid(averageYVelocity);
+            yield return NeuralNetwork.Sigmoid(averageXVelocity / 2) * 2 - 1;
+            yield return NeuralNetwork.Sigmoid(averageYVelocity / 2) * 2 - 1;
 
-            //yield return (float)Cos(rotation);
+            float rotation = Bodies.Average(b => b.Rotation);
 
-            //yield return (float)Sin(totalTime * 2);
+            yield return (float)Cos(rotation);
+
+            yield return (float)Sin(rotation);
         }
     }
 }

@@ -7,12 +7,14 @@ namespace Core.Physics
     {
         public IReadOnlyCollection<CreatureMovementPattern> CreatureMovementPatterns { get; }
         public Environment Environment { get; }
+        public bool UseRandomness { get; }
         public float TickStepSize { get; }
 
-        public SimulationSettings(IEnumerable<CreatureMovementPattern> creatureMovementPatterns, Environment environment, float tickStepSize = 0.0416f)
+        public SimulationSettings(IEnumerable<CreatureMovementPattern> creatureMovementPatterns, Environment environment, bool useRandomness = false, float tickStepSize = 0.0416f)
         {
             CreatureMovementPatterns = creatureMovementPatterns.ToList().AsReadOnly();
             Environment = environment;
+            UseRandomness = useRandomness;
             TickStepSize = tickStepSize;
         }
     }

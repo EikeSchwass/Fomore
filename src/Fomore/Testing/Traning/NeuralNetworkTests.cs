@@ -11,7 +11,7 @@ namespace Testing.Traning
         {
             var neuralNetwork = new NeuralNetwork(0, 1, 2, 3, 2);
 
-            var input = new[] { 0.4f, 0.12f };
+            var input = new[] { 0.4, 0.12 };
             var calculateNetworkOutput = neuralNetwork.CalculateNetworkOutput(input);
             Assert.NotNull(calculateNetworkOutput);
             Assert.AreEqual(2, calculateNetworkOutput.Length);

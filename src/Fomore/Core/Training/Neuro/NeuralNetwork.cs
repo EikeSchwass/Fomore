@@ -1,7 +1,6 @@
 ﻿// Eike Stein: Fomore/Core/NeuralNetwork.cs (2018/09/18)
 
 using System;
-using System.Diagnostics;
 using System.Linq;
 using static System.Math;
 
@@ -20,7 +19,7 @@ namespace Core.Training.Neuro
             CreateStructure(meanWeight, standardDeviation, layers);
         }
 
-        private NeuralNetwork(float[][,] weightLayers)
+        private NeuralNetwork(double[][,] weightLayers)
         {
             WeightLayers = new WeightMatrix[weightLayers.Length];
             for (int i = 0; i < WeightLayers.Length; i++)
@@ -35,7 +34,7 @@ namespace Core.Training.Neuro
             {
                 int fromCount = layers[weightMatrixLayer] + 1;
                 int toCount = layers[weightMatrixLayer + 1];
-                var weightMatrix = new WeightMatrix(new float[fromCount, toCount]);
+                var weightMatrix = new WeightMatrix(new double[fromCount, toCount]);
                 WeightLayers[weightMatrixLayer] = weightMatrix;
             }
             InitializeWeights(mean, standardDeviation);
@@ -46,7 +45,7 @@ namespace Core.Training.Neuro
             for (int i = 0; i < WeightLayers.Length; i++)
             {
                 var currentLayer = WeightLayers[i];
-                var weights = new float[currentLayer.ColumnCount, currentLayer.RowCount];
+                var weights = new double[currentLayer.ColumnCount, currentLayer.RowCount];
                 for (int c = 0; c < weights.GetLength(0); c++)
                 {
                     for (int r = 0; r < weights.GetLength(1); r++)
@@ -58,65 +57,57 @@ namespace Core.Training.Neuro
             }
         }
 
-        public NeuralNetwork MutateNetworkWeights(float mutationChance, float standardDeviation)
+        public NeuralNetwork MutateNetworkWeights(double mutationChance, double standardDeviation)
         {
             var weightLayers = WeightLayers.Select(w => w.GetClonedWeights()).ToArray();
-            int weightLayerIndex = AdvancedRandom.Random.Next(0, weightLayers.Length);
-            int colIndex = AdvancedRandom.Random.Next(0, weightLayers[weightLayerIndex].GetLength(0));
-            int rowIndex = AdvancedRandom.Random.Next(0, weightLayers[weightLayerIndex].GetLength(1));
+            int numberOfMutatedWeights = AdvancedRandom.Random.Next(0, 3);
+            if (AdvancedRandom.Random.NextDouble() < 0.95)
+                numberOfMutatedWeights = AdvancedRandom.Random.NextDouble() < 0.8 ? 1 : 0;
 
-            int mutationVariant = GetMutationVariant(AdvancedRandom.Random.NextDouble());
-
-            switch (mutationVariant)
+            for (int i = 0; i < numberOfMutatedWeights; i++)
             {
-                case 0:
-                    {
-                        float nextNormal = (float)AdvancedRandom.NextNormal(1, standardDeviation);
-                        float current = weightLayers[weightLayerIndex][colIndex, rowIndex];
-                        weightLayers[weightLayerIndex][colIndex, rowIndex] =current* nextNormal;
-                        break;
-                    }
-                case 1:
-                    {
-                        float nextNormal = (float)AdvancedRandom.NextNormal(0, standardDeviation / 10);
-                        float current = weightLayers[weightLayerIndex][colIndex, rowIndex];
-                        weightLayers[weightLayerIndex][colIndex, rowIndex] =current+ nextNormal;
-                        break;
-                    }
-                case 2:
-                    {
-                        float current = weightLayers[weightLayerIndex][colIndex, rowIndex];
-                        weightLayers[weightLayerIndex][colIndex, rowIndex] =current* -1;
-                        break;
-                    }
+                int weightLayerIndex = AdvancedRandom.Random.Next(0, weightLayers.Length);
+                int colIndex = AdvancedRandom.Random.Next(0, weightLayers[weightLayerIndex].GetLength(0));
+                int rowIndex = AdvancedRandom.Random.Next(0, weightLayers[weightLayerIndex].GetLength(1));
 
-                default:
-                    throw new InvalidOperationException();
-            }
+                int mutationVariant = GetMutationVariant(AdvancedRandom.Random.NextDouble());
 
-            int unequalCount = 0;
-
-            for (int i = 0; i < WeightLayers.Length; i++)
-            {
-                for (int j = 0; j < WeightLayers[i].ColumnCount; j++)
+                switch (mutationVariant)
                 {
-                    for (int k = 0; k < WeightLayers[i].RowCount; k++)
-                    {
-                        if (!WeightLayers[i][j, k].Equals(weightLayers[i][j, k]))
-                            unequalCount++;
-                    }
+                    case 0:
+                        {
+                            double nextNormal = (AdvancedRandom.Random.NextDouble() * standardDeviation) + 1 - standardDeviation / 2;
+                            double current = weightLayers[weightLayerIndex][colIndex, rowIndex];
+                            weightLayers[weightLayerIndex][colIndex, rowIndex] = current * nextNormal;
+                            break;
+                        }
+                    case 1:
+                        {
+                            double nextNormal = (AdvancedRandom.Random.NextDouble() - 0.5) * standardDeviation;
+                            double current = weightLayers[weightLayerIndex][colIndex, rowIndex];
+                            weightLayers[weightLayerIndex][colIndex, rowIndex] = current + nextNormal;
+                            break;
+                        }
+                    case 2:
+                        {
+                            double current = weightLayers[weightLayerIndex][colIndex, rowIndex];
+                            weightLayers[weightLayerIndex][colIndex, rowIndex] = current * -1;
+                            break;
+                        }
+
+                    default:
+                        throw new InvalidOperationException();
                 }
             }
-            Debug.Assert(unequalCount == 1);
 
             return new NeuralNetwork(weightLayers);
         }
 
         private int GetMutationVariant(double nextDouble)
         {
-            if (nextDouble < 0.9)
+            if (nextDouble < 0.5)
                 return 0;
-            if (nextDouble < 0.98)
+            if (nextDouble < 0.9)
                 return 1;
             return 2;
         }
@@ -126,7 +117,7 @@ namespace Core.Training.Neuro
         /// </summary>
         /// <param name="input">Pre normalized input</param>
         /// <returns>The normalized output of the network</returns>
-        public float[] CalculateNetworkOutput(float[] input)
+        public double[] CalculateNetworkOutput(double[] input)
         {
             var currentValues = input;
             for (int i = 0; i < WeightLayers.Length; i++)
@@ -145,10 +136,10 @@ namespace Core.Training.Neuro
             return currentValues;
         }
 
-        public static float Sigmoid(float t)
+        public static double Sigmoid(double t)
         {
             double exp = Exp(t);
-            return (float)(exp / (exp + 1));
+            return exp / (exp + 1);
         }
 
         public NeuralNetwork Clone()

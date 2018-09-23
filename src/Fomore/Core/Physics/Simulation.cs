@@ -42,7 +42,7 @@ namespace Core.Physics
                 {
                     joint.Position = new Vector2(joint.Position.X - minX, (joint.Position.Y - minY));
                 }
-                var simulationEntity = new SimulationEntity(World, creatureMovementPattern);
+                var simulationEntity = new SimulationEntity(World, creatureMovementPattern, SimulationSettings.UseRandomness);
                 SimulationEntities.Add(simulationEntity);
             }
 

@@ -11,10 +11,10 @@ namespace Testing.Traning
         [Test]
         public void WeightMatrixMultiplyTest1()
         {
-            var weights = new float[,] { { 1, 2, 3 }, { 4, 5, 6 } };
+            var weights = new double[,] { { 1, 2, 3 }, { 4, 5, 6 } };
             var weightMatrix = new WeightMatrix(weights);
 
-            var values = new float[] { 5, 7 };
+            var values = new double[] { 5, 7 };
 
             var result = values * weightMatrix;
 
@@ -26,10 +26,10 @@ namespace Testing.Traning
         [Test]
         public void WeightMatrixMultiplyTest2()
         {
-            var weights = new float[,] { { 2, 2, 2 }, { 4, 4, 4 } };
+            var weights = new double[,] { { 2, 2, 2 }, { 4, 4, 4 } };
             var weightMatrix = new WeightMatrix(weights);
 
-            var values = new float[] { 2, 3 };
+            var values = new double[] { 2, 3 };
 
             var result = values * weightMatrix;
 
@@ -41,7 +41,7 @@ namespace Testing.Traning
         [Test]
         public void WeightMatriGetClonedWeights()
         {
-            var weights = new float[,] { { 1, 2, 3 }, { 4, 5, 6 } };
+            var weights = new double[,] { { 1, 2, 3 }, { 4, 5, 6 } };
             var weightMatrix = new WeightMatrix(weights);
 
             var clonedWeights = weightMatrix.GetClonedWeights();
